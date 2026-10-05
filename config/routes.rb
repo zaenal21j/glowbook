@@ -1,0 +1,99 @@
+# Routes for GlowBook - Indonesian beauty & wellness booking marketplace
+
+Rails.application.routes.draw do
+  devise_for :users,
+             controllers: { omniauth_callbacks: "users/omniauth_callbacks", registrations: "users/registrations" },
+             path_names: { sign_in: "masuk", sign_out: "keluar", sign_up: "daftar" }
+
+  devise_scope :user do
+    get "/daftar", to: "devise/registrations#new", as: :signup
+    get "/masuk", to: "devise/sessions#new", as: :login
+    delete "/keluar", to: "devise/sessions#destroy", as: :logout
+  end
+
+  # Customer dashboard
+  namespace :account, path: "akun" do
+    root to: "dashboard#show"
+    get "booking", to: "bookings#index", as: :bookings
+    get "favorit", to: "favorites#index", as: :favorites
+    get "ulasan", to: "reviews#index", as: :reviews
+    get "profil", to: "profiles#show", as: :profile
+    patch "profil", to: "profiles#update"
+    get "pengaturan", to: "settings#show", as: :settings
+  end
+
+  # Cancel/reschedule bookings (customer)
+  resources :bookings, only: [:show, :destroy], path: "booking" do
+    member do
+      patch :cancel
+      get :reschedule, path: "ubah-jadwal"
+      patch :update_schedule, path: "update-jadwal"
+    end
+  end
+
+  # Public marketplace
+  root "home#index"
+  get "cari", to: "searches#index", as: :search
+  get "kota/:slug", to: "cities#show", as: :city
+  get "kategori/:slug", to: "categories#show", as: :category
+  get "untuk-bisnis", to: "pages#business", as: :for_business
+  get "daftar-bisnis", to: "pages#business_signup", as: :registrasi_bisnis
+
+  # Booking flow (multi-step) — explicit routes: slug-based, matching the
+  # business_book_* helpers used across views/controllers.
+  get "b/:slug/book", to: "bookings_flow#new", as: :business_book
+  get "b/:slug/book/step/:step", to: "bookings_flow#show", as: :business_book_step
+  patch "b/:slug/book/step/:step", to: "bookings_flow#update", as: :business_book_update
+  get "b/:slug/book/confirmation", to: "bookings_flow#confirmation", as: :business_book_confirmation
+  post "b/:slug/book/complete", to: "bookings_flow#complete", as: :business_book_complete
+
+  # Business detail
+  get "b/:slug", to: "businesses#show", as: :business_detail
+  get "b/:slug/tabs/:tab", to: "businesses#tab", as: :business_tab
+
+  # Business owner dashboard
+  namespace :dashboard, path: "bisnis" do
+    root to: "dashboard#index", as: :root
+    get "kalender", to: "calendars#show", as: :calendar
+    get "booking", to: "bookings#index", as: :bookings
+    get "layanan", to: "services#index", as: :services
+    get "staff", to: "staffs#index", as: :staffs
+    get "pelanggan", to: "customers#index", as: :customers
+    get "promosi", to: "promotions#index", as: :promotions
+    get "analitik", to: "analytics#show", as: :analytics
+    get "profil-bisnis", to: "profiles#show", as: :profile
+    get "pengaturan", to: "settings#show", as: :settings
+
+    resources :services, only: %i[new create edit update destroy], as: :manage_services
+    resources :staffs, only: %i[new create edit update destroy], as: :manage_staffs
+    resources :promotions, only: %i[new create edit update destroy], as: :manage_promotions do
+      member { patch :toggle }
+    end
+  end
+
+  # Admin
+  namespace :admin, path: "admin" do
+    root to: "dashboard#index"
+    resources :users, only: %i[index show destroy], path: "pengguna"
+    resources :businesses, only: %i[index show destroy], path: "bisnis"
+    resources :bookings, only: %i[index show], path: "booking"
+    resources :categories, path: "kategori" do
+      member { patch :toggle_popular }
+    end
+    resources :reviews, only: %i[index destroy], path: "ulasan"
+    resources :promotions, only: %i[index destroy], path: "promosi"
+    get "laporan", to: "reports#index", as: :reports
+    get "pengaturan", to: "settings#show", as: :settings
+  end
+
+  # Favorites (customer)
+  post "b/:slug/favorite", to: "favorites#create", as: :business_favorite
+  delete "b/:slug/favorite", to: "favorites#destroy", as: :business_unfavorite
+
+  # Reviews (customer) — nested under business slug
+  post "b/:slug/reviews", to: "reviews#create", as: :business_reviews
+  get "b/:slug/reviews/new", to: "reviews#new", as: :new_business_review
+
+  # Health check
+  get "up" => "rails/health#show", as: :rails_health_check
+end

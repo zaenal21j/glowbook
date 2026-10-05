@@ -1,0 +1,56 @@
+<% content_for :sidebar_links do %>
+  <%= render "dashboard/shared/sidebar" %>
+<% end %>
+<% content_for :page_title, "Analitik — GlowBook" %>
+
+<div class="mb-4">
+  <h1 class="text-xl font-extrabold">Analitik</h1>
+  <p class="text-sm text-ink-500">Performa bisnis Anda bulan ini.</p>
+</div>
+
+<div class="grid gap-4 md:grid-cols-4">
+  <div class="card p-5">
+    <p class="text-sm text-ink-500">Pendapatan Bulan Ini</p>
+    <p class="mt-1 text-2xl font-bold"><%= number_to_currency(@revenue_month, unit: "Rp ", delimiter: ".", precision: 0) %></p>
+  </div>
+  <div class="card p-5">
+    <p class="text-sm text-ink-500">Booking Bulan Ini</p>
+    <p class="mt-1 text-2xl font-bold"><%= @bookings_month %></p>
+  </div>
+  <div class="card p-5">
+    <p class="text-sm text-ink-500">Pelanggan Aktif</p>
+    <p class="mt-1 text-2xl font-bold"><%= @customers.respond_to?(:length) ? @customers.length : @business.customers.count %></p>
+  </div>
+  <div class="card p-5">
+    <p class="text-sm text-ink-500">Rating Rata-rata</p>
+    <p class="mt-1 text-2xl font-bold text-amber-500">⭐ <%= @rating || "—" %></p>
+  </div>
+</div>
+
+<div class="card mt-5 p-5">
+  <h3 class="font-semibold">Pendapatan 30 Hari Terakhir</h3>
+  <div class="mt-4 flex h-44 items-end gap-[3px]">
+    <% max = [@daily.values.max.to_f, 1].max %>
+    <% @daily.each do |date, amount| %>
+      <div class="flex-1 rounded-t bg-primary-400 hover:bg-primary-600 transition" style="height: <%= [(amount / max * 100).round, 2].max %>%" title="<%= date.strftime("%d %b") %>: <%= number_to_currency(amount, unit: "Rp ", delimiter: ".", precision: 0) %>"></div>
+    <% end %>
+  </div>
+  <div class="mt-1 flex justify-between text-xs text-ink-400">
+    <span><%= @daily.keys.first.strftime("%d %b") %></span>
+    <span><%= @daily.keys.last.strftime("%d %b") %></span>
+  </div>
+</div>
+
+<div class="card mt-5 p-5">
+  <h3 class="font-semibold">Layanan Terpopuler Bulan Ini</h3>
+  <div class="mt-3 space-y-2.5">
+    <% max = [@top_services.map(&:last).max.to_f, 1].max %>
+    <% @top_services.each do |name, count| %>
+      <div>
+        <div class="flex justify-between text-sm"><span><%= name %></span><strong><%= count %>x</strong></div>
+        <div class="mt-1 h-1.5 rounded-full bg-surface-100"><div class="h-full rounded-full bg-primary-500" style="width: <%= (count / max * 100).round %>%"></div></div>
+      </div>
+    <% end %>
+    <% if @top_services.empty? %><p class="text-sm text-ink-400">Belum ada booking bulan ini.</p><% end %>
+  </div>
+</div>

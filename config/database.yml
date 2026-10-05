@@ -1,0 +1,23 @@
+# PostgreSQL. Versions 9.3 and up are supported.
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: <%= ENV.fetch("PGHOST") { "localhost" } %>
+  username: <%= ENV.fetch("PGUSER") { "glowbook" } %>
+  password: <%= ENV.fetch("PGPASSWORD") { "glowbook" } %>
+  timeout: 5000
+
+development:
+  <<: *default
+  database: glowbook_development
+
+test:
+  <<: *default
+  database: glowbook_test
+
+production:
+  <<: *default
+  database: glowbook_production
+  username: glowbook
+  password: <%= ENV["GLOWBOOK_DATABASE_PASSWORD"] %>

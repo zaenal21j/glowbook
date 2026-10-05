@@ -1,0 +1,23 @@
+<h2 class="text-lg font-extrabold">Pilih Layanan</h2>
+<%= form_with url: business_book_update_path(@business.slug, "layanan"), method: :patch, data: { controller: "selection-count" } do |f| %>
+  <div class="mt-4 space-y-3">
+    <% @services.each do |service| %>
+      <label class="card flex cursor-pointer items-center gap-4 p-4 transition hover:border-primary-200 has-[:checked]:border-primary-500 has-[:checked]:bg-primary-50/40">
+        <div class="h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-primary-50">
+          <img src="https://picsum.photos/seed/<%= @business.slug %>-svc-<%= service.id %>/160/160" alt="<%= service.name %>" class="h-full w-full object-cover" loading="lazy" />
+        </div>
+        <div class="min-w-0 flex-1">
+          <p class="font-bold"><%= service.name %></p>
+          <p class="mt-0.5 text-sm text-ink-500"><%= format_duration(service.duration_minutes) %> · <%= service.category.name %></p>
+        </div>
+        <div class="text-right">
+          <p class="font-bold text-primary-600"><%= format_idr(service.price) %></p>
+        </div>
+        <%= f.check_box :service_ids, { name: "service_ids[]", multiple: true, include_hidden: false, checked: (flow_ids = session[:booking_flow]&.dig("service_ids")) && flow_ids.include?(service.id), data: { action: "selection-count#update" }, class: "h-5 w-5 rounded border-gray-300 text-primary-600 focus:ring-primary-500" }, service.id, nil %>
+      </label>
+    <% end %>
+  </div>
+  <div class="sticky bottom-24 mt-6 lg:bottom-6">
+    <%= f.submit "Lanjutkan", class: "btn-primary btn-lg w-full" %>
+  </div>
+<% end %>

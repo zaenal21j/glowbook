@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <title><%= content_for(:title) || "Dashboard — GlowBook" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= stylesheet_link_tag :app %>
+    <%= javascript_importmap_tags %>
+  </head>
+  <body class="min-h-dvh bg-gray-50/60">
+    <div class="flex min-h-dvh">
+      <!-- Sidebar -->
+      <aside class="fixed inset-y-0 left-0 z-40 hidden w-64 transform border-r border-gray-100 bg-white transition-transform lg:static lg:translate-x-0 lg:block" data-controller="sidebar">
+        <div class="flex h-16 items-center gap-2 border-b border-gray-100 px-6">
+          <%= link_to root_path, class: "flex items-center gap-2" do %>
+            <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-600 text-white text-sm font-extrabold">G</span>
+            <span class="font-extrabold text-ink-900">Glow<span class="text-primary-600">Book</span></span>
+          <% end %>
+        </div>
+        <nav class="space-y-1 p-4">
+          <%= yield :sidebar_links %>
+        </nav>
+        <div class="absolute bottom-0 w-full border-t border-gray-100 p-4">
+          <%= link_to root_path, class: "sidebar-link" do %>
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75"/></svg>
+            Kembali ke Beranda
+          <% end %>
+        </div>
+      </aside>
+
+      <!-- Main -->
+      <div class="flex min-w-0 flex-1 flex-col">
+        <header class="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-gray-100 bg-white/95 px-4 backdrop-blur lg:px-8">
+          <div class="flex items-center gap-3">
+            <h1 class="font-extrabold"><%= content_for(:page_title) || "Dashboard" %></h1>
+          </div>
+          <div class="flex items-center gap-3">
+            <% if user_signed_in? %>
+              <span class="hidden text-sm text-ink-500 sm:block"><%= current_user.full_name %></span>
+              <span class="flex h-9 w-9 items-center justify-center rounded-full bg-primary-600 text-sm font-bold text-white"><%= current_user.initial %></span>
+            <% end %>
+          </div>
+        </header>
+        <main class="flex-1 p-4 lg:p-8">
+          <% if flash[:notice] %><div class="mb-4 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800"><%= flash[:notice] %></div><% end %>
+          <% if flash[:alert] %><div class="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"><%= flash[:alert] %></div><% end %>
+          <%= yield %>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

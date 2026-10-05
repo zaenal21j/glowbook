@@ -1,0 +1,38 @@
+<% content_for :sidebar_links do %>
+  <%= render "dashboard/shared/sidebar" %>
+<% end %>
+<% content_for :page_title, "Promosi — GlowBook" %>
+
+<div class="flex flex-wrap items-center justify-between gap-3">
+  <div>
+    <h1 class="text-xl font-extrabold">Promosi</h1>
+    <p class="text-sm text-ink-500">Promosi aktif tampil sebagai badge PROMO di kartu bisnis Anda.</p>
+  </div>
+  <%= link_to "+ Promosi Baru", new_dashboard_manage_promotion_path, class: "btn-primary btn-md" %>
+</div>
+
+<div class="mt-5 space-y-3">
+  <% @promotions.each do |p| %>
+    <div class="card flex flex-wrap items-center justify-between gap-3 p-4">
+      <div>
+        <div class="flex items-center gap-2">
+          <p class="font-semibold"><%= p.title %></p>
+          <% if p.code.present? %><span class="badge badge-primary font-mono"><%= p.code %></span><% end %>
+          <span class="badge <%= p.active? ? "badge-success" : "badge-muted" %>"><%= p.active? ? "Aktif" : "Nonaktif" %></span>
+        </div>
+        <p class="mt-1 text-sm text-ink-500">
+          Diskon <strong class="text-primary-600"><%= p.discount_percent %>%</strong>
+          · <%= p.starts_at&.strftime("%d %b %Y") || "sekarang" %> – <%= p.ends_at&.strftime("%d %b %Y") || "tanpa batas" %>
+        </p>
+      </div>
+      <div class="flex items-center gap-3 text-xs">
+        <%= button_to (p.active? ? "Nonaktifkan" : "Aktifkan"), toggle_dashboard_manage_promotion_path(p), method: :patch, class: "font-semibold text-primary-600 hover:underline" %>
+        <%= link_to "Edit", edit_dashboard_manage_promotion_path(p), class: "font-semibold text-ink-600 hover:underline" %>
+        <%= button_to "Hapus", dashboard_manage_promotion_path(p), method: :delete, form: { data: { turbo_confirm: "Hapus promosi ini?" } }, class: "text-red-500 hover:underline" %>
+      </div>
+    </div>
+  <% end %>
+  <% if @promotions.empty? %>
+    <div class="card p-10 text-center text-ink-500">Belum ada promosi. Buat promosi pertama untuk menarik pelanggan.</div>
+  <% end %>
+</div>

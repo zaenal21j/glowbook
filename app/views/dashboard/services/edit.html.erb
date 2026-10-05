@@ -1,0 +1,9 @@
+<% content_for :sidebar_links do %>
+  <%= render "dashboard/shared/sidebar" %>
+<% end %>
+<% content_for :page_title, "Edit Layanan — GlowBook" %>
+
+<div class="max-w-xl card p-6">
+  <h1 class="text-lg font-extrabold mb-4">Edit: <%= @service.name %></h1>
+  <%= render "form", service: @service %>
+</div>

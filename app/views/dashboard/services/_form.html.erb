@@ -1,0 +1,38 @@
+<%= form_with model: service, url: service.persisted? ? dashboard_manage_service_path(service) : dashboard_manage_services_path, class: "space-y-4" do |f| %>
+  <div>
+    <%= f.label :name, "Nama layanan", class: "label" %>
+    <%= f.text_field :name, class: "input", required: true, placeholder: "Contoh: Haircut Premium" %>
+  </div>
+  <div class="grid gap-4 sm:grid-cols-2">
+    <div>
+      <%= f.label :category_id, "Kategori", class: "label" %>
+      <%= f.collection_select :category_id, @categories || Category.ordered, :id, :name, { prompt: "Pilih kategori" }, class: "input", required: true %>
+    </div>
+    <div>
+      <%= f.label :price, "Harga (Rp)", class: "label" %>
+      <%= f.number_field :price, class: "input", min: 0, step: 1000, required: true %>
+    </div>
+  </div>
+  <div class="grid gap-4 sm:grid-cols-2">
+    <div>
+      <%= f.label :duration_minutes, "Durasi (menit)", class: "label" %>
+      <%= f.number_field :duration_minutes, class: "input", min: 15, step: 15, required: true %>
+    </div>
+    <div>
+      <%= f.label :position, "Urutan tampil", class: "label" %>
+      <%= f.number_field :position, class: "input", min: 0 %>
+    </div>
+  </div>
+  <div>
+    <%= f.label :description, "Deskripsi", class: "label" %>
+    <%= f.text_area :description, rows: 3, class: "input", placeholder: "Jelaskan singkat layanan ini…" %>
+  </div>
+  <label class="flex items-center gap-2 text-sm">
+    <%= f.check_box :active, class: "h-4 w-4 rounded accent-primary-600" %>
+    Aktif (dapat dipesan pelanggan)
+  </label>
+  <div class="flex gap-2 pt-2">
+    <button class="btn-primary btn-md flex-1">Simpan</button>
+    <%= link_to "Batal", dashboard_services_path, class: "btn-ghost btn-md" %>
+  </div>
+<% end %>

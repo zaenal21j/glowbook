@@ -1,0 +1,19 @@
+<div class="card flex flex-col gap-4 p-4 sm:flex-row sm:items-center">
+  <div class="h-20 w-full shrink-0 overflow-hidden rounded-xl bg-primary-50 sm:w-28">
+    <img src="https://picsum.photos/seed/<%= booking.business.slug %>/240/240" alt="" class="h-full w-full object-cover" loading="lazy" />
+  </div>
+  <div class="min-w-0 flex-1">
+    <div class="flex items-center gap-2">
+      <p class="truncate font-bold"><%= booking.booking_items.first&.label || "Booking" %></p>
+      <span class="badge <%= booking.status_badge_class %>"><%= booking.status.humanize %></span>
+    </div>
+    <p class="mt-0.5 truncate text-sm text-ink-500"><%= booking.business.name %> · <%= booking.business.city.name %></p>
+    <p class="mt-1 text-sm font-medium"><%= booking.start_time.strftime("%d %b %Y, %H:%M") %> WIB</p>
+  </div>
+  <div class="flex shrink-0 gap-2">
+    <%= link_to "Lihat Detail", booking_path(booking.reference), class: "btn-secondary btn-sm" %>
+    <% if booking.cancellable? %>
+      <%= button_to "Batalkan", cancel_booking_path(booking), method: :patch, form: { data: { turbo_confirm: "Batalkan booking ini?" } }, class: "btn-danger btn-sm" %>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<% content_for :page_title, "Booking Saya" %>
+
+<div class="flex gap-2 overflow-x-auto scrollbar-none">
+  <%= link_to "Akan Datang", account_bookings_path, class: "chip #{'chip-active' if @tab == 'akan-datang'}" %>
+  <%= link_to "Selesai", account_bookings_path(tab: "selesai"), class: "chip #{'chip-active' if @tab == 'selesai'}" %>
+  <%= link_to "Dibatalkan", account_bookings_path(tab: "dibatalkan"), class: "chip #{'chip-active' if @tab == 'dibatalkan'}" %>
+</div>
+
+<div class="mt-5 space-y-4">
+  <% if @bookings.any? %>
+    <% @bookings.each do |booking| %>
+      <%= render "account/bookings/booking_row", booking: booking %>
+    <% end %>
+  <% else %>
+    <div class="card p-10 text-center">
+      <p class="text-3xl">🗓️</p>
+      <p class="mt-3 font-bold">Tidak ada booking di sini</p>
+      <%= link_to "Booking Sekarang", search_path, class: "btn-primary btn-md mt-4" %>
+    </div>
+  <% end %>
+</div>

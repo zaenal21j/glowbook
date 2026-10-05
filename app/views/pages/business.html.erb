@@ -1,0 +1,54 @@
+<% content_for :page_title, "Untuk Bisnis" %>
+
+<div class="max-w-3xl mx-auto text-center py-16">
+  <span class="badge badge-primary">Untuk Bisnis</span>
+  <h1 class="mt-4 text-4xl font-extrabold tracking-tight">Kelola salon & spa Anda<br class="hidden md:block"> dengan <span class="text-primary-500">GlowBook</span></h1>
+  <p class="mt-4 text-lg text-ink-500">Platform booking yang menghubungkan bisnis kecantikan & wellness Anda dengan ribuan pelanggan baru. Kalender pintar, pengingat otomatis, dan analitik lengkap.</p>
+  <div class="mt-8 flex flex-wrap justify-center gap-3">
+    <%= link_to "Daftarkan Bisnis Anda", registrasi_bisnis_path, class: "btn-primary btn-lg" %>
+    <%= link_to "Hubungi Kami", "#", class: "btn-secondary btn-lg" %>
+  </div>
+</div>
+
+<div class="grid gap-6 md:grid-cols-3 max-w-5xl mx-auto pb-20">
+  <div class="card p-6">
+    <div class="text-3xl">📅</div>
+    <h3 class="mt-3 font-bold">Kalender Pintar</h3>
+    <p class="mt-2 text-sm text-ink-500">Ketersediaan real-time per staff, istirahat, dan durasi layanan. Anti double-booking dengan jaminan database.</p>
+  </div>
+  <div class="card p-6">
+    <div class="text-3xl">📈</div>
+    <h3 class="mt-3 font-bold">Analitik Pendapatan</h3>
+    <p class="mt-2 text-sm text-ink-500">Pantau booking, pelanggan setia, dan pendapatan harian langsung dari dashboard bisnis Anda.</p>
+  </div>
+  <div class="card p-6">
+    <div class="text-3xl">⭐</div>
+    <h3 class="mt-3 font-bold">Ulasan Terverifikasi</h3>
+    <p class="mt-2 text-sm text-ink-500">Kumpulkan ulasan otomatis setelah kunjungan selesai — hanya dari pelanggan yang benar-benar datang.</p>
+  </div>
+</div>
+
+<div class="card p-8 max-w-5xl mx-auto mb-16">
+  <h3 class="text-xl font-bold text-center">Harga Transparan</h3>
+  <div class="mt-6 grid gap-6 md:grid-cols-2">
+    <div class="rounded-2xl border border-line p-6">
+      <p class="font-semibold">Gratis</p>
+      <p class="mt-1 text-3xl font-extrabold">Rp 0<span class="text-sm font-normal text-ink-400">/bulan</span></p>
+      <ul class="mt-4 space-y-2 text-sm text-ink-600">
+        <li>✓ Profil bisnis & katalog layanan</li>
+        <li>✓ Booking online tanpa batas</li>
+        <li>✓ Komisi 5% per transaksi</li>
+      </ul>
+    </div>
+    <div class="rounded-2xl border-2 border-primary-500 p-6 relative">
+      <span class="badge badge-primary absolute -top-3 right-4">Populer</span>
+      <p class="font-semibold">Pro</p>
+      <p class="mt-1 text-3xl font-extrabold">Rp 149.000<span class="text-sm font-normal text-ink-400">/bulan</span></p>
+      <ul class="mt-4 space-y-2 text-sm text-ink-600">
+        <li>✓ Semua fitur Gratis</li>
+        <li>✓ Komisi 0% — semua pendapatan milik Anda</li>
+        <li>✓ Promosi & badge prioritas</li>
+      </ul>
+    </div>
+  </div>
+</div>

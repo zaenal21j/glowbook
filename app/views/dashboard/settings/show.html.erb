@@ -1,0 +1,35 @@
+<% content_for :sidebar_links do %>
+  <%= render "dashboard/shared/sidebar" %>
+<% end %>
+<% content_for :page_title, "Pengaturan — GlowBook" %>
+
+<div class="max-w-2xl space-y-5">
+  <div class="mb-1">
+    <h1 class="text-xl font-extrabold">Pengaturan</h1>
+  </div>
+
+  <div class="card p-6">
+    <h3 class="font-semibold">Akun Bisnis</h3>
+    <div class="mt-4 space-y-3 text-sm">
+      <div class="flex justify-between border-b border-line pb-3"><span class="text-ink-500">Pemilik</span><strong><%= @business.owner.full_name %></strong></div>
+      <div class="flex justify-between border-b border-line pb-3"><span class="text-ink-500">Email</span><strong><%= @business.owner.email %></strong></div>
+      <div class="flex justify-between border-b border-line pb-3"><span class="text-ink-500">Slug halaman</span><strong class="font-mono">/b/<%= @business.slug %></strong></div>
+      <div class="flex justify-between"><span class="text-ink-500">Status</span><span class="badge badge-success"><%= @business.status.humanize %></span></div>
+    </div>
+  </div>
+
+  <div class="card p-6">
+    <h3 class="font-semibold">Preferensi Booking</h3>
+    <div class="mt-4 space-y-3 text-sm">
+      <div class="flex justify-between border-b border-line pb-3"><span class="text-ink-500">Konfirmasi otomatis</span><span class="badge badge-success">Aktif</span></div>
+      <div class="flex justify-between border-b border-line pb-3"><span class="text-ink-500">Pembatalan oleh pelanggan</span><span class="badge badge-success">Diizinkan</span></div>
+      <div class="flex justify-between"><span class="text-ink-500">Pembayaran</span><strong>Bayar di tempat (cash/QRIS)</strong></div>
+    </div>
+  </div>
+
+  <div class="card border-red-100 p-6">
+    <h3 class="font-semibold text-red-600">Zona Berbahaya</h3>
+    <p class="mt-1 text-sm text-ink-500">Menonaktifkan bisnis akan menyembunyikan halaman publis dan menghentikan booking baru.</p>
+    <p class="mt-3 text-xs text-ink-400">Hubungi tim GlowBook untuk menonaktifkan bisnis demi keamanan.</p>
+  </div>
+</div>

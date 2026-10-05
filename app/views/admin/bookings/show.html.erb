@@ -1,0 +1,32 @@
+<%= render "admin/shared/sidebar" %>
+<% content_for :page_title, "Detail Booking" %>
+
+<div class="card max-w-2xl p-6">
+  <div class="flex items-center justify-between">
+    <h2 class="font-mono text-xl font-extrabold"><%= @booking.reference %></h2>
+    <span class="badge <%= @booking.status_badge_class %>"><%= @booking.status.humanize %></span>
+  </div>
+
+  <dl class="mt-5 grid grid-cols-[130px_1fr] gap-y-3 text-sm">
+    <dt class="text-ink-500">Pelanggan</dt><dd class="font-medium"><%= @booking.user.full_name %> (<%= @booking.user.email %>)</dd>
+    <dt class="text-ink-500">Bisnis</dt><dd class="font-medium"><%= @booking.business.name %></dd>
+    <dt class="text-ink-500">Waktu</dt><dd class="font-medium"><%= format_datetime_id(@booking.start_time) %> – <%= format_time_short(@booking.end_time) %> WIB</dd>
+    <dt class="text-ink-500">Pembayaran</dt><dd class="font-medium"><%= @booking.payment_method&.humanize || "—" %></dd>
+    <dt class="text-ink-500">Total</dt><dd class="font-extrabold text-primary-600"><%= format_idr(@booking.total_amount) %></dd>
+  </dl>
+
+  <h3 class="mt-6 text-sm font-extrabold">Item</h3>
+  <div class="mt-2 divide-y divide-gray-50 rounded-xl border border-gray-100">
+    <% @booking.booking_items.each do |item| %>
+      <div class="flex items-center justify-between px-4 py-3 text-sm">
+        <div>
+          <p class="font-medium"><%= item.label %></p>
+          <p class="text-xs text-ink-500"><%= item.staff&.name || "Staff mana pun" %> · <%= item.duration_minutes %> menit</p>
+        </div>
+        <span class="font-semibold"><%= format_idr(item.price) %></span>
+      </div>
+    <% end %>
+  </div>
+
+  <%= link_to "← Kembali ke daftar", admin_bookings_path, class: "btn-secondary btn-md mt-6" %>
+</div>

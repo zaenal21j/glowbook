@@ -1,0 +1,34 @@
+<% date = @slots_date || session[:booking_flow]&.dig("date")&.then { |d| Date.parse(d) rescue nil } %>
+<h2 class="text-lg font-extrabold">Slot Tersedia</h2>
+<% if date %>
+  <p class="mt-1 text-sm text-ink-500"><%= l(date, format: "%A, %d %B %Y") rescue date.strftime("%A, %d %B %Y") %></p>
+<% end %>
+
+<%= form_with url: business_book_update_path(@business.slug, "waktu"), method: :patch do |f| %>
+  <% if @slots.any? %>
+    <div class="mt-4 grid grid-cols-3 gap-2 sm:grid-cols-4">
+      <% @slots.each do |slot| %>
+        <label class="cursor-pointer">
+          <%= f.radio_button :time, slot[:time].strftime("%Y-%m-%dT%H:%M:%S"), class: "peer sr-only" %>
+          <span class="block rounded-xl border border-gray-200 py-2.5 text-center text-sm font-bold text-ink-900 transition peer-checked:border-primary-600 peer-checked:bg-primary-600 peer-checked:text-white hover:border-primary-400">
+            <%= slot[:time].strftime("%H:%M") %>
+          </span>
+        </label>
+      <% end %>
+    </div>
+    <p class="mt-3 flex items-center gap-1.5 text-xs text-ink-500">
+      <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
+      Zona waktu: WIB (Jakarta)
+    </p>
+  <% else %>
+    <div class="card mt-4 p-10 text-center">
+      <p class="text-3xl">😌</p>
+      <p class="mt-3 font-bold">Tidak ada slot pada tanggal ini</p>
+      <p class="mt-1 text-sm text-ink-500">Coba tanggal lain atau staff berbeda.</p>
+      <%= link_to "← Ganti Tanggal", business_book_step_path(@business.slug, "tanggal"), class: "btn-secondary btn-md mt-4" %>
+    </div>
+  <% end %>
+  <div class="sticky bottom-24 mt-6 lg:bottom-6">
+    <%= f.submit "Lanjutkan", class: "btn-primary btn-lg w-full" %>
+  </div>
+<% end %>

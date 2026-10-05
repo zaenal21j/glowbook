@@ -1,0 +1,42 @@
+<%= render "admin/shared/sidebar" %>
+<% content_for :page_title, "Booking" %>
+
+<div class="flex gap-2 overflow-x-auto">
+  <%= link_to "Semua (#{@counts[:all]})", admin_bookings_path, class: "chip #{'chip-active' if params[:status].blank?}" %>
+  <%= link_to "Pending (#{@counts[:pending]})", admin_bookings_path(status: "pending"), class: "chip #{'chip-active' if params[:status] == 'pending'}" %>
+  <%= link_to "Terkonfirmasi (#{@counts[:confirmed]})", admin_bookings_path(status: "confirmed"), class: "chip #{'chip-active' if params[:status] == 'confirmed'}" %>
+  <%= link_to "Selesai (#{@counts[:completed]})", admin_bookings_path(status: "completed"), class: "chip #{'chip-active' if params[:status] == 'completed'}" %>
+  <%= link_to "Dibatalkan (#{@counts[:cancelled]})", admin_bookings_path(status: "cancelled"), class: "chip #{'chip-active' if params[:status] == 'cancelled'}" %>
+</div>
+
+<div class="card mt-5 overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-gray-100 text-left text-xs uppercase tracking-wide text-ink-500">
+        <th class="px-4 py-3">Kode</th>
+        <th class="px-4 py-3">Pelanggan</th>
+        <th class="px-4 py-3">Bisnis</th>
+        <th class="px-4 py-3">Layanan</th>
+        <th class="px-4 py-3">Waktu</th>
+        <th class="px-4 py-3">Total</th>
+        <th class="px-4 py-3">Status</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-50">
+      <% @bookings.each do |b| %>
+        <tr class="hover:bg-gray-50/60">
+          <td class="px-4 py-3 font-mono text-xs"><%= link_to b.reference, admin_booking_path(b), class: "text-primary-600 hover:underline" %></td>
+          <td class="px-4 py-3 font-medium"><%= b.user.full_name %></td>
+          <td class="px-4 py-3"><%= b.business.name %></td>
+          <td class="px-4 py-3"><%= b.booking_items.map(&:label).join(", ") %></td>
+          <td class="px-4 py-3 whitespace-nowrap"><%= b.start_time.strftime("%d %b %Y, %H:%M") %></td>
+          <td class="px-4 py-3 font-semibold"><%= format_idr(b.total_amount) %></td>
+          <td class="px-4 py-3"><span class="badge <%= b.status_badge_class %>"><%= b.status.humanize %></span></td>
+        </tr>
+      <% end %>
+      <% if @bookings.empty? %>
+        <tr><td colspan="7" class="px-4 py-10 text-center text-ink-500">Tidak ada booking.</td></tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

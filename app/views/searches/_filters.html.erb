@@ -1,0 +1,59 @@
+<%= form_with url: search_path, method: :get, local: true, data: { controller: "autosubmit" } do |f| %>
+  <div class="card sticky top-20 p-5">
+    <h3 class="font-bold">Filter</h3>
+
+    <div class="mt-4">
+      <p class="label">Kota</p>
+      <%= f.select :city, City.order(:name).pluck(:name, :slug), { include_blank: "Semua Kota", selected: params[:city] }, class: "input", data: { action: "change->autosubmit#submit" } %>
+    </div>
+
+    <div class="mt-5">
+      <p class="label">Kategori</p>
+      <div class="space-y-2">
+        <% Category.ordered.each do |c| %>
+          <label class="flex cursor-pointer items-center gap-2.5 text-sm">
+            <%= check_box_tag "categories[]", c.slug, params[:categories]&.include?(c.slug), class: "h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500", data: { action: "change->autosubmit#submit" } %>
+            <span class="text-ink-700"><%= c.name %></span>
+          </label>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="mt-5">
+      <p class="label">Rentang Harga</p>
+      <div class="flex items-center gap-2">
+        <%= f.number_field :min_price, placeholder: "Rp 0", value: params[:min_price], min: 0, step: 10000, class: "input", data: { action: "change->autosubmit#submit" } %>
+        <span class="text-ink-300">—</span>
+        <%= f.number_field :max_price, placeholder: "Rp 1.000.000+", value: params[:max_price], min: 0, step: 10000, class: "input", data: { action: "change->autosubmit#submit" } %>
+      </div>
+    </div>
+
+    <div class="mt-5">
+      <p class="label">Rating Minimum</p>
+      <div class="space-y-2">
+        <% [["4.5", "★ 4.5+"], ["4.0", "★ 4.0+"], ["3.5", "★ 3.5+"]].each do |value, label| %>
+          <label class="flex cursor-pointer items-center gap-2.5 text-sm">
+            <%= radio_button_tag "min_rating", value, params[:min_rating] == value, class: "h-4 w-4 border-gray-300 text-primary-600 focus:ring-primary-500", data: { action: "change->autosubmit#submit" } %>
+            <span class="text-ink-700"><%= label %></span>
+          </label>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="mt-5 space-y-3">
+      <label class="flex cursor-pointer items-center justify-between text-sm font-medium">
+        <span>Terdapat Hari Ini</span>
+        <%= check_box_tag "open_today", "1", params[:open_today] == "1", class: "h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500", data: { action: "change->autosubmit#submit" } %>
+      </label>
+      <label class="flex cursor-pointer items-center justify-between text-sm font-medium">
+        <span>Hanya yang Ada Promo</span>
+        <%= check_box_tag "promo", "1", params[:promo] == "1", class: "h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500", data: { action: "change->autosubmit#submit" } %>
+      </label>
+    </div>
+
+    <div class="mt-6 flex gap-2">
+      <%= f.submit "Terapkan Filter", class: "btn-primary btn-md w-full" %>
+      <%= link_to "Reset", search_path, class: "btn-secondary btn-md" %>
+    </div>
+  </div>
+<% end %>

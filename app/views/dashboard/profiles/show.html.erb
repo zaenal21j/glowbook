@@ -1,0 +1,58 @@
+<% content_for :sidebar_links do %>
+  <%= render "dashboard/shared/sidebar" %>
+<% end %>
+<% content_for :page_title, "Profil Bisnis — GlowBook" %>
+
+<div class="max-w-3xl">
+  <div class="mb-4">
+    <h1 class="text-xl font-extrabold">Profil Bisnis</h1>
+    <p class="text-sm text-ink-500">Informasi ini tampil di halaman publis bisnis Anda.</p>
+  </div>
+
+  <%= form_with model: @business, url: dashboard_profile_path, class: "card space-y-4 p-6" do |f| %>
+    <div>
+      <%= f.label :name, "Nama bisnis", class: "label" %>
+      <%= f.text_field :name, class: "input", required: true %>
+    </div>
+    <div class="grid gap-4 sm:grid-cols-2">
+      <div>
+        <%= f.label :phone, "Telepon", class: "label" %>
+        <%= f.text_field :phone, class: "input" %>
+      </div>
+      <div>
+        <%= f.label :city, "Kota", class: "label" %>
+        <%= f.text_field :city_id, value: @business.city.name, disabled: true, class: "input bg-surface-50" %>
+      </div>
+    </div>
+    <div>
+      <%= f.label :address, "Alamat lengkap", class: "label" %>
+      <%= f.text_field :address, class: "input" %>
+    </div>
+    <div>
+      <%= f.label :description, "Deskripsi bisnis", class: "label" %>
+      <%= f.text_area :description, rows: 4, class: "input", placeholder: "Ceritakan tentang bisnis Anda…" %>
+    </div>
+
+    <div class="border-t border-line pt-4">
+      <span class="label">Jam Operasional</span>
+      <div class="mt-2 space-y-2">
+        <% @business_hours.each do |h| %>
+          <div class="flex items-center gap-3 text-sm">
+            <span class="w-16 font-medium"><%= h.day_name %></span>
+            <% if h.closed? %>
+              <span class="badge badge-muted">Tutup</span>
+            <% else %>
+              <span class="text-ink-600"><%= h.open_time_string %> – <%= h.close_time_string %></span>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+      <p class="mt-2 text-xs text-ink-400">Jam operasional diatur melalui dukungan (hubungi kami untuk perubahan).</p>
+    </div>
+
+    <div class="flex gap-2 pt-2">
+      <button class="btn-primary btn-md">Simpan Perubahan</button>
+      <%= link_to "Lihat Halaman Publik", business_detail_path(@business.slug), class: "btn-ghost btn-md", target: "_blank" %>
+    </div>
+  <% end %>
+</div>

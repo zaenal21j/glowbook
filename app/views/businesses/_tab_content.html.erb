@@ -1,0 +1,103 @@
+<% case @tab %>
+<% when "tentang" %>
+  <div class="card p-6">
+    <h2 class="text-lg font-bold">Tentang <%= business.name %></h2>
+    <p class="mt-3 leading-relaxed text-ink-500"><%= business.description || "Belum ada deskripsi." %></p>
+    <div class="mt-6 grid gap-4 sm:grid-cols-2">
+      <div class="rounded-xl border border-gray-100 p-4">
+        <p class="text-sm font-bold">Layanan</p>
+        <p class="mt-1 text-sm text-ink-500"><%= business.services.active.count %> layanan tersedia</p>
+      </div>
+      <div class="rounded-xl border border-gray-100 p-4">
+        <p class="text-sm font-bold">Staff</p>
+        <p class="mt-1 text-sm text-ink-500"><%= business.staff.count %> profesional</p>
+      </div>
+    </div>
+    <% if business.business_galleries.any? %>
+      <h3 class="mt-8 font-bold">Galeri</h3>
+      <div class="mt-3 grid grid-cols-3 gap-3">
+        <% business.business_galleries.order(:position).limit(6).each do |g| %>
+          <div class="aspect-square overflow-hidden rounded-xl bg-gray-100">
+            <% if g.image.attached? %>
+              <%= image_tag g.image, class: "h-full w-full object-cover", loading: "lazy" %>
+            <% else %>
+              <img src="https://picsum.photos/seed/<%= business.slug %>-<%= g.position %>/400/400" alt="<%= g.caption %>" class="h-full w-full object-cover" loading="lazy" />
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+<% when "layanan" %>
+  <div class="space-y-3">
+    <% @services.each do |service| %>
+      <div class="card flex items-center gap-4 p-4">
+        <div class="h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-primary-50">
+          <img src="https://picsum.photos/seed/<%= business.slug %>-svc-<%= service.id %>/200/200" alt="<%= service.name %>" class="h-full w-full object-cover" loading="lazy" />
+        </div>
+        <div class="min-w-0 flex-1">
+          <p class="truncate font-bold"><%= service.name %></p>
+          <p class="mt-0.5 text-xs text-ink-500"><%= service.category.name %> · <%= format_duration(service.duration_minutes) %></p>
+        </div>
+        <div class="text-right">
+          <p class="font-bold text-primary-600"><%= format_idr(service.price) %></p>
+          <%= link_to "Pesan", business_book_path(business.slug, service_id: service.id), class: "btn-primary btn-sm mt-1.5" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+<% when "staff" %>
+  <div class="grid gap-4 sm:grid-cols-2">
+    <% @staff.each do |member| %>
+      <div class="card flex items-center gap-4 p-4">
+        <%= avatar_placeholder(member.name, size: 14) %>
+        <div>
+          <p class="font-bold"><%= member.name %></p>
+          <p class="text-sm text-ink-500"><%= member.display_title %></p>
+          <p class="mt-1 text-xs text-ink-500"><%= member.services.distinct.count %> layanan · <%= member.works_on?(Date.current.wday) ? "Bekerja hari ini" : "Libur hari ini" %></p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+<% when "ulasan" %>
+  <div class="space-y-4">
+    <% if user_signed_in? && !business.reviews.exists?(user: current_user) %>
+      <div class="card p-4">
+        <%= link_to "Tulis Ulasan", new_review_path(business_id: business.id), class: "btn-primary btn-md w-full" %>
+      </div>
+    <% end %>
+    <% @reviews.each do |review| %>
+      <div class="card p-5">
+        <div class="flex items-center gap-3">
+          <%= avatar_placeholder(review.user.full_name, size: 10) %>
+          <div class="min-w-0 flex-1">
+            <p class="truncate text-sm font-bold"><%= review.user.full_name %></p>
+            <p class="text-xs text-ink-500"><%= l(review.created_at, format: "%d %B %Y") rescue review.created_at.strftime("%d %B %Y") %></p>
+          </div>
+          <span class="text-sm text-amber-400"><%= review.stars %></span>
+        </div>
+        <% if review.comment.present? %>
+          <p class="mt-3 text-sm leading-relaxed text-ink-700"><%= review.comment %></p>
+        <% end %>
+      </div>
+    <% end %>
+    <% if @reviews.empty? %>
+      <div class="card p-10 text-center text-sm text-ink-500">Belum ada ulasan.</div>
+    <% end %>
+  </div>
+
+<% when "lokasi" %>
+  <div class="card overflow-hidden">
+    <div class="relative h-72 bg-gray-100">
+      <iframe class="h-full w-full border-0" loading="lazy" src="https://www.openstreetmap.org/export/embed.html?bbox=<%= (business.longitude.to_f - 0.008) %>%2C<%= (business.latitude.to_f - 0.006) %>%2C<%= (business.longitude.to_f + 0.008) %>%2C<%= (business.latitude.to_f + 0.006) %>&amp;layer=mapnik&amp;marker=<%= business.latitude %>%2C<%= business.longitude %>"></iframe>
+    </div>
+    <div class="p-5">
+      <p class="font-bold">Alamat</p>
+      <p class="mt-1 text-sm text-ink-500"><%= business.address %>, <%= business.city.name %></p>
+      <a href="https://www.openstreetmap.org/?mlat=<%= business.latitude %>&amp;mlon=<%= business.longitude %>#map=16/<%= business.latitude %>/<%= business.longitude %>" target="_blank" rel="noopener" class="btn-secondary btn-md mt-4 w-full">Buka di OpenStreetMap</a>
+    </div>
+  </div>
+<% end %>

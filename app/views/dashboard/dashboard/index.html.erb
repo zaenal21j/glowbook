@@ -1,0 +1,55 @@
+<%= render "dashboard/shared/sidebar" %>
+<% content_for :page_title, "Dashboard Bisnis" %>
+
+<div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+  <div class="card p-5">
+    <p class="text-sm text-ink-500">Booking Hari Ini</p>
+    <p class="mt-1 text-3xl font-extrabold"><%= @today_count %></p>
+  </div>
+  <div class="card p-5">
+    <p class="text-sm text-ink-500">Minggu Ini</p>
+    <p class="mt-1 text-3xl font-extrabold"><%= @week_count %></p>
+  </div>
+  <div class="card p-5">
+    <p class="text-sm text-ink-500">Pendapatan Bulan Ini</p>
+    <p class="mt-1 text-3xl font-extrabold text-primary-600"><%= format_idr(@revenue_month) %></p>
+  </div>
+  <div class="card p-5">
+    <p class="text-sm text-ink-500">Rating Bisnis</p>
+    <p class="mt-1 text-3xl font-extrabold">⭐ <%= @rating || "—" %></p>
+  </div>
+</div>
+
+<section class="mt-8">
+  <div class="flex items-center justify-between">
+    <h2 class="text-lg font-extrabold">Booking Terdekat</h2>
+    <%= link_to "Kalender →", dashboard_calendar_path, class: "text-sm font-semibold text-primary-600" %>
+  </div>
+  <div class="card mt-4 overflow-x-auto">
+    <table class="w-full text-sm">
+      <thead>
+        <tr class="border-b border-gray-100 text-left text-xs uppercase tracking-wide text-ink-500">
+          <th class="px-4 py-3">Pelanggan</th>
+          <th class="px-4 py-3">Layanan</th>
+          <th class="px-4 py-3">Staff</th>
+          <th class="px-4 py-3">Waktu</th>
+          <th class="px-4 py-3">Status</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-50">
+        <% @upcoming.each do |booking| %>
+          <tr>
+            <td class="px-4 py-3 font-medium"><%= booking.user.full_name %></td>
+            <td class="px-4 py-3"><%= booking.booking_items.map(&:label).join(", ") %></td>
+            <td class="px-4 py-3"><%= booking.booking_items.first&.staff&.name || "—" %></td>
+            <td class="px-4 py-3 whitespace-nowrap"><%= booking.start_time.strftime("%d %b, %H:%M") %></td>
+            <td class="px-4 py-3"><span class="badge <%= booking.status_badge_class %>"><%= booking.status.humanize %></span></td>
+          </tr>
+        <% end %>
+        <% if @upcoming.empty? %>
+          <tr><td colspan="5" class="px-4 py-10 text-center text-ink-500">Belum ada booking mendatang.</td></tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</section>

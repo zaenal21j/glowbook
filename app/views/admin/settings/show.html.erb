@@ -1,0 +1,30 @@
+<%= render "admin/shared/sidebar" %>
+<% content_for :page_title, "Pengaturan" %>
+
+<div class="max-w-2xl space-y-5">
+  <div class="card p-6">
+    <h3 class="font-semibold">Identitas Platform</h3>
+    <div class="mt-4 space-y-3 text-sm">
+      <div class="flex justify-between border-b border-line pb-3"><span class="text-ink-500">Nama</span><strong>GlowBook</strong></div>
+      <div class="flex justify-between border-b border-line pb-3"><span class="text-ink-500">Domain</span><strong>glowbook.id</strong></div>
+      <div class="flex justify-between"><span class="text-ink-500">Bahasa / Mata Uang</span><strong>Indonesia / IDR</strong></div>
+    </div>
+  </div>
+
+  <div class="card p-6">
+    <h3 class="font-semibold">Komisi & Pembayaran</h3>
+    <div class="mt-4 space-y-3 text-sm">
+      <div class="flex justify-between border-b border-line pb-3"><span class="text-ink-500">Komisi platform</span><strong>5% per booking</strong></div>
+      <div class="flex justify-between"><span class="text-ink-500">Metode pembayaran</span><strong>Bayar di tempat (cash/QRIS)</strong></div>
+    </div>
+  </div>
+
+  <div class="card p-6">
+    <h3 class="font-semibold">Status Sistem</h3>
+    <div class="mt-4 space-y-3 text-sm">
+      <div class="flex justify-between border-b border-line pb-3"><span class="text-ink-500">Mode pendaftaran bisnis</span><span class="badge badge-success">Terbuka</span></div>
+      <div class="flex justify-between"><span class="text-ink-500">Versi aplikasi</span><strong class="font-mono">v1.0.0</strong></div>
+    </div>
+    <p class="mt-4 text-xs text-ink-400">Pengaturan dinamis (editable dari database) direncanakan untuk rilis berikutnya.</p>
+  </div>
+</div>

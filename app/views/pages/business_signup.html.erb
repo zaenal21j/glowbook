@@ -1,0 +1,29 @@
+<% content_for :page_title, "Daftarkan Bisnis Anda" %>
+
+<div class="max-w-lg mx-auto py-16 px-4">
+  <div class="card p-8">
+    <h1 class="text-2xl font-extrabold">Daftarkan Bisnis Anda</h1>
+    <p class="mt-2 text-sm text-ink-500">Lengkapi data berikut — tim GlowBook akan menghubungi Anda untuk verifikasi.</p>
+
+    <%= form_with url: "#", class: "mt-6 space-y-4" do |f| %>
+      <div>
+        <%= f.label :business_name, "Nama bisnis", class: "label" %>
+        <%= f.text_field :business_name, class: "input", placeholder: "Contoh: Bellezza Hair Studio" %>
+      </div>
+      <div>
+        <%= f.label :owner_name, "Nama pemilik", class: "label" %>
+        <%= f.text_field :owner_name, class: "input" %>
+      </div>
+      <div>
+        <%= f.label :phone, "Nomor WhatsApp", class: "label" %>
+        <%= f.text_field :phone, class: "input", placeholder: "0812xxxxxxx" %>
+      </div>
+      <div>
+        <%= f.label :city, "Kota", class: "label" %>
+        <%= f.select :city, %w[Jakarta Bandung Surabaya Bali Yogyakarta Medan], {}, class: "input" %>
+      </div>
+      <button class="btn-primary btn-md w-full" type="button" onclick="alert('Formulir pendaftaran bisnis akan aktif setelah integrasi backend. Hubungi partnerships@glowbook.id untuk sementara.')">Kirim Permintaan</button>
+    <% end %>
+  </div>
+  <p class="mt-4 text-center text-sm text-ink-500">Sudah punya akun bisnis? <%= link_to "Masuk di sini", login_path, class: "text-primary-600 font-semibold hover:underline" %></p>
+</div>

@@ -1,0 +1,74 @@
+<header class="sticky top-0 z-40 border-b border-gray-100 bg-white/95 backdrop-blur">
+  <div class="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 lg:px-8">
+    <%= link_to root_path, class: "flex items-center gap-2 shrink-0" do %>
+      <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-primary-600 text-white">
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c.6 3.2-1.8 5.4-3.6 7C6 10.9 4.5 13 4.5 15.5A7.5 7.5 0 0 0 12 23a7.5 7.5 0 0 0 7.5-7.5c0-3.4-2.3-5.4-4-7.2C13.7 6.4 12.4 4.4 12 2Zm0 19a4 4 0 0 1-4-4c0-1.6 1-2.8 2.3-4 1-.9 2-2 2.7-3.3.9 1.3 2 2.4 3 3.5 1 1.1 2 2.3 2 3.8a4 4 0 0 1-4 4Z"/></svg>
+      </span>
+      <span class="text-lg font-extrabold tracking-tight text-ink-900">Glow<span class="text-primary-600">Book</span></span>
+    <% end %>
+
+    <nav class="hidden items-center gap-1 lg:flex">
+      <div class="relative" data-controller="dropdown">
+        <button type="button" class="btn-ghost btn-md" data-action="dropdown#toggle">
+          Layanan
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg>
+        </button>
+        <div data-dropdown-target="menu" class="absolute left-0 top-full mt-2 hidden w-64 rounded-2xl border border-gray-100 bg-white p-2 shadow-xl">
+          <% Category.order(:position).limit(10).each do |c| %>
+            <%= link_to c.name, category_path(c.slug), class: "block rounded-xl px-4 py-2.5 text-sm font-medium text-ink-700 hover:bg-primary-50 hover:text-primary-700" %>
+          <% end %>
+        </div>
+      </div>
+      <div class="relative" data-controller="dropdown">
+        <button type="button" class="btn-ghost btn-md" data-action="dropdown#toggle">
+          Kota
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg>
+        </button>
+        <div data-dropdown-target="menu" class="absolute left-0 top-full mt-2 hidden w-56 rounded-2xl border border-gray-100 bg-white p-2 shadow-xl">
+          <% City.order(:name).each do |city| %>
+            <%= link_to city.name, city_path(city.slug), class: "block rounded-xl px-4 py-2.5 text-sm font-medium text-ink-700 hover:bg-primary-50 hover:text-primary-700" %>
+          <% end %>
+        </div>
+      </div>
+      <%= link_to "Untuk Bisnis", for_business_path, class: "btn-ghost btn-md" %>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <% if user_signed_in? %>
+        <div class="relative" data-controller="dropdown">
+          <button type="button" data-action="dropdown#toggle" class="flex items-center gap-2 rounded-full border border-gray-200 py-1 pl-1 pr-3 hover:border-primary-400 transition">
+            <span class="flex h-8 w-8 items-center justify-center rounded-full bg-primary-600 text-sm font-bold text-white"><%= current_user.initial %></span>
+            <span class="hidden max-w-28 truncate text-sm font-semibold sm:block"><%= current_user.full_name %></span>
+          </button>
+          <div data-dropdown-target="menu" class="absolute right-0 top-full mt-2 hidden w-60 rounded-2xl border border-gray-100 bg-white p-2 shadow-xl">
+            <% if current_user.admin? %>
+              <%= link_to "Dashboard Admin", admin_root_path, class: "block rounded-xl px-4 py-2.5 text-sm font-medium text-ink-700 hover:bg-primary-50" %>
+            <% end %>
+            <% if current_user.business_owner? %>
+              <%= link_to "Dashboard Bisnis", dashboard_root_path, class: "block rounded-xl px-4 py-2.5 text-sm font-medium text-ink-700 hover:bg-primary-50" %>
+            <% end %>
+            <%= link_to "Dashboard Saya", account_root_path, class: "block rounded-xl px-4 py-2.5 text-sm font-medium text-ink-700 hover:bg-primary-50" %>
+            <%= link_to "Profil", account_profile_path, class: "block rounded-xl px-4 py-2.5 text-sm font-medium text-ink-700 hover:bg-primary-50" %>
+            <hr class="my-2 border-gray-100">
+            <%= button_to "Keluar", logout_path, method: :delete, class: "block w-full rounded-xl px-4 py-2.5 text-left text-sm font-medium text-red-600 hover:bg-red-50" %>
+          </div>
+        </div>
+      <% else %>
+        <%= link_to "Masuk", login_path, class: "btn-ghost btn-md" %>
+        <%= link_to "Daftar", signup_path, class: "btn-primary btn-md" %>
+      <% end %>
+      <button type="button" class="btn-ghost btn-md lg:hidden" data-controller="mobile-menu" data-action="mobile-menu#toggle" aria-label="Menu">
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+      </button>
+    </div>
+  </div>
+  <div data-mobile-menu-target="menu" class="hidden border-t border-gray-100 bg-white px-4 py-3 lg:hidden">
+    <div class="grid gap-1">
+      <% Category.order(:position).limit(10).each do |c| %>
+        <%= link_to c.name, category_path(c.slug), class: "rounded-xl px-3 py-2.5 text-sm font-medium text-ink-700 hover:bg-primary-50" %>
+      <% end %>
+      <hr class="my-2 border-gray-100">
+      <%= link_to "Untuk Bisnis", for_business_path, class: "rounded-xl px-3 py-2.5 text-sm font-medium text-ink-700 hover:bg-primary-50" %>
+    </div>
+  </div>
+</header>

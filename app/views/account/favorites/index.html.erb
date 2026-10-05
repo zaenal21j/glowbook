@@ -1,0 +1,16 @@
+<% content_for :page_title, "Favorit" %>
+
+<% if @businesses.any? %>
+  <div class="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+    <% @businesses.each do |business| %>
+      <%= render "shared/business_card", business: business %>
+    <% end %>
+  </div>
+<% else %>
+  <div class="card p-10 text-center">
+    <p class="text-3xl">❤️</p>
+    <p class="mt-3 font-bold">Belum ada favorit</p>
+    <p class="mt-1 text-sm text-ink-500">Simpan salon favoritmu dengan menekan tombol hati.</p>
+    <%= link_to "Temukan Salon", search_path, class: "btn-primary btn-md mt-4" %>
+  </div>
+<% end %>

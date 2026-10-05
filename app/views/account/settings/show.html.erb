@@ -1,0 +1,30 @@
+<% content_for :page_title, "Pengaturan" %>
+
+<div class="max-w-xl space-y-6">
+  <div class="card p-6">
+    <h2 class="font-extrabold">Ubah Kata Sandi</h2>
+    <p class="mt-1 text-sm text-ink-500">Untuk keamanan, gunakan kata sandi yang kuat.</p>
+    <div class="mt-4">
+      <%= link_to "Kirim tautan reset kata sandi", new_password_path(:user), class: "btn-secondary btn-md" %>
+    </div>
+  </div>
+
+  <div class="card p-6">
+    <h2 class="font-extrabold">Akun</h2>
+    <div class="mt-4 space-y-3 text-sm">
+      <div class="flex items-center justify-between">
+        <span class="text-ink-500">Email</span>
+        <span class="font-medium"><%= current_user.email %></span>
+      </div>
+      <div class="flex items-center justify-between">
+        <span class="text-ink-500">Metode masuk</span>
+        <span class="badge <%= current_user.provider == 'facebook' ? 'badge-pink' : 'badge-gray' %>"><%= current_user.provider == "facebook" ? "Facebook" : "Email" %></span>
+      </div>
+      <div class="flex items-center justify-between">
+        <span class="text-ink-500">Peran</span>
+        <span class="badge badge-gray"><%= current_user.role.humanize %></span>
+      </div>
+    </div>
+    <%= button_to "Keluar dari akun", logout_path, method: :delete, class: "btn-danger btn-md mt-6 w-full" %>
+  </div>
+</div>

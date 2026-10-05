@@ -1,0 +1,34 @@
+<%= render "admin/shared/sidebar" %>
+<% content_for :page_title, "Kategori" %>
+
+<div class="grid gap-6 lg:grid-cols-[1fr_340px]">
+  <div>
+    <div class="card overflow-x-auto p-0">
+      <table class="w-full text-sm">
+        <thead class="border-b border-line bg-surface-50 text-left text-xs uppercase tracking-wide text-ink-400">
+          <tr><th class="p-3">Kategori</th><th class="p-3">Slug</th><th class="p-3">Layanan</th><th class="p-3">Bisnis</th><th class="p-3"></th></tr>
+        </thead>
+        <tbody>
+          <% @categories.each do |c| %>
+            <tr class="border-b border-line last:border-0">
+              <td class="p-3 font-medium"><%= c.name %></td>
+              <td class="p-3 font-mono text-xs text-ink-500"><%= c.slug %></td>
+              <td class="p-3"><%= c.services.count %></td>
+              <td class="p-3"><%= c.businesses_count.to_i %></td>
+              <td class="p-3 text-right whitespace-nowrap">
+                <%= link_to "Edit", edit_admin_category_path(c), class: "text-xs font-semibold text-primary-600 hover:underline" %>
+                <%= button_to "Hapus", admin_category_path(c), method: :delete, form: { data: { turbo_confirm: "Hapus kategori ini?" } }, class: "ml-3 text-xs text-red-500 hover:underline" %>
+              </td>
+            </tr>
+          <% end %>
+          <% if @categories.empty? %><tr><td colspan="5" class="p-8 text-center text-ink-500">Belum ada kategori.</td></tr><% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card h-fit p-5">
+    <h3 class="font-semibold">Kategori Baru</h3>
+    <%= render "form", category: Category.new, url: admin_categories_path %>
+  </div>
+</div>

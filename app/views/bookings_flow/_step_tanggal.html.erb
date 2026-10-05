@@ -1,0 +1,51 @@
+<h2 class="text-lg font-extrabold">Pilih Tanggal &amp; Waktu</h2>
+<p class="mt-1 text-sm text-ink-500">Durasi total: <strong><%= format_duration(@business.services.active.where(id: @selected_service_ids).sum(:duration_minutes)) %></strong></p>
+
+<%= form_with url: business_book_update_path(@business.slug, "tanggal"), method: :patch do |f| %>
+  <div class="card mt-4 p-5">
+    <div class="flex items-center justify-between">
+      <div class="text-center">
+        <p class="font-extrabold"><%= l(@month, format: "%B %Y") rescue @month.strftime("%B %Y") %></p>
+      </div>
+      <div class="flex gap-2">
+        <% prev_month = @month - 1.month %>
+        <% next_month = @month + 1.month %>
+        <% if prev_month.end_of_month >= Date.current %>
+          <%= link_to "‹", business_book_step_path(@business.slug, "tanggal", date: prev_month.strftime("%Y-%m-01")), class: "btn-secondary btn-sm px-3", aria: { label: "Bulan sebelumnya" } %>
+        <% end %>
+        <% if next_month.end_of_month <= Date.current + 60.days %>
+          <%= link_to "›", business_book_step_path(@business.slug, "tanggal", date: next_month.strftime("%Y-%m-01")), class: "btn-secondary btn-sm px-3", aria: { label: "Bulan berikutnya" } %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="mt-4 grid grid-cols-7 gap-1 text-center text-xs font-semibold text-ink-500">
+      <% %w[Sen Sel Rab Kam Jum Sab Min].each do |d| %>
+        <span class="py-1"><%= d %></span>
+      <% end %>
+    </div>
+    <div class="mt-1 grid grid-cols-7 gap-1">
+      <% @calendar_days.flatten.each do |day| %>
+        <% if day.nil? %>
+          <span></span>
+        <% else %>
+          <% past = day < Date.current %>
+          <% too_far = day > Date.current + 60.days %>
+          <% disabled = past || too_far %>
+          <%= button_tag type: "submit", disabled: disabled, data: { date_pick: day.strftime("%Y-%m-%d") },
+                class: "aspect-square rounded-full text-sm font-semibold transition #{'text-ink-300' if disabled} #{'bg-primary-600 text-white hover:bg-primary-700' if !disabled} #{'hover:bg-primary-50 hover:text-primary-700' if !disabled}" do %>
+            <%= day.day %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+    <input type="hidden" name="date" value="" id="picked-date" />
+    <script>
+      document.querySelectorAll("[data-date-pick]").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          document.getElementById("picked-date").value = this.getAttribute("data-date-pick");
+        });
+      });
+    </script>
+  </div>
+<% end %>

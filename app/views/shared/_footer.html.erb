@@ -1,0 +1,42 @@
+<footer class="hidden border-t border-gray-100 bg-gray-50/60 lg:block">
+  <div class="mx-auto max-w-7xl px-4 py-12 lg:px-8">
+    <div class="grid grid-cols-2 gap-8 md:grid-cols-4">
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-primary-600 text-white">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c.6 3.2-1.8 5.4-3.6 7C6 10.9 4.5 13 4.5 15.5A7.5 7.5 0 0 0 12 23a7.5 7.5 0 0 0 7.5-7.5c0-3.4-2.3-5.4-4-7.2C13.7 6.4 12.4 4.4 12 2Z"/></svg>
+          </span>
+          <span class="text-lg font-extrabold text-ink-900">Glow<span class="text-primary-600">Book</span></span>
+        </div>
+        <p class="mt-3 text-sm text-ink-500">Booking salon, spa, dan barber terbaik di Indonesia. Cepat, aman, dan tepat.</p>
+      </div>
+      <div>
+        <h4 class="text-sm font-bold text-ink-900">Kategori</h4>
+        <ul class="mt-3 space-y-2 text-sm text-ink-500">
+          <% Category.order(:position).limit(5).each do |c| %>
+            <li><%= link_to c.name, category_path(c.slug), class: "hover:text-primary-600" %></li>
+          <% end %>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-sm font-bold text-ink-900">Kota</h4>
+        <ul class="mt-3 space-y-2 text-sm text-ink-500">
+          <% City.order(:name).limit(5).each do |city| %>
+            <li><%= link_to city.name, city_path(city.slug), class: "hover:text-primary-600" %></li>
+          <% end %>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-sm font-bold text-ink-900">GlowBook</h4>
+        <ul class="mt-3 space-y-2 text-sm text-ink-500">
+          <li><%= link_to "Untuk Bisnis", for_business_path, class: "hover:text-primary-600" %></li>
+          <li><%= link_to "Masuk", login_path, class: "hover:text-primary-600" %></li>
+          <li><%= link_to "Daftar", signup_path, class: "hover:text-primary-600" %></li>
+        </ul>
+      </div>
+    </div>
+    <div class="mt-10 border-t border-gray-200/70 pt-6 text-xs text-ink-500">
+      &copy; <%= Time.current.year %> GlowBook. Demo marketplace — semua bisnis &amp; ulasan fiktif.
+    </div>
+  </div>
+</footer>

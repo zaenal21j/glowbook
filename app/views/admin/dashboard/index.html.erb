@@ -1,0 +1,123 @@
+<%= render "admin/shared/sidebar" %>
+<% content_for :page_title, "Dashboard Admin" %>
+
+<div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+  <div class="card p-5">
+    <p class="text-sm text-ink-500">Total Pengguna</p>
+    <p class="mt-1 text-3xl font-extrabold"><%= @total_users %></p>
+    <p class="mt-1 text-xs text-ink-400"><%= @total_customers %> pelanggan</p>
+  </div>
+  <div class="card p-5">
+    <p class="text-sm text-ink-500">Total Bisnis</p>
+    <p class="mt-1 text-3xl font-extrabold"><%= @total_businesses %></p>
+    <p class="mt-1 text-xs text-ink-400"><%= @active_businesses %> aktif · <%= @pending_businesses %> menunggu</p>
+  </div>
+  <div class="card p-5">
+    <p class="text-sm text-ink-500">Total Booking</p>
+    <p class="mt-1 text-3xl font-extrabold"><%= @total_bookings %></p>
+    <p class="mt-1 text-xs text-ink-400"><%= @bookings_this_month %> bulan ini</p>
+  </div>
+  <div class="card p-5">
+    <p class="text-sm text-ink-500">Pendapatan Platform</p>
+    <p class="mt-1 text-3xl font-extrabold text-primary-600"><%= format_idr(@total_revenue) %></p>
+  </div>
+</div>
+
+<!-- Booking / revenue chart (last 30 days) -->
+<section class="mt-8">
+  <div class="flex items-center justify-between">
+    <h2 class="text-lg font-extrabold">Booking 30 Hari Terakhir</h2>
+    <%= link_to "Laporan Lengkap →", admin_reports_path, class: "text-sm font-semibold text-primary-600" %>
+  </div>
+  <div class="card mt-4 p-5">
+    <div class="flex h-48 items-end gap-1" data-chart="bookings">
+      <% @chart_bookings.each do |date, count| %>
+        <% pct = @chart.max_count.positive? ? (count.to_f / @chart.max_count * 100).round : 0 %>
+        <div class="group relative flex h-full flex-1 flex-col justify-end" title="<%= date.strftime('%d %b') %>: <%= count %> booking">
+          <div class="w-full rounded-t bg-primary-500/85 transition group-hover:bg-primary-600" style="height: <%= [pct, count.positive? ? 6 : 2].max %>%"></div>
+        </div>
+      <% end %>
+    </div>
+    <div class="mt-2 flex justify-between text-xs text-ink-400">
+      <span><%= 29.days.ago.strftime("%d %b") %></span>
+      <span>Puncak: <%= @chart.max_count %> booking/hari</span>
+      <span>Hari ini</span>
+    </div>
+  </div>
+  <div class="card mt-4 p-5">
+    <h3 class="text-sm font-extrabold text-ink-700">Pendapatan Harian (30 hari)</h3>
+    <div class="mt-3 flex h-32 items-end gap-1" data-chart="revenue">
+      <% @chart_revenue.each do |date, amount| %>
+        <% pct = @chart.max_revenue.positive? ? (amount.to_f / @chart.max_revenue * 100).round : 0 %>
+        <div class="group relative flex h-full flex-1 flex-col justify-end" title="<%= date.strftime('%d %b') %>: <%= format_idr(amount) %>">
+          <div class="w-full rounded-t bg-ink-800/80 transition group-hover:bg-ink-900" style="height: <%= [pct, amount.positive? ? 6 : 2].max %>%"></div>
+        </div>
+      <% end %>
+    </div>
+    <div class="mt-2 flex justify-between text-xs text-ink-400">
+      <span><%= 29.days.ago.strftime("%d %b") %></span>
+      <span>Puncak: <%= format_idr(@chart.max_revenue) %>/hari</span>
+      <span>Hari ini</span>
+    </div>
+  </div>
+</section>
+
+<div class="mt-8 grid gap-6 xl:grid-cols-3">
+  <section class="xl:col-span-2">
+    <h2 class="text-lg font-extrabold">Booking Terbaru</h2>
+    <div class="card mt-4 overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-gray-100 text-left text-xs uppercase tracking-wide text-ink-500">
+            <th class="px-4 py-3">Kode</th>
+            <th class="px-4 py-3">Pelanggan</th>
+            <th class="px-4 py-3">Bisnis</th>
+            <th class="px-4 py-3">Waktu</th>
+            <th class="px-4 py-3">Total</th>
+            <th class="px-4 py-3">Status</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-50">
+          <% @recent_bookings.each do |b| %>
+            <tr class="hover:bg-gray-50/60">
+              <td class="px-4 py-3 font-mono text-xs"><%= link_to b.reference, admin_booking_path(b), class: "text-primary-600 hover:underline" %></td>
+              <td class="px-4 py-3 font-medium"><%= b.user.full_name %></td>
+              <td class="px-4 py-3"><%= b.business.name %></td>
+              <td class="px-4 py-3 whitespace-nowrap"><%= b.start_time.strftime("%d %b %Y, %H:%M") %></td>
+              <td class="px-4 py-3 font-semibold"><%= format_idr(b.total_amount) %></td>
+              <td class="px-4 py-3"><span class="badge <%= b.status_badge_class %>"><%= b.status.humanize %></span></td>
+            </tr>
+          <% end %>
+          <% if @recent_bookings.empty? %>
+            <tr><td colspan="6" class="px-4 py-10 text-center text-ink-500">Belum ada booking.</td></tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="text-lg font-extrabold">Bisnis Terbaik</h2>
+    <div class="card mt-4 divide-y divide-gray-50">
+      <% @top_businesses.each do |b| %>
+        <div class="flex items-center justify-between px-4 py-3">
+          <div>
+            <%= link_to b.name, admin_business_path(b), class: "text-sm font-semibold hover:text-primary-600" %>
+            <p class="text-xs text-ink-500"><%= b.city.name %></p>
+          </div>
+          <span class="badge badge-green">⭐ <%= b.rating_label %></span>
+        </div>
+      <% end %>
+      <% if @top_businesses.empty? %>
+        <p class="px-4 py-8 text-center text-sm text-ink-500">Belum ada data.</p>
+      <% end %>
+    </div>
+
+    <h2 class="mt-6 text-lg font-extrabold">Kategori Populer</h2>
+    <div class="mt-4 flex flex-wrap gap-2">
+      <% @popular_categories.each do |c| %>
+        <span class="chip chip-active"><%= c.name %></span>
+      <% end %>
+    </div>
+  </section>
+</div>

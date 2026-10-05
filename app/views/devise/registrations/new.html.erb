@@ -1,0 +1,47 @@
+<% content_for :title, "Daftar — GlowBook" %>
+
+<div class="mx-auto flex max-w-md flex-col px-4 py-12">
+  <div class="text-center">
+    <h1 class="text-2xl font-extrabold">Buat akun baru</h1>
+    <p class="mt-2 text-sm text-ink-500">Gratis — booking salon &amp; spa favoritmu dalam hitungan detik.</p>
+  </div>
+
+  <div class="card mt-8 p-6 sm:p-8">
+    <%= form_with model: resource, as: resource_name, url: registration_path(resource_name), class: "space-y-4" do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+      <div>
+        <%= f.label :name, "Nama Lengkap", class: "label" %>
+        <%= f.text_field :name, autofocus: true, class: "input", placeholder: "Nama kamu" %>
+      </div>
+      <div>
+        <%= f.label :email, "Email", class: "label" %>
+        <%= f.email_field :email, autocomplete: "email", class: "input", placeholder: "nama@email.com" %>
+      </div>
+      <div>
+        <%= f.label :phone, "Nomor Telepon", class: "label" %>
+        <%= f.telephone_field :phone, class: "input", placeholder: "081234567890" %>
+      </div>
+      <div>
+        <%= f.label :password, "Kata Sandi", class: "label" %>
+        <%= f.password_field :password, autocomplete: "new-password", class: "input", placeholder: "Minimal 6 karakter" %>
+      </div>
+      <%= f.submit "Daftar", class: "btn-primary btn-lg w-full" %>
+    <% end %>
+
+    <div class="my-6 flex items-center gap-3">
+      <div class="h-px flex-1 bg-gray-200"></div>
+      <span class="text-xs text-ink-500">atau</span>
+      <div class="h-px flex-1 bg-gray-200"></div>
+    </div>
+
+    <%= button_to user_facebook_omniauth_authorize_path, data: { turbo: false }, class: "btn-secondary btn-lg w-full gap-2.5" do %>
+      <svg class="h-5 w-5" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.09 10.13 24v-8.44H7.08v-3.49h3.04V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.5c-1.5 0-1.96.93-1.96 1.89v2.26h3.32l-.53 3.49h-2.8V24C19.62 23.09 24 18.1 24 12.07Z"/></svg>
+      Lanjut dengan Facebook
+    <% end %>
+
+    <p class="mt-6 text-center text-sm text-ink-500">
+      Sudah punya akun?
+      <%= link_to "Masuk", login_path, class: "font-semibold text-primary-600 hover:text-primary-700" %>
+    </p>
+  </div>
+</div>
