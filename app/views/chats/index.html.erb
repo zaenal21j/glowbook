@@ -1,0 +1,35 @@
+<% content_for :title, params[:audience] == "business" ? "Pesan Bisnis — GlowBook" : "Pesan Saya — GlowBook" %>
+
+<div class="mx-auto max-w-3xl px-4 py-8 lg:px-8">
+  <div class="mb-5">
+    <h1 class="text-2xl font-extrabold"><%= params[:audience] == "business" ? "Pesan Bisnis" : "Pesan Saya" %></h1>
+    <p class="mt-1 text-sm text-ink-500">Percakapan dengan pelanggan dan bisnis tersimpan di sini.</p>
+  </div>
+
+  <% if @conversations.any? %>
+    <div class="space-y-3">
+      <% @conversations.each do |conversation| %>
+        <% other_party = params[:audience] == "business" ? conversation.customer.full_name : conversation.business.name %>
+        <%= link_to chat_path(conversation), class: "card flex items-center gap-4 p-4 transition hover:border-primary-200 hover:shadow-sm" do %>
+          <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary-50 font-bold text-primary-700"><%= other_party.first.upcase %></div>
+          <div class="min-w-0 flex-1">
+            <p class="truncate font-bold"><%= other_party %></p>
+            <p class="truncate text-xs text-ink-500"><%= conversation.last_message_at ? l(conversation.last_message_at, format: "%d %b %Y, %H:%M") : "Percakapan baru" %></p>
+          </div>
+          <% unread_count = @unread_counts[conversation.id].to_i %>
+          <% if unread_count.positive? %>
+            <span class="badge badge-primary"><%= unread_count %> baru</span>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="card p-10 text-center">
+      <p class="font-semibold">Belum ada percakapan.</p>
+      <p class="mt-1 text-sm text-ink-500"><%= params[:audience] == "business" ? "Pesan dari pelanggan akan muncul di sini." : "Buka halaman bisnis untuk memulai percakapan." %></p>
+      <% if params[:audience] != "business" %>
+        <%= link_to "Cari bisnis", search_path, class: "btn-primary btn-md mt-4" %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

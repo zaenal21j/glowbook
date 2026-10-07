@@ -2,16 +2,21 @@ class BookingsController < ApplicationController
   before_action :set_booking, only: %i[show cancel reschedule update_schedule]
   before_action :authorize_owner!, only: %i[show cancel reschedule update_schedule]
 
-  def show; end
+  def show
+    @latest_payment_attempt = @booking.payment_attempts.latest_first.first
+  end
 
   def cancel
     @booking.cancel!
+    BookingNotificationDelivery.new(booking: @booking, event: :cancellation).call
     redirect_to booking_path(@booking.reference), notice: "Booking berhasil dibatalkan."
   rescue ActiveRecord::RecordInvalid
     redirect_to booking_path(@booking.reference), alert: "Booking tidak dapat dibatalkan."
   end
 
   def reschedule
+    return redirect_to booking_path(@booking.reference), alert: "Booking ini tidak lagi dapat diubah jadwal." unless @booking.reschedulable?
+
     @month = (@booking.start_time.to_date.beginning_of_month)
     @calendar_days = build_calendar(@month)
     @slots = []
@@ -30,27 +35,31 @@ class BookingsController < ApplicationController
   end
 
   def update_schedule
+    return redirect_to booking_path(@booking.reference), alert: "Booking ini tidak lagi dapat diubah jadwal." unless @booking.reschedulable?
+
     date = Date.parse(params[:date]) rescue nil
     time = Time.zone.parse(params[:time]) rescue nil
     if date.nil? || time.nil?
       return redirect_to reschedule_booking_path(@booking), alert: "Pilih tanggal dan waktu baru."
     end
 
-    ok = Booking.transaction do
+    @booking.with_lock do
+      raise ActiveRecord::RecordInvalid, @booking unless @booking.reschedulable?
+
       @booking.booking_items.update_all(during: nil, updated_at: Time.current)
       new_end = time + @booking.duration_minutes.minutes
       @booking.update!(start_time: time, end_time: new_end)
       @booking.booking_items.each do |item|
-        item.update!(during: [time, new_end])
+        item.update!(during: [ time, new_end ])
       end
-      true
     end
 
-    if ok
-      redirect_to booking_path(@booking.reference), notice: "Jadwal booking berhasil diubah."
-    end
+    BookingNotificationDelivery.new(booking: @booking, event: :reschedule).call
+    redirect_to booking_path(@booking.reference), notice: "Jadwal booking berhasil diubah."
   rescue ActiveRecord::RecordNotUnique
     redirect_to reschedule_booking_path(@booking), alert: "Jadwal baru saja diambil orang lain. Pilih waktu lain."
+  rescue ActiveRecord::RecordInvalid
+    redirect_to booking_path(@booking.reference), alert: "Booking ini tidak lagi dapat diubah jadwal."
   end
 
   private

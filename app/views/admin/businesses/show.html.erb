@@ -8,7 +8,14 @@
       <p class="text-sm text-ink-500"><%= @business.address %>, <%= @business.city.name %></p>
       <p class="text-sm text-ink-500">Pemilik: <%= @business.owner.full_name %> · 📞 <%= @business.phone %></p>
     </div>
-    <span class="badge <%= @business.active? ? 'badge-green' : 'badge-amber' %>"><%= @business.status.humanize %></span>
+    <div class="flex items-center gap-3">
+      <span class="badge <%= @business.active? ? 'badge-green' : (@business.pending? ? 'badge-amber' : 'badge-red') %>"><%= @business.status.humanize %></span>
+      <% if @business.pending? %>
+        <%= button_to "Setujui & Aktifkan", activate_admin_business_path(@business), method: :patch,
+                      form: { data: { turbo_confirm: "Publikasikan #{@business.name} di marketplace?" } },
+                      class: "btn-primary btn-sm" %>
+      <% end %>
+    </div>
   </div>
 </div>
 

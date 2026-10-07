@@ -10,16 +10,17 @@
 
 <div class="grid gap-4 md:grid-cols-4">
   <div class="card p-5">
-    <p class="text-sm text-ink-500">Pendapatan Bulan Ini</p>
-    <p class="mt-1 text-2xl font-bold"><%= number_to_currency(@revenue_month, unit: "Rp ", delimiter: ".", precision: 0) %></p>
+    <p class="text-sm text-ink-500">Nilai Booking Selesai Bulan Ini</p>
+    <p class="mt-1 text-2xl font-bold"><%= number_to_currency(@completed_value_month, unit: "Rp ", delimiter: ".", precision: 0) %></p>
+    <p class="mt-1 text-xs text-ink-400">Nilai layanan, bukan konfirmasi pembayaran diterima.</p>
   </div>
   <div class="card p-5">
     <p class="text-sm text-ink-500">Booking Bulan Ini</p>
     <p class="mt-1 text-2xl font-bold"><%= @bookings_month %></p>
   </div>
   <div class="card p-5">
-    <p class="text-sm text-ink-500">Pelanggan Aktif</p>
-    <p class="mt-1 text-2xl font-bold"><%= @customers.respond_to?(:length) ? @customers.length : @business.customers.count %></p>
+    <p class="text-sm text-ink-500">Pelanggan Baru Bulan Ini</p>
+    <p class="mt-1 text-2xl font-bold"><%= @new_customers %></p>
   </div>
   <div class="card p-5">
     <p class="text-sm text-ink-500">Rating Rata-rata</p>
@@ -28,16 +29,17 @@
 </div>
 
 <div class="card mt-5 p-5">
-  <h3 class="font-semibold">Pendapatan 30 Hari Terakhir</h3>
+  <h3 class="font-semibold">Nilai Booking Selesai 30 Hari Terakhir</h3>
+  <p class="mt-1 text-xs text-ink-400">Booking no-show tidak dihitung. Angka ini belum memverifikasi pembayaran.</p>
   <div class="mt-4 flex h-44 items-end gap-[3px]">
-    <% max = [@daily.values.max.to_f, 1].max %>
-    <% @daily.each do |date, amount| %>
+    <% max = [@daily_completed_values.values.max.to_f, 1].max %>
+    <% @daily_completed_values.each do |date, amount| %>
       <div class="flex-1 rounded-t bg-primary-400 hover:bg-primary-600 transition" style="height: <%= [(amount / max * 100).round, 2].max %>%" title="<%= date.strftime("%d %b") %>: <%= number_to_currency(amount, unit: "Rp ", delimiter: ".", precision: 0) %>"></div>
     <% end %>
   </div>
   <div class="mt-1 flex justify-between text-xs text-ink-400">
-    <span><%= @daily.keys.first.strftime("%d %b") %></span>
-    <span><%= @daily.keys.last.strftime("%d %b") %></span>
+    <span><%= @daily_completed_values.keys.first.strftime("%d %b") %></span>
+    <span><%= @daily_completed_values.keys.last.strftime("%d %b") %></span>
   </div>
 </div>
 

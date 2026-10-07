@@ -1,0 +1,7 @@
+<ul>
+  <li>Bisnis: <%= @booking.business.name %></li>
+  <li>Layanan: <%= @booking.booking_items.map(&:label).join(", ") %></li>
+  <li>Tanggal: <%= I18n.l(@booking.start_time, format: "%A, %d %B %Y") %></li>
+  <li>Waktu: <%= @booking.start_time.strftime("%H:%M") %>–<%= @booking.end_time.strftime("%H:%M") %> WIB</li>
+  <li>Status: <%= @booking.status.humanize %></li>
+</ul>

@@ -2,11 +2,7 @@ class Admin::CategoriesController < Admin::BaseController
   before_action :set_category, only: %i[edit update destroy toggle_popular]
 
   def index
-    @categories = Category.ordered
-                          .left_joins(:businesses)
-                          .select("categories.*, COUNT(DISTINCT business_categories.business_id) AS businesses_count")
-                          .group("categories.id")
-    @category = Category.new
+    load_categories
   end
 
   def create
@@ -16,7 +12,7 @@ class Admin::CategoriesController < Admin::BaseController
     if @category.save
       redirect_to admin_categories_path, notice: "Kategori \"#{@category.name}\" dibuat."
     else
-      @categories = Category.ordered
+      load_categories(category: @category)
       render :index, status: :unprocessable_entity
     end
   end
@@ -49,6 +45,16 @@ class Admin::CategoriesController < Admin::BaseController
 
   def set_category
     @category = Category.find(params[:id])
+  end
+
+  def load_categories(category: nil)
+    scope = Category.ordered
+                    .left_joins(:businesses)
+                    .select("categories.*, COUNT(DISTINCT business_categories.business_id) AS businesses_count")
+                    .group("categories.id")
+    total_count = scope.except(:select, :group, :order).distinct.count(:id)
+    @categories = paginate(scope, total_count: total_count)
+    @category = category || Category.new
   end
 
   def category_params

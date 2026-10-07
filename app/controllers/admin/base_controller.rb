@@ -1,4 +1,6 @@
 class Admin::BaseController < ApplicationController
+  include Paginatable
+
   layout "dashboard"
 
   before_action :require_admin!

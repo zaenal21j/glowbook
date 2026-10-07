@@ -16,6 +16,7 @@ class Business < ApplicationRecord
   has_many :favorites, dependent: :destroy
   has_many :promotions, dependent: :destroy
   has_many :business_galleries, dependent: :destroy
+  has_many :conversations, dependent: :destroy
   has_many :customers, -> { distinct }, through: :bookings, source: :user
 
   accepts_nested_attributes_for :business_hours, allow_destroy: true,

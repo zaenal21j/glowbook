@@ -17,7 +17,13 @@ test:
   database: glowbook_test
 
 production:
-  <<: *default
-  database: glowbook_production
-  username: glowbook
-  password: <%= ENV["GLOWBOOK_DATABASE_PASSWORD"] %>
+  primary: &primary_production
+    <<: *default
+    database: glowbook_production
+    username: glowbook
+    password: <%= ENV["GLOWBOOK_DATABASE_PASSWORD"] %>
+    seeds: false
+  queue:
+    <<: *primary_production
+    database: glowbook_production_queue
+    migrations_paths: db/queue_migrate

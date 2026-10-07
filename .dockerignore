@@ -1,0 +1,10 @@
+.git
+.freebuff
+.env*
+config/master.key
+config/credentials/*.key
+log/*
+tmp/*
+storage/*
+db/*.sql
+coverage

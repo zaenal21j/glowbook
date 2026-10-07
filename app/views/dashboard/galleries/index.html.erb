@@ -1,0 +1,55 @@
+<% content_for :sidebar_links do %>
+  <%= render "dashboard/shared/sidebar" %>
+<% end %>
+<% content_for :page_title, "Galeri Bisnis — GlowBook" %>
+
+<div class="max-w-5xl space-y-6">
+  <div>
+    <h1 class="text-xl font-extrabold">Galeri Bisnis</h1>
+    <p class="text-sm text-ink-500">Unggah maksimal 6 foto JPG, PNG, atau WebP. Ukuran setiap foto maksimal 10 MB.</p>
+  </div>
+
+  <% if @gallery.errors.any? %>
+    <div class="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+      <ul class="list-inside list-disc">
+        <% @gallery.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if @galleries.size < Dashboard::GalleriesController::MAX_IMAGES %>
+    <%= form_with model: @gallery, url: dashboard_galleries_path, class: "card grid gap-4 p-5 sm:grid-cols-[1fr_1fr_auto] sm:items-end", multipart: true do |f| %>
+      <div>
+        <%= f.label :image, "Pilih foto", class: "label" %>
+        <%= f.file_field :image, accept: "image/jpeg,image/png,image/webp", required: true, class: "input", direct_upload: true %>
+      </div>
+      <div>
+        <%= f.label :caption, "Keterangan (opsional)", class: "label" %>
+        <%= f.text_field :caption, maxlength: 255, class: "input", placeholder: "Contoh: Ruang perawatan" %>
+      </div>
+      <%= f.submit "Unggah Foto", class: "btn-primary btn-md" %>
+    <% end %>
+  <% end %>
+
+  <% if @galleries.any? %>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <% @galleries.each do |gallery| %>
+        <article class="card overflow-hidden">
+          <% if gallery.image.attached? %>
+            <%= image_tag gallery.image, class: "aspect-square w-full object-cover", loading: "lazy", alt: gallery.caption.presence || "Foto galeri #{@business.name}" %>
+          <% end %>
+          <div class="flex items-center justify-between gap-3 p-3">
+            <p class="truncate text-sm text-ink-600"><%= gallery.caption.presence || "Foto galeri" %></p>
+            <%= button_to "Hapus", dashboard_gallery_path(gallery), method: :delete,
+                          form: { data: { turbo_confirm: "Hapus foto ini dari galeri?" } },
+                          class: "btn-danger btn-sm shrink-0" %>
+          </div>
+        </article>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="card p-10 text-center text-sm text-ink-500">Belum ada foto. Unggah foto pertama bisnis Anda.</div>
+  <% end %>
+</div>

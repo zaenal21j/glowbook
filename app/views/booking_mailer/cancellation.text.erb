@@ -1,0 +1,6 @@
+Booking dibatalkan
+
+Booking <%= @booking.reference %> telah dibatalkan.
+Bisnis: <%= @booking.business.name %>
+Tanggal: <%= I18n.l(@booking.start_time, format: "%A, %d %B %Y") %>
+Waktu: <%= @booking.start_time.strftime("%H:%M") %>–<%= @booking.end_time.strftime("%H:%M") %> WIB

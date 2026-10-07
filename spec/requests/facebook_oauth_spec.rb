@@ -14,11 +14,13 @@ RSpec.describe "Facebook OAuth", type: :request do
     OmniAuth.config.mock_auth[:facebook] = auth_hash
     # Request specs memakai rack-test (tanpa session Rails asli);
     # matikan CSRF proteksi OmniAuth di lingkungan test.
-    OmniAuth.config.allowed_request_methods = [:get, :post]
+    OmniAuth.config.allowed_request_methods = [ :get, :post ]
   end
 
   after do
     OmniAuth.config.test_mode = false
+    OmniAuth.config.mock_auth.delete(:facebook)
+    OmniAuth.config.allowed_request_methods = [ :post ]
   end
 
   it "creates a new user on first login" do
@@ -30,7 +32,7 @@ RSpec.describe "Facebook OAuth", type: :request do
     expect(user).to be_present
     expect(user.email).to eq("fb-user@example.com")
     expect(user.role).to eq("customer")
-    expect([302, 303]).to include(response.status)
+    expect([ 302, 303 ]).to include(response.status)
   end
 
   it "signs in the same user on subsequent logins" do

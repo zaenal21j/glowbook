@@ -4,6 +4,8 @@ class PagesController < ApplicationController
   end
 
   def business_signup
-    # Daftarkan bisnis — landing; pendaftaran penuh menyusul
+    @cities = City.ordered
+    @categories = Category.ordered
+    @business = Business.new
   end
 end

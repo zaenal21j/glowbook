@@ -50,6 +50,12 @@
         <dt class="font-bold">Total</dt>
         <dd class="font-extrabold text-primary-600"><%= format_idr(@booking.total_amount) %></dd>
       </div>
+    <% if @booking.payment_method == "online_transfer" %>
+      <div class="flex justify-between text-sm">
+        <dt class="text-ink-500">Status pembayaran</dt>
+        <dd class="font-semibold"><%= @latest_payment_attempt&.paid? ? "Lunas" : @latest_payment_attempt&.status&.humanize || "Belum dibayar" %></dd>
+      </div>
+    <% end %>
     </dl>
 
     <% if @booking.cancellable? %>
@@ -57,6 +63,9 @@
         <%= button_to "Batalkan", cancel_booking_path(@booking), method: :patch, form: { data: { turbo_confirm: "Batalkan booking ini?" } }, class: "btn-danger btn-md" %>
         <%= link_to "Ubah Jadwal", reschedule_booking_path(@booking), class: "btn-secondary btn-md" %>
       </div>
+    <% end %>
+    <% if @booking.confirmed? && @booking.payment_method == "online_transfer" && Rails.configuration.x.midtrans_enabled && !@latest_payment_attempt&.paid? %>
+      <%= button_to(@latest_payment_attempt&.redirect_url.present? ? "Lanjutkan Pembayaran" : "Bayar Online", booking_payment_path(@booking.reference), method: :post, class: "btn-primary btn-md mt-4 w-full") %>
     <% end %>
   </div>
 

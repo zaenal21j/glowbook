@@ -48,11 +48,11 @@
           <p class="text-xs text-ink-500">Tunai atau QRIS saat kedatangan</p>
         </div>
       </label>
-      <label class="flex cursor-pointer items-center gap-3 rounded-xl border border-gray-200 p-3.5 has-[:checked]:border-primary-500">
-        <%= f.radio_button :payment_method, "online_transfer", class: "h-4 w-4 border-gray-300 text-primary-600" %>
+      <label class="flex cursor-pointer items-center gap-3 rounded-xl border border-gray-200 p-3.5 <%= 'opacity-50' unless Rails.configuration.x.midtrans_enabled %>">
+        <%= f.radio_button :payment_method, "online_transfer", class: "h-4 w-4 border-gray-300 text-primary-600", disabled: !Rails.configuration.x.midtrans_enabled || @total <= 0 %>
         <div class="flex-1">
           <p class="text-sm font-bold">Pembayaran online</p>
-          <p class="text-xs text-ink-500">(Segera tersedia)</p>
+          <p class="text-xs text-ink-500"><%= @total <= 0 ? "Hanya tersedia untuk total di atas Rp0" : Rails.configuration.x.midtrans_enabled ? "Checkout aman via Midtrans Sandbox" : "Belum dikonfigurasi" %></p>
         </div>
       </label>
     </div>

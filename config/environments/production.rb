@@ -1,4 +1,5 @@
 require "active_support/core_ext/integer/time"
+require "uri"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -31,7 +32,7 @@ Rails.application.configure do
   config.force_ssl = true
 
   # Skip http-to-https redirect for the default health check endpoint.
-  # config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }
+  config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }
 
   # Log to STDOUT with the current request id as a default log tag.
   config.log_tags = [ :request_id ]
@@ -50,27 +51,46 @@ Rails.application.configure do
   # config.cache_store = :mem_cache_store
 
   # Replace the default in-process and non-durable queuing backend for Active Job.
-  # config.active_job.queue_adapter = :resque
+  config.active_job.queue_adapter = :solid_queue
+  config.solid_queue.connects_to = { database: { writing: :queue } }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
 
   # Set host to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: "example.com" }
+  app_uri = URI(Rails.configuration.x.app_host)
+  config.hosts << app_uri.host
+  config.hosts.concat(%w[localhost 127.0.0.1])
+  config.action_mailer.default_url_options = {
+    host: app_uri.host,
+    protocol: app_uri.scheme,
+    port: app_uri.port == app_uri.default_port ? nil : app_uri.port
+  }.compact
 
   # Specify outgoing SMTP server. Remember to add smtp/* credentials via bin/rails credentials:edit.
-  # config.action_mailer.smtp_settings = {
-  #   user_name: Rails.application.credentials.dig(:smtp, :user_name),
-  #   password: Rails.application.credentials.dig(:smtp, :password),
-  #   address: "smtp.example.com",
-  #   port: 587,
-  #   authentication: :plain
-  # }
+  if ENV["SMTP_ADDRESS"].present?
+    config.action_mailer.delivery_method = :smtp
+    smtp_settings = {
+      address: ENV.fetch("SMTP_ADDRESS"),
+      port: ENV.fetch("SMTP_PORT", 587).to_i,
+      enable_starttls: true
+    }
+    if ENV["SMTP_USERNAME"].present?
+      smtp_settings.merge!(
+        user_name: ENV.fetch("SMTP_USERNAME"),
+        password: ENV.fetch("SMTP_PASSWORD"),
+        authentication: :plain
+      )
+    end
+    config.action_mailer.smtp_settings = smtp_settings
+  else
+    config.action_mailer.perform_deliveries = false
+  end
 
-  # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
-  # the I18n.default_locale when a translation cannot be found).
-  config.i18n.fallbacks = true
+  # Keep production fallback behavior aligned with the Indonesian default
+  # locale and use English when a framework translation is missing.
+  config.i18n.fallbacks = [:en]
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false

@@ -1,0 +1,15 @@
+<% if @total_pages && @total_pages > 1 %>
+  <nav class="mt-5 flex flex-wrap items-center justify-between gap-3" aria-label="Navigasi halaman">
+    <p class="text-sm text-ink-500">
+      Halaman <%= @page %> dari <%= @total_pages %> · <%= @total_count %> data
+    </p>
+    <div class="flex items-center gap-2">
+      <% if @page > 1 %>
+        <%= link_to "Sebelumnya", url_for(request.query_parameters.merge(page: @page - 1)), class: "btn-secondary btn-sm" %>
+      <% end %>
+      <% if @page < @total_pages %>
+        <%= link_to "Berikutnya", url_for(request.query_parameters.merge(page: @page + 1)), class: "btn-secondary btn-sm" %>
+      <% end %>
+    </div>
+  </nav>
+<% end %>

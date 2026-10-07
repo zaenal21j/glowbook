@@ -1,11 +1,11 @@
 class Admin::PromotionsController < Admin::BaseController
   def index
     scope = case params[:state]
-            when "active" then Promotion.active_now
-            when "inactive" then Promotion.where(active: false)
-            else Promotion.all
-            end
-    @promotions = scope.includes(:business).order(created_at: :desc).limit(200)
+    when "active" then Promotion.active_now
+    when "inactive" then Promotion.where(active: false)
+    else Promotion.all
+    end
+    @promotions = paginate(scope.includes(:business).order(created_at: :desc))
   end
 
   def destroy

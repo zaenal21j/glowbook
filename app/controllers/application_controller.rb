@@ -8,6 +8,14 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  def after_sign_in_path_for(resource)
+    return stored_location_for(resource) || admin_root_path if resource.admin?
+    return stored_location_for(resource) || dashboard_root_path if resource.business_owner? && resource.businesses.exists?
+    return stored_location_for(resource) || dashboard_root_path if resource.staff_member&.active?
+
+    stored_location_for(resource) || account_root_path
+  end
+
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :phone])
     devise_parameter_sanitizer.permit(:account_update, keys: [:name, :phone, :remote_avatar_url])

@@ -1,18 +1,20 @@
 class Dashboard::AnalyticsController < Dashboard::BaseController
   def show
-    @revenue_month = @business.bookings.past.where("start_time >= ?", Date.current.beginning_of_month).sum(:total_amount)
+    completed_bookings = @business.bookings.completed
+    @completed_value_month = completed_bookings.where("start_time >= ?", Date.current.beginning_of_month).sum(:total_amount)
     @bookings_month = @business.bookings.where("start_time >= ?", Date.current.beginning_of_month).count
-    @new_customers = @business.customers.where("bookings.start_time >= ?", Date.current.beginning_of_month).limit(100).count
+    @new_customers = @business.customers.where("bookings.start_time >= ?", Date.current.beginning_of_month).count
     @rating = @business.avg_rating
 
-    # Pendapatan harian 30 hari terakhir (fill gap manual)
+    # Nilai booking selesai 30 hari terakhir (fill gap manual)
     from = 29.days.ago.to_date
-    raw = @business.bookings.unscope(:order)
-                   .where(status: %w[completed no_show])
-                   .where(start_time: from.beginning_of_day..Date.current.end_of_day)
-                   .group("DATE(bookings.start_time)")
-                   .sum(:total_amount)
-    @daily = (from..Date.current).index_with { |d| raw[d.to_s].to_f + raw[d].to_f }
+    raw_completed_values = completed_bookings.unscope(:order)
+                                            .where(start_time: from.beginning_of_day..Date.current.end_of_day)
+                                            .group("DATE(bookings.start_time)")
+                                            .sum(:total_amount)
+    @daily_completed_values = (from..Date.current).index_with do |date|
+      raw_completed_values[date.to_s].to_f + raw_completed_values[date].to_f
+    end
 
     # Layanan terpopuler bulan ini
     @top_services = BookingItem.joins(:booking)

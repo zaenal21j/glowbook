@@ -5,7 +5,7 @@ class Admin::ReportsController < Admin::BaseController
     month_end = month_start.end_of_month
 
     month_scope = Booking.where(start_time: month_start.beginning_of_day..month_end.end_of_day)
-                         .where(status: %w[pending confirmed completed])
+                         .where(status: :completed)
 
     @kpi_bookings = month_scope.count
     @kpi_revenue = month_scope.sum(:total_amount)

@@ -6,7 +6,7 @@ class Admin::DashboardController < Admin::BaseController
     @active_businesses = Business.active.count
     @total_bookings = Booking.count
     @bookings_this_month = Booking.in_month(Time.current.beginning_of_month).count
-    @total_revenue = Booking.past.sum(:total_amount) + Booking.where(status: %w[pending confirmed]).where("start_time < ?", Time.current).sum(:total_amount)
+    @total_revenue = Booking.completed.sum(:total_amount)
     @pending_businesses = Business.pending.count
 
     @recent_bookings = Booking.includes(:user, :business, booking_items: [:service]).order(created_at: :desc).limit(8)

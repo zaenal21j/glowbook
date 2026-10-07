@@ -10,7 +10,6 @@
   </div>
   <p class="text-sm text-ink-500">Rata-rata: <strong class="text-amber-500">⭐ <%= @avg_rating || "—" %></strong></p>
 </div>
-
 <div class="mt-5 space-y-3">
   <% @reviews.each do |r| %>
     <div class="card flex items-start justify-between gap-4 p-4">
@@ -26,3 +25,4 @@
     <div class="card p-10 text-center text-ink-500">Tidak ada ulasan.</div>
   <% end %>
 </div>
+<%= render "admin/shared/pagination" %>

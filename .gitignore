@@ -6,6 +6,7 @@
 # Ignore all environment files (except templates).
 /.env*
 !/.env*.erb
+!/.env.production.example
 
 # Ignore all logfiles and tempfiles.
 /log/*
@@ -25,6 +26,10 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+/config/credentials/*.key
+
+# Keep local database exports out of source control; they may contain real user data.
+/db/*.sql
 
 # Freebuff workspace tooling & logs
 /.freebuff/

@@ -1,0 +1,4 @@
+<h1>Booking berhasil dikonfirmasi</h1>
+<%= render "booking_mailer/booking_details" %>
+<p>Silakan datang sesuai jadwal. Tunjukkan kode booking ini kepada pihak bisnis.</p>
+<p><%= link_to "Lihat detail booking", booking_url(@booking.reference) %></p>

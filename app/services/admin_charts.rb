@@ -1,4 +1,4 @@
-# Aggregates booking counts and revenue per day for the admin chart.
+# Aggregates booking counts and completed booking value per day for the admin chart.
 # Fills missing days with zeros so the bar chart stays continuous.
 class AdminCharts
   def initialize(scope_date:)
@@ -16,7 +16,7 @@ class AdminCharts
   def daily_revenue
     @daily_revenue ||= begin
       raw = Booking.where(start_time: range_start..range_end)
-                   .where(status: %w[pending confirmed completed])
+                   .where(status: :completed)
                    .group("date(start_time AT TIME ZONE 'Asia/Jakarta')")
                    .sum(:total_amount)
       fill(raw)

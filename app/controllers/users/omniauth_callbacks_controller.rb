@@ -1,6 +1,9 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def facebook
-    @user = User.from_facebook(request.env["omniauth.auth"])
+    auth = request.env["omniauth.auth"]
+    return redirect_to login_path, alert: "Login Facebook dibatalkan atau gagal." unless auth
+
+    @user = User.from_facebook(auth)
 
     if @user.persisted?
       sign_in_and_redirect @user, event: :authentication

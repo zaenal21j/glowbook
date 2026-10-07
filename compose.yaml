@@ -1,0 +1,75 @@
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: glowbook_production
+      POSTGRES_USER: glowbook
+      POSTGRES_PASSWORD: ${GLOWBOOK_DATABASE_PASSWORD:?Set GLOWBOOK_DATABASE_PASSWORD in .env.production}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U glowbook -d glowbook_production"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  web:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:${GLOWBOOK_PORT:-3001}:3000"
+    environment:
+      APP_HOST: ${APP_HOST:?Set APP_HOST to the public HTTPS URL}
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE:?Set SECRET_KEY_BASE in .env.production}
+      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY-}
+      GLOWBOOK_DATABASE_PASSWORD: ${GLOWBOOK_DATABASE_PASSWORD:?Set GLOWBOOK_DATABASE_PASSWORD in .env.production}
+      PGHOST: db
+      RAILS_SERVE_STATIC_FILES: "1"
+      RAILS_MAX_THREADS: ${RAILS_MAX_THREADS:-5}
+      RAILS_LOG_LEVEL: ${RAILS_LOG_LEVEL:-info}
+      MAILER_FROM: ${MAILER_FROM:?Set MAILER_FROM in .env.production}
+      SMTP_ADDRESS: ${SMTP_ADDRESS:?Set SMTP_ADDRESS in .env.production}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USERNAME: ${SMTP_USERNAME-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD-}
+      FACEBOOK_APP_ID: ${FACEBOOK_APP_ID-}
+      FACEBOOK_APP_SECRET: ${FACEBOOK_APP_SECRET-}
+    volumes:
+      - storage_data:/rails/storage
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:3000/up || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+  worker:
+    build: .
+    restart: unless-stopped
+    command: ["./bin/jobs"]
+    depends_on:
+      web:
+        condition: service_healthy
+    environment:
+      APP_HOST: ${APP_HOST:?Set APP_HOST to the public HTTPS URL}
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE:?Set SECRET_KEY_BASE in .env.production}
+      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY-}
+      GLOWBOOK_DATABASE_PASSWORD: ${GLOWBOOK_DATABASE_PASSWORD:?Set GLOWBOOK_DATABASE_PASSWORD in .env.production}
+      PGHOST: db
+      RAILS_MAX_THREADS: ${RAILS_MAX_THREADS:-5}
+      RAILS_LOG_LEVEL: ${RAILS_LOG_LEVEL:-info}
+      MAILER_FROM: ${MAILER_FROM:?Set MAILER_FROM in .env.production}
+      SMTP_ADDRESS: ${SMTP_ADDRESS:?Set SMTP_ADDRESS in .env.production}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USERNAME: ${SMTP_USERNAME-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD-}
+      JOB_CONCURRENCY: ${JOB_CONCURRENCY:-1}
+
+volumes:
+  postgres_data:
+  storage_data:

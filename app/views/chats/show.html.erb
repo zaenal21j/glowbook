@@ -1,0 +1,47 @@
+<% other_party = @conversation.customer_id == current_user.id ? @conversation.business.name : @conversation.customer.full_name %>
+<% content_for :title, "Chat dengan #{other_party} — GlowBook" %>
+
+<div class="mx-auto max-w-3xl px-4 py-8 lg:px-8">
+  <div class="mb-4 flex items-center justify-between gap-3">
+    <div>
+      <h1 class="text-xl font-extrabold"><%= other_party %></h1>
+      <p class="text-sm text-ink-500"><%= @conversation.business.name %></p>
+    </div>
+    <%= link_to "Kembali", current_user.id == @conversation.customer_id ? account_chats_path : dashboard_chats_path, class: "btn-secondary btn-sm" %>
+  </div>
+
+  <div class="card p-4 sm:p-6">
+    <% if @message.errors.any? %>
+      <div class="mb-4 rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700"><%= @message.errors.full_messages.to_sentence %></div>
+    <% end %>
+
+    <div class="max-h-[60vh] min-h-64 space-y-3 overflow-y-auto" data-controller="chat"
+         data-chat-url-value="<%= chat_messages_feed_path(@conversation) %>"
+         data-chat-after-id-value="<%= @last_message_id %>">
+      <div data-chat-target="messages" class="space-y-3">
+        <% @messages.each do |message| %>
+          <% mine = message.sender_id == current_user.id %>
+          <div id="chat-message-<%= message.id %>" class="flex <%= mine ? 'justify-end' : 'justify-start' %>">
+            <article class="max-w-[85%] rounded-2xl <%= mine ? 'bg-primary-600 text-white' : 'bg-gray-100 text-ink-900' %> p-3 text-sm">
+              <p class="mb-1 text-xs font-semibold <%= mine ? 'text-white/80' : 'text-ink-500' %>"><%= mine ? "Anda" : message.sender.full_name %></p>
+              <p class="whitespace-pre-wrap break-words"><%= message.body %></p>
+              <time class="mt-1 block text-right text-[10px] <%= mine ? 'text-white/70' : 'text-ink-400' %>" datetime="<%= message.created_at.iso8601 %>"><%= l(message.created_at, format: "%d %b %Y, %H:%M") %></time>
+            </article>
+          </div>
+        <% end %>
+      </div>
+      <% if @messages.empty? %>
+        <p class="py-8 text-center text-sm text-ink-500" data-chat-target="emptyState">Mulai percakapan dengan mengirim pesan.</p>
+      <% end %>
+    </div>
+
+    <%= form_with model: @message, scope: :chat_message, url: chat_messages_path(@conversation), class: "mt-5 border-t border-line pt-4" do |f| %>
+      <%= f.label :body, "Pesan", class: "sr-only" %>
+      <div class="flex items-end gap-3">
+        <%= f.text_area :body, rows: 2, maxlength: 2_000, required: true, placeholder: "Tulis pesan…", class: "input min-h-14 flex-1 resize-y" %>
+        <%= f.submit "Kirim", class: "btn-primary btn-md" %>
+      </div>
+      <p class="mt-2 text-xs text-ink-400">Maksimal 2.000 karakter. Pesan baru diperbarui otomatis.</p>
+    <% end %>
+  </div>
+</div>

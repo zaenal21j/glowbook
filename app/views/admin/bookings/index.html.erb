@@ -8,7 +8,6 @@
   <%= link_to "Selesai (#{@counts[:completed]})", admin_bookings_path(status: "completed"), class: "chip #{'chip-active' if params[:status] == 'completed'}" %>
   <%= link_to "Dibatalkan (#{@counts[:cancelled]})", admin_bookings_path(status: "cancelled"), class: "chip #{'chip-active' if params[:status] == 'cancelled'}" %>
 </div>
-
 <div class="card mt-5 overflow-x-auto">
   <table class="w-full text-sm">
     <thead>
@@ -40,3 +39,4 @@
     </tbody>
   </table>
 </div>
+<%= render "admin/shared/pagination" %>

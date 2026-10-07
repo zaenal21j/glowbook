@@ -16,12 +16,15 @@ module Glowbook
     # Set default locale & timezone for Indonesian marketplace
     config.i18n.default_locale = :id
     config.i18n.available_locales = %i[id en]
+    config.i18n.fallbacks = [:en]
     config.time_zone = "Jakarta"
     config.active_record.default_timezone = :utc
 
     # Devise: allow routing via OmniAuth
     config.x.facebook_enabled = ENV["FACEBOOK_APP_ID"].present?
     config.x.app_host = ENV.fetch("APP_HOST", "http://localhost:3000")
+    config.x.midtrans_server_key = ENV["MIDTRANS_SERVER_KEY"]
+    config.x.midtrans_enabled = config.x.midtrans_server_key.present?
 
     # Allow access by IP in development (localhost is default)
     config.hosts << "127.0.0.1" if Rails.env.development?

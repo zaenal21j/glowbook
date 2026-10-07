@@ -1,0 +1,4 @@
+<h1>Booking dibatalkan</h1>
+<p>Booking <strong><%= @booking.reference %></strong> telah dibatalkan.</p>
+<%= render "booking_mailer/booking_details" %>
+<p>Jika pembatalan ini tidak sesuai, silakan hubungi <%= @booking.business.name %>.</p>

@@ -1,26 +1,53 @@
-// Add a service worker for processing Web Push notifications:
-//
-// self.addEventListener("push", async (event) => {
-//   const { title, options } = await event.data.json()
-//   event.waitUntil(self.registration.showNotification(title, options))
-// })
-//
-// self.addEventListener("notificationclick", function(event) {
-//   event.notification.close()
-//   event.waitUntil(
-//     clients.matchAll({ type: "window" }).then((clientList) => {
-//       for (let i = 0; i < clientList.length; i++) {
-//         let client = clientList[i]
-//         let clientPath = (new URL(client.url)).pathname
-//
-//         if (clientPath == event.notification.data.path && "focus" in client) {
-//           return client.focus()
-//         }
-//       }
-//
-//       if (clients.openWindow) {
-//         return clients.openWindow(event.notification.data.path)
-//       }
-//     })
-//   )
-// })
+const CACHE_PREFIX = "glowbook-static-"
+const CACHE_NAME = `${CACHE_PREFIX}v1`
+const FALLBACK_PAGE = "/offline.html"
+const PRECACHE_URLS = [FALLBACK_PAGE, "/icon.png", "/icon.svg"]
+
+self.addEventListener("install", (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then((cache) => cache.addAll(PRECACHE_URLS))
+      .then(() => self.skipWaiting())
+  )
+})
+
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    caches.keys()
+      .then((keys) => Promise.all(keys
+        .filter((key) => key.startsWith(CACHE_PREFIX) && key !== CACHE_NAME)
+        .map((key) => caches.delete(key))))
+      .then(() => self.clients.claim())
+  )
+})
+
+self.addEventListener("fetch", (event) => {
+  const request = event.request
+  const url = new URL(request.url)
+
+  if (request.method !== "GET" || url.origin !== self.location.origin) return
+
+  if (request.mode === "navigate") {
+    event.respondWith(fetch(request).catch(() => caches.match(FALLBACK_PAGE)))
+    return
+  }
+
+  const isStaticAsset = url.pathname.startsWith("/assets/") || ["/icon.png", "/icon.svg"].includes(url.pathname)
+  if (!isStaticAsset) return
+
+  event.respondWith(
+    fetch(request).then((response) => {
+      if (response.ok && response.type === "basic") {
+        const copy = response.clone()
+        return caches.open(CACHE_NAME)
+          .then((cache) => cache.put(request, copy))
+          .catch(() => undefined)
+          .then(() => response)
+      }
+      return response
+    }).catch(async () => {
+      const cached = await caches.match(request)
+      return cached || Response.error()
+    })
+  )
+})

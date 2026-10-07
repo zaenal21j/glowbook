@@ -53,6 +53,11 @@
           <% end %>
         <% end %>
         <%= link_to "Pesan Sekarang", business_book_path(@business.slug), class: "btn-primary btn-md" %>
+        <% if user_signed_in? && @business.owner_id != current_user.id && !@business.staff.exists?(user_id: current_user.id) %>
+          <%= button_to "Chat", business_chat_path(@business.slug), method: :post, class: "btn-secondary btn-md" %>
+        <% elsif !user_signed_in? %>
+          <%= link_to "Chat", login_path, class: "btn-secondary btn-md" %>
+        <% end %>
       </div>
     </div>
 

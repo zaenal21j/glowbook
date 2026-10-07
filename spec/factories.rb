@@ -71,7 +71,7 @@ FactoryBot.define do
     transient do
       start_hour { 9 }
       end_hour { 17 }
-      weekdays { [1, 2, 3, 4, 5, 6] }
+      weekdays { [ 1, 2, 3, 4, 5, 6 ] }
     end
 
     after :create do |member, evaluator|
@@ -86,7 +86,7 @@ FactoryBot.define do
     end
 
     trait :sunday_too do
-      weekdays { [0, 1, 2, 3, 4, 5, 6] }
+      weekdays { [ 0, 1, 2, 3, 4, 5, 6 ] }
     end
   end
 
@@ -136,6 +136,22 @@ FactoryBot.define do
         )
       end
     end
+  end
+
+  factory :booking_item do
+    booking
+    service { association :service, business: booking.business }
+    staff { nil }
+    price { service.price }
+    duration_minutes { service.duration_minutes }
+    during { booking.start_time...booking.end_time }
+  end
+
+  factory :payment_attempt do
+    booking
+    sequence(:order_id) { |n| "GB-PAYMENT-#{n}" }
+    amount { booking.total_amount }
+    status { "pending" }
   end
 
   factory :review do

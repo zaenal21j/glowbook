@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :recoverable, :rememberable,
-         :validatable, :omniauthable, omniauth_providers: [:facebook]
+         :validatable, :omniauthable, omniauth_providers: [ :facebook ]
 
   ROLE_COLORS = {}.freeze
 
@@ -10,6 +10,9 @@ class User < ApplicationRecord
   has_many :bookings, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :reviews, dependent: :destroy
+  has_many :conversations, foreign_key: :customer_id, dependent: :destroy
+  has_many :chat_messages, foreign_key: :sender_id, dependent: :destroy
+  has_many :user_notifications, dependent: :destroy
   has_one :staff_member, class_name: "Staff", dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 120 }

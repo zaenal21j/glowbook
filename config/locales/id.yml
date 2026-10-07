@@ -1,0 +1,200 @@
+id:
+  activerecord:
+    attributes:
+      user:
+        email: "Email"
+        password: "Kata sandi"
+        password_confirmation: "Konfirmasi kata sandi"
+        name: "Nama"
+      booking:
+        starts_at: "Waktu booking"
+        status: "Status"
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              taken: "sudah digunakan"
+        booking:
+          attributes:
+            starts_at:
+              taken: "sudah dipesan pada waktu tersebut"
+  date:
+    abbr_day_names:
+      - Min
+      - Sen
+      - Sel
+      - Rab
+      - Kam
+      - Jum
+      - Sab
+    abbr_month_names:
+      - ~
+      - Jan
+      - Feb
+      - Mar
+      - Apr
+      - Mei
+      - Jun
+      - Jul
+      - Agu
+      - Sep
+      - Okt
+      - Nov
+      - Des
+    day_names:
+      - Minggu
+      - Senin
+      - Selasa
+      - Rabu
+      - Kamis
+      - Jumat
+      - Sabtu
+    month_names:
+      - ~
+      - Januari
+      - Februari
+      - Maret
+      - April
+      - Mei
+      - Juni
+      - Juli
+      - Agustus
+      - September
+      - Oktober
+      - November
+      - Desember
+    formats:
+      default: "%d-%m-%Y"
+      long: "%d %B %Y"
+      short: "%d %b"
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: "sekitar 1 jam"
+        other: "sekitar %{count} jam"
+      about_x_months:
+        one: "sekitar 1 bulan"
+        other: "sekitar %{count} bulan"
+      about_x_years:
+        one: "sekitar 1 tahun"
+        other: "sekitar %{count} tahun"
+      almost_x_years:
+        one: "hampir 1 tahun"
+        other: "hampir %{count} tahun"
+      half_a_minute: "setengah menit"
+      less_than_x_minutes:
+        one: "kurang dari 1 menit"
+        other: "kurang dari %{count} menit"
+      less_than_x_seconds:
+        one: "kurang dari 1 detik"
+        other: "kurang dari %{count} detik"
+      over_x_years:
+        one: "lebih dari 1 tahun"
+        other: "lebih dari %{count} tahun"
+      x_days:
+        one: "1 hari"
+        other: "%{count} hari"
+      x_minutes:
+        one: "1 menit"
+        other: "%{count} menit"
+      x_months:
+        one: "1 bulan"
+        other: "%{count} bulan"
+      x_seconds:
+        one: "1 detik"
+        other: "%{count} detik"
+      x_years:
+        one: "1 tahun"
+        other: "%{count} tahun"
+    prompts:
+      day: "Tanggal"
+      hour: "Jam"
+      minute: "Menit"
+      month: "Bulan"
+      second: "Detik"
+      year: "Tahun"
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      accepted: "harus disetujui"
+      blank: "tidak boleh kosong"
+      confirmation: "tidak sama dengan %{attribute}"
+      empty: "tidak boleh kosong"
+      equal_to: "harus sama dengan %{count}"
+      even: "harus bilangan genap"
+      exclusion: "tidak tersedia"
+      greater_than: "harus lebih besar dari %{count}"
+      greater_than_or_equal_to: "harus lebih besar atau sama dengan %{count}"
+      inclusion: "tidak termasuk pilihan yang tersedia"
+      invalid: "tidak valid"
+      less_than: "harus kurang dari %{count}"
+      less_than_or_equal_to: "harus kurang dari atau sama dengan %{count}"
+      model_invalid: "Validasi gagal: %{errors}"
+      not_a_number: "bukan angka"
+      not_an_integer: "harus berupa bilangan bulat"
+      odd: "harus bilangan ganjil"
+      other_than: "harus berbeda dari %{count}"
+      present: "harus dikosongkan"
+      required: "wajib diisi"
+      taken: "sudah digunakan"
+      too_long:
+        one: "terlalu panjang (maksimal 1 karakter)"
+        other: "terlalu panjang (maksimal %{count} karakter)"
+      too_short:
+        one: "terlalu pendek (minimal 1 karakter)"
+        other: "terlalu pendek (minimal %{count} karakter)"
+      wrong_length:
+        one: "panjangnya tidak sesuai (harus 1 karakter)"
+        other: "panjangnya tidak sesuai (harus %{count} karakter)"
+  helpers:
+    select:
+      prompt: "Silakan pilih"
+    submit:
+      create: "Buat %{model}"
+      submit: "Simpan %{model}"
+      update: "Perbarui %{model}"
+  number:
+    currency:
+      format:
+        delimiter: "."
+        format: "%u%n"
+        precision: 0
+        separator: ","
+        significant: false
+        strip_insignificant_zeros: false
+        unit: "Rp"
+    format:
+      delimiter: "."
+      precision: 2
+      separator: ","
+      significant: false
+      strip_insignificant_zeros: false
+    human:
+      decimal_units:
+        units:
+          billion: "miliar"
+          million: "juta"
+          quadrillion: "kuadriliun"
+          thousand: "ribu"
+          trillion: "triliun"
+          unit: ""
+    percentage:
+      format:
+        delimiter: ""
+        format: "%n%"
+    precision:
+      format:
+        delimiter: ""
+  support:
+    array:
+      words_connector: ", "
+      two_words_connector: " dan "
+      last_word_connector: ", dan "
+  time:
+    am: "pagi"
+    pm: "sore"
+    formats:
+      default: "%A, %d %B %Y %H:%M %Z"
+      long: "%d %B %Y pukul %H:%M"
+      short: "%d %b, %H:%M"

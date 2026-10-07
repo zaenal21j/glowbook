@@ -14,7 +14,6 @@
     <button class="btn-secondary btn-md">Cari</button>
   <% end %>
 </div>
-
 <div class="card mt-5 overflow-x-auto">
   <table class="w-full text-sm">
     <thead>
@@ -38,6 +37,9 @@
           <td class="px-4 py-3"><%= b.services.count %></td>
           <td class="px-4 py-3"><span class="badge <%= b.active? ? 'badge-green' : (b.pending? ? 'badge-amber' : 'badge-red') %>"><%= b.status.humanize %></span></td>
           <td class="px-4 py-3 text-right">
+            <% if b.pending? %>
+              <%= button_to "Setujui & Aktifkan", activate_admin_business_path(b), method: :patch, form: { data: { turbo_confirm: "Publikasikan #{b.name} di marketplace?" } }, class: "text-xs font-semibold text-emerald-600 hover:underline" %>
+            <% end %>
             <% unless b.suspended? %>
               <%= button_to "Tangguhkan", admin_business_path(b), method: :delete, form: { data: { turbo_confirm: "Tangguhkan #{b.name}?" } }, class: "text-xs font-semibold text-red-500 hover:underline" %>
             <% end %>
@@ -50,3 +52,4 @@
     </tbody>
   </table>
 </div>
+<%= render "admin/shared/pagination" %>

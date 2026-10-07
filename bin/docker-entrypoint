@@ -1,0 +1,8 @@
+#!/bin/bash -e
+
+# Prepare or migrate the single production database before the web process starts.
+if [ "${@: -2:1}" = "./bin/rails" ] && [ "${@: -1:1}" = "server" ]; then
+  ./bin/rails db:prepare || exit $?
+fi
+
+exec "${@}"

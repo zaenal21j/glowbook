@@ -1,0 +1,4 @@
+<h1>Jadwal booking berubah</h1>
+<p>Jadwal booking <strong><%= @booking.reference %></strong> telah diperbarui.</p>
+<%= render "booking_mailer/booking_details" %>
+<p><%= link_to "Lihat detail booking", booking_url(@booking.reference) %></p>

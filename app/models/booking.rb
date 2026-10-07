@@ -3,9 +3,11 @@ class Booking < ApplicationRecord
   belongs_to :business
 
   has_many :booking_items, dependent: :destroy
+  has_many :payment_attempts, dependent: :restrict_with_exception
   has_many :services, through: :booking_items
 
   STATUSES = %w[pending confirmed completed cancelled no_show].freeze
+  PAYMENT_METHODS = %w[pay_at_venue online_transfer].freeze
 
   validates :user, presence: true
   validates :business, presence: true
@@ -13,7 +15,7 @@ class Booking < ApplicationRecord
   validates :start_time, :end_time, presence: true
   validates :status, presence: true, inclusion: { in: STATUSES }
   validates :total_amount, presence: true, numericality: { greater_than_or_equal_to: 0 }
-  validates :payment_method, inclusion: { in: %w[pay_at_venue online_transfer], allow_nil: true }
+  validates :payment_method, inclusion: { in: PAYMENT_METHODS, allow_nil: true }
   validate  :end_after_start
   validate  :not_in_past, on: :create
   validate  :items_belong_to_business
@@ -43,15 +45,47 @@ class Booking < ApplicationRecord
   end
 
   def cancellable?
-    pending? || confirmed?
+    (pending? || confirmed?) && !payment_attempts.where(status: %w[pending settlement capture]).exists?
   end
 
   def reschedulable?
     cancellable? && start_time > 2.hours.from_now
   end
 
+  def completable?
+    confirmed? && end_time <= Time.current
+  end
+
+  def no_showable?
+    confirmed? && start_time <= Time.current
+  end
+
+  def complete!
+    with_lock do
+      unless completable?
+        errors.add(:status, "booking hanya dapat diselesaikan setelah waktu layanan berakhir")
+        raise ActiveRecord::RecordInvalid, self
+      end
+
+      update!(status: :completed)
+    end
+  end
+
+  def mark_no_show!
+    with_lock do
+      unless no_showable?
+        errors.add(:status, "pelanggan hanya dapat ditandai tidak hadir setelah waktu booking dimulai")
+        raise ActiveRecord::RecordInvalid, self
+      end
+
+      update!(status: :no_show)
+    end
+  end
+
   def cancel!
-    transaction do
+    with_lock do
+      raise ActiveRecord::RecordInvalid, self unless cancellable?
+
       booking_items.update_all(during: nil, updated_at: Time.current)
       update!(status: :cancelled)
     end

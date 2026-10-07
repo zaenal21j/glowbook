@@ -12,12 +12,13 @@
 
 <div class="grid gap-4 mt-5 md:grid-cols-4">
   <div class="card p-5">
-    <p class="text-sm text-ink-500">Booking</p>
+    <p class="text-sm text-ink-500">Booking Selesai</p>
     <p class="mt-1 text-2xl font-bold"><%= @kpi_bookings %></p>
   </div>
   <div class="card p-5">
-    <p class="text-sm text-ink-500">Pendapatan</p>
+    <p class="text-sm text-ink-500">Nilai Booking Selesai</p>
     <p class="mt-1 text-2xl font-bold"><%= number_to_currency(@kpi_revenue, unit: "Rp ", delimiter: ".", precision: 0) %></p>
+    <p class="mt-1 text-xs text-ink-400">Bukan komisi atau pembayaran terkonfirmasi.</p>
   </div>
   <div class="card p-5">
     <p class="text-sm text-ink-500">Pelanggan Baru</p>
@@ -31,7 +32,7 @@
 
 <div class="grid gap-5 mt-5 lg:grid-cols-3">
   <div class="card p-5">
-    <h3 class="font-semibold">Pendapatan per Kota</h3>
+    <h3 class="font-semibold">Nilai Booking Selesai per Kota</h3>
     <div class="mt-3 space-y-2.5">
       <% max = [@by_city.map(&:last).max.to_f, 1].max %>
       <% @by_city.each do |name, amount| %>
@@ -40,12 +41,12 @@
           <div class="mt-1 h-1.5 rounded-full bg-surface-100"><div class="h-full rounded-full bg-primary-500" style="width: <%= (amount / max * 100).round %>%"></div></div>
         </div>
       <% end %>
-      <% if @by_city.empty? %><p class="text-sm text-ink-400">Tidak ada transaksi bulan ini.</p><% end %>
+      <% if @by_city.empty? %><p class="text-sm text-ink-400">Tidak ada booking selesai bulan ini.</p><% end %>
     </div>
   </div>
 
   <div class="card p-5">
-    <h3 class="font-semibold">Pendapatan per Kategori</h3>
+    <h3 class="font-semibold">Nilai Layanan Selesai per Kategori</h3>
     <div class="mt-3 space-y-2.5">
       <% max = [@by_category.map(&:last).max.to_f, 1].max %>
       <% @by_category.each do |name, amount| %>
@@ -54,12 +55,12 @@
           <div class="mt-1 h-1.5 rounded-full bg-surface-100"><div class="h-full rounded-full bg-primary-400" style="width: <%= (amount / max * 100).round %>%"></div></div>
         </div>
       <% end %>
-      <% if @by_category.empty? %><p class="text-sm text-ink-400">Tidak ada transaksi bulan ini.</p><% end %>
+      <% if @by_category.empty? %><p class="text-sm text-ink-400">Tidak ada booking selesai bulan ini.</p><% end %>
     </div>
   </div>
 
   <div class="card p-5">
-    <h3 class="font-semibold">10 Bisnis Teratas</h3>
+    <h3 class="font-semibold">10 Bisnis Teratas menurut Nilai Booking Selesai</h3>
     <ol class="mt-3 space-y-2 text-sm">
       <% @top_businesses.each_with_index do |(name, amount), i| %>
         <li class="flex justify-between border-b border-line pb-2 last:border-0">
@@ -67,7 +68,7 @@
           <strong><%= number_to_currency(amount, unit: "Rp ", delimiter: ".", precision: 0) %></strong>
         </li>
       <% end %>
-      <% if @top_businesses.empty? %><p class="text-sm text-ink-400">Tidak ada transaksi bulan ini.</p><% end %>
+      <% if @top_businesses.empty? %><p class="text-sm text-ink-400">Tidak ada booking selesai bulan ini.</p><% end %>
     </ol>
   </div>
 </div>

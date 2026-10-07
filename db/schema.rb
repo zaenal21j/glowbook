@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_21_000001) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_07_000001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "pg_catalog.plpgsql"
@@ -159,12 +159,37 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_21_000001) do
     t.index ["slug"], name: "index_categories_on_slug", unique: true
   end
 
+  create_table "chat_messages", force: :cascade do |t|
+    t.text "body", null: false
+    t.bigint "conversation_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "read_at"
+    t.bigint "sender_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["conversation_id", "id"], name: "index_chat_messages_on_conversation_id_and_id"
+    t.index ["conversation_id", "read_at"], name: "index_chat_messages_on_conversation_id_and_read_at"
+    t.index ["conversation_id"], name: "index_chat_messages_on_conversation_id"
+    t.index ["sender_id"], name: "index_chat_messages_on_sender_id"
+  end
+
   create_table "cities", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name", null: false
     t.string "slug", null: false
     t.datetime "updated_at", null: false
     t.index ["slug"], name: "index_cities_on_slug", unique: true
+  end
+
+  create_table "conversations", force: :cascade do |t|
+    t.bigint "business_id", null: false
+    t.datetime "created_at", null: false
+    t.bigint "customer_id", null: false
+    t.datetime "last_message_at"
+    t.datetime "updated_at", null: false
+    t.index ["business_id", "customer_id"], name: "index_conversations_on_business_id_and_customer_id", unique: true
+    t.index ["business_id"], name: "index_conversations_on_business_id"
+    t.index ["customer_id"], name: "index_conversations_on_customer_id"
+    t.index ["last_message_at"], name: "index_conversations_on_last_message_at"
   end
 
   create_table "favorites", force: :cascade do |t|
@@ -175,6 +200,27 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_21_000001) do
     t.index ["business_id"], name: "index_favorites_on_business_id"
     t.index ["user_id", "business_id"], name: "index_favorites_on_user_id_and_business_id", unique: true
     t.index ["user_id"], name: "index_favorites_on_user_id"
+  end
+
+  create_table "payment_attempts", force: :cascade do |t|
+    t.bigint "amount", null: false
+    t.bigint "booking_id", null: false
+    t.datetime "created_at", null: false
+    t.string "order_id", null: false
+    t.string "payment_type"
+    t.string "provider_status"
+    t.string "redirect_url"
+    t.datetime "settled_at"
+    t.string "snap_token"
+    t.string "status", default: "pending", null: false
+    t.string "transaction_id"
+    t.datetime "updated_at", null: false
+    t.index ["booking_id"], name: "index_payment_attempts_on_booking_id"
+    t.index ["booking_id"], name: "one_pending_payment_attempt_per_booking", unique: true, where: "((status)::text = 'pending'::text)"
+    t.index ["order_id"], name: "index_payment_attempts_on_order_id", unique: true
+    t.index ["transaction_id"], name: "index_payment_attempts_on_transaction_id", unique: true, where: "(transaction_id IS NOT NULL)"
+    t.check_constraint "amount >= 0", name: "payment_attempts_amount_nonnegative"
+    t.check_constraint "status::text = ANY (ARRAY['pending'::character varying, 'settlement'::character varying, 'capture'::character varying, 'expire'::character varying, 'cancel'::character varying, 'deny'::character varying, 'failure'::character varying, 'refund'::character varying]::text[])", name: "payment_attempts_status_valid"
   end
 
   create_table "promotions", force: :cascade do |t|
@@ -268,6 +314,20 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_21_000001) do
     t.index ["user_id"], name: "index_staffs_on_user_id"
   end
 
+  create_table "user_notifications", force: :cascade do |t|
+    t.text "body", null: false
+    t.string "booking_reference", null: false
+    t.datetime "created_at", null: false
+    t.string "event", null: false
+    t.datetime "read_at"
+    t.string "title", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id", "created_at"], name: "index_user_notifications_on_user_id_and_created_at"
+    t.index ["user_id", "read_at"], name: "index_user_notifications_on_user_id_and_read_at"
+    t.index ["user_id"], name: "index_user_notifications_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "current_sign_in_at"
@@ -308,8 +368,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_21_000001) do
   add_foreign_key "business_hours", "businesses"
   add_foreign_key "businesses", "cities"
   add_foreign_key "businesses", "users", column: "owner_id"
+  add_foreign_key "chat_messages", "conversations"
+  add_foreign_key "chat_messages", "users", column: "sender_id"
+  add_foreign_key "conversations", "businesses"
+  add_foreign_key "conversations", "users", column: "customer_id"
   add_foreign_key "favorites", "businesses"
   add_foreign_key "favorites", "users"
+  add_foreign_key "payment_attempts", "bookings"
   add_foreign_key "promotions", "businesses"
   add_foreign_key "reviews", "businesses"
   add_foreign_key "reviews", "users"
@@ -321,4 +386,5 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_21_000001) do
   add_foreign_key "staff_services", "staffs"
   add_foreign_key "staffs", "businesses"
   add_foreign_key "staffs", "users"
+  add_foreign_key "user_notifications", "users"
 end

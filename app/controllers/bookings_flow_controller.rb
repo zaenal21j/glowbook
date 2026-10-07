@@ -7,7 +7,7 @@ class BookingsFlowController < ApplicationController
 
   before_action :set_business
   before_action :require_customer!, except: []
-  before_action :init_flow, only: [:new, :show, :update]
+  before_action :init_flow, only: [ :new, :show, :update ]
 
   # GET /b/:slug/book           -> step 1 (layanan)
   # GET /b/:slug/book/step/:step -> resume a step
@@ -82,17 +82,29 @@ class BookingsFlowController < ApplicationController
       return redirect_to business_book_path(@business.slug)
     end
 
+    payment_method = params[:payment_method].presence || flow["payment_method"] || "pay_at_venue"
+    unless Booking::PAYMENT_METHODS.include?(payment_method)
+      return redirect_to business_book_confirmation_path(@business.slug), alert: "Metode pembayaran tidak valid."
+    end
+    if payment_method == "online_transfer" && !Rails.configuration.x.midtrans_enabled
+      return redirect_to business_book_confirmation_path(@business.slug), alert: "Pembayaran online belum dikonfigurasi."
+    end
+    if payment_method == "online_transfer" && @business.services.active.where(id: flow["service_ids"]).sum(:price) <= 0
+      return redirect_to business_book_confirmation_path(@business.slug), alert: "Pembayaran online memerlukan total booking di atas Rp0."
+    end
+
     result = BookingBuilder.new(
       user: current_user,
       business: @business,
       service_ids: flow["service_ids"],
       staff_id: flow["staff_id"],
       start_time: flow_start_time,
-      payment_method: params[:payment_method] || flow["payment_method"]
+      payment_method: payment_method
     ).call
 
     if result.ok?
       session.delete(:booking_flow)
+      BookingNotificationDelivery.new(booking: result.booking, event: :confirmation).call
       redirect_to booking_path(result.booking.reference)
     else
       redirect_to business_book_confirmation_path(@business.slug), alert: result.error

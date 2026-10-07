@@ -45,7 +45,7 @@ RSpec.describe "Authorization", type: :request do
       get edit_dashboard_manage_service_path(service)
 
       # 404 langsung, atau redirect dengan alert "tidak memiliki akses"
-      expect([404, 302]).to include(response.status)
+      expect([ 404, 302 ]).to include(response.status)
       expect(response.body).not_to include("Formulir") if response.status == 200
     end
   end
@@ -72,11 +72,5 @@ RSpec.describe "Authorization", type: :request do
   def assert_redirected_to_login
     expect(response).to have_http_status(:redirect)
     expect(response.location).to include("masuk")
-  end
-
-  private
-
-  def sign_in(user)
-    post "/users/masuk", params: { user: { email: user.email, password: "password123" } }
   end
 end

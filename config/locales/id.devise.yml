@@ -1,0 +1,65 @@
+id:
+  devise:
+    confirmations:
+      confirmed: "Alamat email berhasil dikonfirmasi."
+      send_instructions: "Dalam beberapa menit, Anda akan menerima email berisi petunjuk konfirmasi akun."
+      send_paranoid_instructions: "Jika alamat email Anda terdaftar, Anda akan menerima email berisi petunjuk konfirmasi akun."
+    failure:
+      already_authenticated: "Anda sudah masuk."
+      inactive: "Akun Anda belum aktif."
+      invalid: "Email atau kata sandi tidak valid."
+      locked: "Akun Anda terkunci."
+      last_attempt: "Ini adalah kesempatan terakhir sebelum akun Anda terkunci."
+      not_found_in_database: "Email atau kata sandi tidak valid."
+      timeout: "Sesi Anda berakhir. Silakan masuk kembali."
+      unauthenticated: "Silakan masuk untuk melanjutkan."
+      unconfirmed: "Konfirmasikan alamat email Anda sebelum melanjutkan."
+    mailer:
+      confirmation_instructions:
+        subject: "Petunjuk konfirmasi akun GlowBook"
+      reset_password_instructions:
+        subject: "Petunjuk untuk mengatur ulang kata sandi GlowBook"
+      unlock_instructions:
+        subject: "Petunjuk membuka kunci akun GlowBook"
+      email_changed:
+        subject: "Email akun GlowBook telah diperbarui"
+      password_change:
+        subject: "Kata sandi GlowBook telah diperbarui"
+    omniauth_callbacks:
+      failure: "Tidak dapat masuk menggunakan %{kind}: %{reason}."
+      success: "Berhasil masuk menggunakan akun %{kind}."
+    passwords:
+      no_token: "Anda hanya dapat membuka halaman ini dari tautan pengaturan ulang kata sandi. Jika menggunakan tautan lengkap, pastikan seluruh tautan tersalin."
+      send_instructions: "Dalam beberapa menit, Anda akan menerima email berisi petunjuk pengaturan ulang kata sandi."
+      send_paranoid_instructions: "Jika alamat email Anda terdaftar, Anda akan menerima tautan untuk mengatur ulang kata sandi."
+      updated: "Kata sandi berhasil diubah. Anda sekarang sudah masuk."
+      updated_not_active: "Kata sandi berhasil diubah."
+    registrations:
+      destroyed: "Akun Anda berhasil dihapus."
+      signed_up: "Selamat datang di GlowBook! Akun Anda berhasil dibuat."
+      signed_up_but_inactive: "Akun berhasil dibuat, tetapi belum dapat digunakan karena belum aktif."
+      signed_up_but_locked: "Akun berhasil dibuat, tetapi sedang terkunci."
+      signed_up_but_unconfirmed: "Tautan konfirmasi akun telah dikirim ke email Anda."
+      update_needs_confirmation: "Akun diperbarui. Periksa email untuk mengonfirmasi alamat email baru."
+      updated: "Akun berhasil diperbarui."
+      updated_but_not_signed_in: "Akun berhasil diperbarui. Masuk kembali karena kata sandi Anda berubah."
+    sessions:
+      signed_in: "Berhasil masuk."
+      signed_out: "Berhasil keluar."
+      user:
+        signed_in: "Selamat datang kembali di GlowBook!"
+        signed_out: "Anda telah keluar dari GlowBook."
+    unlocks:
+      send_instructions: "Dalam beberapa menit, Anda akan menerima email berisi petunjuk membuka kunci akun."
+      send_paranoid_instructions: "Jika akun Anda terdaftar, Anda akan menerima email berisi petunjuk membuka kunci akun."
+      unlocked: "Akun berhasil dibuka. Silakan masuk untuk melanjutkan."
+    errors:
+      messages:
+        already_confirmed: "sudah dikonfirmasi, silakan masuk"
+        confirmation_period_expired: "harus dikonfirmasi dalam %{period}, silakan minta tautan baru"
+        expired: "sudah kedaluwarsa, silakan minta yang baru"
+        not_found: "tidak ditemukan"
+        not_locked: "tidak terkunci"
+        not_saved:
+          one: "Tidak dapat menyimpan %{resource}: 1 kesalahan."
+          other: "Tidak dapat menyimpan %{resource}: %{count} kesalahan."
