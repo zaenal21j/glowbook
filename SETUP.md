@@ -6,7 +6,7 @@ Repository ini berisi source aplikasi **GlowBook** (marketplace booking kecantik
 
 | Item | Keterangan |
 |---|---|
-| Source code aplikasi | Termasuk `config/master.key` (khusus development) |
+| Source code aplikasi | Termasuk `config/credentials.yml.enc` yang terenkripsi; `config/master.key` dan `.env.production` tidak disertakan |
 | `db/seeds.rb` | Seed data demo untuk database development |
 | `storage/` | File upload lokal; tidak disertakan di repository |
 | `SETUP.md` | File ini |
@@ -129,6 +129,6 @@ export APP_HOST="https://<host-anda>"
 
 ## Catatan keamanan
 
-- `config/master.key` di paket ini **hanya untuk development**. Jangan bagikan zip ini ke publik, dan jangan pakai key ini untuk production.
-- Untuk production, generate credentials baru: `rm config/credentials.yml.enc && bin/rails credentials:edit` (otomatis membuat master key baru).
+- `config/master.key` dan `.env.production` tidak disimpan di GitHub. `config/credentials.yml.enc` adalah file terenkripsi; key yang cocok harus disimpan secara terpisah jika nilainya diperlukan.
+- Untuk production, buat credentials dan master key baru: `rm config/credentials.yml.enc && bin/rails credentials:edit`. Simpan master key di secret manager atau konfigurasi deployment, jangan commit ke repository.
 - Upload galeri saat ini memakai Active Storage lokal (`storage/`). Untuk deployment production yang disk-nya sementara atau memiliki beberapa instance, konfigurasi object storage persisten (misalnya S3) sebelum menerima upload bisnis.
