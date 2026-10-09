@@ -3,6 +3,11 @@
 
 <div class="max-w-2xl space-y-5">
   <div class="card p-6">
+    <h3 class="font-semibold"><%= t("integrations.title") %></h3>
+    <p class="mt-2 text-sm text-ink-500"><%= t("integrations.description") %></p>
+    <%= link_to t("integrations.title"), admin_integrations_path, class: "btn-secondary btn-md mt-4" %>
+  </div>
+  <div class="card p-6">
     <h3 class="font-semibold"><%= t("account.customer.change_password") %></h3>
     <p class="mt-2 text-sm text-ink-500"><%= t("account.security.password_help") %></p>
     <%= link_to t("account.customer.change_password"), account_password_path, class: "btn-secondary btn-md mt-4" %>

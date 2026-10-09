@@ -9,6 +9,7 @@ Audit lokal: 10 Oktober 2026 (Asia/Bangkok). Status ini mencatat bukti yang suda
 | Marketplace | Homepage termasuk database kosong, filter kota/kategori/rating/promo/jam buka/harga, urutan terdekat dan pagination diperiksa | `spec/requests/marketplace_spec.rb`; endpoint lokal `/` dan `/cari?open_today=1` memberi 200 |
 | Navigasi publik | Menu layanan/kota/akun, menu ponsel dan tombol tutup pesan berfungsi | Enam pengujian JavaScript, request specs binding tombol/panel; browser membuktikan perpindahan menu, Escape mengembalikan fokus, dan pesan ditutup pada viewport ponsel 390 × 844 |
 | Akun | Daftar, login, peran, pembatasan penghapusan akun bersejarah, ubah kata sandi saat login, reset sekali pakai dan proteksi perubahan email diperiksa | Request specs akun/admin/OAuth; 11 account security examples; email reset/perubahan akun melalui test adapter; SMTP nyata tetap belum dibuktikan |
+| Login Google dan integrasi | Google/Facebook/SMTP dapat diaktifkan dan dikonfigurasi dari Admin; secret terenkripsi, kolom secret kosong, perubahan dibaca tanpa restart | 30 examples OAuth/admin/model/SMTP lulus. Google mensyaratkan email terverifikasi; akun dengan email sama tidak diambil alih. Middleware nyata memeriksa CSRF/state dan callback kanonis. Kredensial Google nyata dan penerimaan email SMTP belum dibuktikan |
 | Booking | Alur lima langkah, rangkaian layanan, kualifikasi staff, bentrok, pembatalan dan reschedule diperiksa | Booking flow/schedule/builder/availability specs; constraint PostgreSQL tetap aktif |
 | Dashboard bisnis | Jam buka, shift, istirahat, blokir waktu, layanan, staff dan profil diperiksa | `business_scheduling_spec.rb`; halaman profil, staff dan blokir waktu lokal memberi 200 |
 | Analitik dan grafik | Batas bulan menggunakan waktu Jakarta; pelanggan baru berdasarkan jadwal booking pertama di bisnis; layanan populer mengikuti bulan jadwal dan mengecualikan pembatalan | `business_analytics_spec.rb`, `admin_charts_spec.rb` dan scope booking mencakup pergantian bulan, booking pukul 00.30 WIB, pelanggan berulang serta pemisahan data bisnis. Dua bahasa dan halaman analitik lokal diperiksa |
@@ -16,7 +17,7 @@ Audit lokal: 10 Oktober 2026 (Asia/Bangkok). Status ini mencatat bukti yang suda
 | Galeri | Upload, tampil publik, validasi gambar, hapus dan pembatasan antar bisnis diperiksa | Request specs galeri; halaman galeri lokal memberi 200 |
 | Chat dan notifikasi | Pertukaran pesan, status dibaca, pembatasan peserta, notifikasi dan tiga jenis email booking diperiksa | Request specs; enam email terkirim melalui test adapter. Pengiriman SMTP nyata belum dibuktikan |
 | Admin | Seluruh bagian utama merender dalam dua bahasa; persetujuan, suspend/reactivate, kategori, pengaturan, proteksi akun dan laporan diperiksa | `admin_workflows_spec.rb`; bisnis bernama sama tetap menjadi dua entri peringkat dengan total terpisah, lokasi dan tautan detail; booking batal/di luar bulan laporan tidak ikut dihitung. Sepuluh halaman admin lokal memberi 200; menu admin dan bisnis dibuka pada viewport ponsel 390 × 844 |
-| Bahasa | Indonesia dan Inggris untuk UI utama, pesan booking, email keamanan akun dan judul kolom CSV | 900 key literal tersedia pada kedua locale; request specs mencakup header CSV, bahasa manifest dan penjelasan metrik analitik |
+| Bahasa | Indonesia dan Inggris untuk UI utama, pesan booking, email keamanan akun, integrasi dan judul kolom CSV | 925 key literal tersedia pada kedua locale; request specs mencakup header CSV, bahasa manifest, pengaturan integrasi dan penjelasan metrik analitik |
 | PWA | Manifest sesuai bahasa, ikon GlowBook 192/512 piksel, worker, cache aset statis dan fallback offline tersedia pada ketiga layout | Tujuh pengujian service worker serta request specs manifest/ikon lulus; browser menampilkan fallback setelah instance sementara port 3002 dihentikan. Instalasi pada perangkat pengguna belum diperiksa |
 | Instalasi baru | Task `glowbook:bootstrap` membuat kota/kategori/admin tanpa akun demo; aman diulang | Empat service specs; seed demo ditolak di production |
 | HTTPS | Overlay Compose dan konfigurasi Caddy untuk server publik tersedia | Compose dan `caddy validate` lulus dengan domain contoh; proxy HTTP sementara pada loopback meneruskan homepage dan `/up` dengan status 200. DNS, sertifikat publik dan akses server tujuan belum dibuktikan |
@@ -24,15 +25,16 @@ Audit lokal: 10 Oktober 2026 (Asia/Bangkok). Status ini mencatat bukti yang suda
 
 ## Verifikasi lokal yang selesai
 
-- RSpec: **158 examples, 0 failures**, seed `15943`.
+- Baseline sebelum penambahan Google: RSpec **158 examples, 0 failures**, seed `15943`.
+- Penambahan Google/Admin integrasi: **30 examples, 0 failures**, seed `33097`; mencakup empat regresi Facebook, secret terenkripsi/penghapusan/penggantian, pembatasan admin, kedua bahasa, SMTP dinamis serta CSRF/state OAuth.
 - Node navigasi dan service worker: **13 passed, 0 failed**.
-- `script/check_release.rb`: 94 file Ruby, 100 template ERB, 900 key terjemahan, 157 pasangan controller/action serta lima registrasi controller Stimulus lolos.
+- `script/check_release.rb`: 97 file Ruby, 102 template ERB, 925 key terjemahan, 160 pasangan controller/action serta lima registrasi controller Stimulus lolos.
 - `rails zeitwerk:check`: eager loading berhasil.
 - Brakeman: **0 errors, 0 security warnings**.
 - Dependency pengujian dapat dipasang dengan lockfile frozen melalui `bundle install --local`.
 - Image production web dan worker berhasil dibangun dan dijalankan pada `http://localhost:3000`; kolom staff bio tersedia dan tidak ada migrasi tertunda.
 - Cadangan database lokal dibuat sebelum penerapan pada `tmp/local_backups/`; folder tersebut tidak termasuk GitHub.
-- CI GitHub commit `a4606ee` lulus seluruh tahap, termasuk 152 request/model/service examples, 13 pengujian JavaScript, build production, validasi konfigurasi HTTPS serta verifikasi backup/restore: [hasil run](https://github.com/zaenal21j/glowbook/actions/runs/37976538673). Perubahan analitik sesudah commit tersebut tetap harus melewati CI.
+- CI GitHub baseline commit `1470c4f` lulus seluruh tahap, termasuk 158 request/model/service examples, 13 pengujian JavaScript, build production, validasi konfigurasi HTTPS serta verifikasi backup/restore: [hasil run](https://github.com/zaenal21j/glowbook/actions/runs/37978317562). Penambahan Google/Admin integrasi harus melewati CI pada commit yang memuat perubahan tersebut.
 - Pemeriksaan laporan terbaru: 15 request examples admin lulus, termasuk pemisahan bisnis bernama sama dalam kedua bahasa.
 - Pemeriksaan analitik terarah: 13 request/model/service examples lulus. Grafik admin pada data lokal juga cocok dengan pengelompokan tanggal Jakarta yang dihitung Ruby; tidak ada data aplikasi yang diubah.
 - Laporan September lokal diperiksa di browser: dua bisnis menampilkan nilai masing-masing Rp 350.000 dan Rp 250.000; tautan peringkat membuka detail bisnis yang sesuai. Data aplikasi tidak diubah untuk pemeriksaan ini.
@@ -49,6 +51,7 @@ Pengujian Rails menggunakan PostgreSQL terpisah dari database aplikasi lokal. Ha
 5. Pasang jadwal backup database aplikasi, database antrean dan file upload pada server, siapkan salinan terenkripsi di luar host serta uji restore production pada lingkungan terpisah. Workflow lokal sudah diperiksa; lihat `BACKUP_RESTORE.md`. Template timer yang belum dipasang tidak membuktikan backup terjadwal server.
 6. Periksa instalasi PWA dan fallback offline pada perangkat/browser yang dipakai pelanggan.
 7. Jika Facebook akan diaktifkan untuk publik, selesaikan konfigurasi domain/callback serta review aplikasi Meta. Mock OAuth lokal tidak membuktikan persetujuan Meta.
+8. Buat OAuth Client Google jenis web, consent/audiens, dan redirect URI persis dari Admin → Integrasi; buktikan login Google nyata pada host tujuan. Simpan secret utama server secara terpisah dari backup database agar kredensial integrasi dapat didekripsi saat restore.
 
 ## Tahap pembayaran terakhir
 

@@ -10,6 +10,7 @@ RSpec.describe "Facebook OAuth", type: :request do
   end
 
   before do
+    host! URI(Rails.configuration.x.app_host).authority
     get login_path
     OmniAuth.config.test_mode = true
     OmniAuth.config.mock_auth[:facebook] = auth_hash

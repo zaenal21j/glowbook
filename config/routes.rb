@@ -108,6 +108,8 @@ Rails.application.routes.draw do
   # Admin
   namespace :admin, path: "admin" do
     root to: "dashboard#index"
+    get "integrasi", to: "integrations#index", as: :integrations
+    patch "integrasi/:provider", to: "integrations#update", as: :integration
     resources :users, only: %i[index show destroy], path: "pengguna"
     resources :businesses, only: %i[index show destroy], path: "bisnis" do
       member { patch :activate }

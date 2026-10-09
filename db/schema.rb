@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_09_130000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_10_100000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "pg_catalog.plpgsql"
@@ -200,6 +200,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_09_130000) do
     t.index ["business_id"], name: "index_favorites_on_business_id"
     t.index ["user_id", "business_id"], name: "index_favorites_on_user_id_and_business_id", unique: true
     t.index ["user_id"], name: "index_favorites_on_user_id"
+  end
+
+  create_table "integration_settings", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.boolean "enabled", default: false, null: false
+    t.text "encrypted_settings"
+    t.string "provider", null: false
+    t.datetime "updated_at", null: false
+    t.index ["provider"], name: "index_integration_settings_on_provider", unique: true
   end
 
   create_table "payment_attempts", force: :cascade do |t|

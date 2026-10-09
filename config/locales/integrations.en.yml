@@ -1,0 +1,40 @@
+en:
+  integrations:
+    title: Integrations
+    description: Manage social login and application email. Create credentials with each provider, then save them here. Changes apply without restarting the application.
+    providers:
+      google_oauth2: Google login
+      facebook: Facebook login
+      smtp: SMTP email
+    fields:
+      client_id: Client ID / App ID
+      client_secret: Client Secret / App Secret
+      address: SMTP server
+      port: SMTP port
+      username: SMTP username
+      password: SMTP password
+      from: Sender email
+      tls_mode: Connection security
+    enabled: Enabled · configuration complete
+    disabled: Inactive
+    enable: Enable integration
+    save: Save settings
+    saved: Integration settings saved successfully.
+    secret_saved: A secret is saved. Leave blank to keep it, or enter a replacement.
+    secret_empty: No secret saved yet.
+    secret_retry: Changes have not been saved. Re-enter any new secret, or leave blank to keep the previous one.
+    clear_secret: Remove the saved secret (disable the integration if a secret is still required).
+    callback_label: Authorized redirect URI / Callback URL
+    oauth_help: Copy this exact URL into the provider's OAuth settings. Use a web application Client ID. Enabling this setting does not verify a successful login with the provider.
+    smtp_help: Use STARTTLS (usually port 587) or TLS (usually 465) as required by your provider. Enter username and password together, or leave both empty for an unauthenticated relay. Verify actual email delivery after setup.
+    server_help: Domain, DNS, HTTPS, database, and the application master keys remain server settings. Preserve the same SECRET_KEY_BASE to read encrypted credentials from the database and backups.
+    starttls: STARTTLS (usually 587)
+    tls: TLS (usually 465)
+    missing_field: "%{field} is required to enable this integration."
+    invalid_smtp: Invalid SMTP server, port, sender email, or connection security.
+    smtp_credentials_pair: SMTP username and password must be supplied together.
+    continue_google: Continue with Google
+    google_user: Google user
+    oauth_failed: Social login was cancelled or is unavailable. Try again or sign in with email.
+    google_unverified: Google login requires a verified email address.
+    account_conflict: This email is already registered. Sign in using the account's previous method.

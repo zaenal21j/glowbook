@@ -5,6 +5,7 @@ GlowBook adalah marketplace kecantikan dan wellness untuk mencari bisnis, meliha
 ## Fitur utama
 
 - Pencarian bisnis berdasarkan kota, kategori, layanan, dan harga.
+- Login email, Google, dan Facebook; pengaturan OAuth serta SMTP melalui Admin → Integrasi dengan secret terenkripsi.
 - Booking dengan pemeriksaan ketersediaan jadwal agar slot tidak dipesan ganda.
 - Dashboard pelanggan dan pemilik bisnis, termasuk layanan, staff, booking, promosi, dan galeri.
 - Pengaturan jam operasional, beberapa shift staff per hari, istirahat mingguan, dan blokir waktu untuk staff atau seluruh bisnis.

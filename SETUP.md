@@ -60,6 +60,29 @@ bin/dev
 
 Port bentrok? `bin/rails server -p 3001`
 
+## Login Google, Facebook, dan SMTP dari Admin
+
+Buka **Admin → Integrasi** (`/admin/integrasi`). Admin dapat menyimpan Client ID/Secret Google, App ID/Secret Facebook, serta server/port/username/password/email pengirim SMTP. Secret disimpan terenkripsi di database; kolom secret selalu kosong saat formulir dibuka. Kosongkan untuk mempertahankan secret lama, atau isi untuk menggantinya. Pengaturan yang disimpan mengesampingkan environment, termasuk ketika integrasi dinonaktifkan. Perubahan dibaca per request/pengiriman email, sehingga web dan worker tidak perlu direstart.
+
+### Google
+
+1. Buat project di [Google Cloud Console](https://console.cloud.google.com/), lalu siapkan OAuth consent screen dan audiens/test users bila aplikasi masih dalam mode pengujian.
+2. Buat OAuth Client ID dengan jenis **Web application**. Daftarkan **Authorized redirect URI** persis seperti yang ditampilkan di Admin. Lokal dengan `APP_HOST=http://localhost:3000` memakai `http://localhost:3000/users/auth/google_oauth2/callback`. Untuk publik, gunakan domain HTTPS sebenarnya pada `APP_HOST`.
+3. Simpan Client ID dan Client Secret di Admin, lalu centang aktivasi. Tombol Google muncul di halaman masuk dan daftar setelah konfigurasi lengkap. Pilihan environment alternatif: `GOOGLE_CLIENT_ID` dan `GOOGLE_CLIENT_SECRET`.
+4. Lakukan login dengan akun Google nyata untuk memverifikasi consent, callback, dan sesi. Tes otomatis menggunakan mock OAuth; hasilnya tidak membuktikan konfigurasi Google Cloud milik Anda. Lihat [dokumentasi OAuth Google](https://developers.google.com/identity/protocols/oauth2/web-server).
+
+Login Google memerlukan email terverifikasi. Akun baru mendapat peran customer; login ulang mempertahankan peran yang sudah ada. Email yang sudah digunakan akun password/Facebook tidak digabung otomatis: masuk menggunakan metode lama. Aplikasi belum menyediakan penautan beberapa identitas OAuth pada satu akun.
+
+### Facebook dan email
+
+Facebook menggunakan callback yang ditampilkan pada kartu Facebook. Mode publik dan review Meta tetap diatur di Meta; menyimpan kredensial di Admin tidak menyelesaikan proses tersebut.
+
+SMTP mendukung STARTTLS (biasanya 587) dan TLS langsung (biasanya 465), dengan verifikasi sertifikat. Isi username/password bersama bila penyedia memerlukan autentikasi. Untuk menghapus secret yang tersimpan, centang **Hapus secret tersimpan**; ketika beralih ke relay tanpa autentikasi, kosongkan username dan hapus secret. Pengaturan berlaku untuk email booking dan email Devise (reset/perubahan password). Periksa penerimaan email nyata melalui worker setelah setup. Menonaktifkan SMTP menghentikan pengiriman email aplikasi. Jika belum ada pengaturan SMTP tersimpan, perilaku environment yang ada tetap digunakan.
+
+### Konfigurasi yang tetap berada di server
+
+Domain, DNS, HTTPS, database, `SECRET_KEY_BASE`, `RAILS_MASTER_KEY`, dan akses server tetap dikelola di server. **Simpan `SECRET_KEY_BASE` secara aman dan pertahankan nilainya saat restore atau redeploy.** Kredensial integrasi terenkripsi dengan kunci yang diturunkan dari nilai tersebut; menggantinya membuat kredensial lama tidak dapat dibaca. Backup database saja tidak cukup tanpa kunci yang sesuai. Jangan masukkan file environment atau kunci asli ke GitHub.
+
 ## Akun demo (password semua: `password123`)
 
 | Email | Peran | Dashboard |

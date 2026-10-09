@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :recoverable, :rememberable,
-         :validatable, :omniauthable, omniauth_providers: [ :facebook ]
+         :validatable, :omniauthable, omniauth_providers: [ :facebook, :google_oauth2 ]
 
   ROLE_COLORS = {}.freeze
 
@@ -26,6 +26,22 @@ class User < ApplicationRecord
     where(provider: auth.provider, uid: auth.uid).first_or_create! do |user|
       user.email = auth.info.email.presence || "fb-#{auth.uid}@glowbook.id"
       user.name = auth.info.name.presence || I18n.t("display.facebook_user")
+      user.password = Devise.friendly_token[0, 20]
+      user.remote_avatar_url = auth.info.image if auth.info.image.present?
+    end
+  end
+
+  class InvalidGoogleIdentity < StandardError; end
+
+  def self.from_google(auth)
+    unless auth.provider == "google_oauth2" && auth.uid.present? &&
+        auth.info.email.present? && auth.info.email_verified == true
+      raise InvalidGoogleIdentity
+    end
+
+    where(provider: "google_oauth2", uid: auth.uid).first_or_create! do |user|
+      user.email = auth.info.email
+      user.name = auth.info.name.presence || I18n.t("integrations.google_user")
       user.password = Devise.friendly_token[0, 20]
       user.remote_avatar_url = auth.info.image if auth.info.image.present?
     end

@@ -18,12 +18,10 @@ Devise.setup do |config|
   config.send_email_changed_notification = true
 
   # ==> OmniAuth
-  facebook_app_id = ENV["FACEBOOK_APP_ID"]
-  facebook_app_secret = ENV["FACEBOOK_APP_SECRET"]
-  if facebook_app_id.present? && facebook_app_secret.present?
-    config.omniauth :facebook, facebook_app_id, facebook_app_secret,
-                   scope: "email,public_profile", info_fields: "email,name", image_size: "large"
-  end
+  config.omniauth :facebook, "", "", scope: "email,public_profile", info_fields: "email,name", image_size: "large",
+                 setup: ->(env) { OauthProviderSetup.call(env, "facebook") }
+  config.omniauth :google_oauth2, "", "", scope: "email,profile", access_type: "online", prompt: "select_account",
+                 setup: ->(env) { OauthProviderSetup.call(env, "google_oauth2") }
 
   # ==> Controller configuration
   config.sign_out_via = :delete

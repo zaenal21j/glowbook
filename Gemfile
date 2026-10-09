@@ -41,6 +41,7 @@ gem "ruby-vips", "~> 2.0"
 
 gem "devise", "~> 5.0"
 gem "omniauth-facebook", "~> 11.0"
+gem "omniauth-google-oauth2", "~> 1.2"
 gem "omniauth-rails_csrf_protection", "~> 2.0"
 gem "rails-i18n", "~> 8.0"
 

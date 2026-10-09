@@ -1,0 +1,21 @@
+<% providers = %w[google_oauth2 facebook].select { |provider| IntegrationSetting.effective(provider).ready? } %>
+<% if providers.any? %>
+  <div class="my-6 flex items-center gap-3">
+    <div class="h-px flex-1 bg-gray-200"></div>
+    <span class="text-xs text-ink-500"><%= t("auth.or") %></span>
+    <div class="h-px flex-1 bg-gray-200"></div>
+  </div>
+  <div class="space-y-3">
+    <% providers.each do |provider| %>
+      <%= button_to omniauth_authorize_path(resource_name, provider), data: { turbo: false }, class: "btn-secondary btn-lg w-full gap-2.5" do %>
+        <% if provider == "google_oauth2" %>
+          <svg aria-hidden="true" class="h-5 w-5" viewBox="0 0 48 48"><path fill="#4285F4" d="M43.61 24.46c0-1.36-.12-2.66-.35-3.92H24v7.42h11a9.4 9.4 0 0 1-4.08 6.16v5.13h6.6c3.86-3.56 6.09-8.8 6.09-14.79Z"/><path fill="#34A853" d="M24 44c5.5 0 10.11-1.82 13.48-4.75l-6.6-5.13c-1.83 1.23-4.17 1.98-6.88 1.98-5.32 0-9.84-3.59-11.46-8.43H5.73v5.29A20 20 0 0 0 24 44Z"/><path fill="#FBBC05" d="M12.54 27.67A12 12 0 0 1 11.9 24c0-1.28.22-2.51.64-3.67v-5.29H5.73A20 20 0 0 0 4 24c0 3.23.77 6.28 1.73 8.96Z"/><path fill="#EA4335" d="M24 11.9c3 0 5.68 1.03 7.8 3.05l5.83-5.83A19.5 19.5 0 0 0 24 4 20 20 0 0 0 5.73 15.04l6.81 5.29C14.16 15.49 18.68 11.9 24 11.9Z"/></svg>
+          <%= t("integrations.continue_google") %>
+        <% else %>
+          <svg aria-hidden="true" class="h-5 w-5" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.09 10.13 24v-8.44H7.08v-3.49h3.04V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.5c-1.5 0-1.96.93-1.96 1.89v2.26h3.32l-.53 3.49h-2.8V24C19.62 23.09 24 18.1 24 12.07Z"/></svg>
+          <%= t("auth.continue_facebook") %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

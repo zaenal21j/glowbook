@@ -1,0 +1,40 @@
+id:
+  integrations:
+    title: Integrasi
+    description: Kelola login sosial dan email aplikasi. Buat kredensial pada layanan penyedia, lalu simpan di sini. Perubahan berlaku tanpa restart aplikasi.
+    providers:
+      google_oauth2: Login Google
+      facebook: Login Facebook
+      smtp: Email SMTP
+    fields:
+      client_id: Client ID / App ID
+      client_secret: Client Secret / App Secret
+      address: Server SMTP
+      port: Port SMTP
+      username: Username SMTP
+      password: Password SMTP
+      from: Email pengirim
+      tls_mode: Keamanan koneksi
+    enabled: Diaktifkan · konfigurasi lengkap
+    disabled: Belum aktif
+    enable: Aktifkan integrasi
+    save: Simpan pengaturan
+    saved: Pengaturan integrasi berhasil disimpan.
+    secret_saved: Secret sudah tersimpan. Kosongkan untuk mempertahankannya, isi untuk menggantinya.
+    secret_empty: Secret belum tersimpan.
+    secret_retry: Perubahan belum disimpan. Isi ulang secret baru jika tadi diubah; kosongkan untuk mempertahankan secret lama.
+    clear_secret: Hapus secret tersimpan (nonaktifkan integrasi bila secret masih diperlukan).
+    callback_label: Authorized redirect URI / Callback URL
+    oauth_help: Salin URL ini persis ke pengaturan OAuth penyedia. Gunakan Client ID untuk aplikasi web. Aktivasi di sini belum membuktikan login berhasil pada layanan penyedia.
+    smtp_help: Gunakan STARTTLS (biasanya port 587) atau TLS (biasanya 465) sesuai penyedia. Isi username dan password bersama, atau kosongkan keduanya untuk relay tanpa autentikasi. Periksa pengiriman email nyata setelah konfigurasi.
+    server_help: Domain, DNS, HTTPS, database, dan kunci utama aplikasi tetap diatur di server. Pertahankan SECRET_KEY_BASE yang sama untuk membaca kredensial terenkripsi dari database dan backup.
+    starttls: STARTTLS (biasanya 587)
+    tls: TLS (biasanya 465)
+    missing_field: "%{field} wajib diisi untuk mengaktifkan integrasi."
+    invalid_smtp: Server, port, email pengirim, atau keamanan SMTP tidak valid.
+    smtp_credentials_pair: Username dan password SMTP harus diisi bersama.
+    continue_google: Lanjutkan dengan Google
+    google_user: Pengguna Google
+    oauth_failed: Login sosial dibatalkan atau belum tersedia. Silakan coba lagi atau masuk dengan email.
+    google_unverified: Login Google membutuhkan email yang sudah terverifikasi.
+    account_conflict: Email ini sudah terdaftar. Masuk menggunakan metode sebelumnya untuk akun tersebut.
