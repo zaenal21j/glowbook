@@ -112,6 +112,10 @@ Konfigurasi ini untuk satu host dengan satu container web dan satu worker. Sebel
 
 Pengguna dengan akun customer dapat mendaftarkan satu bisnis melalui `/daftar-bisnis`. Bisnis baru berstatus menunggu verifikasi; pemilik dapat melengkapi profil, layanan, staff, dan galeri dari dashboard. Admin menyetujui bisnis dari menu Admin → Bisnis. Jam awal otomatis Senin–Sabtu 09.00–17.00 dan Minggu tutup.
 
+Admin dapat menutup sementara pendaftaran baru dari menu Admin → Pengaturan. Menu Bisnis juga menyediakan aktivasi kembali untuk bisnis yang sebelumnya ditangguhkan. Tarif komisi di halaman pengaturan hanya menyimpan nilai rencana; nilai tersebut belum dipotong dari booking dan belum menjadi settlement.
+
+Admin dapat memperbarui status booking dari halaman detail menggunakan aturan status yang sama seperti dashboard bisnis. Pembatalan tetap ditolak jika pembayaran sedang berjalan atau sudah berhasil; refund belum tersedia. Laporan bulanan dapat diunduh sebagai CSV untuk rekonsiliasi manual.
+
 ## Chat customer dan bisnis
 
 Customer dapat memulai percakapan dari halaman bisnis. Pemilik serta staff aktif bisnis dapat membalas melalui menu Pesan. Isi pesan tersimpan di database dan halaman mengambil pesan baru setiap 4 detik; fitur ini tidak memerlukan layanan WebSocket tambahan.
@@ -131,4 +135,4 @@ export APP_HOST="https://<host-anda>"
 
 - `config/master.key` dan `.env.production` tidak disimpan di GitHub. `config/credentials.yml.enc` adalah file terenkripsi; key yang cocok harus disimpan secara terpisah jika nilainya diperlukan.
 - Untuk production, buat credentials dan master key baru: `rm config/credentials.yml.enc && bin/rails credentials:edit`. Simpan master key di secret manager atau konfigurasi deployment, jangan commit ke repository.
-- Upload galeri saat ini memakai Active Storage lokal (`storage/`). Untuk deployment production yang disk-nya sementara atau memiliki beberapa instance, konfigurasi object storage persisten (misalnya S3) sebelum menerima upload bisnis.
+- Upload galeri saat ini memakai Active Storage lokal (`storage/`). Docker Compose membagikan volume penyimpanan yang sama ke web dan worker agar analisis gambar latar dapat membaca berkas unggahan. Untuk deployment production dengan disk sementara atau beberapa instance web, konfigurasi object storage persisten sebelum menerima upload bisnis.

@@ -96,8 +96,11 @@ Rails.application.routes.draw do
     resources :users, only: %i[index show destroy], path: "pengguna"
     resources :businesses, only: %i[index show destroy], path: "bisnis" do
       member { patch :activate }
+      member { patch :reactivate }
     end
-    resources :bookings, only: %i[index show], path: "booking"
+    resources :bookings, only: %i[index show], path: "booking" do
+      member { patch :update_status }
+    end
     resources :categories, path: "kategori" do
       member { patch :toggle_popular }
     end
@@ -105,6 +108,7 @@ Rails.application.routes.draw do
     resources :promotions, only: %i[index destroy], path: "promosi"
     get "laporan", to: "reports#index", as: :reports
     get "pengaturan", to: "settings#show", as: :settings
+    patch "pengaturan", to: "settings#update"
   end
 
   # Favorites (customer)

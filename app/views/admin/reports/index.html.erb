@@ -3,10 +3,13 @@
 
 <div class="flex flex-wrap items-center justify-between gap-3">
   <h2 class="text-lg font-bold">Laporan Bulanan</h2>
-  <%= form_with url: admin_reports_path, method: :get, class: "flex gap-2" do %>
-    <%= month_field_tag :month, @month.strftime("%Y-%m"), class: "input" %>
-    <button class="btn-secondary btn-md">Tampilkan</button>
-  <% end %>
+  <div class="flex flex-wrap gap-2">
+    <%= form_with url: admin_reports_path, method: :get, class: "flex gap-2" do %>
+      <%= month_field_tag :month, @month.strftime("%Y-%m"), class: "input" %>
+      <button class="btn-secondary btn-md">Tampilkan</button>
+    <% end %>
+    <%= link_to "Unduh CSV", admin_reports_path(month: @month.strftime("%Y-%m"), format: :csv), class: "btn-primary btn-md" %>
+  </div>
 </div>
 <p class="text-sm text-ink-500 mt-1">Periode: <%= @month.strftime("%B %Y") %></p>
 

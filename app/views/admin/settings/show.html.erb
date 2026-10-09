@@ -6,26 +6,45 @@
     <h3 class="font-semibold">Identitas Platform</h3>
     <div class="mt-4 space-y-3 text-sm">
       <div class="flex justify-between border-b border-line pb-3"><span class="text-ink-500">Nama</span><strong>GlowBook</strong></div>
-      <div class="flex justify-between border-b border-line pb-3"><span class="text-ink-500">Domain</span><strong>glowbook.id</strong></div>
-      <div class="flex justify-between"><span class="text-ink-500">Bahasa / Mata Uang</span><strong>Indonesia / IDR</strong></div>
+      <div class="flex justify-between border-b border-line pb-3"><span class="text-ink-500">Domain saat ini</span><strong><%= request.host %></strong></div>
+      <div class="flex justify-between"><span class="text-ink-500">Mata uang</span><strong>IDR</strong></div>
     </div>
   </div>
 
   <div class="card p-6">
-    <h3 class="font-semibold">Komisi & Pembayaran</h3>
-    <div class="mt-4 space-y-3 text-sm">
-      <div class="flex justify-between border-b border-line pb-3"><span class="text-ink-500">Komisi platform (rencana)</span><strong>5% per booking</strong></div>
-      <div class="flex justify-between"><span class="text-ink-500">Pembayaran saat ini</span><strong>Bayar di tempat / transfer manual</strong></div>
-    </div>
-    <p class="mt-4 text-xs text-ink-400">Komisi belum dihitung otomatis dan belum ada settlement. Nilai booking pada laporan bukan saldo platform.</p>
-  </div>
+    <h3 class="font-semibold">Operasional Platform</h3>
+    <% if @settings.errors.any? %>
+      <div class="mt-4 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+        <ul class="list-inside list-disc">
+          <% @settings.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
 
-  <div class="card p-6">
-    <h3 class="font-semibold">Status Sistem</h3>
-    <div class="mt-4 space-y-3 text-sm">
-      <div class="flex justify-between border-b border-line pb-3"><span class="text-ink-500">Mode pendaftaran bisnis</span><span class="badge badge-success">Terbuka</span></div>
-      <div class="flex justify-between"><span class="text-ink-500">Versi aplikasi</span><strong class="font-mono">v1.0.0</strong></div>
-    </div>
-    <p class="mt-4 text-xs text-ink-400">Pengaturan dinamis (editable dari database) direncanakan untuk rilis berikutnya.</p>
+    <%= form_with model: @settings, url: admin_settings_path, method: :patch, class: "mt-4 space-y-5" do |f| %>
+      <label class="flex items-start gap-3 rounded-xl border border-line p-4">
+        <%= f.check_box :business_registration_open, class: "mt-1 rounded border-line text-primary-600" %>
+        <span>
+          <strong class="block text-sm">Pendaftaran bisnis dibuka</strong>
+          <span class="mt-1 block text-xs text-ink-500">Matikan untuk menolak pendaftaran baru. Bisnis yang sudah ada tetap dapat menggunakan dashboard.</span>
+        </span>
+      </label>
+
+      <div>
+        <%= f.label :commission_percentage, "Tarif komisi rencana (%)", class: "label" %>
+        <%= f.number_field :commission_percentage, min: 0, max: 100, step: "0.01", required: true, class: "input max-w-xs" %>
+        <p class="mt-1 text-xs text-ink-400">Nilai ini disimpan sebagai pengaturan untuk tahap keuangan berikutnya; saat ini belum dipotong dari transaksi dan belum ada payout otomatis.</p>
+      </div>
+
+      <div class="rounded-xl bg-gray-50 p-4 text-sm">
+        <span class="text-ink-500">Gateway online saat ini</span>
+        <strong class="ml-2"><%= @online_payments_enabled ? "Midtrans Sandbox" : "Belum dikonfigurasi" %></strong>
+        <p class="mt-1 text-xs text-ink-400">Konfigurasi gateway akan dikerjakan pada tahap pembayaran terakhir.</p>
+      </div>
+
+      <%= f.submit "Simpan Pengaturan", class: "btn-primary btn-md" %>
+    <% end %>
   </div>
 </div>

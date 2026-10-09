@@ -1,5 +1,6 @@
 class BusinessRegistrationsController < ApplicationController
   before_action :authenticate_user!
+  before_action :ensure_business_registration_open, only: :create
 
   def create
     unless current_user.customer? || current_user.business_owner?
@@ -41,6 +42,13 @@ class BusinessRegistrationsController < ApplicationController
   end
 
   private
+
+  def ensure_business_registration_open
+    @business_registrations_open = PlatformSetting.current.business_registration_open
+    return if @business_registrations_open
+
+    redirect_to registrasi_bisnis_path, alert: "Pendaftaran bisnis sedang ditutup sementara."
+  end
 
   def business_params
     params.require(:business).permit(:name, :address, :phone, :city_id, category_ids: [])

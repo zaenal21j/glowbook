@@ -22,7 +22,8 @@ RUN apt-get update -qq \
     && rm -rf /var/lib/apt/lists/*
 
 COPY Gemfile Gemfile.lock ./
-RUN bundle install \
+RUN sed -i 's/\r$//' Gemfile Gemfile.lock \
+    && bundle install \
     && rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git
 
 COPY . .

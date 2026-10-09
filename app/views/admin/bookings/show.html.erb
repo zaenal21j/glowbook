@@ -28,5 +28,40 @@
     <% end %>
   </div>
 
+  <% if @booking.payment_attempts.any? %>
+    <h3 class="mt-6 text-sm font-extrabold">Riwayat Pembayaran</h3>
+    <div class="mt-2 divide-y divide-gray-50 rounded-xl border border-gray-100">
+      <% @booking.payment_attempts.latest_first.each do |attempt| %>
+        <div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 text-sm">
+          <span class="font-mono text-xs"><%= attempt.order_id %></span>
+          <span><%= attempt.status.humanize %><%= " · #{attempt.provider_status}" if attempt.provider_status.present? %></span>
+          <span class="font-semibold"><%= format_idr(attempt.amount) %></span>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% if @booking.cancellable? || @booking.completable? || @booking.no_showable? %>
+    <h3 class="mt-6 text-sm font-extrabold">Tindakan Admin</h3>
+    <div class="mt-2 flex flex-wrap gap-2">
+      <% if @booking.cancellable? %>
+        <%= button_to "Batalkan booking", update_status_admin_booking_path(@booking), method: :patch,
+                      params: { status: "cancelled" },
+                      form: { data: { turbo_confirm: "Batalkan booking #{@booking.reference}?" } },
+                      class: "btn-secondary btn-sm text-red-600" %>
+      <% end %>
+      <% if @booking.completable? %>
+        <%= button_to "Tandai selesai", update_status_admin_booking_path(@booking), method: :patch,
+                      params: { status: "completed" }, class: "btn-secondary btn-sm" %>
+      <% end %>
+      <% if @booking.no_showable? %>
+        <%= button_to "Pelanggan tidak hadir", update_status_admin_booking_path(@booking), method: :patch,
+                      params: { status: "no_show" },
+                      form: { data: { turbo_confirm: "Tandai pelanggan tidak hadir?" } },
+                      class: "btn-secondary btn-sm" %>
+      <% end %>
+    </div>
+  <% end %>
+
   <%= link_to "← Kembali ke daftar", admin_bookings_path, class: "btn-secondary btn-md mt-6" %>
 </div>

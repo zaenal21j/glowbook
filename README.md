@@ -9,7 +9,7 @@ GlowBook adalah marketplace kecantikan dan wellness untuk mencari bisnis, meliha
 - Dashboard pelanggan dan pemilik bisnis, termasuk layanan, staff, booking, promosi, dan galeri.
 - Pendaftaran bisnis yang menunggu verifikasi admin.
 - Chat pelanggan dan bisnis, email booking melalui antrean, serta notifikasi in-app.
-- Dashboard admin untuk mengelola pengguna, bisnis, booking, kategori, ulasan, dan promosi.
+- Dashboard admin untuk mengelola pengguna, bisnis, booking, kategori, ulasan, promosi, dan laporan bulanan yang dapat diunduh sebagai CSV.
 - Service worker PWA untuk aset statis dan halaman fallback saat offline.
 
 ## Menjalankan secara lokal

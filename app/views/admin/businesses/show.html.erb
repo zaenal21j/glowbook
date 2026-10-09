@@ -14,6 +14,10 @@
         <%= button_to "Setujui & Aktifkan", activate_admin_business_path(@business), method: :patch,
                       form: { data: { turbo_confirm: "Publikasikan #{@business.name} di marketplace?" } },
                       class: "btn-primary btn-sm" %>
+      <% elsif @business.suspended? %>
+        <%= button_to "Aktifkan Kembali", reactivate_admin_business_path(@business), method: :patch,
+                      form: { data: { turbo_confirm: "Aktifkan kembali #{@business.name} di marketplace?" } },
+                      class: "btn-primary btn-sm" %>
       <% end %>
     </div>
   </div>

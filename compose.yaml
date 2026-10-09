@@ -69,6 +69,8 @@ services:
       SMTP_USERNAME: ${SMTP_USERNAME-}
       SMTP_PASSWORD: ${SMTP_PASSWORD-}
       JOB_CONCURRENCY: ${JOB_CONCURRENCY:-1}
+    volumes:
+      - storage_data:/rails/storage
 
 volumes:
   postgres_data:

@@ -5,7 +5,11 @@
     <h1 class="text-2xl font-extrabold">Daftarkan Bisnis Anda</h1>
     <p class="mt-2 text-sm text-ink-500">Buat profil awal, lalu lengkapi layanan dan staff dari dashboard. Bisnis akan ditinjau admin sebelum tampil di marketplace.</p>
 
-    <% if !user_signed_in? %>
+    <% if !@business_registrations_open %>
+      <div class="mt-6 rounded-xl bg-amber-50 p-4 text-sm text-amber-800">
+        Pendaftaran bisnis sedang ditutup sementara. Silakan coba kembali nanti.
+      </div>
+    <% elsif !user_signed_in? %>
       <div class="mt-6 rounded-xl bg-primary-50 p-4 text-sm text-primary-800">
         Anda perlu masuk atau membuat akun pelanggan sebelum mendaftarkan bisnis.
       </div>

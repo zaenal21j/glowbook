@@ -1,8 +1,23 @@
 class Admin::SettingsController < Admin::BaseController
   def show
-    @facebook_enabled = Rails.application.config.x.facebook_oauth_enabled
-    @user_count = User.count
-    @business_count = Business.count
-    @storage_service = Rails.application.config.active_storage.service.to_s
+    @settings = PlatformSetting.current
+    @online_payments_enabled = Rails.configuration.x.midtrans_enabled
+  end
+
+  def update
+    @settings = PlatformSetting.current
+
+    if @settings.update(settings_params)
+      redirect_to admin_settings_path, notice: "Pengaturan platform berhasil disimpan."
+    else
+      @online_payments_enabled = Rails.configuration.x.midtrans_enabled
+      render :show, status: :unprocessable_entity
+    end
+  end
+
+  private
+
+  def settings_params
+    params.require(:platform_setting).permit(:business_registration_open, :commission_percentage)
   end
 end

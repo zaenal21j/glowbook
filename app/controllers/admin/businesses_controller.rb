@@ -33,4 +33,12 @@ class Admin::BusinessesController < Admin::BaseController
   rescue ActiveRecord::RecordNotFound
     redirect_to admin_businesses_path(status: "pending"), alert: "Bisnis tidak ditemukan atau sudah diproses."
   end
+
+  def reactivate
+    business = Business.suspended.find(params[:id])
+    business.update!(status: :active)
+    redirect_to admin_businesses_path(status: "suspended"), notice: "Bisnis \"#{business.name}\" diaktifkan kembali."
+  rescue ActiveRecord::RecordNotFound
+    redirect_to admin_businesses_path(status: "suspended"), alert: "Bisnis tidak ditemukan atau sudah diproses."
+  end
 end

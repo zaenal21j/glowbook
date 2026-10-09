@@ -1,6 +1,8 @@
 # GlowBook demo data - realistic fictional Indonesian beauty & wellness marketplace.
 # Idempotent: wipes domain tables first, then recreates everything.
 
+require "open-uri"
+
 puts "== Seeding GlowBook =="
 
 # --- Clean slate -----------------------------------------------------------
@@ -220,8 +222,9 @@ BUSINESS_TEMPLATE.each_with_index do |(name, cat_slugs, city_name, rating, servi
 
   # Gallery images
   4.times do |gi|
-    g = BusinessGallery.create!(business: business, caption: "Galeri #{gi + 1}", position: gi)
+    g = BusinessGallery.new(business: business, caption: "Galeri #{gi + 1}", position: gi)
     attach(g, :image, "#{slug}-gallery-#{gi}", 1200, 800)
+    g.save!
   end
 
   attach(business, :cover_image, "#{slug}-cover", 1600, 900)
