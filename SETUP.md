@@ -102,7 +102,7 @@ Project menyertakan Dockerfile untuk image Rails production dan Compose untuk sa
 2. Jalankan `docker compose --env-file .env.production config --quiet` untuk memeriksa konfigurasi Compose.
 3. Jalankan `docker compose --env-file .env.production up --build -d`. Container web menunggu PostgreSQL sehat, menyiapkan database aplikasi dan antrean sebelum server mulai, lalu menyediakan health check di `/up`. Container `worker` mulai setelah web sehat dan memproses email booking.
 
-Port host default adalah `127.0.0.1:3001`; letakkan reverse proxy HTTPS di depannya dan teruskan header protokol HTTPS. Jangan membuka port container langsung ke internet. Atur `GLOWBOOK_PORT` di `.env.production` jika reverse proxy memakai port host lain.
+Port host default adalah `127.0.0.1:3001`; letakkan reverse proxy HTTPS di depannya dan teruskan header protokol HTTPS. Jangan membuka port container langsung ke internet. Atur `GLOWBOOK_PORT` di `.env.production` jika reverse proxy memakai port host lain. Pengaturan `RAILS_ASSUME_SSL` dan `RAILS_FORCE_SSL` bernilai `true` secara default. Untuk Compose lokal yang sengaja dibuka lewat HTTP, isi keduanya `false` dan atur `APP_HOST=http://localhost`; jangan gunakan pengaturan HTTP tersebut di server publik.
 
 Volume `postgres_data` dan `storage_data` tetap ada setelah `docker compose down`. Jangan menambahkan `-v` ketika menghentikan layanan kecuali memang ingin menghapus database dan file galeri. Database antrean terpisah dari data aplikasi; cadangkan keduanya: `docker compose --env-file .env.production exec -T db pg_dump -U glowbook glowbook_production > glowbook-backup.sql` dan `docker compose --env-file .env.production exec -T db pg_dump -U glowbook glowbook_production_queue > glowbook-queue-backup.sql`.
 
