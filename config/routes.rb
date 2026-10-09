@@ -50,6 +50,7 @@ Rails.application.routes.draw do
   # Public marketplace
   root "home#index"
   get "cari", to: "searches#index", as: :search
+  post "cari/terdekat", to: "searches#nearby", as: :nearby_search
   get "kota/:slug", to: "cities#show", as: :city
   get "kategori/:slug", to: "categories#show", as: :category
   get "untuk-bisnis", to: "pages#business", as: :for_business

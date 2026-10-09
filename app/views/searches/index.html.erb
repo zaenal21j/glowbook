@@ -10,15 +10,31 @@
     </div>
   <% end %>
 
-  <div class="mt-3 flex items-center justify-between">
+  <div class="mt-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
     <p class="text-sm text-ink-500"><strong class="text-ink-900"><%= @total_count %></strong> salon ditemukan<%= " untuk \"#{params[:q]}\"" if params[:q].present? %><%= " di #{@active_city.name}" if @active_city %></p>
-    <% sort = params[:sort] || "rating" %>
-    <div class="hidden gap-2 sm:flex">
+    <% sort = @sort %>
+    <div class="flex flex-wrap gap-2">
       <%= link_to "Rating Tertinggi", search_path(request.query_parameters.merge(sort: "rating")), class: "chip #{sort == 'rating' ? 'chip-active' : ''}" %>
       <%= link_to "Harga Terendah", search_path(request.query_parameters.merge(sort: "price")), class: "chip #{sort == 'price' ? 'chip-active' : ''}" %>
-      <%= link_to "Terdekat", "#", class: "chip hidden lg:inline-flex" %>
+      <%= form_with url: nearby_search_path, method: :post, local: true, class: "flex items-center gap-2", data: { controller: "nearby-search" } do %>
+        <% %i[q city min_price max_price min_rating open_today promo].each do |key| %>
+          <%= hidden_field_tag key, params[key] if params[key].present? %>
+        <% end %>
+        <% Array(params[:categories]).each do |category_slug| %>
+          <%= hidden_field_tag "categories[]", category_slug %>
+        <% end %>
+        <%= hidden_field_tag :latitude, nil, data: { nearby_search_target: "latitude" } %>
+        <%= hidden_field_tag :longitude, nil, data: { nearby_search_target: "longitude" } %>
+        <button type="button" data-action="click->nearby-search#locate" data-nearby-search-target="button" class="chip #{'chip-active' if sort == 'nearby' && @nearby_active}">Terdekat</button>
+        <span class="sr-only" aria-live="polite" data-nearby-search-target="status"></span>
+      <% end %>
     </div>
   </div>
+  <% if sort == "nearby" && !@nearby_active %>
+    <p class="mt-2 text-xs text-ink-500" role="status">Tekan Terdekat dan izinkan akses lokasi browser untuk mengurutkan bisnis berdasarkan jarak. Lokasi disimpan sementara selama maksimal 30 menit.</p>
+  <% elsif @nearby_active %>
+    <p class="mt-2 text-xs text-ink-500" role="status">Hasil diurutkan berdasarkan jarak dari lokasi Anda. Bisnis yang belum mengatur koordinat muncul di bagian bawah. Lokasi Anda disimpan sementara dan dihapus dari sesi setelah 30 menit.</p>
+  <% end %>
 
   <div class="mt-4 grid gap-6 lg:grid-cols-[260px_1fr]">
     <!-- Filters sidebar (desktop) -->

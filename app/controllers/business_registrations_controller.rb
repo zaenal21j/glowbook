@@ -51,7 +51,7 @@ class BusinessRegistrationsController < ApplicationController
   end
 
   def business_params
-    params.require(:business).permit(:name, :address, :phone, :city_id, category_ids: [])
+    params.require(:business).permit(:name, :address, :phone, :city_id, :latitude, :longitude, category_ids: [])
   end
 
   def unique_slug(name)

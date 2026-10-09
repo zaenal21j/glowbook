@@ -1,6 +1,7 @@
 <%= form_with url: search_path, method: :get, local: true, data: { controller: "autosubmit" } do |f| %>
   <%= hidden_field_tag :q, params[:q] if params[:q].present? %>
   <%= hidden_field_tag :sort, params[:sort] if params[:sort].present? %>
+  <%= hidden_field_tag :city, params[:city] if params[:city].present? %>
   <div class="card sticky top-20 p-5">
     <h3 class="font-bold">Filter</h3>
 

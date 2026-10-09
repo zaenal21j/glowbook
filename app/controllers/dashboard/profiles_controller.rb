@@ -15,7 +15,7 @@ class Dashboard::ProfilesController < Dashboard::BaseController
   private
 
   def profile_params
-    permitted = %i[name address phone description]
+    permitted = %i[name address phone description latitude longitude]
     permitted << { cover_image: [], logo_image: [] }
     params.require(:business).permit(*permitted)
   end

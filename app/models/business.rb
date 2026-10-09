@@ -50,7 +50,28 @@ class Business < ApplicationRecord
     scope
   }
   scope :by_rating, -> { order(avg_rating: :desc).order(:name) }
-  scope :by_min_price, -> { order(Arel.sql("(SELECT MIN(price) FROM services WHERE services.business_id = businesses.id) ASC NULLS LAST")) }
+  scope :by_min_price, -> {
+    service_prices = Service.select("business_id, MIN(price) AS lowest_service_price").group(:business_id).to_sql
+    joins("LEFT JOIN (#{service_prices}) service_prices ON service_prices.business_id = businesses.id")
+      .select("businesses.*, service_prices.lowest_service_price")
+      .order(Arel.sql("lowest_service_price ASC NULLS LAST"))
+      .order(:name)
+  }
+  scope :near_point, ->(latitude, longitude) {
+    latitude = Float(latitude).round(6)
+    longitude = Float(longitude).round(6)
+    distance = <<~SQL.squish
+      6371 * acos(LEAST(1.0, GREATEST(-1.0,
+        cos(radians(#{latitude})) * cos(radians(businesses.latitude)) *
+        cos(radians(businesses.longitude) - radians(#{longitude})) +
+        sin(radians(#{latitude})) * sin(radians(businesses.latitude))
+      )))
+    SQL
+
+    select("businesses.*, (#{distance}) AS distance_km")
+      .order(Arel.sql("distance_km ASC NULLS LAST"))
+      .order(:name)
+  }
 
   def self.ransackable_attributes(_auth = nil)
     %w[name city_id]
