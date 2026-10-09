@@ -80,6 +80,7 @@ Rails.application.routes.draw do
     get "pelanggan", to: "customers#index", as: :customers
     get "promosi", to: "promotions#index", as: :promotions
     get "analitik", to: "analytics#show", as: :analytics
+    get "keuangan", to: "payments#index", as: :finance
     get "profil-bisnis", to: "profiles#show", as: :profile
     resources :galleries, only: %i[index create destroy], path: "galeri"
     get "pengaturan", to: "settings#show", as: :settings
@@ -102,6 +103,7 @@ Rails.application.routes.draw do
     resources :bookings, only: %i[index show], path: "booking" do
       member { patch :update_status }
     end
+    get "pembayaran", to: "payments#index", as: :payments
     resources :categories, path: "kategori" do
       member { patch :toggle_popular }
     end

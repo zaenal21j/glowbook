@@ -15,4 +15,11 @@ class PaymentAttempt < ApplicationRecord
   def paid?
     status == "settlement" || (status == "capture" && provider_status == "capture")
   end
+
+  def status_badge_class
+    return "badge-green" if paid?
+    return "badge-amber" if status == "pending"
+
+    "badge-red"
+  end
 end
