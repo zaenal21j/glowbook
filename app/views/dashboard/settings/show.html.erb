@@ -19,6 +19,12 @@
   </div>
 
   <div class="card p-6">
+    <h3 class="font-semibold"><%= t("account.customer.change_password") %></h3>
+    <p class="mt-1 text-sm text-ink-500"><%= t("account.customer.password_help") %></p>
+    <%= link_to t("account.customer.change_password"), account_password_path, class: "btn-secondary btn-md mt-4" %>
+  </div>
+
+  <div class="card p-6">
     <h3 class="font-semibold"><%= t("dashboard.settings_page.preferences") %></h3>
     <div class="mt-4 space-y-3 text-sm">
       <div class="flex justify-between border-b border-line pb-3"><span class="text-ink-500"><%= t("dashboard.settings_page.auto_confirmation") %></span><span class="badge badge-success"><%= t("dashboard.settings_page.active") %></span></div>

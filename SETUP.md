@@ -79,7 +79,7 @@ export FACEBOOK_APP_SECRET="..."
 
 Tanpa env var ini, tombol "Lanjut dengan Facebook" otomatis disembunyikan — aplikasi tetap jalan normal dengan login email/password.
 
-## Opsional: Email notifikasi booking
+## Email booking dan keamanan akun
 
 GlowBook mengirim email konfirmasi ke pelanggan dan pemilik bisnis saat booking dibuat, lalu email pembatalan/perubahan jadwal saat booking diperbarui. Peristiwa yang sama juga muncul di halaman **Notifikasi** untuk pelanggan dan pemilik bisnis; notifikasi dapat ditandai dibaca satu per satu atau sekaligus. Pada development, email disimpan sebagai file di `tmp/mail/`. Untuk production, atur SMTP berikut (contoh di bawah untuk server SMTP dengan STARTTLS):
 
@@ -92,7 +92,11 @@ export SMTP_USERNAME="..."
 export SMTP_PASSWORD="..."
 ```
 
-Production menonaktifkan pengiriman jika `SMTP_ADDRESS` belum diisi. Email booking disimpan di antrean PostgreSQL Solid Queue, diproses oleh service `worker`, dan dicoba ulang sampai lima kali untuk gangguan SMTP sementara. Server web menyiapkan kedua database sebelum aktif; service worker menunggu web sehat agar skema antrean sudah siap. Development tetap memakai adapter lokal yang ada.
+Production menonaktifkan pengiriman jika `SMTP_ADDRESS` belum diisi. Email booking, reset kata sandi, pemberitahuan perubahan kata sandi dan perubahan email disimpan di antrean PostgreSQL Solid Queue, diproses oleh service `worker`, dan dicoba ulang sampai lima kali untuk gangguan SMTP sementara. Server web menyiapkan kedua database sebelum aktif; service worker menunggu web sehat agar skema antrean sudah siap. Development tetap memakai adapter lokal yang ada.
+
+Pengguna yang sudah masuk dapat mengganti kata sandi dari Pengaturan → Ubah kata sandi, termasuk dari pengaturan admin dan bisnis. Kata sandi saat ini wajib diisi; sesi browser yang melakukan perubahan tetap aktif. Mengganti email login dari Profil juga memerlukan kata sandi saat ini dan mengirim pemberitahuan ke alamat email lama. Nama dan nomor telepon dapat diperbarui tanpa mengganti kata sandi.
+
+Pengguna yang lupa kata sandi dapat membuka `/users/password/new` dari halaman masuk. Respons permintaan reset sama untuk email terdaftar maupun tidak terdaftar. Tautan reset berlaku enam jam dan hanya dapat digunakan sekali. Bahasa email mengikuti bahasa saat permintaan dibuat. Argumen job email tidak dicatat ke log agar token reset tidak ikut tercetak. Pengiriman ke kotak masuk nyata tetap memerlukan konfigurasi SMTP dan worker yang berjalan.
 
 ## Menjalankan image production dengan Docker Compose
 

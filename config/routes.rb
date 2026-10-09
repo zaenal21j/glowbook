@@ -35,6 +35,8 @@ Rails.application.routes.draw do
     get "profil", to: "profiles#show", as: :profile
     patch "profil", to: "profiles#update"
     get "pengaturan", to: "settings#show", as: :settings
+    get "kata-sandi", to: "passwords#show", as: :password
+    patch "kata-sandi", to: "passwords#update"
   end
 
   # Cancel/reschedule bookings (customer)

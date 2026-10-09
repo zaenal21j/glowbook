@@ -1,0 +1,23 @@
+<% content_for :page_title, t("account.customer.change_password") %>
+
+<div class="card max-w-xl p-6">
+  <h1 class="text-xl font-extrabold"><%= t("account.customer.change_password") %></h1>
+  <p class="mt-2 text-sm text-ink-500"><%= t("account.security.password_help") %></p>
+  <%= form_with model: @user, url: account_password_path, method: :patch, class: "mt-6 space-y-4" do |f| %>
+    <%= render "shared/form_errors", record: @user %>
+    <div>
+      <%= f.label :current_password, t("account.security.current_password"), class: "label" %>
+      <%= f.password_field :current_password, required: true, autocomplete: "current-password", class: "input" %>
+    </div>
+    <div>
+      <%= f.label :password, t("auth.new_password"), class: "label" %>
+      <%= f.password_field :password, required: true, minlength: 8, maxlength: 128, autocomplete: "new-password", class: "input" %>
+    </div>
+    <div>
+      <%= f.label :password_confirmation, t("auth.confirm_password"), class: "label" %>
+      <%= f.password_field :password_confirmation, required: true, autocomplete: "new-password", class: "input" %>
+    </div>
+    <%= f.submit t("auth.save_password"), class: "btn-primary btn-lg w-full" %>
+  <% end %>
+  <%= link_to t("account.security.back_settings"), account_settings_path, class: "mt-4 inline-block text-sm font-semibold text-primary-600" %>
+</div>

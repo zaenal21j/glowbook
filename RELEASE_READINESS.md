@@ -7,28 +7,28 @@ Audit lokal: 10 Oktober 2026 (Asia/Bangkok). Status ini mencatat bukti yang suda
 | Area | Kondisi saat audit | Bukti |
 | --- | --- | --- |
 | Marketplace | Homepage termasuk database kosong, filter kota/kategori/rating/promo/jam buka/harga, urutan terdekat dan pagination diperiksa | `spec/requests/marketplace_spec.rb`; endpoint lokal `/` dan `/cari?open_today=1` memberi 200 |
-| Akun | Daftar, login, peran, pembatasan penghapusan akun bersejarah, dan pesan Devise Indonesia diperiksa | Request specs akun/admin/OAuth; login admin dan owner nyata melalui formulir dengan CSRF berhasil |
+| Akun | Daftar, login, peran, pembatasan penghapusan akun bersejarah, ubah kata sandi saat login, reset sekali pakai dan proteksi perubahan email diperiksa | Request specs akun/admin/OAuth; 11 account security examples; email reset/perubahan akun melalui test adapter; SMTP nyata tetap belum dibuktikan |
 | Booking | Alur lima langkah, rangkaian layanan, kualifikasi staff, bentrok, pembatalan dan reschedule diperiksa | Booking flow/schedule/builder/availability specs; constraint PostgreSQL tetap aktif |
 | Dashboard bisnis | Jam buka, shift, istirahat, blokir waktu, layanan, staff dan profil diperiksa | `business_scheduling_spec.rb`; halaman profil, staff dan blokir waktu lokal memberi 200 |
 | Onboarding | Customer membuat bisnis pending dan mengelolanya; publikasi memerlukan persetujuan admin | `customer_business_workflows_spec.rb` |
 | Galeri | Upload, tampil publik, validasi gambar, hapus dan pembatasan antar bisnis diperiksa | Request specs galeri; halaman galeri lokal memberi 200 |
 | Chat dan notifikasi | Pertukaran pesan, status dibaca, pembatasan peserta, notifikasi dan tiga jenis email booking diperiksa | Request specs; enam email terkirim melalui test adapter. Pengiriman SMTP nyata belum dibuktikan |
 | Admin | Seluruh bagian utama merender dalam dua bahasa; persetujuan, suspend/reactivate, kategori, pengaturan dan proteksi akun diperiksa | `admin_workflows_spec.rb`; sepuluh halaman admin lokal memberi 200; menu admin dan bisnis dibuka pada viewport ponsel 390 × 844 |
-| Bahasa | Indonesia dan Inggris untuk UI utama dan pesan booking | 883 key literal tersedia pada kedua locale; key dinamis juga dicakup sebagian request specs |
+| Bahasa | Indonesia dan Inggris untuk UI utama, pesan booking dan email keamanan akun | 894 key literal tersedia pada kedua locale; key dinamis juga dicakup sebagian request specs |
 | PWA | Manifest, worker, cache aset statis dan fallback offline tersedia | Tujuh pengujian service worker lulus; endpoint nyata memberi 200; browser menampilkan fallback setelah instance sementara port 3002 dihentikan. Instalasi pada perangkat pengguna belum diperiksa |
 | Instalasi baru | Task `glowbook:bootstrap` membuat kota/kategori/admin tanpa akun demo; aman diulang | Empat service specs; seed demo ditolak di production |
 
 ## Verifikasi lokal yang selesai
 
-- RSpec: **136 examples, 0 failures**, seed `9012`.
+- RSpec: **147 examples, 0 failures**, seed `61082`.
 - Node service worker: **7 passed, 0 failed**.
-- `script/check_release.rb`: 92 file Ruby, 92 template ERB, 883 key terjemahan dan 155 pasangan controller/action lolos.
+- `script/check_release.rb`: 93 file Ruby, 99 template ERB, 894 key terjemahan dan 157 pasangan controller/action lolos.
 - `rails zeitwerk:check`: eager loading berhasil.
 - Brakeman: **0 errors, 0 security warnings**.
 - Dependency pengujian dapat dipasang dengan lockfile frozen melalui `bundle install --local`.
 - Image production web dan worker berhasil dibangun dan dijalankan pada `http://localhost:3000`; kolom staff bio tersedia dan tidak ada migrasi tertunda.
 - Cadangan database lokal dibuat sebelum penerapan pada `tmp/local_backups/`; folder tersebut tidak termasuk GitHub.
-- CI GitHub commit `779cb8c` lulus seluruh tahap, termasuk build image verifikasi dari database kosong dan build production: [hasil run](https://github.com/zaenal21j/glowbook/actions/runs/37964594297). Perubahan sesudah commit tersebut tetap harus melewati CI.
+- CI GitHub commit `055eded` lulus seluruh tahap, termasuk build image verifikasi dari database kosong dan build production: [hasil run](https://github.com/zaenal21j/glowbook/actions/runs/37965763346). Perubahan keamanan akun sesudah commit tersebut tetap harus melewati CI.
 - Pemeriksaan tambahan menu ponsel: 32 request examples admin/jadwal bisnis lulus; navigasi menu juga diperiksa di browser.
 
 Pengujian Rails menggunakan PostgreSQL terpisah dari database aplikasi lokal. Hasil ini tidak membuktikan kapasitas beban production atau pengiriman email ke penyedia SMTP.

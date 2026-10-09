@@ -40,6 +40,10 @@ class User < ApplicationRecord
       conversations.exists? || chat_messages.exists?
   end
 
+  def send_devise_notification(notification, *args)
+    devise_mailer.public_send(notification, self, *args).deliver_later
+  end
+
   def full_name
     name.presence || email.split("@").first.titleize
   end

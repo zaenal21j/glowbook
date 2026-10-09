@@ -1,6 +1,6 @@
 # Devise configuration for GlowBook
 Devise.setup do |config|
-  config.mailer_sender = "no-reply@glowbook.id"
+  config.mailer_sender = ENV.fetch("MAILER_FROM", "no-reply@glowbook.id")
 
   require "devise/orm/active_record"
 
@@ -13,6 +13,9 @@ Devise.setup do |config|
 
   # ==> Configure the parent action for password reset emails
   config.reset_password_within = 6.hours
+  config.paranoid = true
+  config.send_password_change_notification = true
+  config.send_email_changed_notification = true
 
   # ==> OmniAuth
   facebook_app_id = ENV["FACEBOOK_APP_ID"]

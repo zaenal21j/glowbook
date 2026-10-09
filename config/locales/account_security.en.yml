@@ -1,0 +1,16 @@
+en:
+  account:
+    security:
+      current_password: Current password
+      password_help: Enter your current password and a new password of at least 8 characters. If you forgot it, sign out and use the forgot-password link on the sign-in page.
+      password_updated: Your password has been updated.
+      back_settings: Back to settings
+      email_password_help: Required only when changing the email address used to sign in.
+  account_email:
+    greeting: "Hello %{name},"
+    reset_intro: We received a request to reset the password for your GlowBook account.
+    reset_link: Reset password
+    reset_expiry: This link expires in 6 hours and can only be used once. If you did not request a change, ignore this email; your password will remain the same.
+    password_changed: The password for your GlowBook account has been updated.
+    email_changed: "The email address for your GlowBook account has been changed to %{email}."
+    unexpected_change: If you did not make this change, use the forgot-password page immediately or contact the GlowBook administrator.

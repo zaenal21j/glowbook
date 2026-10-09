@@ -1,0 +1,21 @@
+id:
+  activerecord:
+    attributes:
+      user:
+        current_password: Kata sandi saat ini
+        reset_password_token: Tautan reset kata sandi
+  account:
+    security:
+      current_password: Kata sandi saat ini
+      password_help: Masukkan kata sandi saat ini dan kata sandi baru minimal 8 karakter. Jika lupa, keluar lalu gunakan tautan lupa kata sandi di halaman masuk.
+      password_updated: Kata sandi berhasil diperbarui.
+      back_settings: Kembali ke pengaturan
+      email_password_help: Wajib diisi hanya jika Anda mengganti alamat email untuk masuk.
+  account_email:
+    greeting: "Halo %{name},"
+    reset_intro: Kami menerima permintaan untuk mengatur ulang kata sandi akun GlowBook Anda.
+    reset_link: Atur ulang kata sandi
+    reset_expiry: Tautan ini berlaku selama 6 jam dan hanya dapat dipakai satu kali. Jika Anda tidak meminta perubahan, abaikan email ini; kata sandi Anda tetap sama.
+    password_changed: Kata sandi akun GlowBook Anda telah diperbarui.
+    email_changed: "Alamat email akun GlowBook Anda telah diperbarui menjadi %{email}."
+    unexpected_change: Jika Anda tidak melakukan perubahan ini, segera gunakan halaman lupa kata sandi atau hubungi pengelola GlowBook.
