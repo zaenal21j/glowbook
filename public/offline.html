@@ -14,9 +14,19 @@
   <body>
     <main>
       <div class="mark" aria-hidden="true">✿</div>
-      <h1>Kamu sedang offline</h1>
-      <p>Halaman ini perlu koneksi internet. Sambungkan kembali lalu coba muat ulang.</p>
-      <button type="button" onclick="window.location.reload()">Coba lagi</button>
+      <h1 id="offline-title">Kamu sedang offline</h1>
+      <p id="offline-description">Halaman ini perlu koneksi internet. Sambungkan kembali lalu coba muat ulang.</p>
+      <button id="offline-retry" type="button" onclick="window.location.reload()">Coba lagi</button>
     </main>
+    <script>
+      try {
+        if (localStorage.getItem("glowbook_locale") === "en") {
+          document.documentElement.lang = "en"
+          document.getElementById("offline-title").textContent = "You are offline"
+          document.getElementById("offline-description").textContent = "This page needs an internet connection. Reconnect and try reloading."
+          document.getElementById("offline-retry").textContent = "Try again"
+        }
+      } catch (_) {}
+    </script>
   </body>
 </html>
