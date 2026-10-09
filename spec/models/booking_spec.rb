@@ -33,6 +33,23 @@ RSpec.describe Booking do
   end
 
   describe "scopes" do
+    it "uses the same exact local month boundaries for Date and Time inputs" do
+      travel_to Time.zone.local(2026, 10, 12, 12)
+      business = create(:business)
+      previous = create(:booking, :past, business: business,
+        start_time: Time.zone.local(2026, 9, 30, 23, 59), end_time: Time.zone.local(2026, 10, 1))
+      first = create(:booking, :past, business: business,
+        start_time: Time.zone.local(2026, 10, 1), end_time: Time.zone.local(2026, 10, 1, 1))
+      last = create(:booking, business: business,
+        start_time: Time.zone.local(2026, 10, 31, 23, 59), end_time: Time.zone.local(2026, 11, 1, 0, 30))
+      following = create(:booking, business: business,
+        start_time: Time.zone.local(2026, 11, 1), end_time: Time.zone.local(2026, 11, 1, 1))
+      [Date.new(2026, 10, 12), Time.zone.local(2026, 10, 12, 12)].each do |month|
+        expect(business.bookings.in_month(month)).to contain_exactly(first, last)
+      end
+      expect(business.bookings.in_month(Time.current.beginning_of_month)).not_to include(previous, following)
+    end
+
     it "upcoming excludes past and cancelled" do
       business = create(:business)
       upcoming = create(:booking, business: business, start_time: 2.days.from_now.change(hour: 14), end_time: 2.days.from_now.change(hour: 15))

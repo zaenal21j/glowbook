@@ -411,12 +411,14 @@ en:
       revenue_note: Service value, not confirmed payments.
       bookings_month: Bookings this month
       new_customers: New customers this month
+      new_customers_note: Customers whose first booking at this business is scheduled for the current month.
       average_rating: Average rating
       confirmed_online: Confirmed online payments
       online_detail: "%{count} bookings confirmed by the gateway this month; in-person payments excluded."
       completed_last_30: Completed booking value in the last 30 days
       no_show_note: No-show bookings are excluded. Payment is not verified here.
       popular_services: Most popular services this month
+      popular_services_note: Based on bookings scheduled this month; cancelled bookings are excluded.
       empty: No bookings this month yet.
     gallery_page:
       title: Business gallery

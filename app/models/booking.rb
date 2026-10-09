@@ -27,7 +27,10 @@ class Booking < ApplicationRecord
   scope :past, -> { where(status: %w[completed no_show]).order(start_time: :desc) }
   scope :on_date, ->(date) { where("start_time >= ? AND start_time < ?", date.beginning_of_day, date.end_of_day) }
   scope :for_week, ->(week_start) { where("start_time >= ? AND start_time < ?", week_start, week_start + 7.days) }
-  scope :in_month, ->(month_start) { where("start_time >= ? AND start_time < ?", month_start, month_start.end_of_month + 1.day) }
+  scope :in_month, ->(month) {
+    month_start = month.to_date.beginning_of_month.beginning_of_day
+    where(start_time: month_start...month_start.next_month)
+  }
 
   before_validation :generate_reference, on: :create
 

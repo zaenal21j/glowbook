@@ -601,12 +601,14 @@ id:
       revenue_note: Nilai layanan, bukan konfirmasi pembayaran diterima.
       bookings_month: Booking Bulan Ini
       new_customers: Pelanggan Baru Bulan Ini
+      new_customers_note: Pelanggan dengan jadwal booking pertama di bisnis ini pada bulan berjalan.
       average_rating: Rating Rata-rata
       confirmed_online: Pembayaran Online Terkonfirmasi
       online_detail: "%{count} booking dikonfirmasi gateway bulan ini; bayar di tempat tidak termasuk."
       completed_last_30: Nilai Booking Selesai 30 Hari Terakhir
       no_show_note: Booking no-show tidak dihitung. Angka ini belum memverifikasi pembayaran.
       popular_services: Layanan Terpopuler Bulan Ini
+      popular_services_note: Berdasarkan jadwal booking bulan ini; booking batal tidak dihitung.
       empty: Belum ada booking bulan ini.
     gallery_page:
       title: Galeri Bisnis
