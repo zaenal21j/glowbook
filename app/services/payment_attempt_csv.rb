@@ -1,15 +1,10 @@
 class PaymentAttemptCsv
-  HEADERS = [
-    "Order ID", "Booking", "Tanggal Booking", "Bisnis", "Pelanggan", "Nominal IDR",
-    "Metode", "Status", "Status Gateway", "ID Transaksi", "Dikonfirmasi Pada", "Dibuat Pada"
-  ].freeze
-
   def initialize(scope)
     @scope = scope
   end
 
   def render
-    rows = [ HEADERS ]
+    rows = [ I18n.t("exports.payment_headers") ]
     @scope.each do |payment|
       booking = payment.booking
       rows << [

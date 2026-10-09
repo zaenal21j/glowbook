@@ -3,6 +3,7 @@
   <head>
     <title><%= content_for(:title) || t("account.title") %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= render "shared/pwa_head" %>
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag :app %>
     <%= javascript_importmap_tags %>

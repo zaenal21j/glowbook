@@ -30,5 +30,14 @@ invalid = actions.filter_map do |name, action|
 end
 abort "Missing route actions:\n#{invalid.join("\n")}" if invalid.any?
 
+registered_controllers = File.read("app/javascript/controllers/index.js").scan(/application\.register\(["']([^"']+)["']/).flatten
+referenced_controllers = views.flat_map do |path|
+  source = File.read(path)
+  source.scan(/data-controller=["']([^"']+)["']/).flatten.flat_map(&:split) +
+    source.scan(/data-action=["']([^"']+)["']/).flatten.flat_map { |action| action.scan(/([a-z][a-z0-9-]*)#/).flatten }
+end.uniq
+unregistered = referenced_controllers - registered_controllers
+abort "Unregistered Stimulus controllers:\n#{unregistered.join("\n")}" if unregistered.any?
+
 puts({ ruby_files: sources.size, erb_templates: views.size, static_translation_keys: keys.size,
-       locales: %w[id en], route_actions: actions.size, result: "passed" }.to_json)
+       locales: %w[id en], route_actions: actions.size, stimulus_controllers: registered_controllers.size, result: "passed" }.to_json)

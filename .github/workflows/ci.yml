@@ -23,7 +23,7 @@ jobs:
           persist-credentials: false
       - name: Run application specs with an isolated database
         run: docker compose -f compose.test.yaml up --build --abort-on-container-exit --exit-code-from tests
-      - name: Check service worker caching and offline language
+      - name: Check navigation, service worker caching and offline language
         run: node --test spec/javascript/*_test.cjs
       - name: Scan Rails code
         run: docker compose -f compose.test.yaml run --rm --no-deps tests bundle exec brakeman --no-pager --quiet

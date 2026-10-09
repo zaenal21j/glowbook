@@ -3,11 +3,7 @@
   <head>
     <title><%= content_for(:title) || t("home.title") %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="theme-color" content="#d94678">
-    <link rel="manifest" href="<%= pwa_manifest_path %>">
-    <link rel="apple-touch-icon" href="/icon.png">
+    <%= render "shared/pwa_head" %>
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag :app %>
     <%= javascript_importmap_tags %>
@@ -21,7 +17,7 @@
           <div class="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800" data-controller="dismissable">
             <div class="flex items-center justify-between gap-4">
               <span><%= flash[:notice] %></span>
-              <button type="button" data-action="dismissable#dismiss" class="text-emerald-600 hover:text-emerald-800">&times;</button>
+              <button type="button" data-action="dismissable#dismiss" aria-label="<%= t('ui.dismiss') %>" class="text-emerald-600 hover:text-emerald-800">&times;</button>
             </div>
           </div>
         </div>
@@ -31,7 +27,7 @@
           <div class="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700" data-controller="dismissable">
             <div class="flex items-center justify-between gap-4">
               <span><%= flash[:alert] %></span>
-              <button type="button" data-action="dismissable#dismiss" class="text-red-500 hover:text-red-700">&times;</button>
+              <button type="button" data-action="dismissable#dismiss" aria-label="<%= t('ui.dismiss') %>" class="text-red-500 hover:text-red-700">&times;</button>
             </div>
           </div>
         </div>

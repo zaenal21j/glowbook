@@ -1,7 +1,7 @@
 const CACHE_PREFIX = "glowbook-static-"
-const CACHE_NAME = `${CACHE_PREFIX}v2`
+const CACHE_NAME = `${CACHE_PREFIX}v3`
 const FALLBACK_PAGE = "/offline.html"
-const PRECACHE_URLS = [FALLBACK_PAGE, "/icon.png", "/icon.svg"]
+const PRECACHE_URLS = [FALLBACK_PAGE, "/icon.png", "/icon-192.png", "/icon.svg"]
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -32,7 +32,7 @@ self.addEventListener("fetch", (event) => {
     return
   }
 
-  const isStaticAsset = url.pathname.startsWith("/assets/") || ["/icon.png", "/icon.svg"].includes(url.pathname)
+  const isStaticAsset = url.pathname.startsWith("/assets/") || ["/icon.png", "/icon-192.png", "/icon.svg"].includes(url.pathname)
   if (!isStaticAsset) return
 
   event.respondWith(

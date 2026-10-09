@@ -58,7 +58,7 @@ class Admin::ReportsController < Admin::BaseController
   def bookings_csv(month_scope)
     rows = month_scope.includes(:user, business: :city, booking_items: :service).order(:start_time)
     data = []
-    data << [ "Kode Booking", "Tanggal", "Bisnis", "Kota", "Pelanggan", "Email", "Layanan", "Total IDR", "Status" ]
+    data << I18n.t("exports.booking_headers")
     rows.each do |booking|
       data << [
         booking.reference,

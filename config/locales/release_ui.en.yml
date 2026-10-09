@@ -1,0 +1,8 @@
+en:
+  ui:
+    dismiss: Dismiss message
+  pwa:
+    description: Book beauty and wellness services with GlowBook.
+  exports:
+    booking_headers: [Booking reference, Date, Business, City, Customer, Email, Services, Total IDR, Status]
+    payment_headers: [Order ID, Booking, Booking date, Business, Customer, Amount IDR, Method, Status, Gateway status, Transaction ID, Confirmed at, Created at]

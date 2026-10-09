@@ -12,7 +12,8 @@ GlowBook adalah marketplace kecantikan dan wellness untuk mencari bisnis, meliha
 - Pendaftaran bisnis yang menunggu verifikasi admin.
 - Chat pelanggan dan bisnis, email booking melalui antrean, serta notifikasi in-app.
 - Dashboard admin untuk mengelola pengguna, bisnis, booking, kategori, ulasan, promosi, dan laporan bulanan yang dapat diunduh sebagai CSV.
-- Service worker PWA untuk aset statis dan halaman fallback saat offline.
+- Navigasi publik pada desktop dan ponsel, termasuk menu layanan, kota, dan akun.
+- Service worker PWA untuk aset statis dan halaman fallback saat offline, dengan ikon GlowBook serta manifest sesuai bahasa pengguna.
 
 ## Menjalankan secara lokal
 
@@ -43,13 +44,15 @@ docker compose -f compose.test.yaml up --build --abort-on-container-exit --exit-
 docker compose -f compose.test.yaml down --remove-orphans
 ```
 
-Pengujian cache service worker dan bahasa halaman offline menggunakan Node.js:
+Pengujian navigasi, cache service worker dan bahasa halaman offline menggunakan Node.js:
 
 ```bash
 node --test spec/javascript/*_test.cjs
 ```
 
-GitHub Actions menjalankan suite Rails, pengujian service worker, pemeriksaan route/template/terjemahan, pemindaian Brakeman, build image production, validasi proxy HTTPS, serta verifikasi backup/restore pada stack terpisah untuk push ke `main`, cabang `codex/**`, serta pull request. Workflow tidak menggunakan secret production dan tidak melakukan deployment. Panduan pencadangan dan jadwal server ada di [BACKUP_RESTORE.md](BACKUP_RESTORE.md).
+GitHub Actions menjalankan suite Rails, pengujian navigasi dan service worker, pemeriksaan route/template/terjemahan serta registrasi controller Stimulus, pemindaian Brakeman, build image production, validasi proxy HTTPS, serta verifikasi backup/restore pada stack terpisah untuk push ke `main`, cabang `codex/**`, serta pull request. Workflow tidak menggunakan secret production dan tidak melakukan deployment. Panduan pencadangan dan jadwal server ada di [BACKUP_RESTORE.md](BACKUP_RESTORE.md).
+
+Ikon PNG PWA dibuat dari `public/icon.svg`. Setelah mengubah vektor tersebut, jalankan `bundle exec ruby script/render_pwa_icons.rb` untuk memperbarui ukuran 192 dan 512 piksel.
 
 ## Catatan kesiapan production
 

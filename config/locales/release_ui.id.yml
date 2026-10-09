@@ -1,0 +1,8 @@
+id:
+  ui:
+    dismiss: Tutup pesan
+  pwa:
+    description: Booking kecantikan dan wellness di GlowBook.
+  exports:
+    booking_headers: [Kode Booking, Tanggal, Bisnis, Kota, Pelanggan, Email, Layanan, Total IDR, Status]
+    payment_headers: [Order ID, Booking, Tanggal Booking, Bisnis, Pelanggan, Nominal IDR, Metode, Status, Status Gateway, ID Transaksi, Dikonfirmasi Pada, Dibuat Pada]

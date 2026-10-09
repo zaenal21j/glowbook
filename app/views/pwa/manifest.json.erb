@@ -1,24 +1,16 @@
-{
-  "name": "GlowBook",
-  "short_name": "GlowBook",
-  "id": "/",
-  "icons": [
-    {
-      "src": "/icon.png",
-      "type": "image/png",
-      "sizes": "512x512"
-    },
-    {
-      "src": "/icon.png",
-      "type": "image/png",
-      "sizes": "512x512",
-      "purpose": "maskable"
-    }
+<%= raw({
+  name: "GlowBook",
+  short_name: "GlowBook",
+  id: "/",
+  lang: I18n.locale.to_s,
+  icons: [
+    { src: "/icon-192.png", type: "image/png", sizes: "192x192", purpose: "any maskable" },
+    { src: "/icon.png", type: "image/png", sizes: "512x512", purpose: "any maskable" }
   ],
-  "start_url": "/",
-  "display": "standalone",
-  "scope": "/",
-  "description": "Booking kecantikan dan wellness di GlowBook.",
-  "theme_color": "#d94678",
-  "background_color": "#ffffff"
-}
+  start_url: "/",
+  display: "standalone",
+  scope: "/",
+  description: t("pwa.description"),
+  theme_color: "#e11d54",
+  background_color: "#e11d54"
+}.to_json) %>

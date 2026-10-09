@@ -120,9 +120,16 @@ RSpec.describe "Admin workflows", type: :request do
     expect(response).to have_http_status(:ok)
     expect(response.media_type).to eq("text/csv")
     expect(response.body).to include(booking.reference, business.name)
+    expect(response.body.lines.first).to include('"Kode Booking"', '"Pelanggan"')
     get admin_payments_path(format: :csv, month: "2026-10")
     expect(response).to have_http_status(:ok)
     expect(response.media_type).to eq("text/csv")
+    expect(response.body.lines.first).to include('"Tanggal Booking"', '"Nominal IDR"')
+    post locale_path(:en)
+    get admin_reports_path(format: :csv, month: "2026-10")
+    expect(response.body.lines.first).to include('"Booking reference"', '"Customer"')
+    get admin_payments_path(format: :csv, month: "2026-10")
+    expect(response.body.lines.first).to include('"Booking date"', '"Amount IDR"')
   end
 
   it "rejects a customer from every admin mutation" do

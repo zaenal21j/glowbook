@@ -1,4 +1,4 @@
-<header class="sticky top-0 z-40 border-b border-gray-100 bg-white/95 backdrop-blur">
+<header class="sticky top-0 z-40 border-b border-gray-100 bg-white/95 backdrop-blur" data-controller="mobile-menu" data-action="click@window->mobile-menu#closeOutside keydown.esc@window->mobile-menu#closeOnEscape">
   <div class="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 lg:px-8">
     <%= link_to root_path, class: "flex items-center gap-2 shrink-0" do %>
       <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-primary-600 text-white">
@@ -8,23 +8,23 @@
     <% end %>
 
     <nav class="hidden items-center gap-1 lg:flex">
-      <div class="relative" data-controller="dropdown">
-        <button type="button" class="btn-ghost btn-md" data-action="dropdown#toggle">
+      <div class="relative" data-controller="dropdown" data-action="click@window->dropdown#closeOutside keydown.esc@window->dropdown#closeOnEscape">
+        <button type="button" class="btn-ghost btn-md" data-action="dropdown#toggle" data-dropdown-target="button" aria-expanded="false" aria-controls="services-navigation">
           <%= t("glowbook.nav.services") %>
           <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg>
         </button>
-        <div data-dropdown-target="menu" class="absolute left-0 top-full mt-2 hidden w-64 rounded-2xl border border-gray-100 bg-white p-2 shadow-xl">
+        <div id="services-navigation" data-dropdown-target="menu" class="absolute left-0 top-full mt-2 hidden w-64 rounded-2xl border border-gray-100 bg-white p-2 shadow-xl">
           <% Category.order(:position).limit(10).each do |c| %>
             <%= link_to c.name, category_path(c.slug), class: "block rounded-xl px-4 py-2.5 text-sm font-medium text-ink-700 hover:bg-primary-50 hover:text-primary-700" %>
           <% end %>
         </div>
       </div>
-      <div class="relative" data-controller="dropdown">
-        <button type="button" class="btn-ghost btn-md" data-action="dropdown#toggle">
+      <div class="relative" data-controller="dropdown" data-action="click@window->dropdown#closeOutside keydown.esc@window->dropdown#closeOnEscape">
+        <button type="button" class="btn-ghost btn-md" data-action="dropdown#toggle" data-dropdown-target="button" aria-expanded="false" aria-controls="cities-navigation">
           <%= t("glowbook.nav.city") %>
           <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg>
         </button>
-        <div data-dropdown-target="menu" class="absolute left-0 top-full mt-2 hidden w-56 rounded-2xl border border-gray-100 bg-white p-2 shadow-xl">
+        <div id="cities-navigation" data-dropdown-target="menu" class="absolute left-0 top-full mt-2 hidden w-56 rounded-2xl border border-gray-100 bg-white p-2 shadow-xl">
           <% City.order(:name).each do |city| %>
             <%= link_to city.name, city_path(city.slug), class: "block rounded-xl px-4 py-2.5 text-sm font-medium text-ink-700 hover:bg-primary-50 hover:text-primary-700" %>
           <% end %>
@@ -36,12 +36,12 @@
     <div class="flex items-center gap-2">
       <%= render "shared/locale_switcher" %>
       <% if user_signed_in? %>
-        <div class="relative" data-controller="dropdown">
-          <button type="button" data-action="dropdown#toggle" class="flex items-center gap-2 rounded-full border border-gray-200 py-1 pl-1 pr-3 hover:border-primary-400 transition">
+        <div class="relative" data-controller="dropdown" data-action="click@window->dropdown#closeOutside keydown.esc@window->dropdown#closeOnEscape">
+          <button type="button" data-action="dropdown#toggle" data-dropdown-target="button" aria-expanded="false" aria-controls="account-navigation" class="flex items-center gap-2 rounded-full border border-gray-200 py-1 pl-1 pr-3 hover:border-primary-400 transition">
             <span class="flex h-8 w-8 items-center justify-center rounded-full bg-primary-600 text-sm font-bold text-white"><%= current_user.initial %></span>
             <span class="hidden max-w-28 truncate text-sm font-semibold sm:block"><%= current_user.full_name %></span>
           </button>
-          <div data-dropdown-target="menu" class="absolute right-0 top-full mt-2 hidden w-60 rounded-2xl border border-gray-100 bg-white p-2 shadow-xl">
+          <div id="account-navigation" data-dropdown-target="menu" class="absolute right-0 top-full mt-2 hidden w-60 rounded-2xl border border-gray-100 bg-white p-2 shadow-xl">
             <%= link_to notifications_path, class: "flex items-center justify-between rounded-xl px-4 py-2.5 text-sm font-medium text-ink-700 hover:bg-primary-50" do %>
               <span><%= t("glowbook.nav.notifications") %></span>
               <% unread_count = current_user.user_notifications.unread.count %>
@@ -67,18 +67,24 @@
         <%= link_to t("glowbook.nav.sign_in"), login_path, class: "btn-ghost btn-md" %>
         <%= link_to t("glowbook.nav.sign_up"), signup_path, class: "btn-primary btn-md" %>
       <% end %>
-      <button type="button" class="btn-ghost btn-md lg:hidden" data-controller="mobile-menu" data-action="mobile-menu#toggle" aria-label="<%= t('glowbook.nav.menu') %>">
+      <button type="button" class="btn-ghost btn-md lg:hidden" data-mobile-menu-target="button" data-action="mobile-menu#toggle" aria-expanded="false" aria-controls="mobile-navigation" aria-label="<%= t('glowbook.nav.menu') %>">
         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
       </button>
     </div>
   </div>
-  <div data-mobile-menu-target="menu" class="hidden border-t border-gray-100 bg-white px-4 py-3 lg:hidden">
+  <nav id="mobile-navigation" data-mobile-menu-target="menu" aria-label="<%= t('glowbook.nav.menu') %>" class="hidden max-h-[70dvh] overflow-y-auto border-t border-gray-100 bg-white px-4 py-3 lg:hidden">
     <div class="grid gap-1">
+      <p class="px-3 py-2 text-xs font-bold uppercase text-ink-500"><%= t("glowbook.nav.services") %></p>
       <% Category.order(:position).limit(10).each do |c| %>
         <%= link_to c.name, category_path(c.slug), class: "rounded-xl px-3 py-2.5 text-sm font-medium text-ink-700 hover:bg-primary-50" %>
       <% end %>
       <hr class="my-2 border-gray-100">
+      <p class="px-3 py-2 text-xs font-bold uppercase text-ink-500"><%= t("glowbook.nav.city") %></p>
+      <% City.order(:name).each do |city| %>
+        <%= link_to city.name, city_path(city.slug), class: "rounded-xl px-3 py-2.5 text-sm font-medium text-ink-700 hover:bg-primary-50" %>
+      <% end %>
+      <hr class="my-2 border-gray-100">
       <%= link_to t("glowbook.nav.for_business"), for_business_path, class: "rounded-xl px-3 py-2.5 text-sm font-medium text-ink-700 hover:bg-primary-50" %>
     </div>
-  </div>
+  </nav>
 </header>

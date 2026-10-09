@@ -1,7 +1,7 @@
 # Routes for GlowBook - Indonesian beauty & wellness booking marketplace
 
 Rails.application.routes.draw do
-  get "manifest", to: "rails/pwa#manifest", as: :pwa_manifest, defaults: { format: :json }
+  get "manifest", to: "pwa#manifest", as: :pwa_manifest, defaults: { format: :json }
   get "service-worker", to: "rails/pwa#service_worker", as: :pwa_service_worker, defaults: { format: :js }
   post "bahasa/:locale", to: "locales#update", as: :locale
 
