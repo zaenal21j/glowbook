@@ -79,7 +79,7 @@ exec 8>&-
 "${compose[@]}" stop --timeout 30 worker >/dev/null
 if bash script/backup.sh "$env_file" "$test_dir/backups" "$fixture" >"$test_dir/stopped.log" 2>&1; then exit 1; else [[ $? == 69 ]]; fi
 [[ -z $("${compose[@]}" ps --status running -q worker) ]]
-"${compose[@]}" start --wait --wait-timeout 120 worker >/dev/null
+"${compose[@]}" start worker >/dev/null
 
 mkdir "$test_dir/corrupt-copy"
 cp "$backup/queue.dump" "$test_dir/corrupt-copy/queue.dump"

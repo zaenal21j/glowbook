@@ -44,8 +44,26 @@ proxy_id=$("${compose[@]}" ps -a -q proxy 2>/dev/null || true)
 
 restart_required=0
 staging=""
+wait_for_service() {
+  local service=$1 container state deadline=$((SECONDS + 120))
+  container=$("${compose[@]}" ps -a -q "$service") || return 1
+  [[ -n "$container" && "$container" != *$'\n'* ]] || return 1
+  while (( SECONDS < deadline )); do
+    state=$(docker inspect --format '{{.State.Running}} {{if .State.Health}}{{.State.Health.Status}}{{end}}' "$container") || return 1
+    case "$state" in
+      'true healthy'|'true ') return 0 ;;
+    esac
+    sleep 2
+  done
+  echo "Service $service did not become ready within 120 seconds." >&2
+  return 1
+}
 restart_services() {
-  "${compose[@]}" start --wait --wait-timeout 120 web worker
+  # Older Compose releases support --wait for up but not for start.
+  "${compose[@]}" start web || return 1
+  wait_for_service web || return 1
+  "${compose[@]}" start worker || return 1
+  wait_for_service worker || return 1
 }
 cleanup() {
   result=$?
