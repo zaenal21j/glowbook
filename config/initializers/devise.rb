@@ -15,8 +15,12 @@ Devise.setup do |config|
   config.reset_password_within = 6.hours
 
   # ==> OmniAuth
-  config.omniauth :facebook, ENV["FACEBOOK_APP_ID"], ENV["FACEBOOK_APP_SECRET"],
-                 scope: "email,public_profile", info_fields: "email,name", image_size: "large"
+  facebook_app_id = ENV["FACEBOOK_APP_ID"]
+  facebook_app_secret = ENV["FACEBOOK_APP_SECRET"]
+  if facebook_app_id.present? && facebook_app_secret.present?
+    config.omniauth :facebook, facebook_app_id, facebook_app_secret,
+                   scope: "email,public_profile", info_fields: "email,name", image_size: "large"
+  end
 
   # ==> Controller configuration
   config.sign_out_via = :delete
