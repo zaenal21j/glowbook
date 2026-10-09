@@ -1,4 +1,6 @@
 <%= form_with url: search_path, method: :get, local: true, data: { controller: "autosubmit" } do |f| %>
+  <%= hidden_field_tag :q, params[:q] if params[:q].present? %>
+  <%= hidden_field_tag :sort, params[:sort] if params[:sort].present? %>
   <div class="card sticky top-20 p-5">
     <h3 class="font-bold">Filter</h3>
 
@@ -12,7 +14,7 @@
       <div class="space-y-2">
         <% Category.ordered.each do |c| %>
           <label class="flex cursor-pointer items-center gap-2.5 text-sm">
-            <%= check_box_tag "categories[]", c.slug, params[:categories]&.include?(c.slug), class: "h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500", data: { action: "change->autosubmit#submit" } %>
+            <%= check_box_tag "categories[]", c.slug, Array(params[:categories]).include?(c.slug), class: "h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500", data: { action: "change->autosubmit#submit" } %>
             <span class="text-ink-700"><%= c.name %></span>
           </label>
         <% end %>

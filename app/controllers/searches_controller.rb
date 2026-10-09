@@ -23,9 +23,9 @@ class SearchesController < ApplicationController
 
     scope = @sort == "price" ? scope.by_min_price : scope.by_rating
 
-    @page = [params[:page].to_i, 1].max
     @total_count = scope.count
     @total_pages = [(@total_count.to_f / PER_PAGE).ceil, 1].max
+    @page = params[:page].to_i.clamp(1, @total_pages)
     @businesses = scope.offset((@page - 1) * PER_PAGE).limit(PER_PAGE)
   end
 end
