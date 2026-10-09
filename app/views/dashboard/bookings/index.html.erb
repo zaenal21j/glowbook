@@ -7,6 +7,7 @@
   <%= link_to "Terkonfirmasi", dashboard_bookings_path(status: "confirmed"), class: "chip #{'chip-active' if params[:status] == 'confirmed'}" %>
   <%= link_to "Selesai", dashboard_bookings_path(status: "completed"), class: "chip #{'chip-active' if params[:status] == 'completed'}" %>
   <%= link_to "Dibatalkan", dashboard_bookings_path(status: "cancelled"), class: "chip #{'chip-active' if params[:status] == 'cancelled'}" %>
+  <%= link_to "Tidak hadir", dashboard_bookings_path(status: "no_show"), class: "chip #{'chip-active' if params[:status] == 'no_show'}" %>
 </div>
 
 <div class="card mt-5 overflow-x-auto">
