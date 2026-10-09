@@ -1,6 +1,6 @@
 class Dashboard::PromotionsController < Dashboard::BaseController
   def index
-    @promotions = @business.promotions.order(created_at: :desc)
+    @promotions = paginate(@business.promotions.order(created_at: :desc))
   end
 
   def new

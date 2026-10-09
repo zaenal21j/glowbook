@@ -1,4 +1,6 @@
 class Account::BaseController < ApplicationController
+  include Paginatable
+
   layout "account"
   before_action :authenticate_user!
 

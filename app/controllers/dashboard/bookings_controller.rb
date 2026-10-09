@@ -13,7 +13,7 @@ class Dashboard::BookingsController < Dashboard::BaseController
       order = :asc
     end
 
-    @bookings = scope.includes(:user, booking_items: [ :service, :staff ]).order(start_time: order).limit(100)
+    @bookings = paginate(scope.includes(:user, booking_items: [ :service, :staff ]).order(start_time: order))
   end
 
   def update_status

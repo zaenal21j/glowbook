@@ -1,7 +1,8 @@
 class Account::FavoritesController < Account::BaseController
   def index
-    @businesses = current_user.favorites
-                              .includes(business: [:city, :categories, :services, :promotions])
-                              .map(&:business)
+    @favorites = paginate(current_user.favorites
+                                      .includes(business: [:city, :categories, :services, :promotions])
+                                      .order(created_at: :desc))
+    @businesses = @favorites.map(&:business)
   end
 end

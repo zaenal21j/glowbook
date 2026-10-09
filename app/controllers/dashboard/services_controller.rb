@@ -1,6 +1,6 @@
 class Dashboard::ServicesController < Dashboard::BaseController
   def index
-    @services = @business.services.includes(:category, :staff).ordered
+    @services = paginate(@business.services.includes(:category, :staff).ordered)
     @categories = Category.ordered
   end
 

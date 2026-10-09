@@ -10,6 +10,7 @@ class Account::BookingsController < Account::BaseController
       @bookings = current_user.bookings.upcoming
     end
     @tab ||= params[:tab]
-    @bookings = @bookings.includes(business: :city, booking_items: [:service, :staff]).order(start_time: :desc)
+    order = @tab == "akan-datang" ? :asc : :desc
+    @bookings = paginate(@bookings.includes(business: :city, booking_items: [:service, :staff]).order(start_time: order))
   end
 end

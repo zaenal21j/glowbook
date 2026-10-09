@@ -1,6 +1,6 @@
 class Dashboard::StaffsController < Dashboard::BaseController
   def index
-    @staff = @business.staff.ordered.includes(:services, :staff_schedules)
+    @staff = paginate(@business.staff.ordered.includes(:services, :staff_schedules))
   end
 
   def new

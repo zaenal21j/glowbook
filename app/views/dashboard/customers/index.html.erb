@@ -5,7 +5,7 @@
 
 <div class="mb-4">
   <h1 class="text-xl font-extrabold">Pelanggan</h1>
-  <p class="text-sm text-ink-500"><%= @customers.length %> pelanggan pernah booking di bisnis Anda.</p>
+  <p class="text-sm text-ink-500"><%= @total_customer_count %> pelanggan pernah booking di bisnis Anda.</p>
 </div>
 
 <div class="card overflow-x-auto p-0">
@@ -34,3 +34,5 @@
     </tbody>
   </table>
 </div>
+
+<%= render "shared/pagination" %>

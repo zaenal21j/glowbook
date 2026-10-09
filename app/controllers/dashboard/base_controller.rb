@@ -1,4 +1,6 @@
 class Dashboard::BaseController < ApplicationController
+  include Paginatable
+
   layout "dashboard"
   before_action :require_business_owner!
   before_action :set_current_business
