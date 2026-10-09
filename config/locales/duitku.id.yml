@@ -1,0 +1,30 @@
+id:
+  integrations:
+    providers:
+      duitku: Payment Gateway Duitku
+    fields:
+      merchant_code: Merchant Code Duitku
+      api_key: API Key Duitku
+      environment: Mode Duitku
+      expiry_minutes: Masa berlaku invoice (menit)
+  duitku:
+    sandbox: Sandbox (pengujian)
+    production: Production (pembayaran nyata)
+    checkout: Checkout aman melalui Duitku
+    checkout_sandbox: Duitku Sandbox — hanya pengujian, bukan pembayaran nyata
+    legacy: riwayat sandbox lama
+    gateway: Gateway
+    mode: Mode gateway
+    callback_label: Callback URL Duitku
+    configuration_help: Buat project Duitku, masukkan Merchant Code dan API Key sesuai mode. Mulai dengan sandbox. Callback memerlukan URL publik; localhost belum dapat menerima callback Duitku. Jangan ganti merchant, mode, atau API Key saat masih ada transaksi pending. Tombol pembayaran membuka halaman checkout Duitku.
+    invalid_configuration: Merchant Code, mode, atau masa berlaku invoice Duitku tidak valid (1–1440 menit).
+    https_required: Mode production memerlukan APP_HOST berupa domain HTTPS publik pada konfigurasi server.
+    not_configured: Pembayaran Duitku belum diaktifkan atau konfigurasinya belum lengkap.
+    invoice_unknown: Hasil pembuatan invoice belum dapat dipastikan. Tunggu sebentar lalu coba lagi dengan transaksi yang sama.
+    invalid_checkout: URL checkout Duitku tidak valid. Silakan hubungi admin.
+    gateway_unavailable: Duitku belum memastikan hasil permintaan. Tunggu sebentar lalu coba lagi.
+    previous_gateway: Transaksi pending menggunakan gateway atau konfigurasi sebelumnya. Hubungi admin untuk rekonsiliasi sebelum membuat pembayaran baru.
+    pending_configuration: Merchant Code, mode, dan API Key tidak dapat diganti saat ada transaksi Duitku pending. Periksa transaksi tersebut terlebih dahulu.
+    refresh_status: Periksa status pembayaran
+    status_updated: Status pembayaran sudah diperiksa melalui Duitku.
+    status_unavailable: Status belum dapat diverifikasi. Silakan coba kembali atau hubungi admin.

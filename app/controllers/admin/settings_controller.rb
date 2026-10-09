@@ -1,7 +1,7 @@
 class Admin::SettingsController < Admin::BaseController
   def show
     @settings = PlatformSetting.current
-    @online_payments_enabled = Rails.configuration.x.midtrans_enabled
+    @online_payments_enabled = DuitkuClient.enabled?
   end
 
   def update
@@ -10,7 +10,7 @@ class Admin::SettingsController < Admin::BaseController
     if @settings.update(settings_params)
       redirect_to admin_settings_path, notice: t("alerts.admin.settings_saved")
     else
-      @online_payments_enabled = Rails.configuration.x.midtrans_enabled
+      @online_payments_enabled = DuitkuClient.enabled?
       render :show, status: :unprocessable_entity
     end
   end

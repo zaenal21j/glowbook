@@ -450,7 +450,6 @@ id:
     pay_at_venue_description: Tunai atau QRIS saat kedatangan
     online_payment: Pembayaran online
     total_must_be_positive: "Hanya tersedia untuk total di atas Rp0"
-    midtrans_sandbox: Checkout aman via Midtrans Sandbox
     payment_not_configured: Belum dikonfigurasi
     continue: Lanjutkan
     successful: Booking Berhasil!

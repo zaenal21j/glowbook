@@ -48,7 +48,8 @@ Rails.application.routes.draw do
     end
   end
   post "booking/:reference/payment", to: "booking_payments#create", as: :booking_payment
-  post "midtrans/notifications", to: "midtrans_notifications#create", as: :midtrans_notifications
+  post "booking/:reference/payment/status", to: "booking_payments#refresh", as: :booking_payment_status
+  post "duitku/callback", to: "duitku_notifications#create", as: :duitku_callback
 
   # Public marketplace
   root "home#index"

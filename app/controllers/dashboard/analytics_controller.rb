@@ -11,7 +11,7 @@ class Dashboard::AnalyticsController < Dashboard::BaseController
     @new_customers = User.where(id: first_bookings).count
     @rating = @business.avg_rating
 
-    paid_attempts = PaymentAttempt.paid.joins(:booking)
+    paid_attempts = PaymentAttempt.paid.production_payments.joins(:booking)
                                    .where(bookings: { business_id: @business.id })
                                    .where(settled_at: Date.current.beginning_of_month.beginning_of_day..Time.current)
     @online_payments_month = paid_attempts.distinct.count(:booking_id)

@@ -48,11 +48,11 @@
           <p class="text-xs text-ink-500"><%= t("booking.pay_at_venue_description") %></p>
         </div>
       </label>
-      <label class="flex cursor-pointer items-center gap-3 rounded-xl border border-gray-200 p-3.5 <%= 'opacity-50' unless Rails.configuration.x.midtrans_enabled %>">
-        <%= f.radio_button :payment_method, "online_transfer", class: "h-4 w-4 border-gray-300 text-primary-600", disabled: !Rails.configuration.x.midtrans_enabled || @total <= 0 %>
+      <label class="flex cursor-pointer items-center gap-3 rounded-xl border border-gray-200 p-3.5 <%= 'opacity-50' unless DuitkuClient.enabled? %>">
+        <%= f.radio_button :payment_method, "online_transfer", class: "h-4 w-4 border-gray-300 text-primary-600", disabled: !DuitkuClient.enabled? || @total <= 0 %>
         <div class="flex-1">
           <p class="text-sm font-bold"><%= t("booking.online_payment") %></p>
-          <p class="text-xs text-ink-500"><%= @total <= 0 ? t("booking.total_must_be_positive") : Rails.configuration.x.midtrans_enabled ? t("booking.midtrans_sandbox") : t("booking.payment_not_configured") %></p>
+          <p class="text-xs text-ink-500"><%= @total <= 0 ? t("booking.total_must_be_positive") : DuitkuClient.enabled? ? DuitkuClient.checkout_label : t("booking.payment_not_configured") %></p>
         </div>
       </label>
     </div>

@@ -55,6 +55,9 @@
         <dt class="text-ink-500"><%= t("booking.payment_status") %></dt>
         <dd class="font-semibold"><%= @latest_payment_attempt&.paid? ? t("booking.paid") : @latest_payment_attempt&.status ? t("booking.payment_statuses.#{@latest_payment_attempt.status}", default: @latest_payment_attempt.status.humanize) : t("booking.unpaid") %></dd>
       </div>
+      <% if @latest_payment_attempt %>
+        <div class="flex justify-between text-sm"><dt class="text-ink-500"><%= t("duitku.gateway") %></dt><dd><%= @latest_payment_attempt.gateway_label %></dd></div>
+      <% end %>
     <% end %>
     </dl>
 
@@ -66,8 +69,11 @@
         <% end %>
       </div>
     <% end %>
-    <% if @booking.confirmed? && @booking.payment_method == "online_transfer" && Rails.configuration.x.midtrans_enabled && !@latest_payment_attempt&.paid? %>
+    <% if @booking.confirmed? && @booking.payment_method == "online_transfer" && DuitkuClient.enabled? && !@latest_payment_attempt&.paid? %>
       <%= button_to(@latest_payment_attempt&.redirect_url.present? ? t("booking.continue_payment") : t("booking.pay_online"), booking_payment_path(@booking.reference), method: :post, class: "btn-primary btn-md mt-4 w-full") %>
+    <% end %>
+    <% if @latest_payment_attempt&.provider == "duitku" && !@latest_payment_attempt.paid? %>
+      <%= button_to t("duitku.refresh_status"), booking_payment_status_path(@booking.reference), method: :post, class: "btn-secondary btn-md mt-3 w-full" %>
     <% end %>
   </div>
 

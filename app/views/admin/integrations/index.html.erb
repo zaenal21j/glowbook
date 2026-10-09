@@ -13,7 +13,7 @@
     <section class="card p-6" aria-labelledby="<%= provider %>_heading">
       <div class="mb-5 flex flex-wrap items-center justify-between gap-3">
         <h2 id="<%= provider %>_heading" class="text-lg font-bold"><%= t("integrations.providers.#{provider}") %></h2>
-        <span class="rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold"><%= integration.ready? ? t("integrations.enabled") : t("integrations.disabled") %></span>
+        <span class="rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold"><%= integration.enabled? && integration.errors.empty? ? t("integrations.enabled") : t("integrations.disabled") %></span>
       </div>
       <% if integration.errors.any? %>
         <div class="mb-4 rounded-lg bg-red-50 p-4 text-sm text-red-700" role="alert">
@@ -33,8 +33,12 @@
                 <% if IntegrationSetting::SECRET_FIELDS.include?(field) %>
                   <%= fields.password_field field, value: nil, id: "#{provider}_#{field}", autocomplete: "new-password", class: "input" %>
                   <p class="mt-1 text-xs text-ink-500"><%= integration.errors.any? ? t("integrations.secret_retry") : (values[field].present? ? t("integrations.secret_saved") : t("integrations.secret_empty")) %></p>
+                <% elsif field == "environment" %>
+                  <%= fields.select field, [[t("duitku.sandbox"), "sandbox"], [t("duitku.production"), "production"]], { selected: values[field] }, id: "#{provider}_#{field}", class: "input" %>
                 <% elsif field == "tls_mode" %>
                   <%= fields.select field, [[t("integrations.starttls"), "starttls"], [t("integrations.tls"), "tls"]], { selected: values[field] }, id: "#{provider}_#{field}", class: "input" %>
+                <% elsif field == "expiry_minutes" %>
+                  <%= fields.number_field field, value: values[field], min: 1, max: 1440, id: "#{provider}_#{field}", class: "input" %>
                 <% elsif field == "port" %>
                   <%= fields.number_field field, value: values[field], min: 1, max: 65535, id: "#{provider}_#{field}", class: "input" %>
                 <% else %>
@@ -50,7 +54,13 @@
             <%= t("integrations.clear_secret") %>
           </label>
         <% end %>
-        <% unless provider == "smtp" %>
+        <% if provider == "duitku" %>
+          <div class="rounded-lg bg-gray-50 p-3 text-sm">
+            <p class="font-semibold"><%= t("duitku.callback_label") %></p>
+            <code class="mt-1 block break-all"><%= "#{Rails.configuration.x.app_host.chomp('/')}#{duitku_callback_path}" %></code>
+            <p class="mt-2 text-xs text-ink-500"><%= t("duitku.configuration_help") %></p>
+          </div>
+        <% elsif provider != "smtp" %>
           <div class="rounded-lg bg-gray-50 p-3 text-sm">
             <p class="font-semibold"><%= t("integrations.callback_label") %></p>
             <code class="mt-1 block break-all"><%= "#{Rails.configuration.x.app_host.chomp('/')}/users/auth/#{provider}/callback" %></code>

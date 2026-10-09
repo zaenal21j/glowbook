@@ -17,7 +17,7 @@ Audit lokal: 10 Oktober 2026 (Asia/Bangkok). Status ini mencatat bukti yang suda
 | Galeri | Upload, tampil publik, validasi gambar, hapus dan pembatasan antar bisnis diperiksa | Request specs galeri; halaman galeri lokal memberi 200 |
 | Chat dan notifikasi | Pertukaran pesan, status dibaca, pembatasan peserta, notifikasi dan tiga jenis email booking diperiksa | Request specs; enam email terkirim melalui test adapter. Pengiriman SMTP nyata belum dibuktikan |
 | Admin | Seluruh bagian utama merender dalam dua bahasa; persetujuan, suspend/reactivate, kategori, pengaturan, proteksi akun dan laporan diperiksa | `admin_workflows_spec.rb`; bisnis bernama sama tetap menjadi dua entri peringkat dengan total terpisah, lokasi dan tautan detail; booking batal/di luar bulan laporan tidak ikut dihitung. Sepuluh halaman admin lokal memberi 200; menu admin dan bisnis dibuka pada viewport ponsel 390 × 844 |
-| Bahasa | Indonesia dan Inggris untuk UI utama, pesan booking, email keamanan akun, integrasi dan judul kolom CSV | 925 key literal tersedia pada kedua locale; request specs mencakup header CSV, bahasa manifest, pengaturan integrasi dan penjelasan metrik analitik |
+| Bahasa | Indonesia dan Inggris untuk UI utama, pesan booking, email keamanan akun, integrasi dan judul kolom CSV | 942 key literal tersedia pada kedua locale; request specs mencakup header CSV, bahasa manifest, pengaturan integrasi dan penjelasan metrik analitik |
 | PWA | Manifest sesuai bahasa, ikon GlowBook 192/512 piksel, worker, cache aset statis dan fallback offline tersedia pada ketiga layout | Tujuh pengujian service worker serta request specs manifest/ikon lulus; browser menampilkan fallback setelah instance sementara port 3002 dihentikan. Instalasi pada perangkat pengguna belum diperiksa |
 | Instalasi baru | Task `glowbook:bootstrap` membuat kota/kategori/admin tanpa akun demo; aman diulang | Empat service specs; seed demo ditolak di production |
 | HTTPS | Overlay Compose dan konfigurasi Caddy untuk server publik tersedia | Compose dan `caddy validate` lulus dengan domain contoh; proxy HTTP sementara pada loopback meneruskan homepage dan `/up` dengan status 200. DNS, sertifikat publik dan akses server tujuan belum dibuktikan |
@@ -28,13 +28,13 @@ Audit lokal: 10 Oktober 2026 (Asia/Bangkok). Status ini mencatat bukti yang suda
 - Baseline sebelum penambahan Google: RSpec **158 examples, 0 failures**, seed `15943`.
 - Penambahan Google/Admin integrasi: **30 examples, 0 failures**, seed `33097`; mencakup empat regresi Facebook, secret terenkripsi/penghapusan/penggantian, pembatasan admin, kedua bahasa, SMTP dinamis serta CSRF/state OAuth.
 - Node navigasi dan service worker: **13 passed, 0 failed**.
-- `script/check_release.rb`: 97 file Ruby, 102 template ERB, 925 key terjemahan, 160 pasangan controller/action serta lima registrasi controller Stimulus lolos.
+- `script/check_release.rb`: 98 file Ruby, 102 template ERB, 942 key terjemahan, 161 pasangan controller/action serta lima registrasi controller Stimulus lolos.
 - `rails zeitwerk:check`: eager loading berhasil.
 - Brakeman: **0 errors, 0 security warnings**.
 - Dependency pengujian dapat dipasang dengan lockfile frozen melalui `bundle install --local`.
 - Image production web dan worker berhasil dibangun dan dijalankan pada `http://localhost:3000`; kolom staff bio tersedia dan tidak ada migrasi tertunda.
 - Cadangan database lokal dibuat sebelum penerapan pada `tmp/local_backups/`; folder tersebut tidak termasuk GitHub.
-- CI GitHub baseline commit `1470c4f` lulus seluruh tahap, termasuk 158 request/model/service examples, 13 pengujian JavaScript, build production, validasi konfigurasi HTTPS serta verifikasi backup/restore: [hasil run](https://github.com/zaenal21j/glowbook/actions/runs/37978317562). Penambahan Google/Admin integrasi harus melewati CI pada commit yang memuat perubahan tersebut.
+- CI GitHub baseline commit `1470c4f` lulus seluruh tahap, termasuk 158 request/model/service examples, 13 pengujian JavaScript, build production, validasi konfigurasi HTTPS serta verifikasi backup/restore: [hasil run](https://github.com/zaenal21j/glowbook/actions/runs/37978317562). Google/Admin integrasi telah melewati CI commit 9e16db3 dengan 184 examples tanpa kegagalan: https://github.com/zaenal21j/glowbook/actions/runs/37984608199. Perubahan Duitku harus melewati CI pada commit yang memuatnya.
 - Pemeriksaan laporan terbaru: 15 request examples admin lulus, termasuk pemisahan bisnis bernama sama dalam kedua bahasa.
 - Pemeriksaan analitik terarah: 13 request/model/service examples lulus. Grafik admin pada data lokal juga cocok dengan pengelompokan tanggal Jakarta yang dihitung Ruby; tidak ada data aplikasi yang diubah.
 - Laporan September lokal diperiksa di browser: dua bisnis menampilkan nilai masing-masing Rp 350.000 dan Rp 250.000; tautan peringkat membuka detail bisnis yang sesuai. Data aplikasi tidak diubah untuk pemeriksaan ini.
@@ -55,6 +55,6 @@ Pengujian Rails menggunakan PostgreSQL terpisah dari database aplikasi lokal. Ha
 
 ## Tahap pembayaran terakhir
 
-Midtrans sandbox tetap dipertahankan. Migrasi ke Duitku menunggu arahan pemilik project setelah gate non-pembayaran selesai. Refund, payout/settlement dan pemotongan komisi otomatis belum tersedia. Nilai booking selesai di laporan tidak boleh dianggap sebagai dana yang sudah diterima; riwayat pembayaran online menampilkan status payment attempt yang tercatat.
+Checkout baru menggunakan Duitku POP. Konfigurasi Merchant Code, API Key terenkripsi, mode sandbox/production dan masa berlaku invoice tersedia di Admin → Integrasi; default nonaktif dan sandbox. Callback diverifikasi signature, nominal, referensi serta status API. Transaksi sandbox dipisahkan dari total uang production. Riwayat Midtrans dipertahankan, tetapi checkout Midtrans baru tidak tersedia. Lihat DUITKU_SETUP.md. Kredensial merchant, callback HTTPS publik dan transaksi sandbox nyata masih harus dibuktikan. Refund, payout/settlement dan pemotongan komisi otomatis belum tersedia. Nilai booking selesai bukan bukti dana diterima.
 
 WhatsApp belum menjadi kanal notifikasi. Notifikasi yang tersedia adalah email dan in-app. Chat memakai polling empat detik, sesuai implementasi saat ini.

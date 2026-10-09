@@ -181,16 +181,17 @@ Admin dapat memperbarui status booking dari halaman detail menggunakan aturan st
 
 Customer dapat memulai percakapan dari halaman bisnis. Pemilik serta staff aktif bisnis dapat membalas melalui menu Pesan. Isi pesan tersimpan di database dan halaman mengambil pesan baru setiap 4 detik; fitur ini tidak memerlukan layanan WebSocket tambahan.
 
-## Opsional: Pembayaran Midtrans Sandbox
+## Pembayaran Duitku
 
-Pembayaran online memakai Snap hosted checkout dan **selalu menunjuk ke endpoint Sandbox**. Isi Server Key sandbox dari Midtrans sebelum menyalakan aplikasi:
+Gateway checkout baru menggunakan **Duitku POP dengan hosted checkout**. Buka **Admin → Integrasi → Payment Gateway Duitku**, isi Merchant Code dan API Key dari project Duitku, pilih **Sandbox**, lalu aktifkan. Nilai awal tetap nonaktif dan sandbox. Secret disimpan terenkripsi; kosongkan API Key saat mengedit untuk mempertahankan nilai lama. Panduan lengkap ada di [DUITKU_SETUP.md](DUITKU_SETUP.md).
 
-```bash
-export MIDTRANS_SERVER_KEY="SB-Mid-server-..."
-export APP_HOST="https://<host-anda>"
-```
+`APP_HOST` menentukan callback URL `https://<domain>/duitku/callback` dan return URL detail booking. Callback harus bisa diakses publik (port 80/443); localhost:3000 hanya untuk menyiapkan aplikasi dan menguji alur lokal dengan mock. Tidak ada tunnel atau eksposur publik otomatis. Mode production memerlukan domain HTTPS publik dan kredensial production yang sesuai.
 
-`APP_HOST` dipakai untuk mengarahkan pelanggan kembali ke detail booking setelah checkout Snap. Setelah aplikasi dapat diakses melalui URL publik HTTPS (atau tunnel lokal), atur `Payment Notification URL` di Midtrans MAP ke `https://<host-anda>/midtrans/notifications`. Endpoint akan memverifikasi signature dan mencocokkan status terbaru, nominal, mata uang, serta order ID sebelum menyimpan status pembayaran. Booking online yang pembayarannya masih berjalan atau sudah lunas tidak bisa dibatalkan/diubah jadwal sampai status pembayaran terminal; alur refund belum tersedia. Jangan gunakan Server Key produksi untuk menjalankan integrasi sandbox.
+Signature menggunakan HMAC SHA256 sesuai dokumentasi Duitku terbaru. Callback mencocokkan merchant, mode, order ID, referensi dan nominal tersimpan, kemudian memeriksa status langsung melalui API Duitku. Query return URL bukan bukti pembayaran. Customer dapat memeriksa status secara manual dengan jeda minimal 30 detik. Timeout pembuatan invoice mempertahankan order ID yang sama.
+
+Menonaktifkan Duitku menghentikan checkout baru; callback dan rekonsiliasi tetap menerima transaksi sebelumnya selama kredensial dipertahankan. Perubahan Merchant Code/API Key/mode ditolak bila masih ada invoice Duitku pending. Entri Midtrans lama tetap tersimpan sebagai riwayat; endpoint dan checkout Midtrans sudah dihentikan. Transaksi pending lama tidak otomatis dialihkan atau ditandai lunas.
+
+Transaksi sandbox diberi label dan tidak masuk total uang production pada laporan/analitik/keuangan. Pembayaran pending/lunas tetap membatasi pembatalan dan reschedule. Refund, payout/settlement ke owner dan pemotongan komisi otomatis belum tersedia; proses tersebut tetap dilakukan melalui prosedur merchant dan direkonsiliasi terpisah.
 
 ## Catatan keamanan
 

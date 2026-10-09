@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_10_100000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_10_110000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "pg_catalog.plpgsql"
@@ -215,13 +215,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_10_100000) do
     t.bigint "amount", null: false
     t.bigint "booking_id", null: false
     t.datetime "created_at", null: false
+    t.string "gateway_environment"
+    t.string "merchant_code"
     t.string "order_id", null: false
     t.string "payment_type"
+    t.string "provider", default: "duitku", null: false
     t.string "provider_status"
     t.string "redirect_url"
     t.datetime "settled_at"
     t.string "snap_token"
     t.string "status", default: "pending", null: false
+    t.datetime "status_checked_at"
     t.string "transaction_id"
     t.datetime "updated_at", null: false
     t.index ["booking_id"], name: "index_payment_attempts_on_booking_id"
@@ -229,6 +233,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_10_100000) do
     t.index ["order_id"], name: "index_payment_attempts_on_order_id", unique: true
     t.index ["transaction_id"], name: "index_payment_attempts_on_transaction_id", unique: true, where: "(transaction_id IS NOT NULL)"
     t.check_constraint "amount >= 0", name: "payment_attempts_amount_nonnegative"
+    t.check_constraint "provider::text = ANY (ARRAY['midtrans'::character varying, 'duitku'::character varying]::text[])", name: "payment_attempts_provider_valid"
     t.check_constraint "status::text = ANY (ARRAY['pending'::character varying::text, 'settlement'::character varying::text, 'capture'::character varying::text, 'expire'::character varying::text, 'cancel'::character varying::text, 'deny'::character varying::text, 'failure'::character varying::text, 'refund'::character varying::text])", name: "payment_attempts_status_valid"
   end
 

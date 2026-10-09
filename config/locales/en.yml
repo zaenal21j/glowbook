@@ -260,7 +260,6 @@ en:
     pay_at_venue_description: Cash or QRIS when you arrive
     online_payment: Online payment
     total_must_be_positive: Only available for totals above Rp 0
-    midtrans_sandbox: Secure checkout via Midtrans Sandbox
     payment_not_configured: Not configured yet
     continue: Continue
     successful: Booking confirmed!

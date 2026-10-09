@@ -22,8 +22,6 @@ module Glowbook
 
     # Devise: allow routing via OmniAuth
     config.x.app_host = ENV.fetch("APP_HOST", "http://localhost:3000")
-    config.x.midtrans_server_key = ENV["MIDTRANS_SERVER_KEY"]
-    config.x.midtrans_enabled = config.x.midtrans_server_key.present?
 
     # Allow access by IP in development (localhost is default)
     config.hosts << "127.0.0.1" if Rails.env.development?

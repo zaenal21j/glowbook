@@ -149,6 +149,9 @@ FactoryBot.define do
 
   factory :payment_attempt do
     booking
+    provider { "duitku" }
+    gateway_environment { "production" }
+    merchant_code { "DTEST" }
     sequence(:order_id) { |n| "GB-PAYMENT-#{n}" }
     amount { booking.total_amount }
     status { "pending" }

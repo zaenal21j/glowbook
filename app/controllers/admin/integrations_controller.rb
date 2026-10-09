@@ -21,6 +21,8 @@ class Admin::IntegrationsController < Admin::BaseController
   private
 
   def load_integrations
-    @integrations = IntegrationSetting::PROVIDERS.index_with { |provider| IntegrationSetting.effective(provider) }
+    @integrations = IntegrationSetting::PROVIDERS.index_with do |provider|
+      IntegrationSetting.effective(provider).tap(&:ready?)
+    end
   end
 end

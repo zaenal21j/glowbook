@@ -94,7 +94,7 @@ class BookingsFlowController < ApplicationController
     unless Booking::PAYMENT_METHODS.include?(payment_method)
       return redirect_to business_book_confirmation_path(@business.slug), alert: t("alerts.booking.invalid_payment_method")
     end
-    if payment_method == "online_transfer" && !Rails.configuration.x.midtrans_enabled
+    if payment_method == "online_transfer" && !DuitkuClient.enabled?
       return redirect_to business_book_confirmation_path(@business.slug), alert: t("alerts.booking.online_payment_unavailable")
     end
     if payment_method == "online_transfer" && @business.services.active.where(id: flow["service_ids"]).sum(:price) <= 0

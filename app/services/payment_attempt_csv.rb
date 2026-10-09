@@ -4,7 +4,7 @@ class PaymentAttemptCsv
   end
 
   def render
-    rows = [ I18n.t("exports.payment_headers") ]
+    rows = [ I18n.t("exports.payment_headers") + [I18n.t("duitku.gateway"), I18n.t("duitku.mode")] ]
     @scope.each do |payment|
       booking = payment.booking
       rows << [
@@ -19,7 +19,9 @@ class PaymentAttemptCsv
         payment.provider_status,
         payment.transaction_id,
         payment.settled_at&.in_time_zone&.iso8601,
-        payment.created_at&.in_time_zone&.iso8601
+        payment.created_at&.in_time_zone&.iso8601,
+        payment.provider,
+        payment.gateway_environment
       ].map { |value| spreadsheet_safe(value) }
     end
 

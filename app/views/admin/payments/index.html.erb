@@ -45,7 +45,7 @@
           <td class="px-4 py-3"><%= link_to booking.reference, admin_booking_path(booking), class: "font-mono text-xs text-primary-600 hover:underline" %></td>
           <td class="px-4 py-3"><span class="block font-medium"><%= booking.user.full_name %></span><span class="text-xs text-ink-500"><%= booking.business.name %></span></td>
           <td class="px-4 py-3 font-semibold"><%= format_idr(payment.amount) %></td>
-          <td class="px-4 py-3"><%= payment.payment_type ? t("admin.payments.methods.#{payment.payment_type}", default: payment.payment_type.humanize) : "—" %></td>
+          <td class="px-4 py-3"><%= payment.payment_type ? t("admin.payments.methods.#{payment.payment_type}", default: payment.payment_type.humanize) : "—" %><span class="mt-1 block text-xs text-ink-500"><%= payment.gateway_label %></span></td>
           <td class="px-4 py-3"><span class="badge <%= payment.status_badge_class %>"><%= t("booking.payment_statuses.#{payment.status}", default: payment.status.humanize) %></span><%= " · #{payment.provider_status}" if payment.provider_status.present? && payment.provider_status != payment.status %></td>
           <td class="px-4 py-3 whitespace-nowrap"><%= payment.settled_at ? format_datetime_id(payment.settled_at) : t("admin.payments.not_confirmed") %></td>
         </tr>

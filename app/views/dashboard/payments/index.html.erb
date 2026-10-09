@@ -50,7 +50,7 @@
           <td class="px-4 py-3 font-mono text-xs"><%= payment.booking.reference %></td>
           <td class="px-4 py-3"><%= payment.booking.user.full_name %></td>
           <td class="px-4 py-3 font-semibold"><%= format_idr(payment.amount) %></td>
-          <td class="px-4 py-3"><%= payment.payment_type ? t("admin.payments.methods.#{payment.payment_type}", default: payment.payment_type.humanize) : "—" %></td>
+          <td class="px-4 py-3"><%= payment.payment_type ? t("admin.payments.methods.#{payment.payment_type}", default: payment.payment_type.humanize) : "—" %><span class="mt-1 block text-xs text-ink-500"><%= payment.gateway_label %></span></td>
           <td class="px-4 py-3"><span class="badge <%= payment.status_badge_class %>"><%= t("booking.payment_statuses.#{payment.status}", default: payment.status.humanize) %></span></td>
           <td class="px-4 py-3 whitespace-nowrap"><%= payment.settled_at ? format_datetime_id(payment.settled_at) : t("dashboard.finance.not_confirmed") %></td>
         </tr>

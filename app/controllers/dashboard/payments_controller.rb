@@ -4,7 +4,7 @@ class Dashboard::PaymentsController < Dashboard::BaseController
     @status = PaymentAttempt::STATUSES.include?(params[:status]) ? params[:status] : nil
     period = @month.beginning_of_month.beginning_of_day..@month.end_of_month.end_of_day
 
-    @online_collected = PaymentAttempt.paid.joins(:booking)
+    @online_collected = PaymentAttempt.paid.production_payments.joins(:booking)
                                        .where(bookings: { business_id: @business.id })
                                        .where(settled_at: period)
                                        .sum(:amount)

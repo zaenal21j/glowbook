@@ -3,7 +3,7 @@ class BookingsController < ApplicationController
   before_action :authorize_owner!, only: %i[show cancel reschedule update_schedule]
 
   def show
-    @latest_payment_attempt = @booking.payment_attempts.latest_first.first
+    @latest_payment_attempt = @booking.payment_attempts.paid.latest_first.first || @booking.payment_attempts.latest_first.first
   end
 
   def cancel
@@ -45,7 +45,7 @@ class BookingsController < ApplicationController
   private
 
   def set_booking
-    @booking = Booking.find_by!(reference: params[:reference] || params[:id])
+    @booking = Booking.find_by!(reference: params[:id])
   end
 
   def authorize_owner!

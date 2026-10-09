@@ -6,6 +6,7 @@ GlowBook adalah marketplace kecantikan dan wellness untuk mencari bisnis, meliha
 
 - Pencarian bisnis berdasarkan kota, kategori, layanan, dan harga.
 - Login email, Google, dan Facebook; pengaturan OAuth serta SMTP melalui Admin → Integrasi dengan secret terenkripsi.
+- Checkout Duitku POP, callback HMAC SHA256 dan pemeriksaan status; Merchant Code/API Key/mode dikonfigurasi melalui Admin → Integrasi. Lihat [panduan Duitku](DUITKU_SETUP.md).
 - Booking dengan pemeriksaan ketersediaan jadwal agar slot tidak dipesan ganda.
 - Dashboard pelanggan dan pemilik bisnis, termasuk layanan, staff, booking, promosi, dan galeri.
 - Pengaturan jam operasional, beberapa shift staff per hari, istirahat mingguan, dan blokir waktu untuk staff atau seluruh bisnis.
@@ -57,4 +58,4 @@ Ikon PNG PWA dibuat dari `public/icon.svg`. Setelah mengubah vektor tersebut, ja
 
 ## Catatan kesiapan production
 
-Image Docker dan startup container sudah dapat diverifikasi secara lokal. Deploy publik tetap memerlukan domain HTTPS, secret production, email SMTP, backup database, dan pemeriksaan operasional. Settlement/komisi otomatis termasuk tahap keuangan yang belum selesai. Implementasi Midtrans dipertahankan selama fitur non-pembayaran diselesaikan; migrasi ke Duitku dilakukan pada tahap pembayaran terakhir sesuai arahan pemilik project.
+Image Docker dan startup container sudah dapat diverifikasi secara lokal. Deploy publik tetap memerlukan domain HTTPS, secret production, email SMTP, backup database, dan pemeriksaan operasional. Duitku disiapkan dengan mode awal sandbox/nonaktif; kredensial merchant dan uji transaksi nyata diperlukan sebelum produksi. Refund, payout/settlement owner dan komisi otomatis masih belum tersedia. Midtrans hanya dipertahankan sebagai label riwayat transaksi lama.

@@ -1,0 +1,30 @@
+en:
+  integrations:
+    providers:
+      duitku: Duitku Payment Gateway
+    fields:
+      merchant_code: Duitku Merchant Code
+      api_key: Duitku API Key
+      environment: Duitku mode
+      expiry_minutes: Invoice validity (minutes)
+  duitku:
+    sandbox: Sandbox (testing)
+    production: Production (real payments)
+    checkout: Secure checkout through Duitku
+    checkout_sandbox: Duitku Sandbox — testing only, no real payments
+    legacy: legacy sandbox history
+    gateway: Gateway
+    mode: Gateway mode
+    callback_label: Duitku Callback URL
+    configuration_help: Create a Duitku project and enter its Merchant Code and API Key for the selected mode. Start with sandbox. Callbacks require a public URL; localhost cannot receive Duitku callbacks. Do not change merchant, mode, or API Key while payments are pending. The payment button opens Duitku checkout.
+    invalid_configuration: Invalid Duitku Merchant Code, mode, or invoice validity (1–1440 minutes).
+    https_required: Production requires a public HTTPS domain in the server APP_HOST setting.
+    not_configured: Duitku payments are disabled or configuration is incomplete.
+    invoice_unknown: Invoice creation could not be confirmed. Wait briefly and retry the same transaction.
+    invalid_checkout: Invalid Duitku checkout URL. Please contact an administrator.
+    gateway_unavailable: Duitku could not confirm the request result. Wait briefly and retry.
+    previous_gateway: A pending transaction uses the previous gateway or configuration. Contact an administrator to reconcile it before starting another payment.
+    pending_configuration: Merchant Code, mode, and API Key cannot be changed while Duitku transactions are pending. Reconcile those payments first.
+    refresh_status: Check payment status
+    status_updated: Payment status has been checked with Duitku.
+    status_unavailable: Payment status could not be verified. Try again or contact an administrator.
