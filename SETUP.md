@@ -127,6 +127,21 @@ Password tidak ditampilkan atau dimasukkan langsung ke riwayat shell. Task ini a
 
 Konfigurasi ini untuk satu host dengan satu container web dan satu worker. Sebelum menambah instance, siapkan object storage untuk upload galeri dan sesuaikan kapasitas worker. Deploy production belum dijalankan.
 
+### Reverse proxy HTTPS yang disertakan
+
+Untuk server yang belum memakai reverse proxy lain, gunakan tambahan `compose.production.yaml`. File ini menambahkan Caddy dengan sertifikat HTTPS otomatis dan meneruskan permintaan ke service web. Konfigurasi membaca `APP_HOST` yang sama dengan Rails, misalnya `https://booking.domain-anda.id` (tanpa path). Arahkan DNS A/AAAA domain tersebut ke server dan buka port TCP 80/443; UDP 443 bersifat opsional untuk HTTP/3. Pastikan port tersebut belum dipakai layanan lain. Pertahankan `RAILS_ASSUME_SSL=true` dan `RAILS_FORCE_SSL=true`.
+
+Jalankan dari direktori project pada server Linux, setelah `.env.production` diisi dengan nilai production:
+
+```bash
+docker compose --env-file .env.production -f compose.yaml -f compose.production.yaml config --quiet
+docker compose --env-file .env.production -f compose.yaml -f compose.production.yaml run --rm --no-deps proxy caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile
+docker compose --env-file .env.production -f compose.yaml -f compose.production.yaml up --build -d
+docker compose --env-file .env.production -f compose.yaml -f compose.production.yaml ps
+```
+
+Gunakan kedua `-f` tersebut pada perintah pengelolaan stack dengan proxy. Saat memperbarui `Caddyfile`, jalankan `docker compose --env-file .env.production -f compose.yaml -f compose.production.yaml exec proxy caddy reload --config /etc/caddy/Caddyfile --adapter caddyfile`. Volume `caddy_data` menyimpan sertifikat dan private key; sertakan dalam cadangan server dan jangan hapus dengan `down -v`. Validasi konfigurasi tidak membuktikan penerbitan sertifikat, DNS atau akses publik; semuanya baru dapat diperiksa pada domain dan server tujuan. Panduan resmi: [Caddy automatic HTTPS](https://caddyserver.com/docs/automatic-https) dan [image Docker Caddy](https://hub.docker.com/_/caddy).
+
 ## Pendaftaran bisnis
 
 Pengguna dengan akun customer dapat mendaftarkan satu bisnis melalui `/daftar-bisnis`. Bisnis baru berstatus menunggu verifikasi; pemilik dapat melengkapi profil, layanan, staff, dan galeri dari dashboard. Admin menyetujui bisnis dari menu Admin → Bisnis. Jam awal otomatis Senin–Sabtu 09.00–17.00 dan Minggu tutup.

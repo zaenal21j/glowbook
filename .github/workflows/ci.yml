@@ -31,6 +31,10 @@ jobs:
         run: docker compose -f compose.test.yaml run --rm --no-deps tests ./bin/rails runner script/check_release.rb
       - name: Build production image
         run: docker build -t glowbook:ci .
+      - name: Validate production HTTPS proxy configuration
+        run: |
+          docker compose --env-file .env.production.example -f compose.yaml -f compose.production.yaml config --quiet
+          docker run --rm -e APP_HOST=https://glowbook.example.com --mount type=bind,source="$PWD/deploy/caddy",target=/etc/caddy,readonly caddy:2.11.7-alpine caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile
       - name: Clean up verification containers
         if: always()
         run: docker compose -f compose.test.yaml down --remove-orphans --volumes

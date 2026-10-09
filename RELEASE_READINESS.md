@@ -17,6 +17,7 @@ Audit lokal: 10 Oktober 2026 (Asia/Bangkok). Status ini mencatat bukti yang suda
 | Bahasa | Indonesia dan Inggris untuk UI utama, pesan booking dan email keamanan akun | 894 key literal tersedia pada kedua locale; key dinamis juga dicakup sebagian request specs |
 | PWA | Manifest, worker, cache aset statis dan fallback offline tersedia | Tujuh pengujian service worker lulus; endpoint nyata memberi 200; browser menampilkan fallback setelah instance sementara port 3002 dihentikan. Instalasi pada perangkat pengguna belum diperiksa |
 | Instalasi baru | Task `glowbook:bootstrap` membuat kota/kategori/admin tanpa akun demo; aman diulang | Empat service specs; seed demo ditolak di production |
+| HTTPS | Overlay Compose dan konfigurasi Caddy untuk server publik tersedia | Compose dan `caddy validate` lulus dengan domain contoh; proxy HTTP sementara pada loopback meneruskan homepage dan `/up` dengan status 200. DNS, sertifikat publik dan akses server tujuan belum dibuktikan |
 
 ## Verifikasi lokal yang selesai
 
@@ -36,7 +37,7 @@ Pengujian Rails menggunakan PostgreSQL terpisah dari database aplikasi lokal. Ha
 ## Gate sebelum publikasi
 
 1. CI GitHub harus lulus untuk commit yang akan dipublikasikan: [GlowBook Actions](https://github.com/zaenal21j/glowbook/actions).
-2. Sediakan domain dan server, arahkan DNS, pasang reverse proxy HTTPS, lalu jalankan stack dengan secret production baru. Lihat `SETUP.md`.
+2. Sediakan domain dan server, arahkan DNS, jalankan reverse proxy HTTPS (overlay `compose.production.yaml` tersedia), lalu jalankan stack dengan secret production baru. Lihat `SETUP.md`.
 3. Jalankan bootstrap admin awal, uji onboarding/approval/booking pada host publik, dan periksa persistensi upload setelah restart.
 4. Isi SMTP; buktikan penerimaan email konfirmasi, pembatalan, reschedule dan reset password melalui worker production.
 5. Pasang jadwal backup database aplikasi, database antrean dan file upload; lakukan percobaan restore pada database terpisah. Cadangan lokal satu kali belum menggantikan proses ini.
