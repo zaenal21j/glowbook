@@ -6,6 +6,12 @@ class Dashboard::AnalyticsController < Dashboard::BaseController
     @new_customers = @business.customers.where("bookings.start_time >= ?", Date.current.beginning_of_month).count
     @rating = @business.avg_rating
 
+    paid_attempts = PaymentAttempt.paid.joins(:booking)
+                                   .where(bookings: { business_id: @business.id })
+                                   .where(settled_at: Date.current.beginning_of_month.beginning_of_day..Time.current)
+    @online_payments_month = paid_attempts.distinct.count(:booking_id)
+    @online_collected_month = paid_attempts.sum(:amount)
+
     # Nilai booking selesai 30 hari terakhir (fill gap manual)
     from = 29.days.ago.to_date
     raw_completed_values = completed_bookings.unscope(:order)

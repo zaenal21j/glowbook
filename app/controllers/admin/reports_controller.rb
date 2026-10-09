@@ -8,6 +8,10 @@ class Admin::ReportsController < Admin::BaseController
 
     @kpi_bookings = month_scope.count
     @kpi_revenue = month_scope.sum(:total_amount)
+    paid_attempts = PaymentAttempt.paid.joins(:booking)
+                                   .where(settled_at: month_start.beginning_of_day..month_end.end_of_day)
+    @kpi_online_payments = paid_attempts.distinct.count(:booking_id)
+    @kpi_online_collected = paid_attempts.sum(:amount)
     @kpi_customers = User.customers.where(created_at: month_start.beginning_of_day..month_end.end_of_day).count
     @kpi_new_businesses = Business.where(created_at: month_start.beginning_of_day..month_end.end_of_day).count
 

@@ -8,7 +8,7 @@
   <p class="text-sm text-ink-500">Performa bisnis Anda bulan ini.</p>
 </div>
 
-<div class="grid gap-4 md:grid-cols-4">
+<div class="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
   <div class="card p-5">
     <p class="text-sm text-ink-500">Nilai Booking Selesai Bulan Ini</p>
     <p class="mt-1 text-2xl font-bold"><%= number_to_currency(@completed_value_month, unit: "Rp ", delimiter: ".", precision: 0) %></p>
@@ -25,6 +25,11 @@
   <div class="card p-5">
     <p class="text-sm text-ink-500">Rating Rata-rata</p>
     <p class="mt-1 text-2xl font-bold text-amber-500">⭐ <%= @rating || "—" %></p>
+  </div>
+  <div class="card p-5">
+    <p class="text-sm text-ink-500">Pembayaran Online Terkonfirmasi</p>
+    <p class="mt-1 text-2xl font-bold"><%= number_to_currency(@online_collected_month, unit: "Rp ", delimiter: ".", precision: 0) %></p>
+    <p class="mt-1 text-xs text-ink-400"><%= @online_payments_month %> booking · dikonfirmasi gateway bulan ini; bayar di tempat tidak termasuk.</p>
   </div>
 </div>
 

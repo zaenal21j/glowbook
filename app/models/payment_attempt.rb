@@ -8,6 +8,9 @@ class PaymentAttempt < ApplicationRecord
   validates :status, inclusion: { in: STATUSES }
 
   scope :latest_first, -> { order(created_at: :desc, id: :desc) }
+  scope :paid, -> {
+    where(status: "settlement").or(where(status: "capture", provider_status: "capture"))
+  }
 
   def paid?
     status == "settlement" || (status == "capture" && provider_status == "capture")

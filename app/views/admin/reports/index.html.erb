@@ -13,7 +13,7 @@
 </div>
 <p class="text-sm text-ink-500 mt-1">Periode: <%= @month.strftime("%B %Y") %></p>
 
-<div class="grid gap-4 mt-5 md:grid-cols-4">
+<div class="grid gap-4 mt-5 md:grid-cols-2 xl:grid-cols-5">
   <div class="card p-5">
     <p class="text-sm text-ink-500">Booking Selesai</p>
     <p class="mt-1 text-2xl font-bold"><%= @kpi_bookings %></p>
@@ -22,6 +22,11 @@
     <p class="text-sm text-ink-500">Nilai Booking Selesai</p>
     <p class="mt-1 text-2xl font-bold"><%= number_to_currency(@kpi_revenue, unit: "Rp ", delimiter: ".", precision: 0) %></p>
     <p class="mt-1 text-xs text-ink-400">Bukan komisi atau pembayaran terkonfirmasi.</p>
+  </div>
+  <div class="card p-5">
+    <p class="text-sm text-ink-500">Pembayaran Online Terkonfirmasi</p>
+    <p class="mt-1 text-2xl font-bold"><%= number_to_currency(@kpi_online_collected, unit: "Rp ", delimiter: ".", precision: 0) %></p>
+    <p class="mt-1 text-xs text-ink-400"><%= @kpi_online_payments %> booking · dikonfirmasi gateway pada periode ini; pembayaran di tempat tidak termasuk.</p>
   </div>
   <div class="card p-5">
     <p class="text-sm text-ink-500">Pelanggan Baru</p>
