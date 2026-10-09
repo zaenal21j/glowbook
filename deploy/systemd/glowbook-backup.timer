@@ -1,0 +1,10 @@
+[Unit]
+Description=Daily GlowBook backup at 03:15 WIB
+
+[Timer]
+OnCalendar=*-*-* 20:15:00 UTC
+Persistent=true
+Unit=glowbook-backup.service
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,56 @@
+name: glowbook-backup-verification
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: glowbook_production
+      POSTGRES_USER: glowbook
+      POSTGRES_PASSWORD: backup-verification-only
+    tmpfs:
+      - /var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U glowbook -d glowbook_production"]
+      interval: 2s
+      timeout: 5s
+      retries: 30
+  web:
+    image: ${GLOWBOOK_BACKUP_TEST_IMAGE:-glowbook:ci}
+    depends_on:
+      db:
+        condition: service_healthy
+    environment: &app_environment
+      APP_HOST: http://localhost
+      SECRET_KEY_BASE: backup-verification-only-0123456789abcdef0123456789abcdef0123456789abcdef
+      PGHOST: db
+      GLOWBOOK_DATABASE_PASSWORD: backup-verification-only
+      RAILS_ASSUME_SSL: "false"
+      RAILS_FORCE_SSL: "false"
+    volumes:
+      - storage:/rails/storage
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:3000/up"]
+      interval: 2s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
+  worker:
+    image: ${GLOWBOOK_BACKUP_TEST_IMAGE:-glowbook:ci}
+    command: ["./bin/jobs"]
+    environment: *app_environment
+    volumes:
+      - storage:/rails/storage
+    depends_on:
+      web:
+        condition: service_healthy
+  proxy:
+    image: caddy:2.11.7-alpine
+    init: true
+    entrypoint: ["/bin/sh", "-c"]
+    command: ["printf 'certificate-fixture' >/data/backup-marker; printf 'config-fixture' >/config/backup-marker; exec sleep infinity"]
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+volumes:
+  storage:
+  caddy_data:
+  caddy_config:

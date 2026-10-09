@@ -142,6 +142,10 @@ docker compose --env-file .env.production -f compose.yaml -f compose.production.
 
 Gunakan kedua `-f` tersebut pada perintah pengelolaan stack dengan proxy. Saat memperbarui `Caddyfile`, jalankan `docker compose --env-file .env.production -f compose.yaml -f compose.production.yaml exec proxy caddy reload --config /etc/caddy/Caddyfile --adapter caddyfile`. Volume `caddy_data` menyimpan sertifikat dan private key; sertakan dalam cadangan server dan jangan hapus dengan `down -v`. Validasi konfigurasi tidak membuktikan penerbitan sertifikat, DNS atau akses publik; semuanya baru dapat diperiksa pada domain dan server tujuan. Panduan resmi: [Caddy automatic HTTPS](https://caddyserver.com/docs/automatic-https) dan [image Docker Caddy](https://hub.docker.com/_/caddy).
 
+## Backup dan restore
+
+Panduan backup database aplikasi/antrean, upload, jadwal systemd dan percobaan pemulihan tersedia di [BACKUP_RESTORE.md](BACKUP_RESTORE.md). Jadwal tersebut belum dipasang pada server production; script memakai jeda layanan selama snapshot agar database dan upload konsisten.
+
 ## Pendaftaran bisnis
 
 Pengguna dengan akun customer dapat mendaftarkan satu bisnis melalui `/daftar-bisnis`. Bisnis baru berstatus menunggu verifikasi; pemilik dapat melengkapi profil, layanan, staff, dan galeri dari dashboard. Admin menyetujui bisnis dari menu Admin → Bisnis. Jam awal otomatis Senin–Sabtu 09.00–17.00 dan Minggu tutup.

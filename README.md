@@ -49,7 +49,7 @@ Pengujian cache service worker dan bahasa halaman offline menggunakan Node.js:
 node --test spec/javascript/*_test.cjs
 ```
 
-GitHub Actions menjalankan suite Rails, pengujian service worker, pemeriksaan route/template/terjemahan, pemindaian Brakeman, dan build image production untuk push ke `main`, cabang `codex/**`, serta pull request. Workflow tidak menggunakan secret production dan tidak melakukan deployment.
+GitHub Actions menjalankan suite Rails, pengujian service worker, pemeriksaan route/template/terjemahan, pemindaian Brakeman, build image production, validasi proxy HTTPS, serta verifikasi backup/restore pada stack terpisah untuk push ke `main`, cabang `codex/**`, serta pull request. Workflow tidak menggunakan secret production dan tidak melakukan deployment. Panduan pencadangan dan jadwal server ada di [BACKUP_RESTORE.md](BACKUP_RESTORE.md).
 
 ## Catatan kesiapan production
 

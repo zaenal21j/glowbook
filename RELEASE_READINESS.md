@@ -18,6 +18,7 @@ Audit lokal: 10 Oktober 2026 (Asia/Bangkok). Status ini mencatat bukti yang suda
 | PWA | Manifest, worker, cache aset statis dan fallback offline tersedia | Tujuh pengujian service worker lulus; endpoint nyata memberi 200; browser menampilkan fallback setelah instance sementara port 3002 dihentikan. Instalasi pada perangkat pengguna belum diperiksa |
 | Instalasi baru | Task `glowbook:bootstrap` membuat kota/kategori/admin tanpa akun demo; aman diulang | Empat service specs; seed demo ditolak di production |
 | HTTPS | Overlay Compose dan konfigurasi Caddy untuk server publik tersedia | Compose dan `caddy validate` lulus dengan domain contoh; proxy HTTP sementara pada loopback meneruskan homepage dan `/up` dengan status 200. DNS, sertifikat publik dan akses server tujuan belum dibuktikan |
+| Backup dan restore | Script backup konsisten, checksum dan template timer tersedia | Workflow lokal memakai image Rails nyata; kedua database dipulihkan, byte upload cocok, data Caddy disalin, serta kegagalan dump/lock/worker berhenti/checksum rusak diperiksa. Timer server dan salinan di luar host belum dibuktikan |
 
 ## Verifikasi lokal yang selesai
 
@@ -29,7 +30,7 @@ Audit lokal: 10 Oktober 2026 (Asia/Bangkok). Status ini mencatat bukti yang suda
 - Dependency pengujian dapat dipasang dengan lockfile frozen melalui `bundle install --local`.
 - Image production web dan worker berhasil dibangun dan dijalankan pada `http://localhost:3000`; kolom staff bio tersedia dan tidak ada migrasi tertunda.
 - Cadangan database lokal dibuat sebelum penerapan pada `tmp/local_backups/`; folder tersebut tidak termasuk GitHub.
-- CI GitHub commit `055eded` lulus seluruh tahap, termasuk build image verifikasi dari database kosong dan build production: [hasil run](https://github.com/zaenal21j/glowbook/actions/runs/37965763346). Perubahan keamanan akun sesudah commit tersebut tetap harus melewati CI.
+- CI GitHub commit `f5b4fe8` lulus seluruh tahap, termasuk 147 request/model/service examples, build production dan validasi konfigurasi HTTPS: [hasil run](https://github.com/zaenal21j/glowbook/actions/runs/37969180877). Perubahan workflow backup sesudah commit tersebut tetap harus melewati CI.
 - Pemeriksaan tambahan menu ponsel: 32 request examples admin/jadwal bisnis lulus; navigasi menu juga diperiksa di browser.
 
 Pengujian Rails menggunakan PostgreSQL terpisah dari database aplikasi lokal. Hasil ini tidak membuktikan kapasitas beban production atau pengiriman email ke penyedia SMTP.
@@ -40,7 +41,7 @@ Pengujian Rails menggunakan PostgreSQL terpisah dari database aplikasi lokal. Ha
 2. Sediakan domain dan server, arahkan DNS, jalankan reverse proxy HTTPS (overlay `compose.production.yaml` tersedia), lalu jalankan stack dengan secret production baru. Lihat `SETUP.md`.
 3. Jalankan bootstrap admin awal, uji onboarding/approval/booking pada host publik, dan periksa persistensi upload setelah restart.
 4. Isi SMTP; buktikan penerimaan email konfirmasi, pembatalan, reschedule dan reset password melalui worker production.
-5. Pasang jadwal backup database aplikasi, database antrean dan file upload; lakukan percobaan restore pada database terpisah. Cadangan lokal satu kali belum menggantikan proses ini.
+5. Pasang jadwal backup database aplikasi, database antrean dan file upload pada server, siapkan salinan terenkripsi di luar host serta uji restore production pada lingkungan terpisah. Workflow lokal sudah diperiksa; lihat `BACKUP_RESTORE.md`. Template timer yang belum dipasang tidak membuktikan backup terjadwal server.
 6. Periksa instalasi PWA dan fallback offline pada perangkat/browser yang dipakai pelanggan.
 7. Jika Facebook akan diaktifkan untuk publik, selesaikan konfigurasi domain/callback serta review aplikasi Meta. Mock OAuth lokal tidak membuktikan persetujuan Meta.
 

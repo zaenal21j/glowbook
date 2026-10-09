@@ -35,6 +35,12 @@ jobs:
         run: |
           docker compose --env-file .env.production.example -f compose.yaml -f compose.production.yaml config --quiet
           docker run --rm -e APP_HOST=https://glowbook.example.com --mount type=bind,source="$PWD/deploy/caddy",target=/etc/caddy,readonly caddy:2.11.7-alpine caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile
+      - name: Verify backup and restore with an isolated stack
+        run: |
+          bash -n script/backup.sh script/verify_backup.sh
+          systemd-analyze calendar '*-*-* 20:15:00 UTC'
+          systemd-analyze verify deploy/systemd/glowbook-backup.service deploy/systemd/glowbook-backup.timer
+          bash script/verify_backup.sh
       - name: Clean up verification containers
         if: always()
         run: docker compose -f compose.test.yaml down --remove-orphans --volumes

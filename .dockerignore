@@ -7,5 +7,6 @@ log/*
 tmp/*
 storage/*
 db/*.sql
+backups/
 coverage
 /ChatGPT Image*.png

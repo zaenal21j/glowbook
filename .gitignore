@@ -30,6 +30,7 @@
 
 # Keep local database exports out of source control; they may contain real user data.
 /db/*.sql
+/backups/
 
 # Freebuff workspace tooling & logs
 /.freebuff/
