@@ -20,6 +20,7 @@
       <%= text_field_tag :q, params[:q], placeholder: "Kode booking, order, pelanggan…", class: "input w-64" %>
     </div>
     <%= submit_tag "Terapkan", class: "btn-secondary btn-md" %>
+    <%= link_to "Unduh CSV", dashboard_finance_path(month: @month.strftime("%Y-%m"), status: @status, q: params[:q], format: :csv), class: "btn-primary btn-md" %>
   <% end %>
 </div>
 

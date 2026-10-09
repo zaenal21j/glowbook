@@ -23,8 +23,17 @@ class Dashboard::PaymentsController < Dashboard::BaseController
       )
     end
 
-    @payments = paginate(scope.includes(booking: :user)
-                              .order(Arel.sql("payment_attempts.settled_at DESC NULLS LAST, payment_attempts.created_at DESC")))
+    @payment_scope = scope.includes(booking: %i[user business])
+                          .order(Arel.sql("payment_attempts.settled_at DESC NULLS LAST, payment_attempts.created_at DESC"))
+
+    respond_to do |format|
+      format.html { @payments = paginate(@payment_scope) }
+      format.csv do
+        send_data PaymentAttemptCsv.new(@payment_scope).render,
+                  filename: "#{@business.slug}-payments-#{@month.strftime('%Y-%m')}.csv",
+                  type: "text/csv; charset=utf-8"
+      end
+    end
   end
 
   private
