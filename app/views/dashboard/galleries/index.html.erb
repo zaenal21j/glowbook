@@ -1,12 +1,12 @@
 <% content_for :sidebar_links do %>
   <%= render "dashboard/shared/sidebar" %>
 <% end %>
-<% content_for :page_title, "Galeri Bisnis — GlowBook" %>
+<% content_for :page_title, t("dashboard.gallery_page.title") + " — GlowBook" %>
 
 <div class="max-w-5xl space-y-6">
   <div>
-    <h1 class="text-xl font-extrabold">Galeri Bisnis</h1>
-    <p class="text-sm text-ink-500">Unggah maksimal 6 foto JPG, PNG, atau WebP. Ukuran setiap foto maksimal 10 MB.</p>
+    <h1 class="text-xl font-extrabold"><%= t("dashboard.gallery_page.title") %></h1>
+    <p class="text-sm text-ink-500"><%= t("dashboard.gallery_page.description") %></p>
   </div>
 
   <% if @gallery.errors.any? %>
@@ -22,14 +22,14 @@
   <% if @galleries.size < Dashboard::GalleriesController::MAX_IMAGES %>
     <%= form_with model: @gallery, url: dashboard_galleries_path, class: "card grid gap-4 p-5 sm:grid-cols-[1fr_1fr_auto] sm:items-end", multipart: true do |f| %>
       <div>
-        <%= f.label :image, "Pilih foto", class: "label" %>
+        <%= f.label :image, t("dashboard.gallery_page.choose_photo"), class: "label" %>
         <%= f.file_field :image, accept: "image/jpeg,image/png,image/webp", required: true, class: "input", direct_upload: true %>
       </div>
       <div>
-        <%= f.label :caption, "Keterangan (opsional)", class: "label" %>
-        <%= f.text_field :caption, maxlength: 255, class: "input", placeholder: "Contoh: Ruang perawatan" %>
+        <%= f.label :caption, t("dashboard.gallery_page.caption"), class: "label" %>
+        <%= f.text_field :caption, maxlength: 255, class: "input", placeholder: t("dashboard.gallery_page.caption_placeholder") %>
       </div>
-      <%= f.submit "Unggah Foto", class: "btn-primary btn-md" %>
+      <%= f.submit t("dashboard.gallery_page.upload"), class: "btn-primary btn-md" %>
     <% end %>
   <% end %>
 
@@ -38,18 +38,18 @@
       <% @galleries.each do |gallery| %>
         <article class="card overflow-hidden">
           <% if gallery.image.attached? %>
-            <%= image_tag gallery.image, class: "aspect-square w-full object-cover", loading: "lazy", alt: gallery.caption.presence || "Foto galeri #{@business.name}" %>
+            <%= image_tag gallery.image, class: "aspect-square w-full object-cover", loading: "lazy", alt: gallery.caption.presence || t("dashboard.gallery_page.photo_alt", business: @business.name) %>
           <% end %>
           <div class="flex items-center justify-between gap-3 p-3">
-            <p class="truncate text-sm text-ink-600"><%= gallery.caption.presence || "Foto galeri" %></p>
-            <%= button_to "Hapus", dashboard_gallery_path(gallery), method: :delete,
-                          form: { data: { turbo_confirm: "Hapus foto ini dari galeri?" } },
+            <p class="truncate text-sm text-ink-600"><%= gallery.caption.presence || t("dashboard.gallery_page.photo") %></p>
+            <%= button_to t("dashboard.gallery_page.delete"), dashboard_gallery_path(gallery), method: :delete,
+                          form: { data: { turbo_confirm: t("dashboard.gallery_page.delete_confirm") } },
                           class: "btn-danger btn-sm shrink-0" %>
           </div>
         </article>
       <% end %>
     </div>
   <% else %>
-    <div class="card p-10 text-center text-sm text-ink-500">Belum ada foto. Unggah foto pertama bisnis Anda.</div>
+    <div class="card p-10 text-center text-sm text-ink-500"><%= t("dashboard.gallery_page.empty") %></div>
   <% end %>
 </div>

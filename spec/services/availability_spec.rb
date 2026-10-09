@@ -6,7 +6,10 @@ RSpec.describe Availability do
   let(:service)  { create(:service, business: business, duration_minutes: 60) }
   let(:member)   { create(:staff, business: business, start_hour: 9, end_hour: 17) }
 
-  before { create(:staff_service, staff: member, service: service) }
+  before do
+    travel_to Time.zone.local(2026, 10, 12, 8)
+    create(:staff_service, staff: member, service: service)
+  end
 
   def at(day_offset, hour, min = 0)
     Time.zone.now.to_date.next_day(day_offset)

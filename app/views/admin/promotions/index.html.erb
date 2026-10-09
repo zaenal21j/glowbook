@@ -1,15 +1,15 @@
 <%= render "admin/shared/sidebar" %>
-<% content_for :page_title, "Promosi" %>
+<% content_for :page_title, t("admin.promotions.title") %>
 
 <div class="flex gap-2">
-  <%= link_to "Semua", admin_promotions_path, class: "chip #{'chip-active' if params[:state].blank?}" %>
-  <%= link_to "Aktif", admin_promotions_path(state: "active"), class: "chip #{'chip-active' if params[:state] == 'active'}" %>
-  <%= link_to "Nonaktif", admin_promotions_path(state: "inactive"), class: "chip #{'chip-active' if params[:state] == 'inactive'}" %>
+  <%= link_to t("admin.promotions.all"), admin_promotions_path, class: "chip #{'chip-active' if params[:state].blank?}" %>
+  <%= link_to t("admin.promotions.active"), admin_promotions_path(state: "active"), class: "chip #{'chip-active' if params[:state] == 'active'}" %>
+  <%= link_to t("admin.promotions.inactive"), admin_promotions_path(state: "inactive"), class: "chip #{'chip-active' if params[:state] == 'inactive'}" %>
 </div>
 <div class="card mt-4 overflow-x-auto p-0">
   <table class="w-full text-sm">
     <thead class="border-b border-line bg-surface-50 text-left text-xs uppercase tracking-wide text-ink-400">
-      <tr><th class="p-3">Judul</th><th class="p-3">Kode</th><th class="p-3">Bisnis</th><th class="p-3">Diskon</th><th class="p-3">Periode</th><th class="p-3">Status</th><th class="p-3"></th></tr>
+      <tr><th class="p-3"><%= t("admin.promotions.title_column") %></th><th class="p-3"><%= t("admin.promotions.code") %></th><th class="p-3"><%= t("admin.promotions.business") %></th><th class="p-3"><%= t("admin.promotions.discount") %></th><th class="p-3"><%= t("admin.promotions.period") %></th><th class="p-3"><%= t("admin.promotions.status") %></th><th class="p-3"></th></tr>
     </thead>
     <tbody>
       <% @promotions.each do |p| %>
@@ -18,14 +18,14 @@
           <td class="p-3 font-mono text-xs"><%= p.code.presence || "—" %></td>
           <td class="p-3"><%= p.business.name %></td>
           <td class="p-3 font-semibold text-primary-600"><%= p.discount_percent ? "#{p.discount_percent}%" : "—" %></td>
-          <td class="p-3 text-ink-500 whitespace-nowrap"><%= p.starts_at&.strftime("%d %b") || "—" %> – <%= p.ends_at&.strftime("%d %b %Y") || "—" %></td>
-          <td class="p-3"><span class="badge <%= p.active? ? "badge-success" : "badge-muted" %>"><%= p.active? ? "Aktif" : "Nonaktif" %></span></td>
+          <td class="p-3 text-ink-500 whitespace-nowrap"><%= p.starts_at ? l(p.starts_at, format: "%d %b") : "—" %> – <%= p.ends_at ? l(p.ends_at, format: "%d %b %Y") : "—" %></td>
+          <td class="p-3"><span class="badge <%= p.active? ? "badge-success" : "badge-muted" %>"><%= p.active? ? t("admin.promotions.active") : t("admin.promotions.inactive") %></span></td>
           <td class="p-3 text-right">
-            <%= button_to "Hapus", admin_promotion_path(p), method: :delete, form: { data: { turbo_confirm: "Hapus promosi ini?" } }, class: "text-xs text-red-500 hover:underline" %>
+            <%= button_to t("admin.promotions.delete"), admin_promotion_path(p), method: :delete, form: { data: { turbo_confirm: t("admin.promotions.delete_confirm") } }, class: "text-xs text-red-500 hover:underline" %>
           </td>
         </tr>
       <% end %>
-      <% if @promotions.empty? %><tr><td colspan="7" class="p-8 text-center text-ink-500">Belum ada promosi.</td></tr><% end %>
+      <% if @promotions.empty? %><tr><td colspan="7" class="p-8 text-center text-ink-500"><%= t("admin.promotions.empty") %></td></tr><% end %>
     </tbody>
   </table>
 </div>

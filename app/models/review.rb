@@ -6,7 +6,7 @@ class Review < ApplicationRecord
   validates :business, presence: true
   validates :rating, presence: true, numericality: { only_integer: true, in: 1..5 }
   validates :comment, length: { maximum: 1000 }
-  validates :user_id, uniqueness: { scope: :business_id, message: "sudah memberi ulasan untuk bisnis ini" }
+  validates :user_id, uniqueness: { scope: :business_id, message: ->(_record, _data) { I18n.t("validation.duplicate_review") } }
 
   scope :recent, -> { order(created_at: :desc) }
   scope :with_comment, -> { where.not(comment: [nil, ""]) }

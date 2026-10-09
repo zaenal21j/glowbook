@@ -1,28 +1,28 @@
 <%= render "admin/shared/sidebar" %>
-<% content_for :page_title, "Ulasan" %>
+<% content_for :page_title, t("admin.reviews.title") %>
 
 <div class="flex flex-wrap items-center justify-between gap-3">
   <div class="flex gap-2 overflow-x-auto">
-    <%= link_to "Semua", admin_reviews_path, class: "chip #{'chip-active' if params[:rating].blank?}" %>
+    <%= link_to t("admin.reviews.all"), admin_reviews_path, class: "chip #{'chip-active' if params[:rating].blank?}" %>
     <% 5.downto(1) do |r| %>
       <%= link_to "#{"★" * r}", admin_reviews_path(rating: r), class: "chip #{'chip-active' if params[:rating] == r.to_s}" %>
     <% end %>
   </div>
-  <p class="text-sm text-ink-500">Rata-rata: <strong class="text-amber-500">⭐ <%= @avg_rating || "—" %></strong></p>
+  <p class="text-sm text-ink-500"><%= t("admin.reviews.average") %>: <strong class="text-amber-500">⭐ <%= @avg_rating || "—" %></strong></p>
 </div>
 <div class="mt-5 space-y-3">
   <% @reviews.each do |r| %>
     <div class="card flex items-start justify-between gap-4 p-4">
       <div>
-        <p class="text-sm font-semibold"><%= r.user.full_name %> <span class="text-ink-400">di</span> <%= link_to r.business.name, admin_business_path(r.business), class: "text-primary-600 hover:underline" %></p>
-        <p class="text-amber-500"><%= "★" * r.rating %> <span class="text-xs text-ink-400"><%= r.created_at.strftime("%d %b %Y") %></span></p>
+        <p class="text-sm font-semibold"><%= r.user.full_name %> <span class="text-ink-400"><%= t("admin.reviews.by") %></span> <%= link_to r.business.name, admin_business_path(r.business.id), class: "text-primary-600 hover:underline" %></p>
+        <p class="text-amber-500"><%= "★" * r.rating %> <span class="text-xs text-ink-400"><%= l(r.created_at, format: "%d %b %Y") %></span></p>
         <p class="mt-1.5 text-sm text-ink-600"><%= r.comment %></p>
       </div>
-      <%= button_to "Hapus", admin_review_path(r), method: :delete, form: { data: { turbo_confirm: "Hapus ulasan ini?" } }, class: "text-xs font-semibold text-red-500 hover:underline" %>
+      <%= button_to t("admin.reviews.delete"), admin_review_path(r), method: :delete, form: { data: { turbo_confirm: t("admin.reviews.delete_confirm") } }, class: "text-xs font-semibold text-red-500 hover:underline" %>
     </div>
   <% end %>
   <% if @reviews.empty? %>
-    <div class="card p-10 text-center text-ink-500">Tidak ada ulasan.</div>
+    <div class="card p-10 text-center text-ink-500"><%= t("admin.reviews.empty") %></div>
   <% end %>
 </div>
 <%= render "shared/pagination" %>

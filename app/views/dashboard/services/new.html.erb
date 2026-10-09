@@ -1,9 +1,9 @@
 <% content_for :sidebar_links do %>
   <%= render "dashboard/shared/sidebar" %>
 <% end %>
-<% content_for :page_title, "Layanan Baru — GlowBook" %>
+<% content_for :page_title, "#{t('business_management.services.new_title')} — GlowBook" %>
 
 <div class="max-w-xl card p-6">
-  <h1 class="text-lg font-extrabold mb-4">Layanan Baru</h1>
+  <h1 class="text-lg font-extrabold mb-4"><%= t("business_management.services.new_title") %></h1>
   <%= render "form", service: @service %>
 </div>

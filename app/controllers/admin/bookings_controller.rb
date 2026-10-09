@@ -39,20 +39,20 @@ class Admin::BookingsController < Admin::BaseController
     when "cancelled"
       booking.cancel!
       notification_event = :cancellation
-      notice = "Booking berhasil dibatalkan."
+      notice = I18n.t("admin.bookings.flash.cancelled")
     when "completed"
       booking.complete!
-      notice = "Booking ditandai selesai."
+      notice = I18n.t("admin.bookings.flash.completed")
     when "no_show"
       booking.mark_no_show!
-      notice = "Pelanggan ditandai tidak hadir."
+      notice = I18n.t("admin.bookings.flash.no_show")
     else
-      return redirect_to admin_booking_path(booking), alert: "Status booking tidak valid."
+      return redirect_to admin_booking_path(booking), alert: I18n.t("admin.bookings.flash.invalid_status")
     end
 
     BookingNotificationDelivery.new(booking: booking, event: notification_event).call if notification_event
     redirect_to admin_booking_path(booking), notice: notice
   rescue ActiveRecord::RecordInvalid
-    redirect_to admin_booking_path(params[:id]), alert: "Perubahan status tidak diizinkan untuk kondisi booking ini."
+    redirect_to admin_booking_path(params[:id]), alert: I18n.t("admin.bookings.flash.transition_failed")
   end
 end

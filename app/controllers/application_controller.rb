@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
 
+  around_action :switch_locale
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   helper_method :current_business
@@ -23,32 +24,38 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def switch_locale(&action)
+    locale = session[:locale].to_s
+    locale = I18n.default_locale.to_s unless I18n.available_locales.map(&:to_s).include?(locale)
+    I18n.with_locale(locale.to_sym, &action)
+  end
+
   def require_customer!
     unless user_signed_in?
-      redirect_to login_path, alert: "Silakan masuk untuk melanjutkan."
+      redirect_to login_path, alert: t("alerts.access.login_required")
       return
     end
   end
 
   def require_business_owner!
     unless user_signed_in?
-      redirect_to login_path, alert: "Silakan masuk untuk melanjutkan."
+      redirect_to login_path, alert: t("alerts.access.login_required")
       return
     end
 
-    unless current_user.business_owner? || current_user.staff_member&.business
-      redirect_to root_path, alert: "Anda tidak memiliki akses ke dashboard bisnis."
+    unless current_user.business_owner? || current_user.staff_member&.active?
+      redirect_to root_path, alert: t("alerts.access.business_dashboard_forbidden")
     end
   end
 
   def require_admin!
     unless user_signed_in?
-      redirect_to login_path, alert: "Silakan masuk untuk melanjutkan."
+      redirect_to login_path, alert: t("alerts.access.login_required")
       return
     end
 
     unless current_user.admin?
-      redirect_to root_path, alert: "Hanya admin yang dapat mengakses halaman ini."
+      redirect_to root_path, alert: t("alerts.access.admin_only")
     end
   end
 

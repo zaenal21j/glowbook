@@ -4,6 +4,7 @@ class BusinessHour < ApplicationRecord
   validates :business, presence: true
   validates :weekday, presence: true, uniqueness: { scope: :business_id }, inclusion: { in: 0..6 }
   validates :open_minute, :close_minute, presence: true, numericality: { only_integer: true, in: 0..(24 * 60) }
+  validates :closed, inclusion: { in: [true, false] }
   validate  :close_after_open, unless: :closed?
 
   def self.days
@@ -11,7 +12,7 @@ class BusinessHour < ApplicationRecord
   end
 
   def day_name
-    self.class.days[weekday]
+    I18n.t("date.day_names")[weekday]
   end
 
   def open_time_string
@@ -23,14 +24,14 @@ class BusinessHour < ApplicationRecord
   end
 
   def open_today_label
-    closed? ? "Tutup" : "#{open_time_string} - #{close_time_string}"
+    closed? ? I18n.t("scheduling.closed") : "#{open_time_string} - #{close_time_string}"
   end
 
   private
 
   def close_after_open
-    return if open_minute < close_minute
+    return if open_minute.nil? || close_minute.nil? || open_minute < close_minute
 
-    errors.add(:close_minute, "harus setelah jam buka")
+    errors.add(:close_minute, I18n.t("scheduling.errors.end_after_start"))
   end
 end

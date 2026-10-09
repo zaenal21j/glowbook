@@ -1,21 +1,21 @@
-<% content_for :title, "Hasil Pencarian — GlowBook" %>
+<% content_for :title, t("search.title") %>
 
 <div class="mx-auto max-w-7xl px-4 py-6 lg:px-8">
   <!-- Search bar -->
   <%= form_with url: search_path, method: :get, class: "rounded-2xl border border-gray-100 bg-white p-2 shadow-sm" do |f| %>
     <div class="grid gap-2 sm:grid-cols-[1fr_1fr_auto]">
-      <%= f.text_field :q, placeholder: "Layanan atau nama bisnis...", class: "input border-0 bg-transparent shadow-none", value: params[:q] %>
-      <%= f.select :city, City.order(:name).pluck(:name, :slug), { include_blank: "Semua Kota", selected: params[:city] }, class: "input border-0 bg-transparent shadow-none" %>
-      <%= f.submit "Cari", class: "btn-primary btn-md px-8" %>
+      <%= f.text_field :q, placeholder: t("search.search_placeholder"), class: "input border-0 bg-transparent shadow-none", value: params[:q] %>
+      <%= f.select :city, City.order(:name).pluck(:name, :slug), { include_blank: t("search.all_cities"), selected: params[:city] }, class: "input border-0 bg-transparent shadow-none" %>
+      <%= f.submit t("search.search"), class: "btn-primary btn-md px-8" %>
     </div>
   <% end %>
 
   <div class="mt-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-    <p class="text-sm text-ink-500"><strong class="text-ink-900"><%= @total_count %></strong> salon ditemukan<%= " untuk \"#{params[:q]}\"" if params[:q].present? %><%= " di #{@active_city.name}" if @active_city %></p>
+    <p class="text-sm text-ink-500"><strong class="text-ink-900"><%= t("search.found", count: @total_count) %></strong><%= " #{t('search.for_query', query: params[:q])}" if params[:q].present? %><%= " #{t('search.in_city', city: @active_city.name)}" if @active_city %></p>
     <% sort = @sort %>
     <div class="flex flex-wrap gap-2">
-      <%= link_to "Rating Tertinggi", search_path(request.query_parameters.merge(sort: "rating")), class: "chip #{sort == 'rating' ? 'chip-active' : ''}" %>
-      <%= link_to "Harga Terendah", search_path(request.query_parameters.merge(sort: "price")), class: "chip #{sort == 'price' ? 'chip-active' : ''}" %>
+      <%= link_to t("search.sort_rating"), search_path(request.query_parameters.merge(sort: "rating")), class: "chip #{sort == 'rating' ? 'chip-active' : ''}" %>
+      <%= link_to t("search.sort_price"), search_path(request.query_parameters.merge(sort: "price")), class: "chip #{sort == 'price' ? 'chip-active' : ''}" %>
       <%= form_with url: nearby_search_path, method: :post, local: true, class: "flex items-center gap-2", data: { controller: "nearby-search" } do %>
         <% %i[q city min_price max_price min_rating open_today promo].each do |key| %>
           <%= hidden_field_tag key, params[key] if params[key].present? %>
@@ -25,15 +25,15 @@
         <% end %>
         <%= hidden_field_tag :latitude, nil, data: { nearby_search_target: "latitude" } %>
         <%= hidden_field_tag :longitude, nil, data: { nearby_search_target: "longitude" } %>
-        <button type="button" data-action="click->nearby-search#locate" data-nearby-search-target="button" class="chip #{'chip-active' if sort == 'nearby' && @nearby_active}">Terdekat</button>
+        <button type="button" data-action="click->nearby-search#locate" data-nearby-search-target="button" class="chip #{'chip-active' if sort == 'nearby' && @nearby_active}"><%= t("search.sort_nearest") %></button>
         <span class="sr-only" aria-live="polite" data-nearby-search-target="status"></span>
       <% end %>
     </div>
   </div>
   <% if sort == "nearby" && !@nearby_active %>
-    <p class="mt-2 text-xs text-ink-500" role="status">Tekan Terdekat dan izinkan akses lokasi browser untuk mengurutkan bisnis berdasarkan jarak. Lokasi disimpan sementara selama maksimal 30 menit.</p>
+    <p class="mt-2 text-xs text-ink-500" role="status"><%= t("search.nearby_permission") %></p>
   <% elsif @nearby_active %>
-    <p class="mt-2 text-xs text-ink-500" role="status">Hasil diurutkan berdasarkan jarak dari lokasi Anda. Bisnis yang belum mengatur koordinat muncul di bagian bawah. Lokasi Anda disimpan sementara dan dihapus dari sesi setelah 30 menit.</p>
+    <p class="mt-2 text-xs text-ink-500" role="status"><%= t("search.nearby_active") %></p>
   <% end %>
 
   <div class="mt-4 grid gap-6 lg:grid-cols-[260px_1fr]">
@@ -45,7 +45,7 @@
     <!-- Mobile filters -->
     <details class="card overflow-hidden lg:hidden">
       <summary class="cursor-pointer list-none px-4 py-3 font-bold">
-        <span class="flex items-center justify-between">Filter <span class="text-primary-600 text-sm font-semibold">Tampilkan</span></summary>
+        <span class="flex items-center justify-between"><%= t("search.filters") %> <span class="text-primary-600 text-sm font-semibold"><%= t("search.show") %></span></span>
       </summary>
       <div class="border-t border-gray-100 p-4">
         <%= render "searches/filters" %>
@@ -78,7 +78,7 @@
                       <%= business.rating_label %>
                     </span>
                     <% if business.reviews_count > 0 %>
-                      <span class="text-ink-500">(<%= business.reviews_count %> ulasan)</span>
+                      <span class="text-ink-500">(<%= t("search.reviews", count: business.reviews_count) %>)</span>
                     <% end %>
                   </p>
                   <p class="mt-1 flex items-center gap-1 text-sm text-ink-500">
@@ -88,17 +88,17 @@
                   <p class="mt-1.5 text-xs font-medium text-ink-500"><%= business.service_categories_list %></p>
                 </div>
                 <% if business.active_promotions.any? %>
-                  <span class="badge-pink shrink-0">PROMO</span>
+                  <span class="badge-pink shrink-0"><%= t("search.promo") %></span>
                 <% end %>
               </div>
               <div class="mt-3 flex items-end justify-between gap-3 sm:mt-auto">
                 <div>
                   <% if business.price_from.positive? %>
-                    <span class="text-xs text-ink-500">Mulai dari</span>
+                    <span class="text-xs text-ink-500"><%= t("search.from") %></span>
                     <p class="font-bold text-primary-600"><%= format_idr(business.price_from) %></p>
                   <% end %>
                 </div>
-                <%= link_to "Lihat Jadwal", business_book_path(business.slug), class: "btn-primary btn-sm shrink-0" %>
+                <%= link_to t("search.view_schedule"), business_book_path(business.slug), class: "btn-primary btn-sm shrink-0" %>
               </div>
             </div>
           </div>
@@ -107,20 +107,20 @@
         <% if @total_pages > 1 %>
           <div class="flex items-center justify-center gap-2 pt-4">
             <% if @page > 1 %>
-              <%= link_to "← Sebelumnya", search_path(request.query_parameters.merge(page: @page - 1)), class: "btn-secondary btn-sm" %>
+              <%= link_to t("search.previous"), search_path(request.query_parameters.merge(page: @page - 1)), class: "btn-secondary btn-sm" %>
             <% end %>
-            <span class="text-sm text-ink-500">Halaman <%= @page %> / <%= @total_pages %></span>
+            <span class="text-sm text-ink-500"><%= t("search.page", page: @page, pages: @total_pages) %></span>
             <% if @page < @total_pages %>
-              <%= link_to "Berikutnya →", search_path(request.query_parameters.merge(page: @page + 1)), class: "btn-secondary btn-sm" %>
+              <%= link_to t("search.next"), search_path(request.query_parameters.merge(page: @page + 1)), class: "btn-secondary btn-sm" %>
             <% end %>
           </div>
         <% end %>
       <% else %>
         <div class="card flex flex-col items-center px-6 py-16 text-center">
           <span class="flex h-16 w-16 items-center justify-center rounded-full bg-primary-50 text-3xl">🔍</span>
-          <h3 class="mt-4 text-lg font-bold">Tidak ada hasil ditemukan</h3>
-          <p class="mt-1 max-w-sm text-sm text-ink-500">Coba kata kunci lain, atau hapus beberapa filter untuk memperluas pencarian.</p>
-          <%= link_to "Reset Filter", search_path, class: "btn-secondary btn-md mt-5" %>
+          <h3 class="mt-4 text-lg font-bold"><%= t("search.no_results") %></h3>
+          <p class="mt-1 max-w-sm text-sm text-ink-500"><%= t("search.try_again") %></p>
+          <%= link_to t("search.reset_filters"), search_path, class: "btn-secondary btn-md mt-5" %>
         </div>
       <% end %>
     </div>

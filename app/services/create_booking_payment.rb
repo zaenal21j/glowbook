@@ -14,9 +14,9 @@ class CreateBookingPayment
 
   def call
     attempt = prepare_attempt
-    return Result.new(payment_attempt: nil, error: "Booking ini tidak lagi dapat dibayar.") if attempt == :ineligible
-    return Result.new(payment_attempt: attempt, error: "Pembayaran booking ini sudah berhasil.") if attempt == :paid
-    return Result.new(payment_attempt: attempt, error: "Pembayaran sedang diproses. Muat ulang halaman beberapa saat lagi.") if attempt == :processing
+    return Result.new(payment_attempt: nil, error: I18n.t("alerts.payment.not_payable")) if attempt == :ineligible
+    return Result.new(payment_attempt: attempt, error: I18n.t("alerts.payment.already_paid")) if attempt == :paid
+    return Result.new(payment_attempt: attempt, error: I18n.t("alerts.payment.processing")) if attempt == :processing
     return Result.new(payment_attempt: attempt, error: nil) if attempt.redirect_url.present?
 
     @client.create_snap_transaction(attempt)

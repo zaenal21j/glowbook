@@ -1,0 +1,28 @@
+id:
+  alerts:
+    reviews:
+      completed_visit_required: Ulasan hanya dapat ditulis oleh pelanggan dengan booking yang sudah selesai di bisnis ini.
+    oauth:
+      facebook_account_conflict: Akun Facebook ini tidak dapat digunakan untuk masuk. Jika email sudah terdaftar, masuk menggunakan email dan kata sandi.
+    account:
+      deletion_restricted: Akun admin atau akun dengan riwayat transaksi dan data bisnis tidak dapat dihapus melalui halaman ini.
+  display:
+    facebook_user: Pengguna Facebook
+    therapist: Terapis
+    new_business: Baru
+    duration:
+      hours: "%{count} jam"
+      minutes: "%{count} menit"
+  validation:
+    duplicate_review: sudah memberi ulasan untuk bisnis ini
+    booking:
+      complete_after_end: booking hanya dapat diselesaikan setelah waktu layanan berakhir
+      no_show_after_start: pelanggan hanya dapat ditandai tidak hadir setelah waktu booking dimulai
+      not_in_past: tidak boleh di masa lalu
+      foreign_service: Layanan tidak valid untuk bisnis ini
+    staff_service: tidak melayani layanan ini
+    gallery:
+      required: wajib diunggah
+      type: harus berformat JPG, PNG, atau WebP
+      size: ukuran maksimal 10 MB
+    chat_participant: tidak termasuk dalam percakapan ini

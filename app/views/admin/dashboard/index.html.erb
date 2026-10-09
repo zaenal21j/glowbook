@@ -1,81 +1,81 @@
 <%= render "admin/shared/sidebar" %>
-<% content_for :page_title, "Dashboard Admin" %>
+<% content_for :page_title, t("admin.dashboard.title") %>
 
 <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
   <div class="card p-5">
-    <p class="text-sm text-ink-500">Total Pengguna</p>
+    <p class="text-sm text-ink-500"><%= t("admin.dashboard.total_users") %></p>
     <p class="mt-1 text-3xl font-extrabold"><%= @total_users %></p>
-    <p class="mt-1 text-xs text-ink-400"><%= @total_customers %> pelanggan</p>
+    <p class="mt-1 text-xs text-ink-400"><%= t("admin.dashboard.customers", count: @total_customers) %></p>
   </div>
   <div class="card p-5">
-    <p class="text-sm text-ink-500">Total Bisnis</p>
+    <p class="text-sm text-ink-500"><%= t("admin.dashboard.total_businesses") %></p>
     <p class="mt-1 text-3xl font-extrabold"><%= @total_businesses %></p>
-    <p class="mt-1 text-xs text-ink-400"><%= @active_businesses %> aktif · <%= @pending_businesses %> menunggu</p>
+    <p class="mt-1 text-xs text-ink-400"><%= t("admin.dashboard.business_status", active: @active_businesses, pending: @pending_businesses) %></p>
   </div>
   <div class="card p-5">
-    <p class="text-sm text-ink-500">Total Booking</p>
+    <p class="text-sm text-ink-500"><%= t("admin.dashboard.total_bookings") %></p>
     <p class="mt-1 text-3xl font-extrabold"><%= @total_bookings %></p>
-    <p class="mt-1 text-xs text-ink-400"><%= @bookings_this_month %> bulan ini</p>
+    <p class="mt-1 text-xs text-ink-400"><%= t("admin.dashboard.this_month", count: @bookings_this_month) %></p>
   </div>
   <div class="card p-5">
-    <p class="text-sm text-ink-500">Nilai Booking Selesai</p>
+    <p class="text-sm text-ink-500"><%= t("admin.dashboard.completed_booking_value") %></p>
     <p class="mt-1 text-3xl font-extrabold text-primary-600"><%= format_idr(@total_revenue) %></p>
-    <p class="mt-1 text-xs text-ink-400">Bukan komisi atau pembayaran terkonfirmasi.</p>
+    <p class="mt-1 text-xs text-ink-400"><%= t("admin.dashboard.revenue_disclaimer") %></p>
   </div>
 </div>
 
 <!-- Booking / revenue chart (last 30 days) -->
 <section class="mt-8">
   <div class="flex items-center justify-between">
-    <h2 class="text-lg font-extrabold">Booking 30 Hari Terakhir</h2>
-    <%= link_to "Laporan Lengkap →", admin_reports_path, class: "text-sm font-semibold text-primary-600" %>
+    <h2 class="text-lg font-extrabold"><%= t("admin.dashboard.bookings_30_days") %></h2>
+    <%= link_to t("admin.dashboard.full_report"), admin_reports_path, class: "text-sm font-semibold text-primary-600" %>
   </div>
   <div class="card mt-4 p-5">
     <div class="flex h-48 items-end gap-1" data-chart="bookings">
       <% @chart_bookings.each do |date, count| %>
         <% pct = @chart.max_count.positive? ? (count.to_f / @chart.max_count * 100).round : 0 %>
-        <div class="group relative flex h-full flex-1 flex-col justify-end" title="<%= date.strftime('%d %b') %>: <%= count %> booking">
+        <div class="group relative flex h-full flex-1 flex-col justify-end" title="<%= l(date, format: '%d %b') %>: <%= count %> <%= t("admin.dashboard.total_bookings").downcase %>">
           <div class="w-full rounded-t bg-primary-500/85 transition group-hover:bg-primary-600" style="height: <%= [pct, count.positive? ? 6 : 2].max %>%"></div>
         </div>
       <% end %>
     </div>
     <div class="mt-2 flex justify-between text-xs text-ink-400">
-      <span><%= 29.days.ago.strftime("%d %b") %></span>
-      <span>Puncak: <%= @chart.max_count %> booking/hari</span>
-      <span>Hari ini</span>
+      <span><%= l(29.days.ago, format: "%d %b") %></span>
+      <span><%= t("admin.dashboard.peak_bookings", count: @chart.max_count) %></span>
+      <span><%= t("admin.dashboard.today") %></span>
     </div>
   </div>
   <div class="card mt-4 p-5">
-    <h3 class="text-sm font-extrabold text-ink-700">Nilai Booking Selesai Harian (30 hari)</h3>
+    <h3 class="text-sm font-extrabold text-ink-700"><%= t("admin.dashboard.daily_completed_value") %></h3>
     <div class="mt-3 flex h-32 items-end gap-1" data-chart="revenue">
       <% @chart_revenue.each do |date, amount| %>
         <% pct = @chart.max_revenue.positive? ? (amount.to_f / @chart.max_revenue * 100).round : 0 %>
-        <div class="group relative flex h-full flex-1 flex-col justify-end" title="<%= date.strftime('%d %b') %>: <%= format_idr(amount) %>">
+        <div class="group relative flex h-full flex-1 flex-col justify-end" title="<%= l(date, format: '%d %b') %>: <%= format_idr(amount) %>">
           <div class="w-full rounded-t bg-ink-800/80 transition group-hover:bg-ink-900" style="height: <%= [pct, amount.positive? ? 6 : 2].max %>%"></div>
         </div>
       <% end %>
     </div>
     <div class="mt-2 flex justify-between text-xs text-ink-400">
-      <span><%= 29.days.ago.strftime("%d %b") %></span>
-      <span>Puncak: <%= format_idr(@chart.max_revenue) %>/hari</span>
-      <span>Hari ini</span>
+      <span><%= l(29.days.ago, format: "%d %b") %></span>
+      <span><%= t("admin.dashboard.peak_daily_value", amount: format_idr(@chart.max_revenue)) %></span>
+      <span><%= t("admin.dashboard.today") %></span>
     </div>
   </div>
 </section>
 
 <div class="mt-8 grid gap-6 xl:grid-cols-3">
   <section class="xl:col-span-2">
-    <h2 class="text-lg font-extrabold">Booking Terbaru</h2>
+    <h2 class="text-lg font-extrabold"><%= t("admin.dashboard.recent_bookings") %></h2>
     <div class="card mt-4 overflow-x-auto">
       <table class="w-full text-sm">
         <thead>
           <tr class="border-b border-gray-100 text-left text-xs uppercase tracking-wide text-ink-500">
-            <th class="px-4 py-3">Kode</th>
-            <th class="px-4 py-3">Pelanggan</th>
-            <th class="px-4 py-3">Bisnis</th>
-            <th class="px-4 py-3">Waktu</th>
-            <th class="px-4 py-3">Total</th>
-            <th class="px-4 py-3">Status</th>
+            <th class="px-4 py-3"><%= t("admin.dashboard.code") %></th>
+            <th class="px-4 py-3"><%= t("admin.dashboard.customer") %></th>
+            <th class="px-4 py-3"><%= t("admin.dashboard.business") %></th>
+            <th class="px-4 py-3"><%= t("admin.dashboard.time") %></th>
+            <th class="px-4 py-3"><%= t("admin.dashboard.total") %></th>
+            <th class="px-4 py-3"><%= t("admin.dashboard.status") %></th>
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-50">
@@ -84,13 +84,13 @@
               <td class="px-4 py-3 font-mono text-xs"><%= link_to b.reference, admin_booking_path(b), class: "text-primary-600 hover:underline" %></td>
               <td class="px-4 py-3 font-medium"><%= b.user.full_name %></td>
               <td class="px-4 py-3"><%= b.business.name %></td>
-              <td class="px-4 py-3 whitespace-nowrap"><%= b.start_time.strftime("%d %b %Y, %H:%M") %></td>
+              <td class="px-4 py-3 whitespace-nowrap"><%= l(b.start_time, format: "%d %b %Y, %H:%M") %></td>
               <td class="px-4 py-3 font-semibold"><%= format_idr(b.total_amount) %></td>
-              <td class="px-4 py-3"><span class="badge <%= b.status_badge_class %>"><%= b.status.humanize %></span></td>
+              <td class="px-4 py-3"><span class="badge <%= b.status_badge_class %>"><%= t("booking.status.#{b.status}", default: b.status.humanize) %></span></td>
             </tr>
           <% end %>
           <% if @recent_bookings.empty? %>
-            <tr><td colspan="6" class="px-4 py-10 text-center text-ink-500">Belum ada booking.</td></tr>
+            <tr><td colspan="6" class="px-4 py-10 text-center text-ink-500"><%= t("admin.dashboard.no_bookings") %></td></tr>
           <% end %>
         </tbody>
       </table>
@@ -98,23 +98,23 @@
   </section>
 
   <section>
-    <h2 class="text-lg font-extrabold">Bisnis Terbaik</h2>
+    <h2 class="text-lg font-extrabold"><%= t("admin.dashboard.top_businesses") %></h2>
     <div class="card mt-4 divide-y divide-gray-50">
       <% @top_businesses.each do |b| %>
         <div class="flex items-center justify-between px-4 py-3">
           <div>
-            <%= link_to b.name, admin_business_path(b), class: "text-sm font-semibold hover:text-primary-600" %>
+            <%= link_to b.name, admin_business_path(b.id), class: "text-sm font-semibold hover:text-primary-600" %>
             <p class="text-xs text-ink-500"><%= b.city.name %></p>
           </div>
           <span class="badge badge-green">⭐ <%= b.rating_label %></span>
         </div>
       <% end %>
       <% if @top_businesses.empty? %>
-        <p class="px-4 py-8 text-center text-sm text-ink-500">Belum ada data.</p>
+        <p class="px-4 py-8 text-center text-sm text-ink-500"><%= t("admin.dashboard.no_data") %></p>
       <% end %>
     </div>
 
-    <h2 class="mt-6 text-lg font-extrabold">Kategori Populer</h2>
+    <h2 class="mt-6 text-lg font-extrabold"><%= t("admin.dashboard.popular_categories") %></h2>
     <div class="mt-4 flex flex-wrap gap-2">
       <% @popular_categories.each do |c| %>
         <span class="chip chip-active"><%= c.name %></span>

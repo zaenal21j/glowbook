@@ -106,6 +106,21 @@ Port host default adalah `127.0.0.1:3001`; letakkan reverse proxy HTTPS di depan
 
 Volume `postgres_data` dan `storage_data` tetap ada setelah `docker compose down`. Jangan menambahkan `-v` ketika menghentikan layanan kecuali memang ingin menghapus database dan file galeri. Database antrean terpisah dari data aplikasi; cadangkan keduanya: `docker compose --env-file .env.production exec -T db pg_dump -U glowbook glowbook_production > glowbook-backup.sql` dan `docker compose --env-file .env.production exec -T db pg_dump -U glowbook glowbook_production_queue > glowbook-queue-backup.sql`.
 
+### Penyiapan pertama tanpa akun demo
+
+Database production baru tidak otomatis menjalankan seed demo. Setelah stack sehat, buat admin awal dan data referensi kota/kategori dengan perintah berikut dari shell Linux/WSL:
+
+```bash
+read -r -p "Email admin: " ADMIN_EMAIL
+read -r -s -p "Password admin (minimal 12 karakter): " ADMIN_PASSWORD
+echo
+export ADMIN_EMAIL ADMIN_PASSWORD
+docker compose --env-file .env.production exec -T -e ADMIN_EMAIL -e ADMIN_PASSWORD web ./bin/rails glowbook:bootstrap
+unset ADMIN_EMAIL ADMIN_PASSWORD
+```
+
+Password tidak ditampilkan atau dimasukkan langsung ke riwayat shell. Task ini aman dijalankan ulang: data yang sudah ada, nama kota/kategori yang sudah disesuaikan, serta password admin tetap dipertahankan. Task menolak menaikkan peran akun customer yang kebetulan memiliki email sama. Login admin melalui `/masuk`, kemudian buka `/admin`. Pemilik bisnis mendaftar dari `/daftar-bisnis` dan menunggu persetujuan admin. Jangan menjalankan `db:seed` untuk production; seed demo hanya diizinkan pada development dan menghapus data development sebelumnya.
+
 Konfigurasi ini untuk satu host dengan satu container web dan satu worker. Sebelum menambah instance, siapkan object storage untuk upload galeri dan sesuaikan kapasitas worker. Deploy production belum dijalankan.
 
 ## Pendaftaran bisnis

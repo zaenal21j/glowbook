@@ -8,3 +8,4 @@ tmp/*
 storage/*
 db/*.sql
 coverage
+/ChatGPT Image*.png

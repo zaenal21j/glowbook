@@ -1,69 +1,78 @@
 <% content_for :sidebar_links do %>
   <%= render "dashboard/shared/sidebar" %>
 <% end %>
-<% content_for :page_title, "Profil Bisnis — GlowBook" %>
+<% content_for :page_title, t("dashboard.profile_page.title") + " — GlowBook" %>
 
 <div class="max-w-3xl">
   <div class="mb-4">
-    <h1 class="text-xl font-extrabold">Profil Bisnis</h1>
-    <p class="text-sm text-ink-500">Informasi ini tampil di halaman publis bisnis Anda.</p>
+    <h1 class="text-xl font-extrabold"><%= t("dashboard.profile_page.title") %></h1>
+    <p class="text-sm text-ink-500"><%= t("dashboard.profile_page.description") %></p>
   </div>
 
   <%= form_with model: @business, url: dashboard_profile_path, class: "card space-y-4 p-6" do |f| %>
+    <%= render "shared/form_errors", record: @business %>
     <div>
-      <%= f.label :name, "Nama bisnis", class: "label" %>
+      <%= f.label :name, t("dashboard.profile_page.business_name"), class: "label" %>
       <%= f.text_field :name, class: "input", required: true %>
     </div>
     <div class="grid gap-4 sm:grid-cols-2">
       <div>
-        <%= f.label :phone, "Telepon", class: "label" %>
+        <%= f.label :phone, t("dashboard.profile_page.phone"), class: "label" %>
         <%= f.text_field :phone, class: "input" %>
       </div>
       <div>
-        <%= f.label :city, "Kota", class: "label" %>
+        <%= f.label :city, t("dashboard.profile_page.city"), class: "label" %>
         <%= f.text_field :city_id, value: @business.city.name, disabled: true, class: "input bg-surface-50" %>
       </div>
     </div>
     <div>
-      <%= f.label :address, "Alamat lengkap", class: "label" %>
+      <%= f.label :address, t("dashboard.profile_page.address"), class: "label" %>
       <%= f.text_field :address, class: "input" %>
     </div>
     <div class="grid gap-4 sm:grid-cols-2">
       <div>
-        <%= f.label :latitude, "Latitude (opsional)", class: "label" %>
+        <%= f.label :latitude, t("dashboard.profile_page.latitude"), class: "label" %>
         <%= f.number_field :latitude, min: -90, max: 90, step: "0.000001", class: "input" %>
       </div>
       <div>
-        <%= f.label :longitude, "Longitude (opsional)", class: "label" %>
+        <%= f.label :longitude, t("dashboard.profile_page.longitude"), class: "label" %>
         <%= f.number_field :longitude, min: -180, max: 180, step: "0.000001", class: "input" %>
       </div>
     </div>
-    <p class="-mt-2 text-xs text-ink-500">Koordinat publik bisnis digunakan untuk peta dan pengurutan hasil terdekat.</p>
+    <p class="-mt-2 text-xs text-ink-500"><%= t("dashboard.profile_page.coordinates_help") %></p>
     <div>
-      <%= f.label :description, "Deskripsi bisnis", class: "label" %>
-      <%= f.text_area :description, rows: 4, class: "input", placeholder: "Ceritakan tentang bisnis Anda…" %>
+      <%= f.label :description, t("dashboard.profile_page.description_label"), class: "label" %>
+      <%= f.text_area :description, rows: 4, class: "input", placeholder: t("dashboard.profile_page.description_placeholder") %>
     </div>
 
     <div class="border-t border-line pt-4">
-      <span class="label">Jam Operasional</span>
+      <span class="label"><%= t("dashboard.profile_page.hours") %></span>
       <div class="mt-2 space-y-2">
-        <% @business_hours.each do |h| %>
-          <div class="flex items-center gap-3 text-sm">
-            <span class="w-16 font-medium"><%= h.day_name %></span>
-            <% if h.closed? %>
-              <span class="badge badge-muted">Tutup</span>
-            <% else %>
-              <span class="text-ink-600"><%= h.open_time_string %> – <%= h.close_time_string %></span>
-            <% end %>
-          </div>
+        <%= f.fields_for :business_hours, @business.business_hours.sort_by { |hour| (hour.weekday + 6) % 7 } do |hf| %>
+          <fieldset class="grid items-end gap-3 rounded-xl border border-line p-3 sm:grid-cols-4">
+            <legend class="px-1 text-sm font-semibold"><%= t("date.day_names")[hf.object.weekday] %></legend>
+            <%= hf.hidden_field :weekday %>
+            <label class="flex items-center gap-2 text-sm sm:col-span-2">
+              <%= hf.check_box :closed, class: "h-4 w-4 rounded accent-primary-600" %>
+              <%= t("scheduling.closed") %>
+            </label>
+            <div>
+              <%= hf.label :open_minute, t("scheduling.opens"), class: "label" %>
+              <%= hf.select :open_minute, minute_of_day_options(hf.object.open_minute), {}, class: "input" %>
+            </div>
+            <div>
+              <%= hf.label :close_minute, t("scheduling.closes"), class: "label" %>
+              <%= hf.select :close_minute, minute_of_day_options(hf.object.close_minute), {}, class: "input" %>
+            </div>
+          </fieldset>
         <% end %>
       </div>
-      <p class="mt-2 text-xs text-ink-400">Jam operasional diatur melalui dukungan (hubungi kami untuk perubahan).</p>
+      <p class="mt-2 text-xs text-ink-400"><%= t("dashboard.profile_page.hours_help") %></p>
     </div>
 
     <div class="flex gap-2 pt-2">
-      <button class="btn-primary btn-md">Simpan Perubahan</button>
-      <%= link_to "Lihat Halaman Publik", business_detail_path(@business.slug), class: "btn-ghost btn-md", target: "_blank" %>
+      <button class="btn-primary btn-md"><%= t("dashboard.profile_page.save") %></button>
+      <%= link_to t("dashboard.profile_page.public_page"), business_detail_path(@business.slug), class: "btn-ghost btn-md", target: "_blank" %>
     </div>
   <% end %>
 </div>

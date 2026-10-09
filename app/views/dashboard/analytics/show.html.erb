@@ -1,55 +1,55 @@
 <% content_for :sidebar_links do %>
   <%= render "dashboard/shared/sidebar" %>
 <% end %>
-<% content_for :page_title, "Analitik — GlowBook" %>
+<% content_for :page_title, t("dashboard.analytics_page.title") + " — GlowBook" %>
 
 <div class="mb-4">
-  <h1 class="text-xl font-extrabold">Analitik</h1>
-  <p class="text-sm text-ink-500">Performa bisnis Anda bulan ini.</p>
+  <h1 class="text-xl font-extrabold"><%= t("dashboard.analytics_page.title") %></h1>
+  <p class="text-sm text-ink-500"><%= t("dashboard.analytics_page.description") %></p>
 </div>
 
 <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
   <div class="card p-5">
-    <p class="text-sm text-ink-500">Nilai Booking Selesai Bulan Ini</p>
+    <p class="text-sm text-ink-500"><%= t("dashboard.analytics_page.completed_value") %></p>
     <p class="mt-1 text-2xl font-bold"><%= number_to_currency(@completed_value_month, unit: "Rp ", delimiter: ".", precision: 0) %></p>
-    <p class="mt-1 text-xs text-ink-400">Nilai layanan, bukan konfirmasi pembayaran diterima.</p>
+    <p class="mt-1 text-xs text-ink-400"><%= t("dashboard.analytics_page.revenue_note") %></p>
   </div>
   <div class="card p-5">
-    <p class="text-sm text-ink-500">Booking Bulan Ini</p>
+    <p class="text-sm text-ink-500"><%= t("dashboard.analytics_page.bookings_month") %></p>
     <p class="mt-1 text-2xl font-bold"><%= @bookings_month %></p>
   </div>
   <div class="card p-5">
-    <p class="text-sm text-ink-500">Pelanggan Baru Bulan Ini</p>
+    <p class="text-sm text-ink-500"><%= t("dashboard.analytics_page.new_customers") %></p>
     <p class="mt-1 text-2xl font-bold"><%= @new_customers %></p>
   </div>
   <div class="card p-5">
-    <p class="text-sm text-ink-500">Rating Rata-rata</p>
+    <p class="text-sm text-ink-500"><%= t("dashboard.analytics_page.average_rating") %></p>
     <p class="mt-1 text-2xl font-bold text-amber-500">⭐ <%= @rating || "—" %></p>
   </div>
   <div class="card p-5">
-    <p class="text-sm text-ink-500">Pembayaran Online Terkonfirmasi</p>
+    <p class="text-sm text-ink-500"><%= t("dashboard.analytics_page.confirmed_online") %></p>
     <p class="mt-1 text-2xl font-bold"><%= number_to_currency(@online_collected_month, unit: "Rp ", delimiter: ".", precision: 0) %></p>
-    <p class="mt-1 text-xs text-ink-400"><%= @online_payments_month %> booking · dikonfirmasi gateway bulan ini; bayar di tempat tidak termasuk.</p>
+    <p class="mt-1 text-xs text-ink-400"><%= t("dashboard.analytics_page.online_detail", count: @online_payments_month) %></p>
   </div>
 </div>
 
 <div class="card mt-5 p-5">
-  <h3 class="font-semibold">Nilai Booking Selesai 30 Hari Terakhir</h3>
-  <p class="mt-1 text-xs text-ink-400">Booking no-show tidak dihitung. Angka ini belum memverifikasi pembayaran.</p>
+  <h3 class="font-semibold"><%= t("dashboard.analytics_page.completed_last_30") %></h3>
+  <p class="mt-1 text-xs text-ink-400"><%= t("dashboard.analytics_page.no_show_note") %></p>
   <div class="mt-4 flex h-44 items-end gap-[3px]">
     <% max = [@daily_completed_values.values.max.to_f, 1].max %>
     <% @daily_completed_values.each do |date, amount| %>
-      <div class="flex-1 rounded-t bg-primary-400 hover:bg-primary-600 transition" style="height: <%= [(amount / max * 100).round, 2].max %>%" title="<%= date.strftime("%d %b") %>: <%= number_to_currency(amount, unit: "Rp ", delimiter: ".", precision: 0) %>"></div>
+      <div class="flex-1 rounded-t bg-primary-400 hover:bg-primary-600 transition" style="height: <%= [(amount / max * 100).round, 2].max %>%" title="<%= l(date, format: "%d %b") %>: <%= number_to_currency(amount, unit: "Rp ", delimiter: ".", precision: 0) %>"></div>
     <% end %>
   </div>
   <div class="mt-1 flex justify-between text-xs text-ink-400">
-    <span><%= @daily_completed_values.keys.first.strftime("%d %b") %></span>
-    <span><%= @daily_completed_values.keys.last.strftime("%d %b") %></span>
+    <span><%= l(@daily_completed_values.keys.first, format: "%d %b") %></span>
+    <span><%= l(@daily_completed_values.keys.last, format: "%d %b") %></span>
   </div>
 </div>
 
 <div class="card mt-5 p-5">
-  <h3 class="font-semibold">Layanan Terpopuler Bulan Ini</h3>
+  <h3 class="font-semibold"><%= t("dashboard.analytics_page.popular_services") %></h3>
   <div class="mt-3 space-y-2.5">
     <% max = [@top_services.map(&:last).max.to_f, 1].max %>
     <% @top_services.each do |name, count| %>
@@ -58,6 +58,6 @@
         <div class="mt-1 h-1.5 rounded-full bg-surface-100"><div class="h-full rounded-full bg-primary-500" style="width: <%= (count / max * 100).round %>%"></div></div>
       </div>
     <% end %>
-    <% if @top_services.empty? %><p class="text-sm text-ink-400">Belum ada booking bulan ini.</p><% end %>
+    <% if @top_services.empty? %><p class="text-sm text-ink-400"><%= t("dashboard.analytics_page.empty") %></p><% end %>
   </div>
 </div>

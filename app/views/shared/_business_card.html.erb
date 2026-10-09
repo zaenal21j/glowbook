@@ -9,7 +9,7 @@
     <% end %>
     <% promo = business.active_promotions.first %>
     <% if promo %>
-      <span class="badge-pink absolute left-3 top-3 shadow-sm">PROMO <%= promo.discount_percent ? "-#{promo.discount_percent}%" : "" %></span>
+      <span class="badge-pink absolute left-3 top-3 shadow-sm"><%= t("search.promo") %> <%= promo.discount_percent ? "-#{promo.discount_percent}%" : "" %></span>
     <% end %>
   </div>
   <div class="p-4">
@@ -33,6 +33,6 @@
         <span class="text-sm font-bold text-primary-600"><%= format_idr(business.price_from) %><span class="text-xs font-medium text-ink-500">+</span></span>
       <% end %>
     </div>
-    <span class="mt-3 hidden group-hover:inline-flex btn-primary btn-sm w-full">Lihat Jadwal</span>
+  <span class="mt-3 hidden group-hover:inline-flex btn-primary btn-sm w-full"><%= t("search.view_schedule") %></span>
   </div>
 <% end %>

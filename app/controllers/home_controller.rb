@@ -3,7 +3,7 @@ class HomeController < ApplicationController
     @categories = Category.where(is_popular: true).order(:position).limit(10)
     @featured_city = City.find_by(slug: "jakarta") || City.ordered.first
     @featured_businesses = Business.active
-                                   .in_city(@featured_city.slug)
+                                   .then { |scope| @featured_city ? scope.where(city: @featured_city) : scope }
                                    .includes(:city, :categories, :services, :promotions)
                                    .order(avg_rating: :desc)
                                    .limit(4)

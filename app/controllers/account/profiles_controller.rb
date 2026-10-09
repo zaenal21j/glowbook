@@ -6,7 +6,7 @@ class Account::ProfilesController < Account::BaseController
   def update
     @user = current_user
     if @user.update(profile_params)
-      redirect_to account_profile_path, notice: "Profil berhasil diperbarui."
+      redirect_to account_profile_path, notice: t("alerts.account.profile_updated")
     else
       flash.now[:alert] = @user.errors.full_messages.to_sentence
       render :show, status: :unprocessable_entity

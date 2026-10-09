@@ -1,17 +1,18 @@
 <%= render "dashboard/shared/sidebar" %>
-<% content_for :page_title, "Kalender" %>
+<% content_for :page_title, t("business_management.calendar.title") %>
 
 <div class="flex flex-wrap items-center justify-between gap-3">
+  <%= link_to t("scheduling.blocks.title"), dashboard_blocked_times_path, class: "btn-secondary btn-sm" %>
   <div class="flex gap-1 rounded-full border border-gray-200 bg-white p-1">
-    <% { "hari" => "Hari", "minggu" => "Minggu", "bulan" => "Bulan" }.each do |key, label| %>
+    <% { "hari" => t("business_management.calendar.views.day"), "minggu" => t("business_management.calendar.views.week"), "bulan" => t("business_management.calendar.views.month") }.each do |key, label| %>
       <%= link_to label, dashboard_calendar_path(view: key, date: @date), class: "rounded-full px-4 py-1.5 text-sm font-semibold #{'bg-primary-600 text-white' if @view == key} #{'text-ink-500 hover:text-ink-900' if @view != key}" %>
     <% end %>
   </div>
   <div class="flex items-center gap-2">
     <%= link_to "‹", dashboard_calendar_path(view: @view, date: (@date - (@view == "minggu" ? 7 : (@view == "bulan" ? 30 : 1)))), class: "btn-secondary btn-sm px-3" %>
-    <span class="min-w-36 text-center text-sm font-bold"><%= l(@date, format: "%B %Y") rescue @date.strftime("%B %Y") %></span>
+    <span class="min-w-36 text-center text-sm font-bold"><%= l(@date, format: "%B %Y") %></span>
     <%= link_to "›", dashboard_calendar_path(view: @view, date: (@date + (@view == "minggu" ? 7 : (@view == "bulan" ? 30 : 1)))), class: "btn-secondary btn-sm px-3" %>
-    <%= link_to "Hari Ini", dashboard_calendar_path(view: @view), class: "btn-secondary btn-sm" %>
+    <%= link_to t("business_management.calendar.today"), dashboard_calendar_path(view: @view), class: "btn-secondary btn-sm" %>
   </div>
 </div>
 
@@ -20,11 +21,11 @@
   <div class="card mt-5 overflow-x-auto p-0">
     <div class="min-w-[640px]">
       <div class="grid border-b border-gray-100 text-sm font-bold" style="grid-template-columns: 70px repeat(<%= [@staff_members.size, 1].max %>, 1fr);">
-        <div class="px-3 py-3 text-xs text-ink-500">Waktu</div>
+        <div class="px-3 py-3 text-xs text-ink-500"><%= t("business_management.calendar.time") %></div>
         <% @staff_members.each do |s| %>
           <div class="px-3 py-3"><%= s.name %></div>
         <% end %>
-        <% if @staff_members.empty? %><div class="px-3 py-3">Semua Booking</div><% end %>
+        <% if @staff_members.empty? %><div class="px-3 py-3"><%= t("business_management.calendar.all_bookings") %></div><% end %>
       </div>
       <% (Dashboard::CalendarsController::DAY_START...21).each do |hour| %>
         <div class="grid border-b border-gray-50" style="grid-template-columns: 70px repeat(<%= [@staff_members.size, 1].max %>, 1fr);">
@@ -56,7 +57,7 @@
         <% day = @week_start + i %>
         <% day_bookings = @week_bookings[day] || [] %>
         <div class="<%= 'rounded-xl border border-primary-200 bg-primary-50/40' if day == Date.current %> rounded-xl border border-gray-100 p-2">
-          <p class="text-center text-xs font-bold text-ink-500"><%= t("date.abbr_day_names")[(day.wday + 6) % 7] %></p>
+          <p class="text-center text-xs font-bold text-ink-500"><%= t("date.abbr_day_names")[day.wday] %></p>
           <p class="text-center text-lg font-extrabold <%= 'text-primary-600' if day == Date.current %>"><%= day.day %></p>
           <div class="mt-2 space-y-1.5">
             <% day_bookings.sort_by(&:start_time).each do |b| %>
@@ -77,7 +78,7 @@
     <% first = @date.beginning_of_month %>
     <% lead = (first.wday + 6) % 7 %>
     <div class="grid grid-cols-7 gap-1 text-center text-xs font-bold text-ink-500">
-      <% %w[Sen Sel Rab Kam Jum Sab Min].each do |d| %><span class="py-1"><%= d %></span><% end %>
+      <% [1, 2, 3, 4, 5, 6, 0].each do |weekday| %><span class="py-1"><%= t("date.abbr_day_names")[weekday] %></span><% end %>
     </div>
     <div class="mt-1 grid grid-cols-7 gap-1">
       <% lead.times do %><span></span><% end %>
@@ -87,7 +88,7 @@
         <div class="min-h-20 rounded-lg border p-1.5 text-left <%= 'border-primary-200 bg-primary-50/40' if day == Date.current %> <%= 'border-gray-100' if day != Date.current %>">
           <p class="text-xs font-bold <%= 'text-primary-600' if day == Date.current %>"><%= d %></p>
           <% if count > 0 %>
-            <span class="mt-1 inline-block rounded-full bg-primary-600 px-1.5 py-0.5 text-[10px] font-bold text-white"><%= count %> booking</span>
+            <span class="mt-1 inline-block rounded-full bg-primary-600 px-1.5 py-0.5 text-[10px] font-bold text-white"><%= t("business_management.calendar.booking_count", count: count) %></span>
           <% end %>
         </div>
       <% end %>

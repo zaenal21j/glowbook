@@ -1,31 +1,988 @@
-# Files in the config/locales directory are used for internationalization and
-# are automatically loaded by Rails. If you want to use locales other than
-# English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t "hello"
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t("hello") %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more about the API, please read the Rails Internationalization guide
-# at https://guides.rubyonrails.org/i18n.html.
-#
-# Be aware that YAML interprets the following case-insensitive strings as
-# booleans: `true`, `false`, `on`, `off`, `yes`, `no`. Therefore, these strings
-# must be quoted to be interpreted as strings. For example:
-#
-#     en:
-#       "yes": yup
-#       enabled: "ON"
-
 en:
-  hello: "Hello world"
+  locale:
+    names:
+      id: Bahasa Indonesia
+      en: English
+    switch_to: "Switch language to %{language}"
+    changed: "Language changed to %{language}."
+    invalid: "The selected language is not available."
+  date:
+    abbr_day_names: [Sun, Mon, Tue, Wed, Thu, Fri, Sat]
+    day_names: [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday]
+    abbr_month_names: [~, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
+    month_names: [~, January, February, March, April, May, June, July, August, September, October, November, December]
+    formats:
+      default: "%Y-%m-%d"
+      long: "%B %d, %Y"
+      short: "%b %d"
+  glowbook:
+    nav:
+      services: Services
+      city: City
+      for_business: For businesses
+      notifications: Notifications
+      admin_dashboard: Admin dashboard
+      business_dashboard: Business dashboard
+      business_messages: Business messages
+      my_dashboard: My dashboard
+      my_messages: My messages
+      profile: Profile
+      sign_out: Sign out
+      sign_in: Sign in
+      sign_up: Sign up
+      menu: Menu
+      home: Home
+      search: Search
+      bookings: Bookings
+      account: Account
+  home:
+    title: "GlowBook — Best Beauty & Wellness Booking"
+    headline: "Find the best beauty & wellness services near you"
+    description: "Book salons, spas, barbers, and more with ease."
+    search_placeholder: "What service? (e.g. facial)"
+    search_label: Service
+    all_cities: All cities
+    search: Search
+    popular: "Popular:"
+    premium_salon: Premium salon
+    booking_confirmed: Booking confirmed
+    instant_free: Instant & free
+    popular_categories: Popular categories
+    see_all: See all >
+    popular_salons_in: "Popular salons in %{city}"
+    top_rated: Top rated with thousands of customer reviews
+    recommendations: Recommended for you
+    business_headline: "Manage your beauty business with GlowBook"
+    business_description: "Smart calendar, staff management, and analytics — all in one dashboard."
+    register_business: List your business
+    indonesia: Indonesia
+  search:
+    title: "Search results — GlowBook"
+    search_placeholder: "Service or business name..."
+    all_cities: All cities
+    search: Search
+    found:
+      one: "%{count} business found"
+      other: "%{count} businesses found"
+    for_query: 'for "%{query}"'
+    in_city: "in %{city}"
+    sort_rating: Top rated
+    sort_price: Lowest price
+    sort_nearest: Nearest
+    nearby_permission: "Press Nearest and allow location access in your browser to sort businesses by distance. Your location is stored temporarily for up to 30 minutes."
+    nearby_active: "Results are sorted by distance from your location. Businesses without coordinates appear last. Your location is stored temporarily and removed from the session after 30 minutes."
+    filters: Filters
+    show: Show
+    reviews:
+      one: "%{count} review"
+      other: "%{count} reviews"
+    promo: PROMO
+    from: From
+    view_schedule: View availability
+    previous: "← Previous"
+    page: "Page %{page} / %{pages}"
+    next: "Next →"
+    no_results: No results found
+    try_again: Try another keyword or remove some filters to broaden your search.
+    reset_filters: Reset filters
+    filter:
+      heading: Filter
+      city: City
+      category: Category
+      price_range: Price range
+      min_price: "Rp 0"
+      max_price: "Rp 1,000,000+"
+      min_rating: Minimum rating
+      open_today: Open today
+      promo_only: Promotions only
+      apply: Apply filters
+      reset: Reset
+  account:
+    title: My account — GlowBook
+    dashboard: Dashboard
+    bookings: My bookings
+    messages: Messages
+    favorites: Favorites
+    reviews: Reviews
+    profile: Profile
+    settings: Settings
+    customer:
+      dashboard_title: Customer dashboard
+      total_bookings: Total bookings
+      completed: Completed
+      upcoming: Upcoming bookings
+      see_all: View all
+      no_upcoming: No upcoming bookings
+      first_booking_prompt: Book your first beauty service.
+      explore: Explore salons
+      upcoming_tab: Upcoming
+      completed_tab: Completed
+      cancelled_tab: Cancelled
+      empty_bookings: No bookings here
+      book_now: Book now
+      booking_fallback: Booking
+      details: View details
+      cancel: Cancel
+      cancel_confirm: Cancel this booking?
+      no_favorites: No favorites yet
+      favorite_help: Save your favorite salons with the heart button.
+      find_salon: Find salons
+      no_reviews: No reviews yet
+      review_help: Share your experience after visiting a salon.
+      profile_title: My profile
+      full_name: Full name
+      email: Email
+      phone: Phone number
+      save_changes: Save changes
+      settings_title: Settings
+      change_password: Change password
+      password_help: Use a strong password to keep your account secure.
+      send_reset_link: Send password reset link
+      account: Account
+      sign_in_method: Sign-in method
+      role: Role
+      sign_out: Sign out
+      roles:
+        customer: Customer
+        business_owner: Business owner
+        staff: Staff
+        admin: Admin
+  notifications:
+    account: Account
+    title: Notifications
+    unread_count: "%{count} unread"
+    mark_all_read: Mark all as read
+    new: New
+    open_booking: Open booking
+    empty: No notifications yet
+    empty_help: Booking updates will appear here.
+    all_read: All notifications marked as read.
+  chat_page:
+    business_title: Business messages — GlowBook
+    customer_title: My messages — GlowBook
+    business_heading: Business messages
+    customer_heading: My messages
+    description: Conversations with customers and businesses are saved here.
+    new_conversation: New conversation
+    unread_count: "%{count} new"
+    empty: No conversations yet.
+    business_empty_help: Customer messages will appear here.
+    customer_empty_help: Open a business page to start a conversation.
+    find_business: Find businesses
+    title: "Chat with %{name} — GlowBook"
+    back: Back
+    you: You
+    start: Start the conversation by sending a message.
+    message: Message
+    placeholder: Write a message…
+    send: Send
+    limit_help: Messages can contain up to 2,000 characters. New messages update automatically.
+  auth:
+    sign_in_title: "Sign in — GlowBook"
+    welcome_back: Welcome back
+    sign_in_description: Sign in to manage your bookings and favorites.
+    email: Email
+    password: Password
+    remember_me: Remember me
+    forgot_password: Forgot password?
+    sign_in: Sign in
+    or: or
+    continue_facebook: Continue with Facebook
+    no_account: "Don't have an account?"
+    sign_up: Sign up
+    sign_up_title: "Sign up — GlowBook"
+    create_account: Create your account
+    sign_up_description: "Free — book your favorite salon or spa in seconds."
+    full_name: Full name
+    your_name: Your name
+    phone: Phone number
+    password_minimum: At least 6 characters
+    already_account: Already have an account?
+    forgot_title: "Forgot password — GlowBook"
+    reset_password: Reset password
+    reset_description: Enter your email and we'll send you a reset link.
+    send_reset_link: Send reset link
+    back_to_sign_in: "← Back to sign in"
+    new_password_title: "New password — GlowBook"
+    create_new_password: Create a new password
+    new_password: New password
+    confirm_password: Confirm password
+    save_password: Save password
+  devise:
+    sessions:
+      signed_in: "Signed in successfully."
+      signed_out: "Signed out successfully."
+      user:
+        signed_in: "Signed in successfully."
+        signed_out: "Signed out successfully."
+    failure:
+      unauthenticated: "You need to sign in or sign up before continuing."
+      invalid: "Invalid email or password."
+      not_found_in_database: "Invalid email or password."
+    passwords:
+      send_instructions: "You will receive an email with instructions to reset your password shortly."
+      updated: "Your password has been changed successfully. You are now signed in."
+    registrations:
+      signed_up: "Welcome! You have signed up successfully."
+      updated: "Your account has been updated successfully."
+  booking:
+    title: "Booking — %{business}"
+    steps:
+      services: Services
+      staff: Staff
+      date: Date
+      time: Time
+      confirmation: Confirmation
+    choose_services: Choose services
+    choose_staff: Choose a staff member
+    staff_prompt: Who would you like to serve you?
+    available_staff: Any available staff
+    staff_available_description: Staff available at your selected time
+    does_not_serve: Cannot provide all selected services
+    choose_date_time: Choose a date and time
+    total_duration: "Total duration: %{duration}"
+    previous_month: Previous month
+    next_month: Next month
+    available_slots: Available times
+    timezone: "Time zone: WIB (Jakarta)"
+    no_slots: No times available on this date
+    try_another_date: Try another date or staff member.
+    change_date: "← Change date"
+    confirm_booking: Confirm booking
+    service: Service
+    staff: Staff
+    date: Date
+    time: Time
+    duration: Duration
+    total_price: Total price
+    payment_method: Payment method
+    pay_at_venue: Pay at the venue
+    pay_at_venue_description: Cash or QRIS when you arrive
+    online_payment: Online payment
+    total_must_be_positive: Only available for totals above Rp 0
+    midtrans_sandbox: Secure checkout via Midtrans Sandbox
+    payment_not_configured: Not configured yet
+    continue: Continue
+    successful: Booking confirmed!
+    thanks: Thank you, your booking has been confirmed.
+    details: Booking details
+    reference: Booking code
+    payment_status: Payment status
+    paid: Paid
+    unpaid: Not paid
+    cancel: Cancel
+    cancel_confirm: Cancel this booking?
+    reschedule: Reschedule
+    back_to_booking: "← Back to booking"
+    reschedule_help: Choose a new time. Your services, staff, duration, and price stay the same.
+    current_schedule: "Current appointment: %{schedule}"
+    find_times: Find available times
+    save_schedule: Save new appointment
+    continue_payment: Continue payment
+    pay_online: Pay online
+    all_bookings: View all bookings
+    back_home: Back to home
+    status:
+      pending: Pending
+      confirmed: Confirmed
+      cancelled: Cancelled
+      completed: Completed
+      no_show: No show
+    payment_statuses:
+      pending: Pending
+      settlement: Processing
+      capture: Paid
+      paid: Paid
+      failed: Failed
+      cancelled: Cancelled
+      expire: Expired
+      expired: Expired
+      cancel: Cancelled
+      deny: Denied
+      failure: Failed
+      refund: Refunded
+  business_page:
+    review_count: "(%{count} reviews)"
+    remove_favorite: Remove from favorites
+    save_favorite: Save to favorites
+    saved: Saved
+    favorite: Favorite
+    book_now: Book now
+    chat: Chat
+    tabs:
+      about: About
+      services: Services
+      staff: Staff
+      reviews: Reviews
+      location: Location
+    hours: Opening hours
+    open_now: Open now
+    closed: Closed
+    see_map: View map
+    promotions: Promotions
+    discount: Discount
+    promo_code: "Code:"
+    about: "About %{business}"
+    no_description: No description yet.
+    services_available: "%{count} services available"
+    professionals: "%{count} professionals"
+    gallery: Gallery
+    book: Book
+    works_today: Working today
+    day_off: Day off today
+    write_review: Write a review
+    no_reviews: No reviews yet.
+    address: Address
+    open_osm: Open in OpenStreetMap
+  review_page:
+    title: "Write a review — %{business}"
+    write_review: Write a review
+    for_business: "for %{business}"
+    rating: Rating
+    comment: Comment
+    prompt: How was your experience?
+    submit: Submit review
+  dashboard:
+    title: Dashboard
+    back_home: Back to home
+    nav:
+      dashboard: Dashboard
+      calendar: Calendar
+      bookings: Bookings
+      messages: Messages
+      services: Services
+      staff: Staff
+      customers: Customers
+      promotions: Promotions
+      analytics: Analytics
+      finance: Finance
+      business_profile: Business profile
+      gallery: Gallery
+      settings: Settings
+    home:
+      title: Business dashboard
+      today: Bookings today
+      this_week: This week
+      monthly_completed_value: Completed booking value this month
+      revenue_note: Based on completed services; payment status is not checked.
+      rating: Business rating
+      upcoming: Upcoming bookings
+      calendar: Calendar →
+      customer: Customer
+      service: Service
+      staff: Staff
+      time: Time
+      status: Status
+      no_upcoming: No upcoming bookings.
+    bookings_page:
+      title: Bookings
+      upcoming: Upcoming
+      pending: Pending
+      confirmed: Confirmed
+      completed: Completed
+      cancelled: Cancelled
+      no_show: No show
+      code: Code
+      customer: Customer
+      service: Service
+      staff: Staff
+      time: Time
+      total: Total
+      status: Status
+      actions: Actions
+      cancel: Cancel
+      cancel_confirm: "Cancel booking %{reference}?"
+      mark_complete: Mark completed
+      mark_no_show: Mark customer as no-show
+      no_show_confirm: Mark this customer as no-show?
+      empty: No bookings found.
+    customers_page:
+      title: Customers
+      description: "%{count} customers have booked with your business."
+      customer: Customer
+      total_bookings: Total bookings
+      total_spent: Total spent
+      last_visit: Last visit
+      empty: No customers yet.
+    analytics_page:
+      title: Analytics
+      description: Your business performance this month.
+      completed_value: Completed booking value this month
+      revenue_note: Service value, not confirmed payments.
+      bookings_month: Bookings this month
+      new_customers: New customers this month
+      average_rating: Average rating
+      confirmed_online: Confirmed online payments
+      online_detail: "%{count} bookings confirmed by the gateway this month; in-person payments excluded."
+      completed_last_30: Completed booking value in the last 30 days
+      no_show_note: No-show bookings are excluded. Payment is not verified here.
+      popular_services: Most popular services this month
+      empty: No bookings this month yet.
+    gallery_page:
+      title: Business gallery
+      description: Upload up to 6 JPG, PNG, or WebP photos. Each photo can be up to 10 MB.
+      choose_photo: Choose a photo
+      caption: Caption (optional)
+      caption_placeholder: e.g. Treatment room
+      upload: Upload photo
+      photo_alt: "Gallery photo for %{business}"
+      photo: Gallery photo
+      delete: Delete
+      delete_confirm: Remove this photo from the gallery?
+      empty: No photos yet. Upload the first photo for your business.
+    profile_page:
+      title: Business profile
+      description: This information appears on your public business page.
+      business_name: Business name
+      phone: Phone
+      city: City
+      address: Full address
+      latitude: Latitude (optional)
+      longitude: Longitude (optional)
+      coordinates_help: Public business coordinates are used for maps and nearby sorting.
+      description_label: Business description
+      description_placeholder: Tell customers about your business…
+      hours: Opening hours
+      closed: Closed
+      hours_help: Set opening hours for each day in WIB. Changes affect new slots and do not cancel existing bookings.
+      save: Save changes
+      public_page: View public page
+    settings_page:
+      title: Settings
+      business_account: Business account
+      owner: Owner
+      email: Email
+      page_slug: Page slug
+      status: Status
+      preferences: Booking preferences
+      auto_confirmation: Automatic confirmation
+      active: Active
+      customer_cancellation: Customer cancellation
+      allowed: Allowed
+      payment: Payment
+      pay_at_venue: Pay at the venue (cash/QRIS)
+      danger_zone: Danger zone
+      suspend_help: Suspending the business hides its public page and stops new bookings.
+      support_help: Contact GlowBook support to suspend the business for security reasons.
+    finance:
+      title: Finance
+      history: Online payment history
+      description: "Gateway transaction summary for %{business}. In-person payments are not listed here."
+      period: Period
+      status: Status
+      all_statuses: All statuses
+      search: Search
+      search_placeholder: Booking code, order, customer…
+      apply: Apply
+      download_csv: Download CSV
+      confirmed_month: Confirmed online payments this month
+      gross_note: Gross gateway amount, not net settlement or payout balance.
+      order: Order
+      booking: Booking
+      customer: Customer
+      amount: Amount
+      method: Method
+      confirmed_at: Confirmed at
+      not_confirmed: Not confirmed
+      empty: No payments match this period and filter.
+  admin:
+    nav:
+      dashboard: Dashboard
+      users: Users
+      businesses: Businesses
+      bookings: Bookings
+      payments: Payments
+      categories: Categories
+      reviews: Reviews
+      promotions: Promotions
+      reports: Reports
+      settings: Settings
+      back_home: Back to home
+    dashboard:
+      title: Admin dashboard
+      total_users: Total users
+      customers: "%{count} customers"
+      total_businesses: Total businesses
+      business_status: "%{active} active · %{pending} pending"
+      total_bookings: Total bookings
+      this_month: "%{count} this month"
+      completed_booking_value: Completed booking value
+      revenue_disclaimer: Not commission or confirmed payments.
+      bookings_30_days: Bookings in the last 30 days
+      full_report: Full report →
+      peak_bookings: "Peak: %{count} bookings/day"
+      today: Today
+      daily_completed_value: Daily completed booking value (30 days)
+      peak_daily_value: "Peak: %{amount}/day"
+      recent_bookings: Recent bookings
+      code: Code
+      customer: Customer
+      business: Business
+      time: Time
+      total: Total
+      status: Status
+      no_bookings: No bookings yet.
+      top_businesses: Top businesses
+      no_data: No data yet.
+      popular_categories: Popular categories
+    bookings:
+      title: Bookings
+      all: All
+      pending: Pending
+      confirmed: Confirmed
+      completed: Completed
+      cancelled: Cancelled
+      no_show: No show
+      search_placeholder: "Search code, customer, or business…"
+      search: Search
+      code: Code
+      customer: Customer
+      business: Business
+      service: Service
+      time: Time
+      total: Total
+      status: Status
+      no_bookings: No bookings found.
+      detail_title: Booking details
+      payment: Payment
+      item: Item
+      any_staff: Any staff
+      duration_minutes: "%{count} min"
+      payment_history: Payment history
+      admin_actions: Admin actions
+      cancel_action: Cancel booking
+      cancel_confirm: "Cancel booking %{reference}?"
+      mark_complete: Mark completed
+      mark_no_show: Mark customer as no-show
+      no_show_confirm: "Mark this customer as no-show?"
+      back_to_list: "← Back to list"
+      flash:
+        cancelled: Booking cancelled.
+        completed: Booking marked as completed.
+        no_show: Customer marked as no-show.
+        invalid_status: Invalid booking status.
+        transition_failed: This status change is not allowed for the current booking.
+    users:
+      title: Users
+      all: All
+      customers: Customers
+      business_owners: Business owners
+      admins: Admins
+      search_placeholder: Search name or email…
+      search: Search
+      name: Name
+      email: Email
+      role: Role
+      bookings: Bookings
+      registered: Registered
+      delete: Delete
+      delete_confirm: "Delete %{name}?"
+      no_users: No users found.
+      booking_history: Booking history
+      code: Code
+      business: Business
+      service: Service
+      time: Time
+      total: Total
+      status: Status
+      no_bookings: No bookings yet.
+      roles:
+        customer: Customer
+        business_owner: Business owner
+        staff: Staff
+        admin: Admin
+      deleted: User deleted.
+      errors:
+        delete_self: You cannot delete your own account.
+        delete_admin: Admin accounts cannot be deleted from this panel.
+        related_data: This user has business, history, or messages that must be retained.
+        restricted: This user cannot be deleted because related records still exist.
+    categories:
+      title: Categories
+      category: Category
+      slug: Slug
+      services: Services
+      businesses: Businesses
+      edit: Edit
+      delete: Delete
+      delete_confirm: Delete this category?
+      empty: No categories yet.
+      new: New category
+      name: Name
+      tagline: Tagline
+      position: Position
+      save: Save
+      cancel: Cancel
+      edit_title: Edit category
+      errors:
+        in_use: "This category is used by %{count} services and cannot be deleted."
+      flash:
+        created: 'Category "%{name}" created.'
+        updated: Category updated.
+        deleted: Category deleted.
+        popular: '"%{name}" %{state} as popular.'
+        marked: marked
+        unmarked: unmarked
+    reviews:
+      title: Reviews
+      all: All
+      average: Average rating
+      by: by
+      delete: Delete
+      delete_confirm: Delete this review?
+      empty: No reviews found.
+      flash_deleted: "Review for %{business} deleted."
+    promotions:
+      title: Promotions
+      all: All
+      active: Active
+      inactive: Inactive
+      title_column: Title
+      code: Code
+      business: Business
+      discount: Discount
+      period: Period
+      status: Status
+      delete: Delete
+      delete_confirm: Delete this promotion?
+      empty: No promotions yet.
+      flash_deleted: 'Promotion "%{title}" deleted.'
+    businesses:
+      title: Businesses
+      all: All
+      active: Active
+      pending: Pending
+      suspended: Suspended
+      search_placeholder: Search businesses…
+      search: Search
+      business: Business
+      city: City
+      owner: Owner
+      rating: Rating
+      services: Services
+      status: Status
+      approve: Approve & activate
+      approve_confirm: "Publish %{name} on the marketplace?"
+      reactivate: Reactivate
+      reactivate_confirm: "Reactivate %{name} on the marketplace?"
+      suspend: Suspend
+      suspend_confirm: "Suspend %{name}?"
+      no_businesses: No businesses found.
+      owner_label: "Owner:"
+      duration_minutes: "%{count} min"
+      staff_status:
+        active: Active
+        inactive: Inactive
+      recent_bookings: Recent bookings
+      code: Code
+      customer: Customer
+      time: Time
+      total: Total
+      booking_status: Status
+      no_bookings: No bookings yet.
+      latest_reviews: Latest reviews
+      no_reviews: No reviews yet.
+      flash:
+        suspended: "Business %{name} suspended."
+        approved: "Business %{name} approved and published."
+        reactivated: "Business %{name} reactivated."
+        unavailable: Business not found or already processed.
+    payments:
+      title: Payments
+      history: Online payment history
+      description: Payment attempts and gateway confirmations. In-person payments are not included.
+      period: Period
+      status: Status
+      all_statuses: All statuses
+      search: Search
+      search_placeholder: Order, booking, customer, business…
+      apply: Apply
+      download_csv: Download CSV
+      order: Order
+      booking: Booking
+      customer_business: Customer / business
+      amount: Amount
+      method: Method
+      confirmed_at: Confirmed at
+      not_confirmed: Not confirmed
+      empty: No payments match this period and filter.
+      methods:
+        bank_transfer: Bank transfer
+        echannel: E-channel
+        qris: QRIS
+        credit_card: Credit card
+        gopay: GoPay
+        shopeepay: ShopeePay
+        cstore: Convenience store
+    reports:
+      title: Reports
+      monthly: Monthly report
+      show: Show
+      download_csv: Download CSV
+      period: "Period: %{month}"
+      completed_bookings: Completed bookings
+      completed_value: Completed booking value
+      revenue_disclaimer: Not commission or confirmed payments.
+      confirmed_online_payments: Confirmed online payments
+      online_payment_detail: "%{count} bookings confirmed by the gateway this period; in-person payments excluded."
+      new_customers: New customers
+      new_businesses: New businesses
+      value_by_city: Completed booking value by city
+      value_by_category: Completed service value by category
+      top_businesses: Top 10 businesses by completed booking value
+      no_completed_bookings: No completed bookings this month.
+    settings:
+      title: Settings
+      platform_identity: Platform identity
+      name: Name
+      current_domain: Current domain
+      currency: Currency
+      operations: Platform operations
+      registration_open: Business registration is open
+      registration_help: Turn this off to reject new registrations. Existing businesses can continue using their dashboard.
+      planned_commission: Planned commission rate (%)
+      commission_help: Stored for future finance work; it is not deducted from transactions and there are no automatic payouts yet.
+      current_gateway: Current online gateway
+      gateway_not_configured: Not configured
+      gateway_later: Gateway configuration is planned for the final payment phase.
+      save: Save settings
+  business_management:
+    calendar:
+      title: Calendar
+      views:
+        day: Day
+        week: Week
+        month: Month
+      today: Today
+      time: Time
+      all_bookings: All bookings
+      booking_count: "%{count} bookings"
+    services:
+      title: Services
+      description: Manage your business service catalog.
+      new: New service
+      name: Service name
+      category: Category
+      choose_category: Choose a category
+      duration: Duration (minutes)
+      price: Price (IDR)
+      staff_count: "%{count} staff"
+      status: Status
+      active: Active
+      inactive: Inactive
+      edit: Edit
+      delete: Delete
+      delete_confirm: Delete this service?
+      empty: No services yet. Add your first service.
+      description_label: Description
+      description_placeholder: Briefly describe this service…
+      order: Display order
+      active_help: Active (customers can book it)
+      example: "Example: Premium Haircut"
+      save: Save
+      cancel: Cancel
+      new_title: New service
+      edit_title: "Edit: %{name}"
+      flash:
+        created: 'Service "%{name}" created.'
+        updated: Service updated.
+        deleted: Service deleted.
+    staff:
+      title: Staff
+      description: Manage your team and their work schedules.
+      new: New staff member
+      name: Staff name
+      title_label: Job title
+      bio: Short bio
+      services: Services they provide
+      duration: "%{count} min"
+      active_help: Active (accepts bookings)
+      active: Active
+      inactive: Inactive
+      edit: Edit
+      delete: Delete
+      delete_confirm: Delete this staff member?
+      empty: No staff yet. Add your first staff member.
+      save: Save
+      cancel: Cancel
+      example_title: "Example: Senior Stylist"
+      new_title: New staff member
+      edit_title: "Edit: %{name}"
+      flash:
+        created: 'Staff member "%{name}" added.'
+        updated: Staff details updated.
+        deleted: Staff member deleted.
+    promotions:
+      title: Promotions
+      description: Active promotions appear as a PROMO badge on your business card.
+      new: New promotion
+      title_label: Promotion title
+      example_title: "Example: Weekend special discount"
+      code: Coupon code (optional)
+      discount: Discount (%)
+      starts_at: Starts
+      ends_at: Ends
+      active_help: Activate now
+      active: Active
+      inactive: Inactive
+      discount_line: Discount
+      now: now
+      unlimited: no end date
+      enable: Activate
+      disable: Deactivate
+      edit: Edit
+      delete: Delete
+      delete_confirm: Delete this promotion?
+      empty: No promotions yet. Create your first promotion to attract customers.
+      save: Save
+      cancel: Cancel
+      new_title: New promotion
+      edit_title: "Edit: %{name}"
+      flash:
+        created: 'Promotion "%{name}" created.'
+        updated: Promotion updated.
+        deleted: Promotion deleted.
+        enabled: Promotion activated.
+        disabled: Promotion deactivated.
+  business_signup:
+    title: List your business
+    description: Create your business profile, then add services and staff in the dashboard. An admin will review your business before it appears in the marketplace.
+    closed: Business registration is temporarily closed. Please try again later.
+    sign_in_required: Sign in or create a customer account before registering a business.
+    sign_in: Sign in
+    create_account: Create account
+    already_has_business: This account already has a business. Manage it from the dashboard.
+    open_dashboard: Open business dashboard
+    role_not_allowed: This account cannot register a business. Use a customer or business owner account.
+    business_name: Business name
+    business_name_example: "Example: Bellezza Hair Studio"
+    phone: Phone / WhatsApp number
+    country_code_help: Include the country code, for example +6281234567890.
+    city: City
+    choose_city: Choose a city
+    address: Full address
+    address_example: Street, number, and area
+    latitude: Latitude (optional)
+    longitude: Longitude (optional)
+    coordinates_help: Coordinates help customers find your location on the map and sort nearby businesses.
+    categories: Business categories
+    hours_help: Initial hours are Monday–Saturday 9:00 AM–5:00 PM and closed Sunday. Update opening hours in the business profile after registration.
+    submit: Register business
+    errors:
+      choose_category: choose at least one available category
+    flash:
+      created: Business registered and awaiting review. You can now complete your services and profile in the dashboard.
+  for_business_page:
+    title: For businesses
+    headline: Manage your salon or spa with GlowBook
+    description: A booking platform that connects your beauty and wellness business with thousands of new customers. Smart calendars, automatic reminders, and complete analytics.
+    register: List your business
+    features_link: View features
+    features:
+      calendar_title: Smart calendar
+      calendar_description: Real-time availability by staff, breaks, and service duration. Database protection prevents double bookings.
+      analytics_title: Revenue analytics
+      analytics_description: Track bookings, returning customers, and completed booking value from your business dashboard.
+      reviews_title: Verified reviews
+      reviews_description: Reviews can only be written by customers with a completed booking at your business.
+    pricing_title: Fees during the preview period
+    trial: Preview access
+    trial_note: No subscription fee is currently charged.
+    month: /month
+    free_features:
+      profile: Business profile and service catalog
+      booking: Unlimited online bookings
+      commission: Commission deductions and automatic payouts are not available yet.
+  pagination:
+    aria_label: Page navigation
+    page_info: Page %{page} of %{pages} · %{count} records
+    previous: Previous
+    next: Next
+  alerts:
+    access:
+      login_required: Please sign in to continue.
+      business_dashboard_forbidden: You do not have access to the business dashboard.
+      admin_only: Only administrators can access this page.
+      business_unregistered: Your account does not have a registered business.
+      booking_forbidden: You do not have access to this booking.
+      business_messages_forbidden: You do not have access to business messages.
+      own_business_chat: You cannot message your own business.
+    booking:
+      select_service: Select at least one service.
+      select_date: Select an appointment date.
+      select_time: Select an appointment time.
+      invalid_payment_method: Invalid payment method.
+      online_payment_unavailable: Online payments are not configured yet.
+      online_payment_positive_total: Online payment requires a booking total above Rp 0.
+      cancelled: Booking cancelled.
+      cancel_failed: This booking cannot be cancelled.
+      reschedule_unavailable: This booking can no longer be rescheduled.
+      select_new_slot: Select a new date and time.
+      rescheduled: Booking rescheduled.
+      slot_taken: That time was just booked. Please choose another slot.
+      invalid_status: Invalid booking status.
+      status_updated: Booking status updated.
+      transition_failed: This booking status cannot be changed.
+    payment:
+      online_disabled: Online payments are disabled.
+      wrong_method: This booking does not use online payment.
+      not_payable: This booking is no longer payable.
+      already_paid: This booking has already been paid.
+      processing: Payment is processing. Refresh the page in a moment.
+    booking_builder:
+      service_not_found: Service not found.
+      time_unavailable: That time is unavailable. Please choose another slot.
+      staff_not_found: Staff member not found.
+      staff_not_qualified: The selected staff member does not provide this service.
+      slot_taken: That time was just booked. Please choose another slot.
+      save_failed: Something went wrong while saving the booking.
+    gallery:
+      limit_reached: "The gallery can contain up to %{count} photos."
+      photo_added: Photo added to the gallery.
+      photo_deleted: Photo removed from the gallery.
+    admin:
+      settings_saved: Platform settings saved.
+    account:
+      profile_updated: Profile updated.
+    business:
+      profile_updated: Business profile updated.
+    search:
+      invalid_location: Invalid location. Please try again in your browser.
+    reviews:
+      submitted: Review submitted.
+    oauth:
+      facebook_cancelled_or_failed: Facebook sign-in was cancelled or failed.
+      facebook_signin_failed: Could not sign in with Facebook. Please try again.
+  footer:
+  booking_email:
+    confirmation_title: Booking confirmed
+    cancellation_title: Booking cancelled
+    reschedule_title: Booking rescheduled
+    new_booking: New booking received
+    booking_created: Booking created
+    booking_cancelled: Booking cancelled
+    booking_rescheduled: Booking rescheduled
+    reference: Booking code
+    business: Business
+    services: Services
+    date: Date
+    time: Time
+    status: Status
+    appointment_format: "%{date} at %{time} WIB"
+    cancellation_body: has been cancelled.
+    reschedule_body: has been updated.
+    confirmation_help: Please arrive at the scheduled time and show this booking code to the business.
+    contact_business: If this cancellation does not look right, contact %{business}.
+    see_booking: View booking details
+    owner_confirmation: "New booking from %{customer} at %{business}, scheduled for %{appointment}."
+    owner_cancellation: "Booking %{reference} from %{customer} at %{business} has been cancelled."
+    owner_reschedule: "Booking %{reference} from %{customer} at %{business} has been rescheduled to %{appointment}."
+    customer_confirmation: "Booking %{reference} at %{business} is scheduled for %{appointment}."
+    customer_cancellation: "Booking %{reference} at %{business} has been cancelled."
+    customer_reschedule: "Booking %{reference} at %{business} has been rescheduled to %{appointment}."
+  footer:
+    description: "Book the best salons, spas, and barbers in Indonesia. Fast, easy, and convenient."
+    categories: Categories
+    cities: Cities
+    brand: GlowBook
+    disclaimer: "Demo marketplace — all businesses and reviews are fictional."

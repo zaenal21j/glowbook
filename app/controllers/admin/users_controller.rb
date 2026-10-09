@@ -20,17 +20,16 @@ class Admin::UsersController < Admin::BaseController
   def destroy
     user = User.find(params[:id])
     if user == current_user
-      redirect_to admin_users_path, alert: "Anda tidak bisa menghapus akun sendiri."
+      redirect_to admin_users_path, alert: I18n.t("admin.users.errors.delete_self")
     elsif user.admin?
-      redirect_to admin_users_path, alert: "Akun admin tidak dapat dihapus dari panel ini."
-    elsif user.businesses.exists? || user.staff_member.present? || user.bookings.exists? ||
-          user.reviews.exists? || user.conversations.exists? || user.chat_messages.exists?
-      redirect_to admin_users_path, alert: "Pengguna ini memiliki bisnis, riwayat, atau pesan yang harus disimpan."
+      redirect_to admin_users_path, alert: I18n.t("admin.users.errors.delete_admin")
+    elsif user.has_retained_records?
+      redirect_to admin_users_path, alert: I18n.t("admin.users.errors.related_data")
     else
       user.destroy!
-      redirect_to admin_users_path, notice: "Pengguna dihapus."
+      redirect_to admin_users_path, notice: I18n.t("admin.users.deleted")
     end
   rescue ActiveRecord::DeleteRestrictionError, ActiveRecord::RecordNotDestroyed
-    redirect_to admin_users_path, alert: "Pengguna tidak dapat dihapus karena masih memiliki data terkait."
+    redirect_to admin_users_path, alert: I18n.t("admin.users.errors.restricted")
   end
 end

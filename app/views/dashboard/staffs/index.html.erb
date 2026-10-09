@@ -1,14 +1,14 @@
 <% content_for :sidebar_links do %>
   <%= render "dashboard/shared/sidebar" %>
 <% end %>
-<% content_for :page_title, "Staff — GlowBook" %>
+<% content_for :page_title, "#{t('business_management.staff.title')} — GlowBook" %>
 
 <div class="flex flex-wrap items-center justify-between gap-3">
   <div>
-    <h1 class="text-xl font-extrabold">Staff</h1>
-    <p class="text-sm text-ink-500">Kelola tim dan jadwal kerja mereka.</p>
+    <h1 class="text-xl font-extrabold"><%= t("business_management.staff.title") %></h1>
+    <p class="text-sm text-ink-500"><%= t("business_management.staff.description") %></p>
   </div>
-  <%= link_to "+ Staff Baru", new_dashboard_manage_staff_path, class: "btn-primary btn-md" %>
+  <%= link_to "+ #{t('business_management.staff.new')}", new_dashboard_manage_staff_path, class: "btn-primary btn-md" %>
 </div>
 
 <div class="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -22,7 +22,7 @@
             <p class="text-xs text-ink-500"><%= m.display_title %></p>
           </div>
         </div>
-        <span class="badge <%= m.active? ? "badge-success" : "badge-muted" %>"><%= m.active? ? "Aktif" : "Nonaktif" %></span>
+        <span class="badge <%= m.active? ? "badge-success" : "badge-muted" %>"><%= t(m.active? ? "business_management.staff.active" : "business_management.staff.inactive") %></span>
       </div>
       <div class="mt-3 flex flex-wrap gap-1.5">
         <% m.services.limit(4).each do |s| %>
@@ -31,18 +31,19 @@
         <% if m.services.count > 4 %><span class="chip">+<%= m.services.count - 4 %></span><% end %>
       </div>
       <div class="mt-3 flex flex-wrap gap-1 text-xs text-ink-500">
-        <% BusinessHour.days.each_with_index do |day, i| %>
-          <span class="<%= 'font-bold text-primary-600' if m.works_on?(i) %>"><%= day.first %></span>
+        <% BusinessHour.days.each_with_index do |_day, i| %>
+          <span class="<%= 'font-bold text-primary-600' if m.works_on?(i) %>"><%= t("date.abbr_day_names")[i] %></span>
         <% end %>
       </div>
       <div class="mt-4 flex gap-3 border-t border-line pt-3 text-xs">
-        <%= link_to "Edit", edit_dashboard_manage_staff_path(m), class: "font-semibold text-primary-600 hover:underline" %>
-        <%= button_to "Hapus", dashboard_manage_staff_path(m), method: :delete, form: { data: { turbo_confirm: "Hapus staff ini?" } }, class: "text-red-500 hover:underline" %>
+        <%= link_to t("scheduling.manage_schedule"), dashboard_staff_availability_path(m), class: "font-semibold text-primary-600 hover:underline" %>
+        <%= link_to t("business_management.staff.edit"), edit_dashboard_manage_staff_path(m), class: "font-semibold text-primary-600 hover:underline" %>
+        <%= button_to t("business_management.staff.delete"), dashboard_manage_staff_path(m), method: :delete, form: { data: { turbo_confirm: t("business_management.staff.delete_confirm") } }, class: "text-red-500 hover:underline" %>
       </div>
     </div>
   <% end %>
   <% if @staff.empty? %>
-    <div class="card p-10 text-center text-ink-500 md:col-span-2 xl:col-span-3">Belum ada staff. Tambahkan staff pertama Anda.</div>
+    <div class="card p-10 text-center text-ink-500 md:col-span-2 xl:col-span-3"><%= t("business_management.staff.empty") %></div>
   <% end %>
 </div>
 

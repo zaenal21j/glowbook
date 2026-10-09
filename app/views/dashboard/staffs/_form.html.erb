@@ -1,33 +1,35 @@
 <%= form_with model: staff_member, url: staff_member.persisted? ? dashboard_manage_staff_path(staff_member) : dashboard_manage_staffs_path, class: "space-y-4" do |f| %>
+  <%= render "shared/form_errors", record: staff_member %>
   <div>
-    <%= f.label :name, "Nama staff", class: "label" %>
+    <%= f.label :name, t("business_management.staff.name"), class: "label" %>
     <%= f.text_field :name, class: "input", required: true %>
   </div>
   <div>
-    <%= f.label :title, "Jabatan", class: "label" %>
-    <%= f.text_field :title, class: "input", placeholder: "Contoh: Senior Stylist" %>
+    <%= f.label :title, t("business_management.staff.title_label"), class: "label" %>
+    <%= f.text_field :title, class: "input", placeholder: t("business_management.staff.example_title") %>
   </div>
   <div>
-    <%= f.label :bio, "Bio singkat", class: "label" %>
+    <%= f.label :bio, t("business_management.staff.bio"), class: "label" %>
     <%= f.text_area :bio, rows: 3, class: "input" %>
   </div>
   <div>
-    <span class="label">Layanan yang dikuasai</span>
+    <span class="label"><%= t("business_management.staff.services") %></span>
+    <%= hidden_field_tag "staff[service_ids][]", "" %>
     <div class="mt-1 grid max-h-48 gap-1.5 overflow-y-auto rounded-xl border border-line p-3">
       <% @business.services.ordered.each do |s| %>
         <label class="flex items-center gap-2 text-sm">
           <%= check_box_tag "staff[service_ids][]", s.id, staff_member.services.include?(s), id: "staff_service_#{s.id}", class: "h-4 w-4 rounded accent-primary-600" %>
-          <%= s.name %> <span class="text-ink-400">(<%= s.duration_minutes %> mnt)</span>
+          <%= s.name %> <span class="text-ink-400">(<%= t("business_management.staff.duration", count: s.duration_minutes) %>)</span>
         </label>
       <% end %>
     </div>
   </div>
   <label class="flex items-center gap-2 text-sm">
     <%= f.check_box :active, class: "h-4 w-4 rounded accent-primary-600" %>
-    Aktif (menerima booking)
+    <%= t("business_management.staff.active_help") %>
   </label>
   <div class="flex gap-2 pt-2">
-    <button class="btn-primary btn-md flex-1">Simpan</button>
-    <%= link_to "Batal", dashboard_staffs_path, class: "btn-ghost btn-md" %>
+    <button class="btn-primary btn-md flex-1"><%= t("business_management.staff.save") %></button>
+    <%= link_to t("business_management.staff.cancel"), dashboard_staffs_path, class: "btn-ghost btn-md" %>
   </div>
 <% end %>

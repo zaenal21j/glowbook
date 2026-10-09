@@ -1,8 +1,7 @@
-# syntax=docker/dockerfile:1
-
 # Keep this in sync with .ruby-version.
 ARG RUBY_VERSION=3.4.7
-FROM ruby:${RUBY_VERSION}-slim AS base
+ARG RUBY_IMAGE=ruby:${RUBY_VERSION}-slim
+FROM ${RUBY_IMAGE} AS base
 
 WORKDIR /rails
 
@@ -15,7 +14,7 @@ ENV RAILS_ENV=production \
     BUNDLE_PATH=/usr/local/bundle \
     BUNDLE_WITHOUT="development:test"
 
-FROM base AS build
+FROM base AS dependencies
 
 RUN apt-get update -qq \
     && apt-get install --no-install-recommends -y build-essential git libpq-dev libyaml-dev pkg-config \
@@ -26,11 +25,22 @@ RUN sed -i 's/\r$//' Gemfile Gemfile.lock \
     && bundle install \
     && rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git
 
+FROM dependencies AS build
+
 COPY . .
 
 RUN chmod +x bin/rails bin/rake bin/jobs bin/docker-entrypoint \
     && bundle exec bootsnap precompile -j 1 --gemfile \
     && bundle exec bootsnap precompile -j 1 app/ lib/ \
+    && SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
+
+FROM dependencies AS verification
+
+ENV RAILS_ENV=test BUNDLE_WITHOUT="development"
+RUN bundle install
+COPY . .
+RUN sed -i 's/\r$//' Gemfile Gemfile.lock \
+    && chmod +x bin/rails bin/rake \
     && SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 
 FROM base

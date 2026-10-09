@@ -4,11 +4,11 @@ class BusinessRegistrationsController < ApplicationController
 
   def create
     unless current_user.customer? || current_user.business_owner?
-      return redirect_to registrasi_bisnis_path, alert: "Akun ini tidak dapat mendaftarkan bisnis."
+      return redirect_to registrasi_bisnis_path, alert: t("business_signup.role_not_allowed")
     end
 
     if current_user.businesses.exists?
-      return redirect_to dashboard_root_path, notice: "Akun Anda sudah memiliki bisnis."
+      return redirect_to dashboard_root_path, notice: t("business_signup.already_has_business")
     end
 
     @cities = City.ordered
@@ -18,7 +18,7 @@ class BusinessRegistrationsController < ApplicationController
     categories = Category.where(id: category_ids)
 
     if categories.empty? || categories.size != category_ids.size
-      @business.errors.add(:categories, "pilih minimal satu kategori yang tersedia")
+      @business.errors.add(:categories, t("business_signup.errors.choose_category"))
       return render "pages/business_signup", status: :unprocessable_entity
     end
 
@@ -32,7 +32,7 @@ class BusinessRegistrationsController < ApplicationController
       current_user.update!(role: :business_owner) if current_user.customer?
     end
 
-    redirect_to dashboard_root_path, notice: "Bisnis berhasil didaftarkan dan menunggu verifikasi. Anda sudah bisa melengkapi layanan serta profil di dashboard."
+    redirect_to dashboard_root_path, notice: t("business_signup.flash.created")
   rescue ActiveRecord::RecordInvalid => e
     @business ||= Business.new
     @business.errors.add(:base, e.record.errors.full_messages.to_sentence) unless e.record == @business
@@ -47,7 +47,7 @@ class BusinessRegistrationsController < ApplicationController
     @business_registrations_open = PlatformSetting.current.business_registration_open
     return if @business_registrations_open
 
-    redirect_to registrasi_bisnis_path, alert: "Pendaftaran bisnis sedang ditutup sementara."
+    redirect_to registrasi_bisnis_path, alert: t("business_signup.closed")
   end
 
   def business_params

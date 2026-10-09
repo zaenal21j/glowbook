@@ -63,7 +63,7 @@ class Booking < ApplicationRecord
   def complete!
     with_lock do
       unless completable?
-        errors.add(:status, "booking hanya dapat diselesaikan setelah waktu layanan berakhir")
+        errors.add(:status, I18n.t("validation.booking.complete_after_end"))
         raise ActiveRecord::RecordInvalid, self
       end
 
@@ -74,7 +74,7 @@ class Booking < ApplicationRecord
   def mark_no_show!
     with_lock do
       unless no_showable?
-        errors.add(:status, "pelanggan hanya dapat ditandai tidak hadir setelah waktu booking dimulai")
+        errors.add(:status, I18n.t("validation.booking.no_show_after_start"))
         raise ActiveRecord::RecordInvalid, self
       end
 
@@ -106,13 +106,13 @@ class Booking < ApplicationRecord
     return if start_time.blank? || end_time.blank?
     return if end_time > start_time
 
-    errors.add(:end_time, "harus setelah waktu mulai")
+    errors.add(:end_time, I18n.t("scheduling.errors.end_after_start"))
   end
 
   def not_in_past
     return if start_time.blank? || start_time > 10.minutes.ago
 
-    errors.add(:start_time, "tidak boleh di masa lalu")
+    errors.add(:start_time, I18n.t("validation.booking.not_in_past"))
   end
 
   def items_belong_to_business
@@ -121,7 +121,7 @@ class Booking < ApplicationRecord
     booking_items.each do |item|
       next if item.service&.business_id == business_id
 
-      errors.add(:base, "Layanan tidak valid untuk bisnis ini")
+      errors.add(:base, I18n.t("validation.booking.foreign_service"))
     end
   end
 end

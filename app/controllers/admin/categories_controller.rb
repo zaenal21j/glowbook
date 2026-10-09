@@ -7,10 +7,10 @@ class Admin::CategoriesController < Admin::BaseController
 
   def create
     @category = Category.new(category_params)
-    @category.slug = params[:category][:slug].presence || @category.name.parameterize
+    @category.slug = params[:category][:slug].presence || @category.name.to_s.parameterize
 
     if @category.save
-      redirect_to admin_categories_path, notice: "Kategori \"#{@category.name}\" dibuat."
+      redirect_to admin_categories_path, notice: I18n.t("admin.categories.flash.created", name: @category.name)
     else
       load_categories(category: @category)
       render :index, status: :unprocessable_entity
@@ -21,7 +21,7 @@ class Admin::CategoriesController < Admin::BaseController
 
   def update
     if @category.update(category_params)
-      redirect_to admin_categories_path, notice: "Kategori diperbarui."
+      redirect_to admin_categories_path, notice: I18n.t("admin.categories.flash.updated")
     else
       render :edit, status: :unprocessable_entity
     end
@@ -29,16 +29,17 @@ class Admin::CategoriesController < Admin::BaseController
 
   def destroy
     if @category.services.exists?
-      redirect_to admin_categories_path, alert: "Kategori masih dipakai #{@category.services.count} layanan, tidak bisa dihapus."
+      redirect_to admin_categories_path, alert: I18n.t("admin.categories.errors.in_use", count: @category.services.count)
     else
       @category.destroy
-      redirect_to admin_categories_path, notice: "Kategori dihapus."
+      redirect_to admin_categories_path, notice: I18n.t("admin.categories.flash.deleted")
     end
   end
 
   def toggle_popular
     @category.update!(is_popular: !@category.is_popular)
-    redirect_to admin_categories_path, notice: "\"#{@category.name}\" #{'ditandai' if @category.is_popular} sebagai populer."
+    state = @category.is_popular ? I18n.t("admin.categories.flash.marked") : I18n.t("admin.categories.flash.unmarked")
+    redirect_to admin_categories_path, notice: I18n.t("admin.categories.flash.popular", name: @category.name, state: state)
   end
 
   private

@@ -21,6 +21,6 @@ class NotificationsController < ApplicationController
 
   def mark_all_read
     current_user.user_notifications.unread.update_all(read_at: Time.current, updated_at: Time.current)
-    redirect_to notifications_path, notice: "Semua notifikasi sudah ditandai dibaca."
+    redirect_to notifications_path, notice: I18n.t("notifications.all_read")
   end
 end

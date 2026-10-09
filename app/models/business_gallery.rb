@@ -11,13 +11,13 @@ class BusinessGallery < ApplicationRecord
 
   def image_must_be_supported
     unless image.attached?
-      errors.add(:image, "wajib diunggah")
+      errors.add(:image, I18n.t("validation.gallery.required"))
       return
     end
 
     unless %w[image/jpeg image/png image/webp].include?(image.content_type)
-      errors.add(:image, "harus berformat JPG, PNG, atau WebP")
+      errors.add(:image, I18n.t("validation.gallery.type"))
     end
-    errors.add(:image, "ukuran maksimal 10 MB") if image.blob.byte_size > 10.megabytes
+    errors.add(:image, I18n.t("validation.gallery.size")) if image.blob.byte_size > 10.megabytes
   end
 end

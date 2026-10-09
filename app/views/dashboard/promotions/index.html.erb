@@ -1,14 +1,14 @@
 <% content_for :sidebar_links do %>
   <%= render "dashboard/shared/sidebar" %>
 <% end %>
-<% content_for :page_title, "Promosi — GlowBook" %>
+<% content_for :page_title, "#{t('business_management.promotions.title')} — GlowBook" %>
 
 <div class="flex flex-wrap items-center justify-between gap-3">
   <div>
-    <h1 class="text-xl font-extrabold">Promosi</h1>
-    <p class="text-sm text-ink-500">Promosi aktif tampil sebagai badge PROMO di kartu bisnis Anda.</p>
+    <h1 class="text-xl font-extrabold"><%= t("business_management.promotions.title") %></h1>
+    <p class="text-sm text-ink-500"><%= t("business_management.promotions.description") %></p>
   </div>
-  <%= link_to "+ Promosi Baru", new_dashboard_manage_promotion_path, class: "btn-primary btn-md" %>
+  <%= link_to "+ #{t('business_management.promotions.new')}", new_dashboard_manage_promotion_path, class: "btn-primary btn-md" %>
 </div>
 
 <div class="mt-5 space-y-3">
@@ -18,22 +18,22 @@
         <div class="flex items-center gap-2">
           <p class="font-semibold"><%= p.title %></p>
           <% if p.code.present? %><span class="badge badge-primary font-mono"><%= p.code %></span><% end %>
-          <span class="badge <%= p.active? ? "badge-success" : "badge-muted" %>"><%= p.active? ? "Aktif" : "Nonaktif" %></span>
+          <span class="badge <%= p.active? ? "badge-success" : "badge-muted" %>"><%= t(p.active? ? "business_management.promotions.active" : "business_management.promotions.inactive") %></span>
         </div>
         <p class="mt-1 text-sm text-ink-500">
-          Diskon <strong class="text-primary-600"><%= p.discount_percent %>%</strong>
-          · <%= p.starts_at&.strftime("%d %b %Y") || "sekarang" %> – <%= p.ends_at&.strftime("%d %b %Y") || "tanpa batas" %>
+          <%= t("business_management.promotions.discount_line") %> <strong class="text-primary-600"><%= p.discount_percent %>%</strong>
+          · <%= p.starts_at ? l(p.starts_at.to_date, format: :short) : t("business_management.promotions.now") %> – <%= p.ends_at ? l(p.ends_at.to_date, format: :short) : t("business_management.promotions.unlimited") %>
         </p>
       </div>
       <div class="flex items-center gap-3 text-xs">
-        <%= button_to (p.active? ? "Nonaktifkan" : "Aktifkan"), toggle_dashboard_manage_promotion_path(p), method: :patch, class: "font-semibold text-primary-600 hover:underline" %>
-        <%= link_to "Edit", edit_dashboard_manage_promotion_path(p), class: "font-semibold text-ink-600 hover:underline" %>
-        <%= button_to "Hapus", dashboard_manage_promotion_path(p), method: :delete, form: { data: { turbo_confirm: "Hapus promosi ini?" } }, class: "text-red-500 hover:underline" %>
+        <%= button_to t(p.active? ? "business_management.promotions.disable" : "business_management.promotions.enable"), toggle_dashboard_manage_promotion_path(p), method: :patch, class: "font-semibold text-primary-600 hover:underline" %>
+        <%= link_to t("business_management.promotions.edit"), edit_dashboard_manage_promotion_path(p), class: "font-semibold text-ink-600 hover:underline" %>
+        <%= button_to t("business_management.promotions.delete"), dashboard_manage_promotion_path(p), method: :delete, form: { data: { turbo_confirm: t("business_management.promotions.delete_confirm") } }, class: "text-red-500 hover:underline" %>
       </div>
     </div>
   <% end %>
   <% if @promotions.empty? %>
-    <div class="card p-10 text-center text-ink-500">Belum ada promosi. Buat promosi pertama untuk menarik pelanggan.</div>
+    <div class="card p-10 text-center text-ink-500"><%= t("business_management.promotions.empty") %></div>
   <% end %>
 </div>
 

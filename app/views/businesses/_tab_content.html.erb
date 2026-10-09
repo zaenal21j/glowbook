@@ -1,20 +1,20 @@
 <% case @tab %>
 <% when "tentang" %>
   <div class="card p-6">
-    <h2 class="text-lg font-bold">Tentang <%= business.name %></h2>
-    <p class="mt-3 leading-relaxed text-ink-500"><%= business.description || "Belum ada deskripsi." %></p>
+    <h2 class="text-lg font-bold"><%= t("business_page.about", business: business.name) %></h2>
+    <p class="mt-3 leading-relaxed text-ink-500"><%= business.description || t("business_page.no_description") %></p>
     <div class="mt-6 grid gap-4 sm:grid-cols-2">
       <div class="rounded-xl border border-gray-100 p-4">
-        <p class="text-sm font-bold">Layanan</p>
-        <p class="mt-1 text-sm text-ink-500"><%= business.services.active.count %> layanan tersedia</p>
+        <p class="text-sm font-bold"><%= t("business_page.tabs.services") %></p>
+        <p class="mt-1 text-sm text-ink-500"><%= t("business_page.services_available", count: business.services.active.count) %></p>
       </div>
       <div class="rounded-xl border border-gray-100 p-4">
-        <p class="text-sm font-bold">Staff</p>
-        <p class="mt-1 text-sm text-ink-500"><%= business.staff.count %> profesional</p>
+        <p class="text-sm font-bold"><%= t("business_page.tabs.staff") %></p>
+        <p class="mt-1 text-sm text-ink-500"><%= t("business_page.professionals", count: business.staff.count) %></p>
       </div>
     </div>
     <% if business.business_galleries.any? %>
-      <h3 class="mt-8 font-bold">Galeri</h3>
+      <h3 class="mt-8 font-bold"><%= t("business_page.gallery") %></h3>
       <div class="mt-3 grid grid-cols-3 gap-3">
         <% business.business_galleries.order(:position).limit(6).each do |g| %>
           <div class="aspect-square overflow-hidden rounded-xl bg-gray-100">
@@ -42,7 +42,7 @@
         </div>
         <div class="text-right">
           <p class="font-bold text-primary-600"><%= format_idr(service.price) %></p>
-          <%= link_to "Pesan", business_book_path(business.slug, service_id: service.id), class: "btn-primary btn-sm mt-1.5" %>
+          <%= link_to t("business_page.book"), business_book_path(business.slug, service_id: service.id), class: "btn-primary btn-sm mt-1.5" %>
         </div>
       </div>
     <% end %>
@@ -56,7 +56,7 @@
         <div>
           <p class="font-bold"><%= member.name %></p>
           <p class="text-sm text-ink-500"><%= member.display_title %></p>
-          <p class="mt-1 text-xs text-ink-500"><%= member.services.distinct.count %> layanan · <%= member.works_on?(Date.current.wday) ? "Bekerja hari ini" : "Libur hari ini" %></p>
+          <p class="mt-1 text-xs text-ink-500"><%= member.services.distinct.count %> <%= t("business_page.tabs.services").downcase %> · <%= member.works_on?(Date.current.wday) ? t("business_page.works_today") : t("business_page.day_off") %></p>
         </div>
       </div>
     <% end %>
@@ -66,7 +66,7 @@
   <div class="space-y-4">
     <% if user_signed_in? && !business.reviews.exists?(user: current_user) %>
       <div class="card p-4">
-        <%= link_to "Tulis Ulasan", new_review_path(business_id: business.id), class: "btn-primary btn-md w-full" %>
+        <%= link_to t("business_page.write_review"), new_review_path(business_id: business.id), class: "btn-primary btn-md w-full" %>
       </div>
     <% end %>
     <% @reviews.each do |review| %>
@@ -75,7 +75,7 @@
           <%= avatar_placeholder(review.user.full_name, size: 10) %>
           <div class="min-w-0 flex-1">
             <p class="truncate text-sm font-bold"><%= review.user.full_name %></p>
-            <p class="text-xs text-ink-500"><%= l(review.created_at, format: "%d %B %Y") rescue review.created_at.strftime("%d %B %Y") %></p>
+            <p class="text-xs text-ink-500"><%= l(review.created_at, format: "%d %B %Y") %></p>
           </div>
           <span class="text-sm text-amber-400"><%= review.stars %></span>
         </div>
@@ -85,7 +85,7 @@
       </div>
     <% end %>
     <% if @reviews.empty? %>
-      <div class="card p-10 text-center text-sm text-ink-500">Belum ada ulasan.</div>
+      <div class="card p-10 text-center text-sm text-ink-500"><%= t("business_page.no_reviews") %></div>
     <% end %>
   </div>
 
@@ -95,9 +95,9 @@
       <iframe class="h-full w-full border-0" loading="lazy" src="https://www.openstreetmap.org/export/embed.html?bbox=<%= (business.longitude.to_f - 0.008) %>%2C<%= (business.latitude.to_f - 0.006) %>%2C<%= (business.longitude.to_f + 0.008) %>%2C<%= (business.latitude.to_f + 0.006) %>&amp;layer=mapnik&amp;marker=<%= business.latitude %>%2C<%= business.longitude %>"></iframe>
     </div>
     <div class="p-5">
-      <p class="font-bold">Alamat</p>
+      <p class="font-bold"><%= t("business_page.address") %></p>
       <p class="mt-1 text-sm text-ink-500"><%= business.address %>, <%= business.city.name %></p>
-      <a href="https://www.openstreetmap.org/?mlat=<%= business.latitude %>&amp;mlon=<%= business.longitude %>#map=16/<%= business.latitude %>/<%= business.longitude %>" target="_blank" rel="noopener" class="btn-secondary btn-md mt-4 w-full">Buka di OpenStreetMap</a>
+      <a href="https://www.openstreetmap.org/?mlat=<%= business.latitude %>&amp;mlon=<%= business.longitude %>#map=16/<%= business.latitude %>/<%= business.longitude %>" target="_blank" rel="noopener" class="btn-secondary btn-md mt-4 w-full"><%= t("business_page.open_osm") %></a>
     </div>
   </div>
 <% end %>

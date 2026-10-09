@@ -1,27 +1,27 @@
 <%= render "admin/shared/sidebar" %>
-<% content_for :page_title, "Detail Booking" %>
+<% content_for :page_title, t("admin.bookings.detail_title") %>
 
 <div class="card max-w-2xl p-6">
   <div class="flex items-center justify-between">
     <h2 class="font-mono text-xl font-extrabold"><%= @booking.reference %></h2>
-    <span class="badge <%= @booking.status_badge_class %>"><%= @booking.status.humanize %></span>
+    <span class="badge <%= @booking.status_badge_class %>"><%= t("booking.status.#{@booking.status}", default: @booking.status.humanize) %></span>
   </div>
 
   <dl class="mt-5 grid grid-cols-[130px_1fr] gap-y-3 text-sm">
-    <dt class="text-ink-500">Pelanggan</dt><dd class="font-medium"><%= @booking.user.full_name %> (<%= @booking.user.email %>)</dd>
-    <dt class="text-ink-500">Bisnis</dt><dd class="font-medium"><%= @booking.business.name %></dd>
-    <dt class="text-ink-500">Waktu</dt><dd class="font-medium"><%= format_datetime_id(@booking.start_time) %> – <%= format_time_short(@booking.end_time) %> WIB</dd>
-    <dt class="text-ink-500">Pembayaran</dt><dd class="font-medium"><%= @booking.payment_method&.humanize || "—" %></dd>
-    <dt class="text-ink-500">Total</dt><dd class="font-extrabold text-primary-600"><%= format_idr(@booking.total_amount) %></dd>
+    <dt class="text-ink-500"><%= t("admin.bookings.customer") %></dt><dd class="font-medium"><%= @booking.user.full_name %> (<%= @booking.user.email %>)</dd>
+    <dt class="text-ink-500"><%= t("admin.bookings.business") %></dt><dd class="font-medium"><%= @booking.business.name %></dd>
+    <dt class="text-ink-500"><%= t("admin.bookings.time") %></dt><dd class="font-medium"><%= format_datetime_id(@booking.start_time) %> – <%= format_time_short(@booking.end_time) %> WIB</dd>
+    <dt class="text-ink-500"><%= t("admin.bookings.payment") %></dt><dd class="font-medium"><%= @booking.payment_method&.humanize || "—" %></dd>
+    <dt class="text-ink-500"><%= t("admin.bookings.total") %></dt><dd class="font-extrabold text-primary-600"><%= format_idr(@booking.total_amount) %></dd>
   </dl>
 
-  <h3 class="mt-6 text-sm font-extrabold">Item</h3>
+  <h3 class="mt-6 text-sm font-extrabold"><%= t("admin.bookings.item") %></h3>
   <div class="mt-2 divide-y divide-gray-50 rounded-xl border border-gray-100">
     <% @booking.booking_items.each do |item| %>
       <div class="flex items-center justify-between px-4 py-3 text-sm">
         <div>
           <p class="font-medium"><%= item.label %></p>
-          <p class="text-xs text-ink-500"><%= item.staff&.name || "Staff mana pun" %> · <%= item.duration_minutes %> menit</p>
+          <p class="text-xs text-ink-500"><%= item.staff&.name || t("admin.bookings.any_staff") %> · <%= t("admin.bookings.duration_minutes", count: item.duration_minutes) %></p>
         </div>
         <span class="font-semibold"><%= format_idr(item.price) %></span>
       </div>
@@ -29,12 +29,12 @@
   </div>
 
   <% if @booking.payment_attempts.any? %>
-    <h3 class="mt-6 text-sm font-extrabold">Riwayat Pembayaran</h3>
+    <h3 class="mt-6 text-sm font-extrabold"><%= t("admin.bookings.payment_history") %></h3>
     <div class="mt-2 divide-y divide-gray-50 rounded-xl border border-gray-100">
       <% @booking.payment_attempts.latest_first.each do |attempt| %>
         <div class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 text-sm">
           <span class="font-mono text-xs"><%= attempt.order_id %></span>
-          <span><%= attempt.status.humanize %><%= " · #{attempt.provider_status}" if attempt.provider_status.present? %></span>
+          <span><%= t("booking.payment_statuses.#{attempt.status}", default: attempt.status.humanize) %><%= " · #{attempt.provider_status}" if attempt.provider_status.present? %></span>
           <span class="font-semibold"><%= format_idr(attempt.amount) %></span>
         </div>
       <% end %>
@@ -42,26 +42,26 @@
   <% end %>
 
   <% if @booking.cancellable? || @booking.completable? || @booking.no_showable? %>
-    <h3 class="mt-6 text-sm font-extrabold">Tindakan Admin</h3>
+    <h3 class="mt-6 text-sm font-extrabold"><%= t("admin.bookings.admin_actions") %></h3>
     <div class="mt-2 flex flex-wrap gap-2">
       <% if @booking.cancellable? %>
-        <%= button_to "Batalkan booking", update_status_admin_booking_path(@booking), method: :patch,
+        <%= button_to t("admin.bookings.cancel_action"), update_status_admin_booking_path(@booking), method: :patch,
                       params: { status: "cancelled" },
-                      form: { data: { turbo_confirm: "Batalkan booking #{@booking.reference}?" } },
+                      form: { data: { turbo_confirm: t("admin.bookings.cancel_confirm", reference: @booking.reference) } },
                       class: "btn-secondary btn-sm text-red-600" %>
       <% end %>
       <% if @booking.completable? %>
-        <%= button_to "Tandai selesai", update_status_admin_booking_path(@booking), method: :patch,
+        <%= button_to t("admin.bookings.mark_complete"), update_status_admin_booking_path(@booking), method: :patch,
                       params: { status: "completed" }, class: "btn-secondary btn-sm" %>
       <% end %>
       <% if @booking.no_showable? %>
-        <%= button_to "Pelanggan tidak hadir", update_status_admin_booking_path(@booking), method: :patch,
+        <%= button_to t("admin.bookings.mark_no_show"), update_status_admin_booking_path(@booking), method: :patch,
                       params: { status: "no_show" },
-                      form: { data: { turbo_confirm: "Tandai pelanggan tidak hadir?" } },
+                      form: { data: { turbo_confirm: t("admin.bookings.no_show_confirm") } },
                       class: "btn-secondary btn-sm" %>
       <% end %>
     </div>
   <% end %>
 
-  <%= link_to "← Kembali ke daftar", admin_bookings_path, class: "btn-secondary btn-md mt-6" %>
+  <%= link_to t("admin.bookings.back_to_list"), admin_bookings_path, class: "btn-secondary btn-md mt-6" %>
 </div>

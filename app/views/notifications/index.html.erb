@@ -1,13 +1,13 @@
 <div class="mx-auto max-w-4xl px-4 py-8 lg:px-8">
   <div class="mb-6 flex flex-wrap items-center justify-between gap-4">
     <div>
-      <p class="text-sm font-semibold uppercase tracking-wide text-primary-600">Akun</p>
-      <h1 class="mt-1 text-3xl font-extrabold text-ink-900">Notifikasi</h1>
-      <p class="mt-2 text-sm text-ink-500"><%= @unread_count %> belum dibaca</p>
+      <p class="text-sm font-semibold uppercase tracking-wide text-primary-600"><%= t("notifications.account") %></p>
+      <h1 class="mt-1 text-3xl font-extrabold text-ink-900"><%= t("notifications.title") %></h1>
+      <p class="mt-2 text-sm text-ink-500"><%= t("notifications.unread_count", count: @unread_count) %></p>
     </div>
 
     <% if @unread_count.positive? %>
-      <%= button_to "Tandai semua dibaca", mark_all_notifications_read_path, method: :patch, class: "btn-secondary btn-sm" %>
+      <%= button_to t("notifications.mark_all_read"), mark_all_notifications_read_path, method: :patch, class: "btn-secondary btn-sm" %>
     <% end %>
   </div>
 
@@ -19,7 +19,7 @@
             <div class="flex flex-wrap items-center gap-2">
               <h2 class="font-bold text-ink-900"><%= notification.title %></h2>
               <% if notification.unread? %>
-                <span class="rounded-full bg-primary-100 px-2.5 py-1 text-xs font-semibold text-primary-700">Baru</span>
+                <span class="rounded-full bg-primary-100 px-2.5 py-1 text-xs font-semibold text-primary-700"><%= t("notifications.new") %></span>
               <% end %>
             </div>
             <p class="mt-2 text-sm leading-6 text-ink-700"><%= notification.body %></p>
@@ -27,14 +27,14 @@
           </div>
 
           <% if notification.booking_reference.present? %>
-            <%= button_to "Buka booking", read_notification_path(notification), method: :patch, class: "btn-secondary btn-sm shrink-0" %>
+            <%= button_to t("notifications.open_booking"), read_notification_path(notification), method: :patch, class: "btn-secondary btn-sm shrink-0" %>
           <% end %>
         </article>
       <% end %>
     <% else %>
       <div class="rounded-2xl border border-dashed border-gray-200 bg-white px-6 py-12 text-center">
-        <h2 class="font-bold text-ink-900">Belum ada notifikasi</h2>
-        <p class="mt-2 text-sm text-ink-500">Pembaruan booking akan muncul di sini.</p>
+        <h2 class="font-bold text-ink-900"><%= t("notifications.empty") %></h2>
+        <p class="mt-2 text-sm text-ink-500"><%= t("notifications.empty_help") %></p>
       </div>
     <% end %>
   </div>

@@ -53,13 +53,13 @@ id:
       send_instructions: "Dalam beberapa menit, Anda akan menerima email berisi petunjuk membuka kunci akun."
       send_paranoid_instructions: "Jika akun Anda terdaftar, Anda akan menerima email berisi petunjuk membuka kunci akun."
       unlocked: "Akun berhasil dibuka. Silakan masuk untuk melanjutkan."
-    errors:
-      messages:
-        already_confirmed: "sudah dikonfirmasi, silakan masuk"
-        confirmation_period_expired: "harus dikonfirmasi dalam %{period}, silakan minta tautan baru"
-        expired: "sudah kedaluwarsa, silakan minta yang baru"
-        not_found: "tidak ditemukan"
-        not_locked: "tidak terkunci"
-        not_saved:
-          one: "Tidak dapat menyimpan %{resource}: 1 kesalahan."
-          other: "Tidak dapat menyimpan %{resource}: %{count} kesalahan."
+  errors:
+    messages:
+      already_confirmed: "sudah dikonfirmasi, silakan masuk"
+      confirmation_period_expired: "harus dikonfirmasi dalam %{period}, silakan minta tautan baru"
+      expired: "sudah kedaluwarsa, silakan minta yang baru"
+      not_found: "tidak ditemukan"
+      not_locked: "tidak terkunci"
+      not_saved:
+        one: "Tidak dapat menyimpan %{resource}: 1 kesalahan."
+        other: "Tidak dapat menyimpan %{resource}: %{count} kesalahan."

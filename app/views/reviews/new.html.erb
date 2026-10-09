@@ -1,27 +1,28 @@
-<% content_for :page_title, "Tulis Ulasan — #{@business.name}" %>
+<% content_for :page_title, t("review_page.title", business: @business.name) %>
 
 <div class="max-w-lg mx-auto py-12 px-4">
   <div class="card p-8">
-    <h1 class="text-xl font-extrabold">Tulis Ulasan</h1>
-    <p class="mt-1 text-sm text-ink-500">untuk <strong><%= @business.name %></strong></p>
+    <h1 class="text-xl font-extrabold"><%= t("review_page.write_review") %></h1>
+    <p class="mt-1 text-sm text-ink-500"><%= t("review_page.for_business", business: @business.name) %></p>
 
-    <%= form_with model: @review, url: new_business_review_path(@business.slug), class: "mt-6 space-y-4" do |f| %>
+    <%= form_with model: @review, url: business_reviews_path(@business.slug), class: "mt-6 space-y-4" do |f| %>
+      <%= render "shared/form_errors", record: @review %>
       <div>
-        <%= f.label :rating, "Rating", class: "label" %>
+        <%= f.label :rating, t("review_page.rating"), class: "label" %>
         <div class="flex gap-1.5">
           <% (1..5).each do |n| %>
             <label class="cursor-pointer">
-              <%= f.radio_button :rating, n, class: "peer sr-only" %>
+              <%= f.radio_button :rating, n, required: true, class: "peer sr-only" %>
               <span class="block w-10 h-10 rounded-full border border-line text-center leading-10 peer-checked:bg-primary-500 peer-checked:text-white peer-checked:border-primary-500 hover:border-primary-400 transition">★</span>
             </label>
           <% end %>
         </div>
       </div>
       <div>
-        <%= f.label :comment, "Komentar", class: "label" %>
-        <%= f.text_area :comment, rows: 4, class: "input", placeholder: "Bagaimana pengalaman Anda?" %>
+        <%= f.label :comment, t("review_page.comment"), class: "label" %>
+        <%= f.text_area :comment, rows: 4, class: "input", placeholder: t("review_page.prompt") %>
       </div>
-      <button class="btn-primary btn-md w-full">Kirim Ulasan</button>
+      <button class="btn-primary btn-md w-full"><%= t("review_page.submit") %></button>
     <% end %>
   </div>
 </div>

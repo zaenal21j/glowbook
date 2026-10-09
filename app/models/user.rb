@@ -16,7 +16,7 @@ class User < ApplicationRecord
   has_one :staff_member, class_name: "Staff", dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 120 }
-  validates :phone, allow_nil: true, format: { with: /\A\+?[0-9]{8,15}\z/, message: "nomor telepon tidak valid" }
+  validates :phone, allow_blank: true, format: { with: /\A\+?[0-9]{8,15}\z/ }
   validates :uid, uniqueness: { scope: :provider }, allow_nil: true
 
   scope :customers, -> { where(role: :customer) }
@@ -24,8 +24,8 @@ class User < ApplicationRecord
 
   def self.from_facebook(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create! do |user|
-      user.email = auth.info.email || "fb-#{auth.uid}@glowbook.id"
-      user.name = auth.info.name || "Pengguna Facebook"
+      user.email = auth.info.email.presence || "fb-#{auth.uid}@glowbook.id"
+      user.name = auth.info.name.presence || I18n.t("display.facebook_user")
       user.password = Devise.friendly_token[0, 20]
       user.remote_avatar_url = auth.info.image if auth.info.image.present?
     end
@@ -33,6 +33,11 @@ class User < ApplicationRecord
 
   def business_owner?
     super || businesses.exists?
+  end
+
+  def has_retained_records?
+    businesses.exists? || staff_member.present? || bookings.exists? || reviews.exists? ||
+      conversations.exists? || chat_messages.exists?
   end
 
   def full_name

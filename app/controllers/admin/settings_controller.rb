@@ -8,7 +8,7 @@ class Admin::SettingsController < Admin::BaseController
     @settings = PlatformSetting.current
 
     if @settings.update(settings_params)
-      redirect_to admin_settings_path, notice: "Pengaturan platform berhasil disimpan."
+      redirect_to admin_settings_path, notice: t("alerts.admin.settings_saved")
     else
       @online_payments_enabled = Rails.configuration.x.midtrans_enabled
       render :show, status: :unprocessable_entity

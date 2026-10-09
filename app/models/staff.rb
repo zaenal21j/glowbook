@@ -9,17 +9,18 @@ class Staff < ApplicationRecord
   has_many :blocked_times, dependent: :destroy
   has_many :staff_services, dependent: :destroy
   has_many :services, through: :staff_services
-  has_many :booking_items, dependent: :destroy
+  has_many :booking_items, dependent: :restrict_with_error
 
   validates :business, presence: true
   validates :name, presence: true, length: { maximum: 120 }
   validates :title, allow_blank: true, length: { maximum: 80 }
+  validates :bio, length: { maximum: 2000 }, allow_blank: true
 
   scope :ordered, -> { order(:name) }
   scope :active, -> { where(active: true) }
 
   def display_title
-    title.presence || "Terapis"
+    title.presence || I18n.t("display.therapist")
   end
 
   def works_on?(weekday)

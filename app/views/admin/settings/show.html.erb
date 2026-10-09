@@ -1,18 +1,18 @@
 <%= render "admin/shared/sidebar" %>
-<% content_for :page_title, "Pengaturan" %>
+<% content_for :page_title, t("admin.settings.title") %>
 
 <div class="max-w-2xl space-y-5">
   <div class="card p-6">
-    <h3 class="font-semibold">Identitas Platform</h3>
+    <h3 class="font-semibold"><%= t("admin.settings.platform_identity") %></h3>
     <div class="mt-4 space-y-3 text-sm">
-      <div class="flex justify-between border-b border-line pb-3"><span class="text-ink-500">Nama</span><strong>GlowBook</strong></div>
-      <div class="flex justify-between border-b border-line pb-3"><span class="text-ink-500">Domain saat ini</span><strong><%= request.host %></strong></div>
-      <div class="flex justify-between"><span class="text-ink-500">Mata uang</span><strong>IDR</strong></div>
+      <div class="flex justify-between border-b border-line pb-3"><span class="text-ink-500"><%= t("admin.settings.name") %></span><strong>GlowBook</strong></div>
+      <div class="flex justify-between border-b border-line pb-3"><span class="text-ink-500"><%= t("admin.settings.current_domain") %></span><strong><%= request.host %></strong></div>
+      <div class="flex justify-between"><span class="text-ink-500"><%= t("admin.settings.currency") %></span><strong>IDR</strong></div>
     </div>
   </div>
 
   <div class="card p-6">
-    <h3 class="font-semibold">Operasional Platform</h3>
+    <h3 class="font-semibold"><%= t("admin.settings.operations") %></h3>
     <% if @settings.errors.any? %>
       <div class="mt-4 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
         <ul class="list-inside list-disc">
@@ -27,24 +27,24 @@
       <label class="flex items-start gap-3 rounded-xl border border-line p-4">
         <%= f.check_box :business_registration_open, class: "mt-1 rounded border-line text-primary-600" %>
         <span>
-          <strong class="block text-sm">Pendaftaran bisnis dibuka</strong>
-          <span class="mt-1 block text-xs text-ink-500">Matikan untuk menolak pendaftaran baru. Bisnis yang sudah ada tetap dapat menggunakan dashboard.</span>
+          <strong class="block text-sm"><%= t("admin.settings.registration_open") %></strong>
+          <span class="mt-1 block text-xs text-ink-500"><%= t("admin.settings.registration_help") %></span>
         </span>
       </label>
 
       <div>
-        <%= f.label :commission_percentage, "Tarif komisi rencana (%)", class: "label" %>
+        <%= f.label :commission_percentage, t("admin.settings.planned_commission"), class: "label" %>
         <%= f.number_field :commission_percentage, min: 0, max: 100, step: "0.01", required: true, class: "input max-w-xs" %>
-        <p class="mt-1 text-xs text-ink-400">Nilai ini disimpan sebagai pengaturan untuk tahap keuangan berikutnya; saat ini belum dipotong dari transaksi dan belum ada payout otomatis.</p>
+        <p class="mt-1 text-xs text-ink-400"><%= t("admin.settings.commission_help") %></p>
       </div>
 
       <div class="rounded-xl bg-gray-50 p-4 text-sm">
-        <span class="text-ink-500">Gateway online saat ini</span>
-        <strong class="ml-2"><%= @online_payments_enabled ? "Midtrans Sandbox" : "Belum dikonfigurasi" %></strong>
-        <p class="mt-1 text-xs text-ink-400">Konfigurasi gateway akan dikerjakan pada tahap pembayaran terakhir.</p>
+        <span class="text-ink-500"><%= t("admin.settings.current_gateway") %></span>
+        <strong class="ml-2"><%= @online_payments_enabled ? "Midtrans Sandbox" : t("admin.settings.gateway_not_configured") %></strong>
+        <p class="mt-1 text-xs text-ink-400"><%= t("admin.settings.gateway_later") %></p>
       </div>
 
-      <%= f.submit "Simpan Pengaturan", class: "btn-primary btn-md" %>
+      <%= f.submit t("admin.settings.save"), class: "btn-primary btn-md" %>
     <% end %>
   </div>
 </div>

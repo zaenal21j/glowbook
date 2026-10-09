@@ -1,4 +1,4 @@
-<h1>Booking berhasil dikonfirmasi</h1>
+<h1><%= t("booking_email.confirmation_title") %></h1>
 <%= render "booking_mailer/booking_details" %>
-<p>Silakan datang sesuai jadwal. Tunjukkan kode booking ini kepada pihak bisnis.</p>
-<p><%= link_to "Lihat detail booking", booking_url(@booking.reference) %></p>
+<p><%= t("booking_email.confirmation_help") %></p>
+<p><%= link_to t("booking_email.see_booking"), booking_url(@booking.reference) %></p>

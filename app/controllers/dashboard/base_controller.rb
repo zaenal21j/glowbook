@@ -11,10 +11,10 @@ class Dashboard::BaseController < ApplicationController
 
   def set_current_business
     @business = current_business
-    redirect_to root_path, alert: "Anda belum memiliki bisnis terdaftar." if @business.nil?
+    redirect_to root_path, alert: t("alerts.access.business_unregistered") if @business.nil?
   end
 
   def current_business
-    @current_business ||= current_user.businesses.first || Staff.find_by(user: current_user)&.business
+    @current_business ||= current_user.businesses.first || Staff.active.find_by(user: current_user)&.business
   end
 end

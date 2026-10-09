@@ -7,13 +7,15 @@ class Availability
 
   attr_reader :date, :staff_ids, :duration_minutes
 
-  def initialize(business:, service:, date:, staff: nil)
+  def initialize(business:, service:, date:, staff: nil, duration_minutes: nil, excluding_booking: nil)
     @business = business
     @service = service
     @date = date
     @staff = staff
-    @duration_minutes = service.duration_minutes
-    @staff_ids = staff ? [staff.id] : eligible_staff_ids
+    @duration_minutes = duration_minutes || service.duration_minutes
+    @excluding_booking = excluding_booking
+    eligible_ids = eligible_staff_ids
+    @staff_ids = staff ? eligible_ids & [staff.id] : eligible_ids
   end
 
   # Returns array of { time:, staff_ids: } hashes for each bookable start time
@@ -34,6 +36,18 @@ class Availability
     slot ? slot[:staff_ids] : []
   end
 
+  # Later services in one appointment may begin between the displayed slots.
+  # They still need to fit completely inside the day's available intervals.
+  def staff_available_during(time)
+    return [] if time.nil? || time.to_date != date || time <= Time.current
+
+    window = business_window
+    finish = time + duration_minutes.minutes
+    return [] if window.nil? || time < window.first || finish > window.last
+
+    staff_ids.select { |sid| staff_free?(sid, time, finish) }
+  end
+
   private
 
   def compute_slots
@@ -42,18 +56,13 @@ class Availability
     window = business_window
     return [] if window.nil?
 
-    day_base = Time.zone.local(date.year, date.month, date.day)
     candidates = []
 
     slot_time = window.first
     last_start = window.last - duration_minutes.minutes
-    # Slots already elapsed today can no longer be booked.
-    earliest = date == Date.current ? Time.zone.now : nil
     while slot_time <= last_start
-      available_staff = staff_ids.select do |sid|
-        staff_free?(sid, slot_time, slot_time + duration_minutes.minutes)
-      end
-      if available_staff.any? && (earliest.nil? || slot_time > earliest)
+      available_staff = staff_available_during(slot_time)
+      if available_staff.any?
         candidates << { time: slot_time, staff_ids: available_staff }
       end
       slot_time += SLOT_GRANULARITY
@@ -79,7 +88,7 @@ class Availability
   end
 
   def eligible_staff_ids
-    @business.staff.joins(:services).where(services: { id: @service.id }).ids
+    @business.staff.active.joins(:services).where(services: { id: @service.id }).distinct.ids
   end
 
   def staff_free?(staff_id, start, finish)
@@ -90,11 +99,16 @@ class Availability
   end
 
   def working_hours?(staff_id, start, finish)
-    schedule = StaffSchedule.find_by(staff_id: staff_id, weekday: date.wday)
-    return false if schedule.nil?
+    covered_until = minute_of_day(start)
+    StaffSchedule.where(staff_id: staff_id, weekday: date.wday).order(:start_minute)
+                 .pluck(:start_minute, :end_minute).each do |opens, closes|
+      next if closes <= covered_until
+      break if opens > covered_until
 
-    start >= day_base + schedule.start_minute.minutes &&
-      finish <= day_base + schedule.end_minute.minutes
+      covered_until = closes
+      return true if covered_until >= minute_of_day(finish)
+    end
+    false
   end
 
   def on_break?(staff_id, start, finish)
@@ -111,12 +125,13 @@ class Availability
   end
 
   def booked?(staff_id, start, finish)
-    BookingItem.active
+    scope = BookingItem.active
                .joins(:booking)
                .where(staff_id: staff_id)
                .where(bookings: { business_id: @business.id, status: %w[pending confirmed] })
                .where("booking_items.during && tstzrange(?, ?, '[)')", start, finish)
-               .exists?
+    scope = scope.where.not(booking_id: @excluding_booking.id) if @excluding_booking
+    scope.exists?
   end
 
   def minute_of_day(time)

@@ -1,4 +1,4 @@
-<% content_for :title, "Booking #{@booking.reference} — GlowBook" %>
+<% content_for :title, t("booking.details") + " #{@booking.reference} — GlowBook" %>
 
 <div class="mx-auto max-w-lg px-4 py-12 lg:px-8">
   <% if @booking.confirmed? %>
@@ -6,17 +6,17 @@
       <span class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500 text-white">
         <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>
       </span>
-      <h1 class="mt-5 text-2xl font-extrabold">Booking Berhasil!</h1>
-      <p class="mt-2 text-sm text-ink-500">Terima kasih, booking Anda telah dikonfirmasi.</p>
+      <h1 class="mt-5 text-2xl font-extrabold"><%= t("booking.successful") %></h1>
+      <p class="mt-2 text-sm text-ink-500"><%= t("booking.thanks") %></p>
     </div>
   <% else %>
-    <h1 class="text-center text-2xl font-extrabold">Detail Booking</h1>
+    <h1 class="text-center text-2xl font-extrabold"><%= t("booking.details") %></h1>
   <% end %>
 
   <div class="card mt-8 p-6 text-center">
-    <p class="text-xs font-semibold uppercase tracking-wider text-ink-500">Kode Booking</p>
+    <p class="text-xs font-semibold uppercase tracking-wider text-ink-500"><%= t("booking.reference") %></p>
     <p class="mt-1 font-mono text-2xl font-extrabold tracking-wide"><%= @booking.reference %></p>
-    <span class="badge <%= @booking.status_badge_class %> mt-3"><%= @booking.status.humanize %></span>
+    <span class="badge <%= @booking.status_badge_class %> mt-3"><%= t("booking.status.#{@booking.status}", default: @booking.status.humanize) %></span>
   </div>
 
   <div class="card mt-4 p-6">
@@ -31,46 +31,48 @@
     </div>
     <dl class="mt-4 space-y-3 text-sm">
       <div class="flex justify-between">
-        <dt class="text-ink-500">Layanan</dt>
+        <dt class="text-ink-500"><%= t("booking.service") %></dt>
         <dd class="text-right font-medium"><%= @booking.booking_items.map(&:label).join(", ") %></dd>
       </div>
       <div class="flex justify-between">
-        <dt class="text-ink-500">Staff</dt>
-        <dd class="font-medium"><%= @booking.booking_items.first&.staff&.name || "Staff tersedia" %></dd>
+        <dt class="text-ink-500"><%= t("booking.staff") %></dt>
+        <dd class="font-medium"><%= @booking.booking_items.first&.staff&.name || t("booking.available_staff") %></dd>
       </div>
       <div class="flex justify-between">
-        <dt class="text-ink-500">Tanggal</dt>
-        <dd class="font-medium"><%= @booking.start_time.strftime("%A, %d %B %Y") %></dd>
+        <dt class="text-ink-500"><%= t("booking.date") %></dt>
+        <dd class="font-medium"><%= l(@booking.start_time, format: "%A, %d %B %Y") %></dd>
       </div>
       <div class="flex justify-between">
-        <dt class="text-ink-500">Waktu</dt>
+        <dt class="text-ink-500"><%= t("booking.time") %></dt>
         <dd class="font-medium"><%= @booking.start_time.strftime("%H:%M") %> - <%= @booking.end_time.strftime("%H:%M") %> WIB</dd>
       </div>
       <div class="flex justify-between border-t border-gray-100 pt-3">
-        <dt class="font-bold">Total</dt>
+        <dt class="font-bold"><%= t("booking.total_price") %></dt>
         <dd class="font-extrabold text-primary-600"><%= format_idr(@booking.total_amount) %></dd>
       </div>
     <% if @booking.payment_method == "online_transfer" %>
       <div class="flex justify-between text-sm">
-        <dt class="text-ink-500">Status pembayaran</dt>
-        <dd class="font-semibold"><%= @latest_payment_attempt&.paid? ? "Lunas" : @latest_payment_attempt&.status&.humanize || "Belum dibayar" %></dd>
+        <dt class="text-ink-500"><%= t("booking.payment_status") %></dt>
+        <dd class="font-semibold"><%= @latest_payment_attempt&.paid? ? t("booking.paid") : @latest_payment_attempt&.status ? t("booking.payment_statuses.#{@latest_payment_attempt.status}", default: @latest_payment_attempt.status.humanize) : t("booking.unpaid") %></dd>
       </div>
     <% end %>
     </dl>
 
     <% if @booking.cancellable? %>
       <div class="mt-6 grid grid-cols-2 gap-3">
-        <%= button_to "Batalkan", cancel_booking_path(@booking), method: :patch, form: { data: { turbo_confirm: "Batalkan booking ini?" } }, class: "btn-danger btn-md" %>
-        <%= link_to "Ubah Jadwal", reschedule_booking_path(@booking), class: "btn-secondary btn-md" %>
+        <%= button_to t("booking.cancel"), cancel_booking_path(@booking.reference), method: :patch, form: { data: { turbo_confirm: t("booking.cancel_confirm") } }, class: "btn-danger btn-md" %>
+        <% if @booking.reschedulable? %>
+          <%= link_to t("booking.reschedule"), reschedule_booking_path(@booking.reference), class: "btn-secondary btn-md" %>
+        <% end %>
       </div>
     <% end %>
     <% if @booking.confirmed? && @booking.payment_method == "online_transfer" && Rails.configuration.x.midtrans_enabled && !@latest_payment_attempt&.paid? %>
-      <%= button_to(@latest_payment_attempt&.redirect_url.present? ? "Lanjutkan Pembayaran" : "Bayar Online", booking_payment_path(@booking.reference), method: :post, class: "btn-primary btn-md mt-4 w-full") %>
+      <%= button_to(@latest_payment_attempt&.redirect_url.present? ? t("booking.continue_payment") : t("booking.pay_online"), booking_payment_path(@booking.reference), method: :post, class: "btn-primary btn-md mt-4 w-full") %>
     <% end %>
   </div>
 
   <div class="mt-6 grid gap-3">
-    <%= link_to "Lihat Semua Booking", account_bookings_path, class: "btn-primary btn-lg w-full" %>
-    <%= link_to "Kembali ke Beranda", root_path, class: "btn-ghost btn-md w-full" %>
+    <%= link_to t("booking.all_bookings"), account_bookings_path, class: "btn-primary btn-lg w-full" %>
+    <%= link_to t("booking.back_home"), root_path, class: "btn-ghost btn-md w-full" %>
   </div>
 </div>

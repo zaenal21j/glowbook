@@ -1,0 +1,79 @@
+id:
+  scheduling:
+    title: "Jadwal %{name}"
+    description: Shift menentukan kapan staff menerima booking, mengikuti batas jam operasional bisnis. Semua waktu menggunakan WIB. Perubahan tidak membatalkan booking yang sudah ada.
+    manage_schedule: Jadwal & Istirahat
+    back_to_staff: Kembali ke Staff
+    shifts: Shift Mingguan
+    breaks: Istirahat Mingguan
+    breaks_help: Waktu istirahat menghapus slot yang beririsan dari ketersediaan staff.
+    no_shifts: Belum ada shift. Staff ini belum dapat menerima booking sampai shift ditambahkan.
+    no_breaks: Belum ada waktu istirahat.
+    copy_hours: Gunakan Jam Operasional Bisnis
+    already_configured: Staff sudah memiliki shift. Edit jadwal yang tersedia untuk mengubahnya.
+    no_business_hours: Belum ada hari buka. Atur jam operasional di profil bisnis terlebih dahulu.
+    hours_copied: Shift staff dibuat mengikuti jam operasional bisnis.
+    add_shift: Tambah Shift
+    edit_shift: Edit Shift
+    add_break: Tambah Istirahat
+    edit_break: Edit Istirahat
+    shift_saved: Shift staff disimpan.
+    shift_deleted: Shift staff dihapus.
+    break_saved: Waktu istirahat disimpan.
+    break_deleted: Waktu istirahat dihapus.
+    day: Hari
+    starts: Jam Mulai
+    ends: Jam Selesai
+    opens: Buka
+    closes: Tutup
+    closed: Tutup sepanjang hari
+    save: Simpan
+    cancel: Batal
+    edit: Edit
+    delete: Hapus
+    delete_confirm: Hapus pengaturan waktu ini?
+    review_errors: Periksa data berikut.
+    errors:
+      end_after_start: harus setelah waktu mulai
+      overlap: Shift beririsan dengan shift lain pada hari yang sama.
+      foreign_staff: harus berasal dari bisnis yang sama
+      staff_in_use: Staff memiliki riwayat booking. Nonaktifkan staff untuk menghentikan booking baru.
+      service_in_use: Layanan memiliki riwayat booking. Nonaktifkan layanan untuk menghentikan booking baru.
+    blocks:
+      title: Blokir Waktu
+      description: Tutup slot untuk libur, pelatihan, atau keperluan lain pada staff tertentu maupun seluruh bisnis.
+      add_title: Tambah Waktu Terblokir
+      edit_title: Edit Waktu Terblokir
+      staff: Staff
+      all_staff: Semua Staff / Seluruh Bisnis
+      reason: Alasan
+      reason_example: "Contoh: Libur nasional atau pelatihan"
+      starts_at: Mulai (WIB)
+      ends_at: Selesai (WIB)
+      help: Blokir mencegah booking baru pada rentang ini. Booking yang sudah ada tetap berlaku dan perlu dikelola melalui daftar booking.
+      saved: Waktu terblokir disimpan.
+      deleted: Waktu terblokir dihapus.
+      empty: Tidak ada waktu terblokir untuk filter ini.
+      filter_label: Filter waktu terblokir
+      filters:
+        upcoming: Mendatang
+        past: Lampau
+        all: Semua
+  activerecord:
+    attributes:
+      staff_schedule:
+        weekday: Hari
+        start_minute: Jam mulai
+        end_minute: Jam selesai
+      staff_break:
+        weekday: Hari
+        start_minute: Jam mulai
+        end_minute: Jam selesai
+      business_hour:
+        open_minute: Jam buka
+        close_minute: Jam tutup
+      blocked_time:
+        staff: Staff
+        reason: Alasan
+        start_time: Waktu mulai
+        end_time: Waktu selesai

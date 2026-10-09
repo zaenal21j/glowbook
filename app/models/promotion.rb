@@ -15,6 +15,6 @@ class Promotion < ApplicationRecord
   def ends_after_starts
     return if ends_at > starts_at
 
-    errors.add(:ends_at, "harus setelah tanggal mulai")
+    errors.add(:ends_at, I18n.t("scheduling.errors.end_after_start"))
   end
 end

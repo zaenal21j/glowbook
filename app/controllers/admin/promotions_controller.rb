@@ -11,6 +11,6 @@ class Admin::PromotionsController < Admin::BaseController
   def destroy
     promo = Promotion.find(params[:id])
     promo.destroy
-    redirect_to admin_promotions_path, notice: "Promosi \"#{promo.title}\" dihapus."
+    redirect_to admin_promotions_path, notice: I18n.t("admin.promotions.flash_deleted", title: promo.title)
   end
 end

@@ -23,22 +23,22 @@ class Admin::BusinessesController < Admin::BaseController
   def destroy
     business = Business.find(params[:id])
     business.update!(status: :suspended)
-    redirect_to admin_businesses_path, notice: "Bisnis \"#{business.name}\" dinonaktifkan."
+    redirect_to admin_businesses_path, notice: I18n.t("admin.businesses.flash.suspended", name: business.name)
   end
 
   def activate
     business = Business.pending.find(params[:id])
     business.update!(status: :active)
-    redirect_to admin_businesses_path(status: "pending"), notice: "Bisnis \"#{business.name}\" disetujui dan dipublikasikan."
+    redirect_to admin_businesses_path(status: "pending"), notice: I18n.t("admin.businesses.flash.approved", name: business.name)
   rescue ActiveRecord::RecordNotFound
-    redirect_to admin_businesses_path(status: "pending"), alert: "Bisnis tidak ditemukan atau sudah diproses."
+    redirect_to admin_businesses_path(status: "pending"), alert: I18n.t("admin.businesses.flash.unavailable")
   end
 
   def reactivate
     business = Business.suspended.find(params[:id])
     business.update!(status: :active)
-    redirect_to admin_businesses_path(status: "suspended"), notice: "Bisnis \"#{business.name}\" diaktifkan kembali."
+    redirect_to admin_businesses_path(status: "suspended"), notice: I18n.t("admin.businesses.flash.reactivated", name: business.name)
   rescue ActiveRecord::RecordNotFound
-    redirect_to admin_businesses_path(status: "suspended"), alert: "Bisnis tidak ditemukan atau sudah diproses."
+    redirect_to admin_businesses_path(status: "suspended"), alert: I18n.t("admin.businesses.flash.unavailable")
   end
 end

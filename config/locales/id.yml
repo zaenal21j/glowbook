@@ -198,3 +198,981 @@ id:
       default: "%A, %d %B %Y %H:%M %Z"
       long: "%d %B %Y pukul %H:%M"
       short: "%d %b, %H:%M"
+  locale:
+    names:
+      id: Bahasa Indonesia
+      en: English
+    switch_to: "Ganti bahasa ke %{language}"
+    changed: "Bahasa diubah ke %{language}."
+    invalid: "Bahasa yang dipilih tidak tersedia."
+  glowbook:
+    nav:
+      services: Layanan
+      city: Kota
+      for_business: Untuk Bisnis
+      notifications: Notifikasi
+      admin_dashboard: Dashboard Admin
+      business_dashboard: Dashboard Bisnis
+      business_messages: Pesan Bisnis
+      my_dashboard: Dashboard Saya
+      my_messages: Pesan Saya
+      profile: Profil
+      sign_out: Keluar
+      sign_in: Masuk
+      sign_up: Daftar
+      menu: Menu
+      home: Beranda
+      search: Cari
+      bookings: Booking
+      account: Akun
+  home:
+    title: "GlowBook — Booking Kecantikan & Wellness Terbaik"
+    headline: "Temukan layanan kecantikan & wellness terbaik di dekatmu"
+    description: "Booking salon, spa, barber, dan banyak lagi dengan mudah dan cepat."
+    search_placeholder: "Layanan apa? (mis. facial)"
+    search_label: Layanan
+    all_cities: Semua Kota
+    search: Cari
+    popular: "Populer:"
+    premium_salon: Salon premium
+    booking_confirmed: Booking Terkonfirmasi
+    instant_free: Instan & tanpa biaya
+    popular_categories: Kategori Populer
+    see_all: Lihat semua >
+    popular_salons_in: "Salon Populer di %{city}"
+    top_rated: Rating tertinggi dengan ribuan ulasan pelanggan
+    recommendations: Rekomendasi Untukmu
+    business_headline: Kelola bisnis kecantikanmu dengan GlowBook
+    business_description: "Kalender cerdas, manajemen staff, dan analitik — semua dalam satu dashboard."
+    register_business: Daftarkan Bisnis
+    indonesia: Indonesia
+  search:
+    title: "Hasil Pencarian — GlowBook"
+    search_placeholder: Layanan atau nama bisnis...
+    all_cities: Semua Kota
+    search: Cari
+    found:
+      one: "%{count} salon ditemukan"
+      other: "%{count} salon ditemukan"
+    for_query: 'untuk "%{query}"'
+    in_city: "di %{city}"
+    sort_rating: Rating Tertinggi
+    sort_price: Harga Terendah
+    sort_nearest: Terdekat
+    nearby_permission: "Tekan Terdekat dan izinkan akses lokasi browser untuk mengurutkan bisnis berdasarkan jarak. Lokasi disimpan sementara selama maksimal 30 menit."
+    nearby_active: "Hasil diurutkan berdasarkan jarak dari lokasi Anda. Bisnis yang belum mengatur koordinat muncul di bagian bawah. Lokasi Anda disimpan sementara dan dihapus dari sesi setelah 30 menit."
+    filters: Filter
+    show: Tampilkan
+    reviews:
+      one: "%{count} ulasan"
+      other: "%{count} ulasan"
+    promo: PROMO
+    from: Mulai dari
+    view_schedule: Lihat Jadwal
+    previous: "← Sebelumnya"
+    page: "Halaman %{page} / %{pages}"
+    next: "Berikutnya →"
+    no_results: Tidak ada hasil ditemukan
+    try_again: Coba kata kunci lain, atau hapus beberapa filter untuk memperluas pencarian.
+    reset_filters: Reset Filter
+    filter:
+      heading: Filter
+      city: Kota
+      category: Kategori
+      price_range: Rentang Harga
+      min_price: "Rp 0"
+      max_price: "Rp 1.000.000+"
+      min_rating: Rating Minimum
+      open_today: Terdapat Hari Ini
+      promo_only: Hanya yang Ada Promo
+      apply: Terapkan Filter
+      reset: Reset
+  account:
+    title: Akun Saya — GlowBook
+    dashboard: Dashboard
+    bookings: Booking Saya
+    messages: Pesan
+    favorites: Favorit
+    reviews: Ulasan
+    profile: Profil
+    settings: Pengaturan
+    customer:
+      dashboard_title: Dashboard Pelanggan
+      total_bookings: Total Booking
+      completed: Selesai
+      upcoming: Booking Mendatang
+      see_all: Lihat Semua
+      no_upcoming: Belum ada booking mendatang
+      first_booking_prompt: Yuk pesan layanan kecantikan pertamamu!
+      explore: Jelajahi Salon
+      upcoming_tab: Akan Datang
+      completed_tab: Selesai
+      cancelled_tab: Dibatalkan
+      empty_bookings: Tidak ada booking di sini
+      book_now: Booking Sekarang
+      booking_fallback: Booking
+      details: Lihat Detail
+      cancel: Batalkan
+      cancel_confirm: Batalkan booking ini?
+      no_favorites: Belum ada favorit
+      favorite_help: Simpan salon favoritmu dengan menekan tombol hati.
+      find_salon: Temukan Salon
+      no_reviews: Belum ada ulasan
+      review_help: Bagikan pengalamanmu setelah mengunjungi salon.
+      profile_title: Profil Saya
+      full_name: Nama Lengkap
+      email: Email
+      phone: Nomor Telepon
+      save_changes: Simpan Perubahan
+      settings_title: Pengaturan
+      change_password: Ubah Kata Sandi
+      password_help: Untuk keamanan, gunakan kata sandi yang kuat.
+      send_reset_link: Kirim tautan reset kata sandi
+      account: Akun
+      sign_in_method: Metode masuk
+      role: Peran
+      sign_out: Keluar dari akun
+      roles:
+        customer: Pelanggan
+        business_owner: Pemilik Bisnis
+        staff: Staff
+        admin: Admin
+  notifications:
+    account: Akun
+    title: Notifikasi
+    unread_count: "%{count} belum dibaca"
+    mark_all_read: Tandai semua dibaca
+    new: Baru
+    open_booking: Buka booking
+    empty: Belum ada notifikasi
+    empty_help: Pembaruan booking akan muncul di sini.
+    all_read: Semua notifikasi sudah ditandai dibaca.
+  chat_page:
+    business_title: Pesan Bisnis — GlowBook
+    customer_title: Pesan Saya — GlowBook
+    business_heading: Pesan Bisnis
+    customer_heading: Pesan Saya
+    description: Percakapan dengan pelanggan dan bisnis tersimpan di sini.
+    new_conversation: Percakapan baru
+    unread_count: "%{count} baru"
+    empty: Belum ada percakapan.
+    business_empty_help: Pesan dari pelanggan akan muncul di sini.
+    customer_empty_help: Buka halaman bisnis untuk memulai percakapan.
+    find_business: Cari bisnis
+    title: "Chat dengan %{name} — GlowBook"
+    back: Kembali
+    you: Anda
+    start: Mulai percakapan dengan mengirim pesan.
+    message: Pesan
+    placeholder: Tulis pesan…
+    send: Kirim
+    limit_help: Maksimal 2.000 karakter. Pesan baru diperbarui otomatis.
+  auth:
+    sign_in_title: "Masuk — GlowBook"
+    welcome_back: Selamat datang kembali
+    sign_in_description: Masuk untuk mengelola booking dan favoritmu.
+    email: Email
+    password: Kata Sandi
+    remember_me: Ingat saya
+    forgot_password: Lupa kata sandi?
+    sign_in: Masuk
+    or: atau
+    continue_facebook: Lanjut dengan Facebook
+    no_account: Belum punya akun?
+    sign_up: Daftar
+    sign_up_title: "Daftar — GlowBook"
+    create_account: Buat akun baru
+    sign_up_description: "Gratis — booking salon & spa favoritmu dalam hitungan detik."
+    full_name: Nama Lengkap
+    your_name: Nama kamu
+    phone: Nomor Telepon
+    password_minimum: Minimal 6 karakter
+    already_account: Sudah punya akun?
+    forgot_title: "Lupa Kata Sandi — GlowBook"
+    reset_password: Reset kata sandi
+    reset_description: Masukkan email kamu dan kami akan mengirim tautan reset.
+    send_reset_link: Kirim Tautan Reset
+    back_to_sign_in: "← Kembali ke masuk"
+    new_password_title: "Kata Sandi Baru — GlowBook"
+    create_new_password: Buat kata sandi baru
+    new_password: Kata Sandi Baru
+    confirm_password: Konfirmasi Kata Sandi
+    save_password: Simpan Kata Sandi
+  devise:
+    sessions:
+      signed_in: "Berhasil masuk."
+      signed_out: "Berhasil keluar."
+      user:
+        signed_in: "Berhasil masuk."
+        signed_out: "Berhasil keluar."
+    failure:
+      unauthenticated: "Silakan masuk atau daftar sebelum melanjutkan."
+      invalid: "Email atau kata sandi salah."
+      not_found_in_database: "Email atau kata sandi salah."
+    passwords:
+      send_instructions: "Petunjuk untuk mengatur ulang kata sandi akan segera dikirim ke email Anda."
+      updated: "Kata sandi berhasil diubah. Anda sudah masuk."
+    registrations:
+      signed_up: "Selamat datang! Pendaftaran berhasil."
+      updated: "Akun Anda berhasil diperbarui."
+  booking:
+    title: "Booking — %{business}"
+    steps:
+      services: Layanan
+      staff: Staff
+      date: Tanggal
+      time: Waktu
+      confirmation: Konfirmasi
+    choose_services: Pilih Layanan
+    choose_staff: Pilih Staff
+    staff_prompt: Siapa yang akan melayanimu?
+    available_staff: Staff tersedia
+    staff_available_description: Staff yang tersedia pada waktu pilihan
+    does_not_serve: Tidak melayani semua layanan terpilih
+    choose_date_time: Pilih Tanggal & Waktu
+    total_duration: "Durasi total: %{duration}"
+    previous_month: Bulan sebelumnya
+    next_month: Bulan berikutnya
+    available_slots: Slot Tersedia
+    timezone: "Zona waktu: WIB (Jakarta)"
+    no_slots: Tidak ada slot pada tanggal ini
+    try_another_date: Coba tanggal lain atau staff berbeda.
+    change_date: "← Ganti Tanggal"
+    confirm_booking: Konfirmasi Booking
+    service: Layanan
+    staff: Staff
+    date: Tanggal
+    time: Waktu
+    duration: Durasi
+    total_price: Total Harga
+    payment_method: Metode Pembayaran
+    pay_at_venue: Bayar di tempat
+    pay_at_venue_description: Tunai atau QRIS saat kedatangan
+    online_payment: Pembayaran online
+    total_must_be_positive: "Hanya tersedia untuk total di atas Rp0"
+    midtrans_sandbox: Checkout aman via Midtrans Sandbox
+    payment_not_configured: Belum dikonfigurasi
+    continue: Lanjutkan
+    successful: Booking Berhasil!
+    thanks: Terima kasih, booking Anda telah dikonfirmasi.
+    details: Detail Booking
+    reference: Kode Booking
+    payment_status: Status pembayaran
+    paid: Lunas
+    unpaid: Belum dibayar
+    cancel: Batalkan
+    cancel_confirm: Batalkan booking ini?
+    reschedule: Ubah Jadwal
+    back_to_booking: "← Kembali ke booking"
+    reschedule_help: Pilih waktu baru. Layanan, staff, durasi, dan harga booking tetap sama.
+    current_schedule: "Jadwal sekarang: %{schedule}"
+    find_times: Cari waktu tersedia
+    save_schedule: Simpan jadwal baru
+    continue_payment: Lanjutkan Pembayaran
+    pay_online: Bayar Online
+    all_bookings: Lihat Semua Booking
+    back_home: Kembali ke Beranda
+    status:
+      pending: Menunggu
+      confirmed: Dikonfirmasi
+      cancelled: Dibatalkan
+      completed: Selesai
+      no_show: Tidak hadir
+    payment_statuses:
+      pending: Menunggu pembayaran
+      settlement: Diproses
+      capture: Lunas
+      paid: Lunas
+      failed: Gagal
+      cancelled: Dibatalkan
+      expire: Kedaluwarsa
+      expired: Kedaluwarsa
+      cancel: Dibatalkan
+      deny: Ditolak
+      failure: Gagal
+      refund: Dikembalikan
+  business_page:
+    review_count: "(%{count} ulasan)"
+    remove_favorite: Hapus dari favorit
+    save_favorite: Simpan ke favorit
+    saved: Tersimpan
+    favorite: Favorit
+    book_now: Pesan Sekarang
+    chat: Chat
+    tabs:
+      about: Tentang
+      services: Layanan
+      staff: Staff
+      reviews: Ulasan
+      location: Lokasi
+    hours: Jam Buka
+    open_now: Buka sekarang
+    closed: Tutup
+    see_map: Lihat Peta
+    promotions: Promosi
+    discount: Diskon
+    promo_code: "Kode:"
+    about: "Tentang %{business}"
+    no_description: Belum ada deskripsi.
+    services_available: "%{count} layanan tersedia"
+    professionals: "%{count} profesional"
+    gallery: Galeri
+    book: Pesan
+    works_today: Bekerja hari ini
+    day_off: Libur hari ini
+    write_review: Tulis Ulasan
+    no_reviews: Belum ada ulasan.
+    address: Alamat
+    open_osm: Buka di OpenStreetMap
+  review_page:
+    title: "Tulis Ulasan — %{business}"
+    write_review: Tulis Ulasan
+    for_business: "untuk %{business}"
+    rating: Rating
+    comment: Komentar
+    prompt: Bagaimana pengalaman Anda?
+    submit: Kirim Ulasan
+  dashboard:
+    title: Dashboard
+    back_home: Kembali ke Beranda
+    nav:
+      dashboard: Dashboard
+      calendar: Kalender
+      bookings: Booking
+      messages: Pesan
+      services: Layanan
+      staff: Staff
+      customers: Pelanggan
+      promotions: Promosi
+      analytics: Analitik
+      finance: Keuangan
+      business_profile: Profil Bisnis
+      gallery: Galeri
+      settings: Pengaturan
+    home:
+      title: Dashboard Bisnis
+      today: Booking Hari Ini
+      this_week: Minggu Ini
+      monthly_completed_value: Nilai Booking Selesai Bulan Ini
+      revenue_note: Berdasarkan status layanan selesai; status pembayaran tidak diperiksa.
+      rating: Rating Bisnis
+      upcoming: Booking Terdekat
+      calendar: Kalender →
+      customer: Pelanggan
+      service: Layanan
+      staff: Staff
+      time: Waktu
+      status: Status
+      no_upcoming: Belum ada booking mendatang.
+    bookings_page:
+      title: Booking
+      upcoming: Akan Datang
+      pending: Menunggu
+      confirmed: Terkonfirmasi
+      completed: Selesai
+      cancelled: Dibatalkan
+      no_show: Tidak hadir
+      code: Kode
+      customer: Pelanggan
+      service: Layanan
+      staff: Staff
+      time: Waktu
+      total: Total
+      status: Status
+      actions: Aksi
+      cancel: Batalkan
+      cancel_confirm: "Batalkan booking %{reference}?"
+      mark_complete: Tandai selesai
+      mark_no_show: Tandai pelanggan tidak hadir
+      no_show_confirm: Tandai pelanggan tidak hadir?
+      empty: Tidak ada booking.
+    customers_page:
+      title: Pelanggan
+      description: "%{count} pelanggan pernah booking di bisnis Anda."
+      customer: Pelanggan
+      total_bookings: Total Booking
+      total_spent: Total Belanja
+      last_visit: Kunjungan Terakhir
+      empty: Belum ada pelanggan.
+    analytics_page:
+      title: Analitik
+      description: Performa bisnis Anda bulan ini.
+      completed_value: Nilai Booking Selesai Bulan Ini
+      revenue_note: Nilai layanan, bukan konfirmasi pembayaran diterima.
+      bookings_month: Booking Bulan Ini
+      new_customers: Pelanggan Baru Bulan Ini
+      average_rating: Rating Rata-rata
+      confirmed_online: Pembayaran Online Terkonfirmasi
+      online_detail: "%{count} booking dikonfirmasi gateway bulan ini; bayar di tempat tidak termasuk."
+      completed_last_30: Nilai Booking Selesai 30 Hari Terakhir
+      no_show_note: Booking no-show tidak dihitung. Angka ini belum memverifikasi pembayaran.
+      popular_services: Layanan Terpopuler Bulan Ini
+      empty: Belum ada booking bulan ini.
+    gallery_page:
+      title: Galeri Bisnis
+      description: Unggah maksimal 6 foto JPG, PNG, atau WebP. Ukuran setiap foto maksimal 10 MB.
+      choose_photo: Pilih foto
+      caption: Keterangan (opsional)
+      caption_placeholder: "Contoh: Ruang perawatan"
+      upload: Unggah Foto
+      photo_alt: "Foto galeri %{business}"
+      photo: Foto galeri
+      delete: Hapus
+      delete_confirm: Hapus foto ini dari galeri?
+      empty: Belum ada foto. Unggah foto pertama bisnis Anda.
+    profile_page:
+      title: Profil Bisnis
+      description: Informasi ini tampil di halaman publik bisnis Anda.
+      business_name: Nama bisnis
+      phone: Telepon
+      city: Kota
+      address: Alamat lengkap
+      latitude: Latitude (opsional)
+      longitude: Longitude (opsional)
+      coordinates_help: Koordinat publik bisnis digunakan untuk peta dan pengurutan hasil terdekat.
+      description_label: Deskripsi bisnis
+      description_placeholder: Ceritakan tentang bisnis Anda…
+      hours: Jam Operasional
+      closed: Tutup
+      hours_help: Atur jam buka setiap hari dalam WIB. Perubahan memengaruhi slot baru dan tidak membatalkan booking yang sudah ada.
+      save: Simpan Perubahan
+      public_page: Lihat Halaman Publik
+    settings_page:
+      title: Pengaturan
+      business_account: Akun Bisnis
+      owner: Pemilik
+      email: Email
+      page_slug: Slug halaman
+      status: Status
+      preferences: Preferensi Booking
+      auto_confirmation: Konfirmasi otomatis
+      active: Aktif
+      customer_cancellation: Pembatalan oleh pelanggan
+      allowed: Diizinkan
+      payment: Pembayaran
+      pay_at_venue: Bayar di tempat (cash/QRIS)
+      danger_zone: Zona Berbahaya
+      suspend_help: Menonaktifkan bisnis akan menyembunyikan halaman publik dan menghentikan booking baru.
+      support_help: Hubungi tim GlowBook untuk menonaktifkan bisnis demi keamanan.
+    finance:
+      title: Keuangan
+      history: Riwayat Pembayaran Online
+      description: "Ringkasan transaksi gateway untuk %{business}. Pembayaran di tempat tidak tercatat di sini."
+      period: Periode
+      status: Status
+      all_statuses: Semua status
+      search: Cari
+      search_placeholder: Kode booking, order, pelanggan…
+      apply: Terapkan
+      download_csv: Unduh CSV
+      confirmed_month: Pembayaran online terkonfirmasi bulan ini
+      gross_note: Nominal bruto menurut gateway, bukan pencairan bersih atau saldo payout.
+      order: Order
+      booking: Booking
+      customer: Pelanggan
+      amount: Nominal
+      method: Metode
+      confirmed_at: Dikonfirmasi
+      not_confirmed: Belum dikonfirmasi
+      empty: Tidak ada pembayaran pada periode dan filter ini.
+  admin:
+    nav:
+      dashboard: Dashboard
+      users: Pengguna
+      businesses: Bisnis
+      bookings: Booking
+      payments: Pembayaran
+      categories: Kategori
+      reviews: Ulasan
+      promotions: Promosi
+      reports: Laporan
+      settings: Pengaturan
+      back_home: Kembali ke Beranda
+    dashboard:
+      title: Dashboard Admin
+      total_users: Total Pengguna
+      customers: "%{count} pelanggan"
+      total_businesses: Total Bisnis
+      business_status: "%{active} aktif · %{pending} menunggu"
+      total_bookings: Total Booking
+      this_month: "%{count} bulan ini"
+      completed_booking_value: Nilai Booking Selesai
+      revenue_disclaimer: Bukan komisi atau pembayaran terkonfirmasi.
+      bookings_30_days: Booking 30 Hari Terakhir
+      full_report: Laporan Lengkap →
+      peak_bookings: "Puncak: %{count} booking/hari"
+      today: Hari ini
+      daily_completed_value: Nilai Booking Selesai Harian (30 hari)
+      peak_daily_value: "Puncak: %{amount}/hari"
+      recent_bookings: Booking Terbaru
+      code: Kode
+      customer: Pelanggan
+      business: Bisnis
+      time: Waktu
+      total: Total
+      status: Status
+      no_bookings: Belum ada booking.
+      top_businesses: Bisnis Terbaik
+      no_data: Belum ada data.
+      popular_categories: Kategori Populer
+    bookings:
+      title: Booking
+      all: Semua
+      pending: Menunggu
+      confirmed: Terkonfirmasi
+      completed: Selesai
+      cancelled: Dibatalkan
+      no_show: Tidak hadir
+      search_placeholder: "Cari kode, pelanggan, atau bisnis…"
+      search: Cari
+      code: Kode
+      customer: Pelanggan
+      business: Bisnis
+      service: Layanan
+      time: Waktu
+      total: Total
+      status: Status
+      no_bookings: Tidak ada booking.
+      detail_title: Detail Booking
+      payment: Pembayaran
+      item: Item
+      any_staff: Staff mana pun
+      duration_minutes: "%{count} menit"
+      payment_history: Riwayat Pembayaran
+      admin_actions: Tindakan Admin
+      cancel_action: Batalkan booking
+      cancel_confirm: "Batalkan booking %{reference}?"
+      mark_complete: Tandai selesai
+      mark_no_show: Tandai pelanggan tidak hadir
+      no_show_confirm: "Tandai pelanggan tidak hadir?"
+      back_to_list: "← Kembali ke daftar"
+      flash:
+        cancelled: Booking berhasil dibatalkan.
+        completed: Booking ditandai selesai.
+        no_show: Pelanggan ditandai tidak hadir.
+        invalid_status: Status booking tidak valid.
+        transition_failed: Perubahan status tidak diizinkan untuk kondisi booking ini.
+    users:
+      title: Pengguna
+      all: Semua
+      customers: Pelanggan
+      business_owners: Pemilik Bisnis
+      admins: Admin
+      search_placeholder: Cari nama/email…
+      search: Cari
+      name: Nama
+      email: Email
+      role: Peran
+      bookings: Booking
+      registered: Terdaftar
+      delete: Hapus
+      delete_confirm: "Hapus %{name}?"
+      no_users: Tidak ada pengguna.
+      booking_history: Riwayat Booking
+      code: Kode
+      business: Bisnis
+      service: Layanan
+      time: Waktu
+      total: Total
+      status: Status
+      no_bookings: Belum ada booking.
+      roles:
+        customer: Pelanggan
+        business_owner: Pemilik Bisnis
+        staff: Staff
+        admin: Admin
+      deleted: Pengguna dihapus.
+      errors:
+        delete_self: Anda tidak bisa menghapus akun sendiri.
+        delete_admin: Akun admin tidak dapat dihapus dari panel ini.
+        related_data: Pengguna ini memiliki bisnis, riwayat, atau pesan yang harus disimpan.
+        restricted: Pengguna tidak dapat dihapus karena masih memiliki data terkait.
+    categories:
+      title: Kategori
+      category: Kategori
+      slug: Slug
+      services: Layanan
+      businesses: Bisnis
+      edit: Edit
+      delete: Hapus
+      delete_confirm: Hapus kategori ini?
+      empty: Belum ada kategori.
+      new: Kategori Baru
+      name: Nama
+      tagline: Tagline
+      position: Urutan
+      save: Simpan
+      cancel: Batal
+      edit_title: Edit Kategori
+      errors:
+        in_use: "Kategori masih dipakai %{count} layanan, tidak bisa dihapus."
+      flash:
+        created: 'Kategori "%{name}" dibuat.'
+        updated: Kategori diperbarui.
+        deleted: Kategori dihapus.
+        popular: '"%{name}" %{state} sebagai populer.'
+        marked: ditandai
+        unmarked: batal ditandai
+    reviews:
+      title: Ulasan
+      all: Semua
+      average: Rata-rata rating
+      by: oleh
+      delete: Hapus
+      delete_confirm: Hapus ulasan ini?
+      empty: Tidak ada ulasan.
+      flash_deleted: "Ulasan dari %{business} dihapus."
+    promotions:
+      title: Promosi
+      all: Semua
+      active: Aktif
+      inactive: Nonaktif
+      title_column: Judul
+      code: Kode
+      business: Bisnis
+      discount: Diskon
+      period: Periode
+      status: Status
+      delete: Hapus
+      delete_confirm: Hapus promosi ini?
+      empty: Belum ada promosi.
+      flash_deleted: 'Promosi "%{title}" dihapus.'
+    businesses:
+      title: Bisnis
+      all: Semua
+      active: Aktif
+      pending: Menunggu
+      suspended: Ditangguhkan
+      search_placeholder: Cari bisnis…
+      search: Cari
+      business: Bisnis
+      city: Kota
+      owner: Pemilik
+      rating: Rating
+      services: Layanan
+      status: Status
+      approve: Setujui & Aktifkan
+      approve_confirm: "Publikasikan %{name} di marketplace?"
+      reactivate: Aktifkan Kembali
+      reactivate_confirm: "Aktifkan kembali %{name} di marketplace?"
+      suspend: Tangguhkan
+      suspend_confirm: "Tangguhkan %{name}?"
+      no_businesses: Tidak ada bisnis.
+      owner_label: "Pemilik:"
+      duration_minutes: "%{count} mnt"
+      staff_status:
+        active: Aktif
+        inactive: Nonaktif
+      recent_bookings: Booking Terakhir
+      code: Kode
+      customer: Pelanggan
+      time: Waktu
+      total: Total
+      booking_status: Status
+      no_bookings: Belum ada booking.
+      latest_reviews: Ulasan Terbaru
+      no_reviews: Belum ada ulasan.
+      flash:
+        suspended: "Bisnis %{name} dinonaktifkan."
+        approved: "Bisnis %{name} disetujui dan dipublikasikan."
+        reactivated: "Bisnis %{name} diaktifkan kembali."
+        unavailable: Bisnis tidak ditemukan atau sudah diproses.
+    payments:
+      title: Pembayaran
+      history: Riwayat Pembayaran Online
+      description: Daftar percobaan dan konfirmasi pembayaran gateway. Tidak mencakup pembayaran di tempat.
+      period: Periode
+      status: Status
+      all_statuses: Semua status
+      search: Cari
+      search_placeholder: Order, booking, pelanggan, bisnis…
+      apply: Terapkan
+      download_csv: Unduh CSV
+      order: Order
+      booking: Booking
+      customer_business: Pelanggan / bisnis
+      amount: Nominal
+      method: Metode
+      confirmed_at: Dikonfirmasi
+      not_confirmed: Belum dikonfirmasi
+      empty: Tidak ada pembayaran pada periode dan filter ini.
+      methods:
+        bank_transfer: Transfer bank
+        echannel: E-channel
+        qris: QRIS
+        credit_card: Kartu kredit
+        gopay: GoPay
+        shopeepay: ShopeePay
+        cstore: Gerai pembayaran
+    reports:
+      title: Laporan
+      monthly: Laporan Bulanan
+      show: Tampilkan
+      download_csv: Unduh CSV
+      period: "Periode: %{month}"
+      completed_bookings: Booking Selesai
+      completed_value: Nilai Booking Selesai
+      revenue_disclaimer: Bukan komisi atau pembayaran terkonfirmasi.
+      confirmed_online_payments: Pembayaran Online Terkonfirmasi
+      online_payment_detail: "%{count} booking dikonfirmasi gateway pada periode ini; pembayaran di tempat tidak termasuk."
+      new_customers: Pelanggan Baru
+      new_businesses: Bisnis Baru
+      value_by_city: Nilai Booking Selesai per Kota
+      value_by_category: Nilai Layanan Selesai per Kategori
+      top_businesses: 10 Bisnis Teratas menurut Nilai Booking Selesai
+      no_completed_bookings: Tidak ada booking selesai bulan ini.
+    settings:
+      title: Pengaturan
+      platform_identity: Identitas Platform
+      name: Nama
+      current_domain: Domain saat ini
+      currency: Mata uang
+      operations: Operasional Platform
+      registration_open: Pendaftaran bisnis dibuka
+      registration_help: Matikan untuk menolak pendaftaran baru. Bisnis yang sudah ada tetap dapat menggunakan dashboard.
+      planned_commission: Tarif komisi rencana (%)
+      commission_help: Nilai ini disimpan untuk tahap keuangan berikutnya; saat ini belum dipotong dari transaksi dan belum ada payout otomatis.
+      current_gateway: Gateway online saat ini
+      gateway_not_configured: Belum dikonfigurasi
+      gateway_later: Konfigurasi gateway akan dikerjakan pada tahap pembayaran terakhir.
+      save: Simpan Pengaturan
+  business_management:
+    calendar:
+      title: Kalender
+      views:
+        day: Hari
+        week: Minggu
+        month: Bulan
+      today: Hari Ini
+      time: Waktu
+      all_bookings: Semua Booking
+      booking_count: "%{count} booking"
+    services:
+      title: Layanan
+      description: Kelola katalog layanan bisnis Anda.
+      new: Layanan Baru
+      name: Nama layanan
+      category: Kategori
+      choose_category: Pilih kategori
+      duration: Durasi (menit)
+      price: Harga (Rp)
+      staff_count: "%{count} staff"
+      status: Status
+      active: Aktif
+      inactive: Nonaktif
+      edit: Edit
+      delete: Hapus
+      delete_confirm: Hapus layanan ini?
+      empty: Belum ada layanan. Tambahkan layanan pertama Anda.
+      description_label: Deskripsi
+      description_placeholder: Jelaskan singkat layanan ini…
+      order: Urutan tampil
+      active_help: Aktif (dapat dipesan pelanggan)
+      example: "Contoh: Haircut Premium"
+      save: Simpan
+      cancel: Batal
+      new_title: Layanan Baru
+      edit_title: "Edit: %{name}"
+      flash:
+        created: 'Layanan "%{name}" dibuat.'
+        updated: Layanan diperbarui.
+        deleted: Layanan dihapus.
+    staff:
+      title: Staff
+      description: Kelola tim dan jadwal kerja mereka.
+      new: Staff Baru
+      name: Nama staff
+      title_label: Jabatan
+      bio: Bio singkat
+      services: Layanan yang dikuasai
+      duration: "%{count} mnt"
+      active_help: Aktif (menerima booking)
+      active: Aktif
+      inactive: Nonaktif
+      edit: Edit
+      delete: Hapus
+      delete_confirm: Hapus staff ini?
+      empty: Belum ada staff. Tambahkan staff pertama Anda.
+      save: Simpan
+      cancel: Batal
+      example_title: "Contoh: Senior Stylist"
+      new_title: Staff Baru
+      edit_title: "Edit: %{name}"
+      flash:
+        created: 'Staff "%{name}" ditambahkan.'
+        updated: Data staff diperbarui.
+        deleted: Staff dihapus.
+    promotions:
+      title: Promosi
+      description: Promosi aktif tampil sebagai badge PROMO di kartu bisnis Anda.
+      new: Promosi Baru
+      title_label: Judul promosi
+      example_title: "Contoh: Diskon Spesial Akhir Pekan"
+      code: Kode kupon (opsional)
+      discount: Diskon (%)
+      starts_at: Mulai
+      ends_at: Berakhir
+      active_help: Aktifkan sekarang
+      active: Aktif
+      inactive: Nonaktif
+      discount_line: Diskon
+      now: sekarang
+      unlimited: tanpa batas
+      enable: Aktifkan
+      disable: Nonaktifkan
+      edit: Edit
+      delete: Hapus
+      delete_confirm: Hapus promosi ini?
+      empty: Belum ada promosi. Buat promosi pertama untuk menarik pelanggan.
+      save: Simpan
+      cancel: Batal
+      new_title: Promosi Baru
+      edit_title: "Edit: %{name}"
+      flash:
+        created: 'Promosi "%{name}" dibuat.'
+        updated: Promosi diperbarui.
+        deleted: Promosi dihapus.
+        enabled: Promosi diaktifkan.
+        disabled: Promosi dinonaktifkan.
+  business_signup:
+    title: Daftarkan Bisnis Anda
+    description: Buat profil awal, lalu lengkapi layanan dan staff dari dashboard. Bisnis akan ditinjau admin sebelum tampil di marketplace.
+    closed: Pendaftaran bisnis sedang ditutup sementara. Silakan coba kembali nanti.
+    sign_in_required: Anda perlu masuk atau membuat akun pelanggan sebelum mendaftarkan bisnis.
+    sign_in: Masuk
+    create_account: Buat Akun
+    already_has_business: Akun ini sudah memiliki bisnis. Kelola data bisnis dari dashboard.
+    open_dashboard: Buka Dashboard Bisnis
+    role_not_allowed: Peran akun ini tidak dapat mendaftarkan bisnis. Gunakan akun pelanggan atau pemilik bisnis.
+    business_name: Nama bisnis
+    business_name_example: "Contoh: Bellezza Hair Studio"
+    phone: Nomor telepon / WhatsApp
+    country_code_help: Gunakan kode negara, misalnya +6281234567890.
+    city: Kota
+    choose_city: Pilih kota
+    address: Alamat lengkap
+    address_example: Nama jalan, nomor, dan area
+    latitude: Latitude (opsional)
+    longitude: Longitude (opsional)
+    coordinates_help: Koordinat membantu pelanggan menemukan lokasi di peta dan mengurutkan bisnis terdekat.
+    categories: Kategori bisnis
+    hours_help: Jam awal diatur Senin–Sabtu 09.00–17.00 dan Minggu tutup. Ubah jam operasional dari profil bisnis setelah mendaftar.
+    submit: Daftarkan Bisnis
+    errors:
+      choose_category: pilih minimal satu kategori yang tersedia
+    flash:
+      created: Bisnis berhasil didaftarkan dan menunggu verifikasi. Anda sudah bisa melengkapi layanan serta profil di dashboard.
+  for_business_page:
+    title: Untuk Bisnis
+    headline: Kelola salon & spa Anda dengan GlowBook
+    description: Platform booking yang menghubungkan bisnis kecantikan & wellness Anda dengan ribuan pelanggan baru. Kalender pintar, pengingat otomatis, dan analitik lengkap.
+    register: Daftarkan Bisnis Anda
+    features_link: Lihat Fitur
+    features:
+      calendar_title: Kalender Pintar
+      calendar_description: Ketersediaan real-time per staff, istirahat, dan durasi layanan. Anti double-booking dengan jaminan database.
+      analytics_title: Analitik Pendapatan
+      analytics_description: Pantau booking, pelanggan setia, dan nilai booking selesai langsung dari dashboard bisnis Anda.
+      reviews_title: Ulasan Terverifikasi
+      reviews_description: Ulasan hanya dapat ditulis oleh pelanggan dengan booking yang sudah selesai di bisnis Anda.
+    pricing_title: Biaya Selama Tahap Uji Coba
+    trial: Akses Uji Coba
+    trial_note: Saat ini tidak ada biaya langganan yang dikenakan.
+    month: /bulan
+    free_features:
+      profile: Profil bisnis & katalog layanan
+      booking: Booking online tanpa batas
+      commission: Pemotongan komisi dan pencairan payout otomatis belum tersedia.
+  pagination:
+    aria_label: Navigasi halaman
+    page_info: Halaman %{page} dari %{pages} · %{count} data
+    previous: Sebelumnya
+    next: Berikutnya
+  alerts:
+    access:
+      login_required: Silakan masuk untuk melanjutkan.
+      business_dashboard_forbidden: Anda tidak memiliki akses ke dashboard bisnis.
+      admin_only: Hanya admin yang dapat mengakses halaman ini.
+      business_unregistered: Anda belum memiliki bisnis terdaftar.
+      booking_forbidden: Anda tidak memiliki akses ke booking ini.
+      business_messages_forbidden: Anda tidak memiliki akses ke pesan bisnis.
+      own_business_chat: Anda tidak dapat mengirim pesan ke bisnis sendiri.
+    booking:
+      select_service: Pilih minimal satu layanan.
+      select_date: Pilih tanggal kunjungan.
+      select_time: Pilih jam kunjungan.
+      invalid_payment_method: Metode pembayaran tidak valid.
+      online_payment_unavailable: Pembayaran online belum dikonfigurasi.
+      online_payment_positive_total: Pembayaran online memerlukan total booking di atas Rp0.
+      cancelled: Booking berhasil dibatalkan.
+      cancel_failed: Booking tidak dapat dibatalkan.
+      reschedule_unavailable: Booking ini tidak lagi dapat diubah jadwal.
+      select_new_slot: Pilih tanggal dan waktu baru.
+      rescheduled: Jadwal booking berhasil diubah.
+      slot_taken: Jadwal baru saja diambil orang lain. Pilih waktu lain.
+      invalid_status: Status booking tidak valid.
+      status_updated: Status booking berhasil diperbarui.
+      transition_failed: Perubahan status tidak dapat dilakukan untuk booking ini.
+    payment:
+      online_disabled: Pembayaran online tidak diaktifkan.
+      wrong_method: Booking ini tidak menggunakan pembayaran online.
+      not_payable: Booking ini tidak lagi dapat dibayar.
+      already_paid: Pembayaran booking ini sudah berhasil.
+      processing: Pembayaran sedang diproses. Muat ulang halaman beberapa saat lagi.
+    booking_builder:
+      service_not_found: Layanan tidak ditemukan.
+      time_unavailable: Waktu tidak tersedia. Silakan pilih jadwal lain.
+      staff_not_found: Staff tidak ditemukan.
+      staff_not_qualified: Staff yang dipilih tidak melayani layanan ini.
+      slot_taken: Jadwal baru saja diambil orang lain. Silakan pilih waktu lain.
+      save_failed: Terjadi kesalahan saat menyimpan booking.
+    gallery:
+      limit_reached: "Galeri maksimal berisi %{count} foto."
+      photo_added: Foto berhasil ditambahkan ke galeri.
+      photo_deleted: Foto dihapus dari galeri.
+    admin:
+      settings_saved: Pengaturan platform berhasil disimpan.
+    account:
+      profile_updated: Profil berhasil diperbarui.
+    business:
+      profile_updated: Profil bisnis diperbarui.
+    search:
+      invalid_location: Lokasi tidak valid. Coba lagi dari browser Anda.
+    reviews:
+      submitted: Ulasan berhasil dikirim.
+    oauth:
+      facebook_cancelled_or_failed: Login Facebook dibatalkan atau gagal.
+      facebook_signin_failed: Gagal masuk dengan Facebook. Coba lagi.
+  footer:
+  booking_email:
+    confirmation_title: Booking berhasil dikonfirmasi
+    cancellation_title: Booking dibatalkan
+    reschedule_title: Jadwal booking berubah
+    new_booking: Booking baru masuk
+    booking_created: Booking berhasil dibuat
+    booking_cancelled: Booking dibatalkan
+    booking_rescheduled: Jadwal booking diubah
+    reference: Kode booking
+    business: Bisnis
+    services: Layanan
+    date: Tanggal
+    time: Waktu
+    status: Status
+    appointment_format: "%{date} pukul %{time} WIB"
+    cancellation_body: telah dibatalkan.
+    reschedule_body: telah diperbarui.
+    confirmation_help: Silakan datang sesuai jadwal. Tunjukkan kode booking ini kepada pihak bisnis.
+    contact_business: Jika pembatalan ini tidak sesuai, silakan hubungi %{business}.
+    see_booking: Lihat detail booking
+    owner_confirmation: "Booking baru dari %{customer} di %{business}, terjadwal %{appointment}."
+    owner_cancellation: "Booking %{reference} dari %{customer} di %{business} dibatalkan."
+    owner_reschedule: "Jadwal booking %{reference} dari %{customer} di %{business} diubah menjadi %{appointment}."
+    customer_confirmation: "Booking %{reference} di %{business} tercatat untuk %{appointment}."
+    customer_cancellation: "Booking %{reference} di %{business} berhasil dibatalkan."
+    customer_reschedule: "Jadwal booking %{reference} di %{business} diubah menjadi %{appointment}."
+  footer:
+    description: "Booking salon, spa, dan barber terbaik di Indonesia. Cepat, aman, dan tepat."
+    categories: Kategori
+    cities: Kota
+    brand: GlowBook
+    disclaimer: "Demo marketplace — semua bisnis & ulasan fiktif."

@@ -9,8 +9,8 @@ class StaffBreak < ApplicationRecord
   private
 
   def end_after_start
-    return if start_minute < end_minute
+    return if start_minute.nil? || end_minute.nil? || start_minute < end_minute
 
-    errors.add(:end_minute, "harus setelah jam selesai")
+    errors.add(:end_minute, I18n.t("scheduling.errors.end_after_start"))
   end
 end

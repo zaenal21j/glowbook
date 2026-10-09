@@ -1,9 +1,10 @@
 <% content_for :sidebar_links do %>
   <%= render "dashboard/shared/sidebar" %>
 <% end %>
-<% content_for :page_title, "Edit Staff — GlowBook" %>
+<% content_for :page_title, "#{t('business_management.staff.edit_title', name: @staff_member.name)} — GlowBook" %>
 
 <div class="max-w-xl card p-6">
-  <h1 class="text-lg font-extrabold mb-4">Edit: <%= @staff_member.name %></h1>
+  <h1 class="text-lg font-extrabold mb-4"><%= t("business_management.staff.edit_title", name: @staff_member.name) %></h1>
+  <%= link_to t("scheduling.manage_schedule"), dashboard_staff_availability_path(@staff_member), class: "btn-secondary btn-sm mb-4" %>
   <%= render "form", staff_member: @staff_member %>
 </div>

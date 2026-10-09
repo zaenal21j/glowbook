@@ -1,0 +1,46 @@
+<% content_for :title, "#{t('booking.reschedule')} — GlowBook" %>
+
+<div class="mx-auto max-w-2xl px-4 py-10 lg:px-8">
+  <%= link_to t("booking.back_to_booking"), booking_path(@booking.reference), class: "text-sm font-semibold text-primary-600" %>
+  <h1 class="mt-4 text-2xl font-extrabold"><%= t("booking.reschedule") %></h1>
+  <p class="mt-2 text-sm text-ink-500"><%= t("booking.reschedule_help") %></p>
+
+  <div class="card mt-6 p-5">
+    <p class="font-bold"><%= @booking.business.name %></p>
+    <p class="mt-1 font-mono text-sm"><%= @booking.reference %></p>
+    <p class="mt-2 text-sm"><%= @booking.booking_items.map(&:label).join(", ") %></p>
+    <p class="mt-2 text-sm text-ink-500"><%= t("booking.current_schedule", schedule: format_datetime_id(@booking.start_time)) %> WIB</p>
+    <p class="mt-1 text-sm text-ink-500"><%= t("booking.total_duration", duration: format_duration(@booking.duration_minutes)) %></p>
+  </div>
+
+  <%= form_with url: reschedule_booking_path(@booking.reference), method: :get, class: "card mt-4 p-5" do |form| %>
+    <%= form.label :date, t("booking.date"), class: "label" %>
+    <div class="mt-2 flex flex-wrap items-center gap-3">
+      <%= form.date_field :date, value: @selected_date.iso8601, min: Date.current.iso8601, required: true, class: "input" %>
+      <%= form.submit t("booking.find_times"), class: "btn-secondary btn-md" %>
+    </div>
+  <% end %>
+
+  <div class="card mt-4 p-5">
+    <h2 class="font-bold"><%= t("booking.available_slots") %></h2>
+    <p class="mt-1 text-sm text-ink-500"><%= l(@selected_date, format: "%A, %d %B %Y") %></p>
+    <% if @slots.any? %>
+      <%= form_with url: update_schedule_booking_path(@booking.reference), method: :patch do |form| %>
+        <%= form.hidden_field :date, value: @selected_date.iso8601 %>
+        <div class="mt-4 grid grid-cols-3 gap-2 sm:grid-cols-4">
+          <% @slots.each do |slot| %>
+            <label class="cursor-pointer">
+              <%= form.radio_button :time, slot[:time].iso8601, required: true, class: "peer sr-only" %>
+              <span class="block rounded-xl border border-gray-200 py-3 text-center text-sm font-bold peer-checked:border-primary-600 peer-checked:bg-primary-600 peer-checked:text-white"><%= format_time_short(slot[:time]) %></span>
+            </label>
+          <% end %>
+        </div>
+        <p class="mt-3 text-xs text-ink-500"><%= t("booking.timezone") %></p>
+        <%= form.submit t("booking.save_schedule"), class: "btn-primary btn-lg mt-5 w-full" %>
+      <% end %>
+    <% else %>
+      <p class="mt-5 font-semibold"><%= t("booking.no_slots") %></p>
+      <p class="mt-2 text-sm text-ink-500"><%= t("booking.try_another_date") %></p>
+    <% end %>
+  </div>
+</div>

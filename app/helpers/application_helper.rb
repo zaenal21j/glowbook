@@ -1,6 +1,20 @@
 # Helpers for displaying IDR prices, durations and dates in Indonesian format.
 
 module ApplicationHelper
+  def weekday_options
+    [1, 2, 3, 4, 5, 6, 0].map { |day| [t("date.day_names")[day], day] }
+  end
+
+  def minute_of_day_options(current = nil)
+    minutes = (0..1440).step(15).to_a
+    minutes << current if current.is_a?(Integer) && (0..1440).cover?(current)
+    minutes.uniq.sort.map { |minute| [format_minute_of_day(minute), minute] }
+  end
+
+  def format_minute_of_day(minute)
+    format("%02d:%02d", minute.to_i / 60, minute.to_i % 60)
+  end
+
   def format_idr(amount)
     "Rp #{number_with_delimiter(amount.to_i, delimiter: '.')}"
   end
@@ -8,8 +22,8 @@ module ApplicationHelper
   def format_duration(minutes)
     h, m = minutes.to_i.divmod(60)
     parts = []
-    parts << "#{h} jam" if h.positive?
-    parts << "#{m} menit" if m.positive?
+    parts << t("display.duration.hours", count: h) if h.positive?
+    parts << t("display.duration.minutes", count: m) if m.positive?
     parts.join(" ")
   end
 
@@ -18,11 +32,11 @@ module ApplicationHelper
   end
 
   def format_date_id(date)
-    date.strftime("%d %b %Y")
+    l(date, format: "%d %b %Y")
   end
 
   def format_datetime_id(time)
-    time.strftime("%d %b %Y, %H:%M")
+    l(time, format: "%d %b %Y, %H:%M")
   end
 
   def rating_stars(rating)

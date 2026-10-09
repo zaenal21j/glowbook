@@ -11,7 +11,7 @@ class Dashboard::PromotionsController < Dashboard::BaseController
     @promotion = @business.promotions.build(promotion_params)
 
     if @promotion.save
-      redirect_to dashboard_promotions_path, notice: "Promosi \"#{@promotion.title}\" dibuat."
+      redirect_to dashboard_promotions_path, notice: t("business_management.promotions.flash.created", name: @promotion.title)
     else
       render :new, status: :unprocessable_entity
     end
@@ -25,7 +25,7 @@ class Dashboard::PromotionsController < Dashboard::BaseController
     @promotion = @business.promotions.find(params[:id])
 
     if @promotion.update(promotion_params)
-      redirect_to dashboard_promotions_path, notice: "Promosi diperbarui."
+      redirect_to dashboard_promotions_path, notice: t("business_management.promotions.flash.updated")
     else
       render :edit, status: :unprocessable_entity
     end
@@ -34,13 +34,13 @@ class Dashboard::PromotionsController < Dashboard::BaseController
   def destroy
     @promotion = @business.promotions.find(params[:id])
     @promotion.destroy
-    redirect_to dashboard_promotions_path, notice: "Promosi dihapus."
+    redirect_to dashboard_promotions_path, notice: t("business_management.promotions.flash.deleted")
   end
 
   def toggle
     @promotion = @business.promotions.find(params[:id])
     @promotion.update!(active: !@promotion.active)
-    redirect_to dashboard_promotions_path, notice: "Promosi #{@promotion.active? ? "diaktifkan" : "dinonaktifkan"}."
+    redirect_to dashboard_promotions_path, notice: t(@promotion.active? ? "business_management.promotions.flash.enabled" : "business_management.promotions.flash.disabled")
   end
 
   private

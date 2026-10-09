@@ -1,17 +1,17 @@
 <% content_for :sidebar_links do %>
   <%= render "dashboard/shared/sidebar" %>
 <% end %>
-<% content_for :page_title, "Pelanggan — GlowBook" %>
+<% content_for :page_title, t("dashboard.customers_page.title") + " — GlowBook" %>
 
 <div class="mb-4">
-  <h1 class="text-xl font-extrabold">Pelanggan</h1>
-  <p class="text-sm text-ink-500"><%= @total_customer_count %> pelanggan pernah booking di bisnis Anda.</p>
+  <h1 class="text-xl font-extrabold"><%= t("dashboard.customers_page.title") %></h1>
+  <p class="text-sm text-ink-500"><%= t("dashboard.customers_page.description", count: @total_customer_count) %></p>
 </div>
 
 <div class="card overflow-x-auto p-0">
   <table class="w-full text-sm">
     <thead class="border-b border-line bg-surface-50 text-left text-xs uppercase tracking-wide text-ink-400">
-      <tr><th class="p-3">Pelanggan</th><th class="p-3">Total Booking</th><th class="p-3">Total Belanja</th><th class="p-3">Kunjungan Terakhir</th></tr>
+      <tr><th class="p-3"><%= t("dashboard.customers_page.customer") %></th><th class="p-3"><%= t("dashboard.customers_page.total_bookings") %></th><th class="p-3"><%= t("dashboard.customers_page.total_spent") %></th><th class="p-3"><%= t("dashboard.customers_page.last_visit") %></th></tr>
     </thead>
     <tbody>
       <% @customers.each do |c| %>
@@ -27,10 +27,10 @@
           </td>
           <td class="p-3 font-semibold"><%= c.bookings_count %></td>
           <td class="p-3"><%= number_to_currency(c.total_spent.to_f, unit: "Rp ", delimiter: ".", precision: 0) %></td>
-          <td class="p-3 text-ink-500"><%= c.last_visit ? c.last_visit.strftime("%d %b %Y, %H:%M") : "—" %></td>
+          <td class="p-3 text-ink-500"><%= c.last_visit ? l(c.last_visit, format: "%d %b %Y, %H:%M") : "—" %></td>
         </tr>
       <% end %>
-      <% if @customers.empty? %><tr><td colspan="4" class="p-8 text-center text-ink-500">Belum ada pelanggan.</td></tr><% end %>
+      <% if @customers.empty? %><tr><td colspan="4" class="p-8 text-center text-ink-500"><%= t("dashboard.customers_page.empty") %></td></tr><% end %>
     </tbody>
   </table>
 </div>

@@ -16,7 +16,7 @@ class BookingNotificationDelivery
     end
 
     notification_recipients.map(&:email).compact_blank.uniq.each do |recipient|
-      BookingMailer.with(booking: @booking, recipient: recipient).public_send(@event).deliver_later
+      BookingMailer.with(booking: @booking, recipient: recipient, locale: I18n.locale).public_send(@event).deliver_later
     rescue StandardError => e
       Rails.logger.error("Gagal mengantrekan email booking #{@booking.reference}: #{e.class}: #{e.message}")
     end
@@ -41,16 +41,13 @@ class BookingNotificationDelivery
   end
 
   def notification_content(user)
-    title = case @event
-    when :confirmation
-      user == @booking.business.owner ? "Booking baru masuk" : "Booking berhasil dibuat"
-    when :cancellation
-      "Booking dibatalkan"
-    when :reschedule
-      "Jadwal booking diubah"
+    title_key = if @event == :confirmation && user == @booking.business.owner
+      "booking_email.new_booking"
+    else
+      "booking_email.#{@event == :confirmation ? 'booking_created' : @event == :cancellation ? 'booking_cancelled' : 'booking_rescheduled'}"
     end
-
-    appointment = @booking.start_time.in_time_zone.strftime("%d-%m-%Y pukul %H:%M")
+    title = I18n.t(title_key)
+    appointment = I18n.t("booking_email.appointment_format", date: I18n.l(@booking.start_time.to_date, format: :long), time: I18n.l(@booking.start_time, format: "%H:%M"))
     business = @booking.business.name
 
     body = if user == @booking.business.owner
@@ -63,24 +60,12 @@ class BookingNotificationDelivery
   end
 
   def owner_notification_body(appointment, business)
-    case @event
-    when :confirmation
-      "Booking baru dari #{@booking.user.full_name} di #{business}, terjadwal #{appointment}."
-    when :cancellation
-      "Booking #{@booking.reference} dari #{@booking.user.full_name} di #{business} dibatalkan."
-    when :reschedule
-      "Jadwal booking #{@booking.reference} dari #{@booking.user.full_name} di #{business} diubah menjadi #{appointment}."
-    end
+    key = "booking_email.owner_#{@event}"
+    I18n.t(key, reference: @booking.reference, customer: @booking.user.full_name, business: business, appointment: appointment)
   end
 
   def customer_notification_body(appointment, business)
-    case @event
-    when :confirmation
-      "Booking #{@booking.reference} di #{business} tercatat untuk #{appointment}."
-    when :cancellation
-      "Booking #{@booking.reference} di #{business} berhasil dibatalkan."
-    when :reschedule
-      "Jadwal booking #{@booking.reference} di #{business} diubah menjadi #{appointment}."
-    end
+    key = "booking_email.customer_#{@event}"
+    I18n.t(key, reference: @booking.reference, business: business, appointment: appointment)
   end
 end

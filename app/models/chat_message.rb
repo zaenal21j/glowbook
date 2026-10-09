@@ -17,7 +17,7 @@ class ChatMessage < ApplicationRecord
   def sender_must_be_a_participant
     return if conversation&.participant?(sender)
 
-    errors.add(:sender, "tidak termasuk dalam percakapan ini")
+    errors.add(:sender, I18n.t("validation.chat_participant"))
   end
 
   def touch_conversation

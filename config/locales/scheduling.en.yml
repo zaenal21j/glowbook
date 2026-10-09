@@ -1,0 +1,79 @@
+en:
+  scheduling:
+    title: "%{name}'s schedule"
+    description: Shifts determine when staff can accept bookings within business opening hours. All times are WIB. Changes do not cancel existing bookings.
+    manage_schedule: Schedule & breaks
+    back_to_staff: Back to staff
+    shifts: Weekly shifts
+    breaks: Weekly breaks
+    breaks_help: Breaks remove overlapping slots from this staff member's availability.
+    no_shifts: No shifts yet. This staff member cannot accept bookings until a shift is added.
+    no_breaks: No breaks configured.
+    copy_hours: Use business opening hours
+    already_configured: This staff member already has shifts. Edit the existing schedule to make changes.
+    no_business_hours: There are no open days. Set your business opening hours in the business profile first.
+    hours_copied: Staff shifts created from business opening hours.
+    add_shift: Add shift
+    edit_shift: Edit shift
+    add_break: Add break
+    edit_break: Edit break
+    shift_saved: Staff shift saved.
+    shift_deleted: Staff shift deleted.
+    break_saved: Break saved.
+    break_deleted: Break deleted.
+    day: Day
+    starts: Start time
+    ends: End time
+    opens: Opens
+    closes: Closes
+    closed: Closed all day
+    save: Save
+    cancel: Cancel
+    edit: Edit
+    delete: Delete
+    delete_confirm: Delete this time setting?
+    review_errors: Please review the following details.
+    errors:
+      end_after_start: must be after the start time
+      overlap: This shift overlaps another shift on the same day.
+      foreign_staff: must belong to the same business
+      staff_in_use: This staff member has booking history. Deactivate them to stop new bookings.
+      service_in_use: This service has booking history. Deactivate it to stop new bookings.
+    blocks:
+      title: Blocked times
+      description: Close slots for holidays, training, or other events for one staff member or the entire business.
+      add_title: Add blocked time
+      edit_title: Edit blocked time
+      staff: Staff
+      all_staff: All staff / Entire business
+      reason: Reason
+      reason_example: "Example: Public holiday or training"
+      starts_at: Starts (WIB)
+      ends_at: Ends (WIB)
+      help: Blocks prevent new bookings in this period. Existing bookings stay valid and must be managed from the booking list.
+      saved: Blocked time saved.
+      deleted: Blocked time removed.
+      empty: No blocked times match this filter.
+      filter_label: Filter blocked times
+      filters:
+        upcoming: Upcoming
+        past: Past
+        all: All
+  activerecord:
+    attributes:
+      staff_schedule:
+        weekday: Day
+        start_minute: Start time
+        end_minute: End time
+      staff_break:
+        weekday: Day
+        start_minute: Start time
+        end_minute: End time
+      business_hour:
+        open_minute: Opening time
+        close_minute: Closing time
+      blocked_time:
+        staff: Staff
+        reason: Reason
+        start_time: Start time
+        end_time: End time

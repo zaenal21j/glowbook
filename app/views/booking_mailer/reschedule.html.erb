@@ -1,4 +1,4 @@
-<h1>Jadwal booking berubah</h1>
-<p>Jadwal booking <strong><%= @booking.reference %></strong> telah diperbarui.</p>
+<h1><%= t("booking_email.reschedule_title") %></h1>
+<p><%= t("booking_email.reference") %> <strong><%= @booking.reference %></strong> <%= t("booking_email.reschedule_body") %></p>
 <%= render "booking_mailer/booking_details" %>
-<p><%= link_to "Lihat detail booking", booking_url(@booking.reference) %></p>
+<p><%= link_to t("booking_email.see_booking"), booking_url(@booking.reference) %></p>

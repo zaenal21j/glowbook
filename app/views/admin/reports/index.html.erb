@@ -1,46 +1,46 @@
 <%= render "admin/shared/sidebar" %>
-<% content_for :page_title, "Laporan" %>
+<% content_for :page_title, t("admin.reports.title") %>
 
 <div class="flex flex-wrap items-center justify-between gap-3">
-  <h2 class="text-lg font-bold">Laporan Bulanan</h2>
+  <h2 class="text-lg font-bold"><%= t("admin.reports.monthly") %></h2>
   <div class="flex flex-wrap gap-2">
     <%= form_with url: admin_reports_path, method: :get, class: "flex gap-2" do %>
       <%= month_field_tag :month, @month.strftime("%Y-%m"), class: "input" %>
-      <button class="btn-secondary btn-md">Tampilkan</button>
+      <button class="btn-secondary btn-md"><%= t("admin.reports.show") %></button>
     <% end %>
-    <%= link_to "Unduh CSV", admin_reports_path(month: @month.strftime("%Y-%m"), format: :csv), class: "btn-primary btn-md" %>
+    <%= link_to t("admin.reports.download_csv"), admin_reports_path(month: @month.strftime("%Y-%m"), format: :csv), class: "btn-primary btn-md" %>
   </div>
 </div>
-<p class="text-sm text-ink-500 mt-1">Periode: <%= @month.strftime("%B %Y") %></p>
+<p class="text-sm text-ink-500 mt-1"><%= t("admin.reports.period", month: l(@month, format: "%B %Y")) %></p>
 
 <div class="grid gap-4 mt-5 md:grid-cols-2 xl:grid-cols-5">
   <div class="card p-5">
-    <p class="text-sm text-ink-500">Booking Selesai</p>
+    <p class="text-sm text-ink-500"><%= t("admin.reports.completed_bookings") %></p>
     <p class="mt-1 text-2xl font-bold"><%= @kpi_bookings %></p>
   </div>
   <div class="card p-5">
-    <p class="text-sm text-ink-500">Nilai Booking Selesai</p>
+    <p class="text-sm text-ink-500"><%= t("admin.reports.completed_value") %></p>
     <p class="mt-1 text-2xl font-bold"><%= number_to_currency(@kpi_revenue, unit: "Rp ", delimiter: ".", precision: 0) %></p>
-    <p class="mt-1 text-xs text-ink-400">Bukan komisi atau pembayaran terkonfirmasi.</p>
+    <p class="mt-1 text-xs text-ink-400"><%= t("admin.reports.revenue_disclaimer") %></p>
   </div>
   <div class="card p-5">
-    <p class="text-sm text-ink-500">Pembayaran Online Terkonfirmasi</p>
+    <p class="text-sm text-ink-500"><%= t("admin.reports.confirmed_online_payments") %></p>
     <p class="mt-1 text-2xl font-bold"><%= number_to_currency(@kpi_online_collected, unit: "Rp ", delimiter: ".", precision: 0) %></p>
-    <p class="mt-1 text-xs text-ink-400"><%= @kpi_online_payments %> booking · dikonfirmasi gateway pada periode ini; pembayaran di tempat tidak termasuk.</p>
+    <p class="mt-1 text-xs text-ink-400"><%= t("admin.reports.online_payment_detail", count: @kpi_online_payments) %></p>
   </div>
   <div class="card p-5">
-    <p class="text-sm text-ink-500">Pelanggan Baru</p>
+    <p class="text-sm text-ink-500"><%= t("admin.reports.new_customers") %></p>
     <p class="mt-1 text-2xl font-bold"><%= @kpi_customers %></p>
   </div>
   <div class="card p-5">
-    <p class="text-sm text-ink-500">Bisnis Baru</p>
+    <p class="text-sm text-ink-500"><%= t("admin.reports.new_businesses") %></p>
     <p class="mt-1 text-2xl font-bold"><%= @kpi_new_businesses %></p>
   </div>
 </div>
 
 <div class="grid gap-5 mt-5 lg:grid-cols-3">
   <div class="card p-5">
-    <h3 class="font-semibold">Nilai Booking Selesai per Kota</h3>
+    <h3 class="font-semibold"><%= t("admin.reports.value_by_city") %></h3>
     <div class="mt-3 space-y-2.5">
       <% max = [@by_city.map(&:last).max.to_f, 1].max %>
       <% @by_city.each do |name, amount| %>
@@ -49,12 +49,12 @@
           <div class="mt-1 h-1.5 rounded-full bg-surface-100"><div class="h-full rounded-full bg-primary-500" style="width: <%= (amount / max * 100).round %>%"></div></div>
         </div>
       <% end %>
-      <% if @by_city.empty? %><p class="text-sm text-ink-400">Tidak ada booking selesai bulan ini.</p><% end %>
+      <% if @by_city.empty? %><p class="text-sm text-ink-400"><%= t("admin.reports.no_completed_bookings") %></p><% end %>
     </div>
   </div>
 
   <div class="card p-5">
-    <h3 class="font-semibold">Nilai Layanan Selesai per Kategori</h3>
+    <h3 class="font-semibold"><%= t("admin.reports.value_by_category") %></h3>
     <div class="mt-3 space-y-2.5">
       <% max = [@by_category.map(&:last).max.to_f, 1].max %>
       <% @by_category.each do |name, amount| %>
@@ -63,12 +63,12 @@
           <div class="mt-1 h-1.5 rounded-full bg-surface-100"><div class="h-full rounded-full bg-primary-400" style="width: <%= (amount / max * 100).round %>%"></div></div>
         </div>
       <% end %>
-      <% if @by_category.empty? %><p class="text-sm text-ink-400">Tidak ada booking selesai bulan ini.</p><% end %>
+      <% if @by_category.empty? %><p class="text-sm text-ink-400"><%= t("admin.reports.no_completed_bookings") %></p><% end %>
     </div>
   </div>
 
   <div class="card p-5">
-    <h3 class="font-semibold">10 Bisnis Teratas menurut Nilai Booking Selesai</h3>
+    <h3 class="font-semibold"><%= t("admin.reports.top_businesses") %></h3>
     <ol class="mt-3 space-y-2 text-sm">
       <% @top_businesses.each_with_index do |(name, amount), i| %>
         <li class="flex justify-between border-b border-line pb-2 last:border-0">
@@ -76,7 +76,7 @@
           <strong><%= number_to_currency(amount, unit: "Rp ", delimiter: ".", precision: 0) %></strong>
         </li>
       <% end %>
-      <% if @top_businesses.empty? %><p class="text-sm text-ink-400">Tidak ada booking selesai bulan ini.</p><% end %>
+      <% if @top_businesses.empty? %><p class="text-sm text-ink-400"><%= t("admin.reports.no_completed_bookings") %></p><% end %>
     </ol>
   </div>
 </div>

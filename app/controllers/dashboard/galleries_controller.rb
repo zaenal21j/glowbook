@@ -8,14 +8,14 @@ class Dashboard::GalleriesController < Dashboard::BaseController
 
   def create
     if @business.business_galleries.count >= MAX_IMAGES
-      return redirect_to dashboard_galleries_path, alert: "Galeri maksimal berisi #{MAX_IMAGES} foto."
+      return redirect_to dashboard_galleries_path, alert: t("alerts.gallery.limit_reached", count: MAX_IMAGES)
     end
 
     @gallery = @business.business_galleries.build(gallery_params)
     @gallery.position = @business.business_galleries.maximum(:position).to_i + 1
 
     if @gallery.save
-      redirect_to dashboard_galleries_path, notice: "Foto berhasil ditambahkan ke galeri."
+      redirect_to dashboard_galleries_path, notice: t("alerts.gallery.photo_added")
     else
       load_galleries
       render :index, status: :unprocessable_entity
@@ -24,7 +24,7 @@ class Dashboard::GalleriesController < Dashboard::BaseController
 
   def destroy
     @business.business_galleries.find(params[:id]).destroy!
-    redirect_to dashboard_galleries_path, notice: "Foto dihapus dari galeri."
+    redirect_to dashboard_galleries_path, notice: t("alerts.gallery.photo_deleted")
   end
 
   private

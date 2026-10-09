@@ -1,7 +1,6 @@
 class BookingBuilder
-  # Creates a booking within a DB transaction; relies on the tstzrange EXCLUDE
-  # constraint for double-booking prevention and re-validates availability
-  # inside the critical section.
+  # Checks availability before creating a booking in a DB transaction. The
+  # tstzrange EXCLUDE constraint handles concurrent requests for the same staff.
 
   def initialize(user:, business:, service_ids:, staff_id: nil, start_time:, payment_method: nil)
     @user = user
@@ -13,27 +12,28 @@ class BookingBuilder
   end
 
   def call
-    services = Service.active.where(id: @service_ids, business_id: @business.id).order(:id)
-    return BookingResult.new(error: "Layanan tidak ditemukan") if services.count != @service_ids.count
+    services = Service.active.where(id: @service_ids, business_id: @business.id).order(:id).to_a
+    return BookingResult.new(error: I18n.t("alerts.booking_builder.service_not_found")) if services.empty? || services.size != @service_ids.count
+    return BookingResult.new(error: I18n.t("alerts.booking_builder.time_unavailable")) unless @start_time.respond_to?(:to_date)
 
     @staff_error = nil
     staff = resolve_staff(services)
     return BookingResult.new(error: @staff_error) if staff.nil? && @staff_error.present?
-    return BookingResult.new(error: "Waktu tidak tersedia. Silakan pilih jadwal lain.") if staff.nil?
+    return BookingResult.new(error: I18n.t("alerts.booking_builder.time_unavailable")) if staff.nil?
 
     unless sequence_available?(services, staff)
-      return BookingResult.new(error: "Waktu tidak tersedia. Silakan pilih jadwal lain.")
+      return BookingResult.new(error: I18n.t("alerts.booking_builder.time_unavailable"))
     end
 
-    end_time = @start_time + services.sum(:duration_minutes).minutes
+    end_time = @start_time + services.sum(&:duration_minutes).minutes
 
-    Booking.transaction do
+    Booking.transaction(requires_new: true) do
       booking = Booking.create!(
         user: @user,
         business: @business,
         start_time: @start_time,
         end_time: end_time,
-        total_amount: services.sum(:price),
+        total_amount: services.sum(&:price),
         payment_method: @payment_method,
         status: :confirmed
       )
@@ -60,9 +60,9 @@ class BookingBuilder
     BookingResult.new(error: e.record.errors.full_messages.to_sentence)
   rescue ActiveRecord::RecordNotUnique, ActiveRecord::ExclusionViolation => e
     if e.message.include?("no_overlapping_bookings")
-      BookingResult.new(error: "Jadwal baru saja diambil orang lain. Silakan pilih waktu lain.")
+      BookingResult.new(error: I18n.t("alerts.booking_builder.slot_taken"))
     else
-      BookingResult.new(error: "Terjadi kesalahan saat menyimpan booking.")
+      BookingResult.new(error: I18n.t("alerts.booking_builder.save_failed"))
     end
   end
 
@@ -75,11 +75,11 @@ class BookingBuilder
     if @staff_id.present?
       staff = Staff.active.find_by(id: @staff_id, business_id: @business.id)
       if staff.nil?
-        @staff_error = "Staff tidak ditemukan."
+        @staff_error = I18n.t("alerts.booking_builder.staff_not_found")
         return nil
       end
       unless services.all? { |s| staff.services.include?(s) }
-        @staff_error = "Staff yang dipilih tidak melayani layanan ini."
+        @staff_error = I18n.t("alerts.booking_builder.staff_not_qualified")
         return nil
       end
       return staff
@@ -95,16 +95,7 @@ class BookingBuilder
   end
 
   def sequence_free?(services, staff)
-    cursor = @start_time
-    services.all? do |service|
-      ok = Availability.new(
-        business: @business,
-        service: service,
-        date: cursor.to_date,
-        staff: staff
-      ).available_at?(cursor)
-      cursor += service.duration_minutes.minutes
-      ok
-    end
+    BookingSequenceAvailability.new(business: @business, services: services,
+                                    date: @start_time.to_date, staff: staff).available_at?(@start_time)
   end
 end

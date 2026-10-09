@@ -1,0 +1,5 @@
+<% next_locale = I18n.locale == :id ? :en : :id %>
+<%= button_to I18n.t("locale.names.#{next_locale}"), locale_path(next_locale), method: :post,
+              form: { data: { turbo: false } },
+              aria: { label: I18n.t("locale.switch_to", language: I18n.t("locale.names.#{next_locale}")) },
+              class: "btn-ghost btn-sm whitespace-nowrap" %>

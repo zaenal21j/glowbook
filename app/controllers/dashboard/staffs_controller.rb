@@ -11,7 +11,7 @@ class Dashboard::StaffsController < Dashboard::BaseController
     @staff_member = @business.staff.build(staff_params)
 
     if @staff_member.save
-      redirect_to dashboard_staffs_path, notice: "Staff \"#{@staff_member.name}\" ditambahkan."
+      redirect_to dashboard_staff_availability_path(@staff_member), notice: t("business_management.staff.flash.created", name: @staff_member.name)
     else
       render :new, status: :unprocessable_entity
     end
@@ -25,7 +25,7 @@ class Dashboard::StaffsController < Dashboard::BaseController
     @staff_member = @business.staff.find(params[:id])
 
     if @staff_member.update(staff_params)
-      redirect_to dashboard_staffs_path, notice: "Data staff diperbarui."
+      redirect_to dashboard_staffs_path, notice: t("business_management.staff.flash.updated")
     else
       render :edit, status: :unprocessable_entity
     end
@@ -33,13 +33,22 @@ class Dashboard::StaffsController < Dashboard::BaseController
 
   def destroy
     @staff_member = @business.staff.find(params[:id])
-    @staff_member.destroy
-    redirect_to dashboard_staffs_path, notice: "Staff dihapus."
+    if @staff_member.destroy
+      redirect_to dashboard_staffs_path, notice: t("business_management.staff.flash.deleted")
+    else
+      redirect_to dashboard_staffs_path, alert: t("scheduling.errors.staff_in_use")
+    end
   end
 
   private
 
   def staff_params
-    params.require(:staff).permit(:name, :title, :bio, :active, service_ids: [])
+    permitted = params.require(:staff).permit(:name, :title, :bio, :active, service_ids: [])
+    if permitted.key?(:service_ids)
+      ids = permitted[:service_ids].reject(&:blank?).map(&:to_s).uniq
+      valid_ids = @business.services.where(id: ids).ids.map(&:to_s)
+      raise ActiveRecord::RecordNotFound unless (ids - valid_ids).empty?
+    end
+    permitted
   end
 end

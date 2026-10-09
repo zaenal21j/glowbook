@@ -8,6 +8,7 @@ RSpec.describe "Booking flow", type: :request do
   let(:member)   { create(:staff, business: business, start_hour: 9, end_hour: 17) }
 
   before do
+    travel_to Time.zone.local(2026, 10, 12, 8)
     create(:staff_service, staff: member, service: service)
     sign_in user
   end

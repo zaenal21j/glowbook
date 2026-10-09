@@ -1,5 +1,5 @@
-<h2 class="text-lg font-extrabold">Pilih Staff</h2>
-<p class="mt-1 text-sm text-ink-500">Siapa yang akan melayanimu?</p>
+<h2 class="text-lg font-extrabold"><%= t("booking.choose_staff") %></h2>
+<p class="mt-1 text-sm text-ink-500"><%= t("booking.staff_prompt") %></p>
 <%= form_with url: business_book_update_path(@business.slug, "staff"), method: :patch do |f| %>
   <div class="mt-4 space-y-3">
     <label class="card flex cursor-pointer items-center gap-4 p-4 transition hover:border-primary-200 has-[:checked]:border-primary-500 has-[:checked]:bg-primary-50/40">
@@ -7,8 +7,8 @@
         <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z"/></svg>
       </span>
       <div class="flex-1">
-        <p class="font-bold">Staff tersedia</p>
-        <p class="text-sm text-ink-500">Staff yang tersedia pada waktu pilihan</p>
+        <p class="font-bold"><%= t("booking.available_staff") %></p>
+        <p class="text-sm text-ink-500"><%= t("booking.staff_available_description") %></p>
       </div>
       <%= f.radio_button :staff_id, "", checked: session[:booking_flow]&.dig("staff_id").nil?, class: "h-5 w-5 border-gray-300 text-primary-600 focus:ring-primary-500" %>
     </label>
@@ -20,13 +20,13 @@
         <div class="flex-1">
           <p class="font-bold"><%= member.name %></p>
           <p class="text-sm text-ink-500"><%= member.display_title %></p>
-          <% unless serves_all %><p class="text-xs text-red-500">Tidak melayani layanan terpilih</p><% end %>
+          <% unless serves_all %><p class="text-xs text-red-500"><%= t("booking.does_not_serve") %></p><% end %>
         </div>
         <%= f.radio_button :staff_id, member.id, checked: session[:booking_flow]&.dig("staff_id") == member.id, disabled: !serves_all, class: "h-5 w-5 border-gray-300 text-primary-600 focus:ring-primary-500" %>
       </label>
     <% end %>
   </div>
   <div class="sticky bottom-24 mt-6 lg:bottom-6">
-    <%= f.submit "Lanjutkan", class: "btn-primary btn-lg w-full" %>
+    <%= f.submit t("booking.continue"), class: "btn-primary btn-lg w-full" %>
   </div>
 <% end %>

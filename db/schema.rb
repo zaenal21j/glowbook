@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_09_120000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_09_130000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "pg_catalog.plpgsql"
@@ -220,7 +220,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_09_120000) do
     t.index ["order_id"], name: "index_payment_attempts_on_order_id", unique: true
     t.index ["transaction_id"], name: "index_payment_attempts_on_transaction_id", unique: true, where: "(transaction_id IS NOT NULL)"
     t.check_constraint "amount >= 0", name: "payment_attempts_amount_nonnegative"
-    t.check_constraint "status::text = ANY (ARRAY['pending'::character varying, 'settlement'::character varying, 'capture'::character varying, 'expire'::character varying, 'cancel'::character varying, 'deny'::character varying, 'failure'::character varying, 'refund'::character varying]::text[])", name: "payment_attempts_status_valid"
+    t.check_constraint "status::text = ANY (ARRAY['pending'::character varying::text, 'settlement'::character varying::text, 'capture'::character varying::text, 'expire'::character varying::text, 'cancel'::character varying::text, 'deny'::character varying::text, 'failure'::character varying::text, 'refund'::character varying::text])", name: "payment_attempts_status_valid"
   end
 
   create_table "platform_settings", force: :cascade do |t|
@@ -310,6 +310,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_09_120000) do
   create_table "staffs", force: :cascade do |t|
     t.boolean "active", default: true, null: false
     t.string "avatar_color"
+    t.text "bio"
     t.bigint "business_id", null: false
     t.datetime "created_at", null: false
     t.string "name", null: false

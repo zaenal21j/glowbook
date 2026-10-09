@@ -1,4 +1,4 @@
-<h2 class="text-lg font-extrabold">Pilih Layanan</h2>
+<h2 class="text-lg font-extrabold"><%= t("booking.choose_services") %></h2>
 <%= form_with url: business_book_update_path(@business.slug, "layanan"), method: :patch, data: { controller: "selection-count" } do |f| %>
   <div class="mt-4 space-y-3">
     <% @services.each do |service| %>
@@ -18,6 +18,6 @@
     <% end %>
   </div>
   <div class="sticky bottom-24 mt-6 lg:bottom-6">
-    <%= f.submit "Lanjutkan", class: "btn-primary btn-lg w-full" %>
+    <%= f.submit t("booking.continue"), class: "btn-primary btn-lg w-full" %>
   </div>
 <% end %>

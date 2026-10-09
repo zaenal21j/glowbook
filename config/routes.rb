@@ -1,8 +1,9 @@
 # Routes for GlowBook - Indonesian beauty & wellness booking marketplace
 
 Rails.application.routes.draw do
-  get "manifest", to: "rails/pwa#manifest", as: :pwa_manifest
-  get "service-worker", to: "rails/pwa#service_worker", as: :pwa_service_worker
+  get "manifest", to: "rails/pwa#manifest", as: :pwa_manifest, defaults: { format: :json }
+  get "service-worker", to: "rails/pwa#service_worker", as: :pwa_service_worker, defaults: { format: :js }
+  post "bahasa/:locale", to: "locales#update", as: :locale
 
   get "notifikasi", to: "notifications#index", as: :notifications
   patch "notifikasi/baca-semua", to: "notifications#mark_all_read", as: :mark_all_notifications_read
@@ -37,7 +38,7 @@ Rails.application.routes.draw do
   end
 
   # Cancel/reschedule bookings (customer)
-  resources :bookings, only: [ :show, :destroy ], path: "booking" do
+  resources :bookings, only: [ :show ], path: "booking" do
     member do
       patch :cancel
       get :reschedule, path: "ubah-jadwal"
@@ -82,6 +83,16 @@ Rails.application.routes.draw do
     get "analitik", to: "analytics#show", as: :analytics
     get "keuangan", to: "payments#index", as: :finance
     get "profil-bisnis", to: "profiles#show", as: :profile
+    patch "profil-bisnis", to: "profiles#update"
+    resources :blocked_times, except: %i[new show], path: "blokir-waktu"
+    get "staff/:staff_id/jadwal", to: "staff_availability#show", as: :staff_availability
+    post "staff/:staff_id/jadwal/salin", to: "staff_availability#copy_hours", as: :copy_staff_hours
+    post "staff/:staff_id/jadwal/shift", to: "staff_availability#create_shift", as: :staff_shifts
+    patch "staff/:staff_id/jadwal/shift/:id", to: "staff_availability#update_shift", as: :staff_shift
+    delete "staff/:staff_id/jadwal/shift/:id", to: "staff_availability#destroy_shift"
+    post "staff/:staff_id/jadwal/istirahat", to: "staff_availability#create_break", as: :staff_breaks
+    patch "staff/:staff_id/jadwal/istirahat/:id", to: "staff_availability#update_break", as: :staff_break
+    delete "staff/:staff_id/jadwal/istirahat/:id", to: "staff_availability#destroy_break"
     resources :galleries, only: %i[index create destroy], path: "galeri"
     get "pengaturan", to: "settings#show", as: :settings
 
@@ -104,7 +115,7 @@ Rails.application.routes.draw do
       member { patch :update_status }
     end
     get "pembayaran", to: "payments#index", as: :payments
-    resources :categories, path: "kategori" do
+    resources :categories, only: %i[index create edit update destroy], path: "kategori" do
       member { patch :toggle_popular }
     end
     resources :reviews, only: %i[index destroy], path: "ulasan"

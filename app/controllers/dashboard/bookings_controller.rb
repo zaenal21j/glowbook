@@ -29,12 +29,12 @@ class Dashboard::BookingsController < Dashboard::BaseController
     when "no_show"
       booking.mark_no_show!
     else
-      return redirect_to dashboard_bookings_path, alert: "Status booking tidak valid."
+      return redirect_to dashboard_bookings_path, alert: t("alerts.booking.invalid_status")
     end
 
     BookingNotificationDelivery.new(booking: booking, event: notification_event).call if notification_event
-    redirect_to dashboard_bookings_path(status: params[:return_status].presence), notice: "Status booking berhasil diperbarui."
+    redirect_to dashboard_bookings_path(status: params[:return_status].presence), notice: t("alerts.booking.status_updated")
   rescue ActiveRecord::RecordInvalid
-    redirect_to dashboard_bookings_path(status: params[:return_status].presence), alert: "Perubahan status tidak dapat dilakukan untuk booking ini."
+    redirect_to dashboard_bookings_path(status: params[:return_status].presence), alert: t("alerts.booking.transition_failed")
   end
 end

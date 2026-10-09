@@ -1,4 +1,4 @@
-<% content_for :title, "Booking — #{@business.name}" %>
+<% content_for :title, t("booking.title", business: @business.name) %>
 
 <div class="mx-auto max-w-3xl px-4 py-8 lg:px-8">
   <!-- Business mini header -->
@@ -13,7 +13,7 @@
   <!-- Step indicator -->
   <ol class="mt-8 flex items-center justify-between">
     <% step_icons = { "layanan" => "M9.5 3.7 4 6.1v5.4c0 3.6 2.4 6.9 5.5 8.8 3.1-1.9 5.5-5.2 5.5-8.8V6.1l-5.5-2.4Z", "staff" => "M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.5 20.1a7.5 7.5 0 0 1 15 0", "tanggal" => "M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5A2.25 2.25 0 0 1 5.25 5.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25M3 18.75A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75M3 12h18", "waktu" => "M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z", "konfirmasi" => "m4.5 12.75 6 6 9-13.5" } %>
-    <% step_labels = { "layanan" => "Layanan", "staff" => "Staff", "tanggal" => "Tanggal", "waktu" => "Waktu", "konfirmasi" => "Konfirmasi" } %>
+    <% step_labels = { "layanan" => t("booking.steps.services"), "staff" => t("booking.steps.staff"), "tanggal" => t("booking.steps.date"), "waktu" => t("booking.steps.time"), "konfirmasi" => t("booking.steps.confirmation") } %>
     <% current_idx = BookingsFlowController::STEPS.index(@step) %>
     <% BookingsFlowController::STEPS.each_with_index do |s, i| %>
       <li class="flex flex-1 flex-col items-center gap-1.5 <%= 'pointer-events-none' if s != @step %>">

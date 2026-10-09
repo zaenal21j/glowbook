@@ -1,4 +1,4 @@
-<h1>Booking dibatalkan</h1>
-<p>Booking <strong><%= @booking.reference %></strong> telah dibatalkan.</p>
+<h1><%= t("booking_email.cancellation_title") %></h1>
+<p><%= t("booking_email.reference") %> <strong><%= @booking.reference %></strong> <%= t("booking_email.cancellation_body") %></p>
 <%= render "booking_mailer/booking_details" %>
-<p>Jika pembatalan ini tidak sesuai, silakan hubungi <%= @booking.business.name %>.</p>
+<p><%= t("booking_email.contact_business", business: @booking.business.name) %></p>

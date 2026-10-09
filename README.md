@@ -7,6 +7,8 @@ GlowBook adalah marketplace kecantikan dan wellness untuk mencari bisnis, meliha
 - Pencarian bisnis berdasarkan kota, kategori, layanan, dan harga.
 - Booking dengan pemeriksaan ketersediaan jadwal agar slot tidak dipesan ganda.
 - Dashboard pelanggan dan pemilik bisnis, termasuk layanan, staff, booking, promosi, dan galeri.
+- Pengaturan jam operasional, beberapa shift staff per hari, istirahat mingguan, dan blokir waktu untuk staff atau seluruh bisnis.
+- Pilihan bahasa Indonesia/Inggris untuk halaman publik, akun, dashboard, admin, dan pesan booking.
 - Pendaftaran bisnis yang menunggu verifikasi admin.
 - Chat pelanggan dan bisnis, email booking melalui antrean, serta notifikasi in-app.
 - Dashboard admin untuk mengelola pengguna, bisnis, booking, kategori, ulasan, promosi, dan laporan bulanan yang dapat diunduh sebagai CSV.
@@ -34,6 +36,21 @@ Project menyertakan Dockerfile dan Compose untuk menjalankan image production sa
 bundle exec rspec
 ```
 
+Pengujian juga dapat dijalankan melalui Docker dengan database sementara yang terpisah dari stack lokal:
+
+```bash
+docker compose -f compose.test.yaml up --build --abort-on-container-exit --exit-code-from tests
+docker compose -f compose.test.yaml down --remove-orphans
+```
+
+Pengujian cache service worker dan bahasa halaman offline menggunakan Node.js:
+
+```bash
+node --test spec/javascript/*_test.cjs
+```
+
+GitHub Actions menjalankan suite Rails, pengujian service worker, pemeriksaan route/template/terjemahan, pemindaian Brakeman, dan build image production untuk push ke `main`, cabang `codex/**`, serta pull request. Workflow tidak menggunakan secret production dan tidak melakukan deployment.
+
 ## Catatan kesiapan production
 
-Image Docker dan startup container sudah dapat diverifikasi secara lokal. Deploy publik tetap memerlukan domain HTTPS, secret production, email SMTP, backup database, dan pemeriksaan operasional. Settlement/komisi otomatis bergantung pada penyelesaian serta verifikasi integrasi pembayaran; Midtrans tetap menjadi tahap terakhir.
+Image Docker dan startup container sudah dapat diverifikasi secara lokal. Deploy publik tetap memerlukan domain HTTPS, secret production, email SMTP, backup database, dan pemeriksaan operasional. Settlement/komisi otomatis termasuk tahap keuangan yang belum selesai. Implementasi Midtrans dipertahankan selama fitur non-pembayaran diselesaikan; migrasi ke Duitku dilakukan pada tahap pembayaran terakhir sesuai arahan pemilik project.

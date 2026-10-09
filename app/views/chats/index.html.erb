@@ -1,9 +1,9 @@
-<% content_for :title, params[:audience] == "business" ? "Pesan Bisnis — GlowBook" : "Pesan Saya — GlowBook" %>
+<% content_for :title, params[:audience] == "business" ? t("chat_page.business_title") : t("chat_page.customer_title") %>
 
 <div class="mx-auto max-w-3xl px-4 py-8 lg:px-8">
   <div class="mb-5">
-    <h1 class="text-2xl font-extrabold"><%= params[:audience] == "business" ? "Pesan Bisnis" : "Pesan Saya" %></h1>
-    <p class="mt-1 text-sm text-ink-500">Percakapan dengan pelanggan dan bisnis tersimpan di sini.</p>
+    <h1 class="text-2xl font-extrabold"><%= params[:audience] == "business" ? t("chat_page.business_heading") : t("chat_page.customer_heading") %></h1>
+    <p class="mt-1 text-sm text-ink-500"><%= t("chat_page.description") %></p>
   </div>
 
   <% if @conversations.any? %>
@@ -14,21 +14,21 @@
           <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary-50 font-bold text-primary-700"><%= other_party.first.upcase %></div>
           <div class="min-w-0 flex-1">
             <p class="truncate font-bold"><%= other_party %></p>
-            <p class="truncate text-xs text-ink-500"><%= conversation.last_message_at ? l(conversation.last_message_at, format: "%d %b %Y, %H:%M") : "Percakapan baru" %></p>
+            <p class="truncate text-xs text-ink-500"><%= conversation.last_message_at ? l(conversation.last_message_at, format: "%d %b %Y, %H:%M") : t("chat_page.new_conversation") %></p>
           </div>
           <% unread_count = @unread_counts[conversation.id].to_i %>
           <% if unread_count.positive? %>
-            <span class="badge badge-primary"><%= unread_count %> baru</span>
+            <span class="badge badge-primary"><%= t("chat_page.unread_count", count: unread_count) %></span>
           <% end %>
         <% end %>
       <% end %>
     </div>
   <% else %>
     <div class="card p-10 text-center">
-      <p class="font-semibold">Belum ada percakapan.</p>
-      <p class="mt-1 text-sm text-ink-500"><%= params[:audience] == "business" ? "Pesan dari pelanggan akan muncul di sini." : "Buka halaman bisnis untuk memulai percakapan." %></p>
+      <p class="font-semibold"><%= t("chat_page.empty") %></p>
+      <p class="mt-1 text-sm text-ink-500"><%= params[:audience] == "business" ? t("chat_page.business_empty_help") : t("chat_page.customer_empty_help") %></p>
       <% if params[:audience] != "business" %>
-        <%= link_to "Cari bisnis", search_path, class: "btn-primary btn-md mt-4" %>
+        <%= link_to t("chat_page.find_business"), search_path, class: "btn-primary btn-md mt-4" %>
       <% end %>
     </div>
   <% end %>

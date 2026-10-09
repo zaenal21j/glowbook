@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="<%= I18n.locale %>">
   <head>
-    <title><%= content_for(:title) || "Dashboard — GlowBook" %></title>
+    <title><%= content_for(:title) || "#{t('dashboard.title')} — GlowBook" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag :app %>
@@ -23,7 +23,7 @@
         <div class="absolute bottom-0 w-full border-t border-gray-100 p-4">
           <%= link_to root_path, class: "sidebar-link" do %>
             <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75"/></svg>
-            Kembali ke Beranda
+            <%= t("dashboard.back_home") %>
           <% end %>
         </div>
       </aside>
@@ -32,13 +32,14 @@
       <div class="flex min-w-0 flex-1 flex-col">
         <header class="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-gray-100 bg-white/95 px-4 backdrop-blur lg:px-8">
           <div class="flex items-center gap-3">
-            <h1 class="font-extrabold"><%= content_for(:page_title) || "Dashboard" %></h1>
+            <h1 class="font-extrabold"><%= content_for(:page_title) || t("dashboard.title") %></h1>
           </div>
           <div class="flex items-center gap-3">
             <% if user_signed_in? %>
               <span class="hidden text-sm text-ink-500 sm:block"><%= current_user.full_name %></span>
               <span class="flex h-9 w-9 items-center justify-center rounded-full bg-primary-600 text-sm font-bold text-white"><%= current_user.initial %></span>
             <% end %>
+            <%= render "shared/locale_switcher" %>
           </div>
         </header>
         <main class="flex-1 p-4 lg:p-8">

@@ -1,0 +1,31 @@
+name: glowbook-verification
+
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: glowbook_test
+      POSTGRES_USER: glowbook_test
+      POSTGRES_PASSWORD: glowbook_test
+    tmpfs:
+      - /var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U glowbook_test -d glowbook_test"]
+      interval: 2s
+      timeout: 5s
+      retries: 15
+
+  tests:
+    build:
+      context: .
+      target: verification
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      RAILS_ENV: test
+      SECRET_KEY_BASE_DUMMY: "1"
+      PGHOST: db
+      PGUSER: glowbook_test
+      PGPASSWORD: glowbook_test
+    command: ["/bin/bash", "-c", "./bin/rails db:prepare && bundle exec rspec"]

@@ -23,6 +23,6 @@ class BookingItem < ApplicationRecord
   def staff_must_serve_service
     return if staff.services.include?(service)
 
-    errors.add(:staff, "tidak melayani layanan ini")
+    errors.add(:staff, I18n.t("validation.staff_service"))
   end
 end

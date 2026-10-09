@@ -1,0 +1,32 @@
+en:
+  alerts:
+    reviews:
+      completed_visit_required: Only customers with a completed booking at this business can write a review.
+    oauth:
+      facebook_account_conflict: This Facebook account cannot be used to sign in. If the email is already registered, sign in with your email and password.
+    account:
+      deletion_restricted: Admin accounts and accounts with transaction history or business records cannot be deleted here.
+  display:
+    facebook_user: Facebook user
+    therapist: Therapist
+    new_business: New
+    duration:
+      hours:
+        one: "%{count} hour"
+        other: "%{count} hours"
+      minutes:
+        one: "%{count} minute"
+        other: "%{count} minutes"
+  validation:
+    duplicate_review: has already reviewed this business
+    booking:
+      complete_after_end: can only be completed after the appointment ends
+      no_show_after_start: can only be marked as a no-show after the appointment starts
+      not_in_past: cannot be in the past
+      foreign_service: The service does not belong to this business
+    staff_service: does not provide this service
+    gallery:
+      required: must be uploaded
+      type: must be a JPG, PNG, or WebP image
+      size: must be no larger than 10 MB
+    chat_participant: is not a participant in this conversation

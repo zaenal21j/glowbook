@@ -1,6 +1,8 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
+ENV['FACEBOOK_APP_ID'] ||= 'glowbook-test-app'
+ENV['FACEBOOK_APP_SECRET'] ||= 'glowbook-test-secret'
 require_relative '../config/environment'
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?

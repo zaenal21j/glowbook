@@ -1,10 +1,11 @@
-Booking berhasil dikonfirmasi
+<%= t("booking_email.confirmation_title") %>
 
-Kode booking: <%= @booking.reference %>
-Bisnis: <%= @booking.business.name %>
-Layanan: <%= @booking.booking_items.map(&:label).join(", ") %>
-Tanggal: <%= I18n.l(@booking.start_time, format: "%A, %d %B %Y") %>
-Waktu: <%= @booking.start_time.strftime("%H:%M") %>–<%= @booking.end_time.strftime("%H:%M") %> WIB
-Status: <%= @booking.status.humanize %>
+<%= t("booking_email.reference") %>: <%= @booking.reference %>
+<%= t("booking_email.business") %>: <%= @booking.business.name %>
+<%= t("booking_email.services") %>: <%= @booking.booking_items.map(&:label).join(", ") %>
+<%= t("booking_email.date") %>: <%= I18n.l(@booking.start_time, format: "%A, %d %B %Y") %>
+<%= t("booking_email.time") %>: <%= I18n.l(@booking.start_time, format: "%H:%M") %>–<%= I18n.l(@booking.end_time, format: "%H:%M") %> WIB
+<%= t("booking_email.status") %>: <%= t("booking.status.#{@booking.status}") %>
 
-Detail booking: <%= booking_url(@booking.reference) %>
+<%= t("booking_email.confirmation_help") %>
+<%= t("booking_email.see_booking") %>: <%= booking_url(@booking.reference) %>

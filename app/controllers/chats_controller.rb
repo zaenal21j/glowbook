@@ -6,7 +6,7 @@ class ChatsController < ApplicationController
   def index
     if params[:audience] == "business"
       @business = business_for_current_user
-      return redirect_to root_path, alert: "Anda tidak memiliki akses ke pesan bisnis." unless @business
+      return redirect_to root_path, alert: t("alerts.access.business_messages_forbidden") unless @business
 
       @conversations = @business.conversations.includes(:customer).recent.limit(100)
     else
@@ -23,7 +23,7 @@ class ChatsController < ApplicationController
   def start
     business = Business.active.find_by!(slug: params[:slug])
     if business.owner_id == current_user.id || business.staff.exists?(user_id: current_user.id)
-      return redirect_to business_detail_path(business.slug), alert: "Anda tidak dapat mengirim pesan ke bisnis sendiri."
+      return redirect_to business_detail_path(business.slug), alert: t("alerts.access.own_business_chat")
     end
 
     conversation = Conversation.find_or_create_by!(business: business, customer: current_user)

@@ -3,17 +3,21 @@
 
 require "open-uri"
 
+abort "Demo seeds are only allowed in development. Use rails glowbook:bootstrap for production setup." unless Rails.env.development?
+
 puts "== Seeding GlowBook =="
 
 # --- Clean slate -----------------------------------------------------------
-[BookingItem, Booking, Review, Favorite, Promotion, BlockedTime, StaffBreak,
+[ChatMessage, Conversation, UserNotification, PaymentAttempt,
+ BookingItem, Booking, Review, Favorite, Promotion, BlockedTime, StaffBreak,
  StaffSchedule, StaffService, Staff, Service, BusinessHour, BusinessGallery,
  BusinessCategory, Business, Category, City, User].each(&:delete_all)
 ActiveStorage::Attachment.where(record_type: ["Business", "Staff", "BusinessGallery", "Service"]).delete_all
+ActiveStorage::VariantRecord.delete_all
 ActiveStorage::Blob.delete_all
 
 def fetch_image(seed, w = 1200, h = 800)
-  io = URI.open("https://picsum.photos/seed/#{seed}/#{w}/#{h}", read_timeout: 20)
+  io = URI.open("https://picsum.photos/seed/#{seed}/#{w}/#{h}", open_timeout: 5, read_timeout: 20)
   { io: io, filename: "#{seed}.jpg", content_type: "image/jpeg" }
 rescue StandardError => e
   Rails.logger.warn("picsum seed #{seed} failed: #{e.message}")
@@ -224,7 +228,7 @@ BUSINESS_TEMPLATE.each_with_index do |(name, cat_slugs, city_name, rating, servi
   4.times do |gi|
     g = BusinessGallery.new(business: business, caption: "Galeri #{gi + 1}", position: gi)
     attach(g, :image, "#{slug}-gallery-#{gi}", 1200, 800)
-    g.save!
+    g.save! if g.image.attached?
   end
 
   attach(business, :cover_image, "#{slug}-cover", 1600, 900)

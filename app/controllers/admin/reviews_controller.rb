@@ -12,6 +12,6 @@ class Admin::ReviewsController < Admin::BaseController
     review = Review.find(params[:id])
     business = review.business
     review.destroy
-    redirect_to admin_reviews_path, notice: "Ulasan dari #{business.name} dihapus."
+    redirect_to admin_reviews_path, notice: I18n.t("admin.reviews.flash_deleted", business: business.name)
   end
 end

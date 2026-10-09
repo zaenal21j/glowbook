@@ -33,4 +33,6 @@ Devise.setup do |config|
 
   # ==> Navigation
   config.navigational_formats = ["*/*", :html, :turbo_stream]
+  config.responder.error_status = :unprocessable_content
+  config.responder.redirect_status = :see_other
 end

@@ -44,7 +44,7 @@ class SearchesController < ApplicationController
     latitude = Float(params[:latitude], exception: false)
     longitude = Float(params[:longitude], exception: false)
     unless latitude && longitude && (-90..90).cover?(latitude) && (-180..180).cover?(longitude)
-      return redirect_to search_path(search_filters), alert: "Lokasi tidak valid. Coba lagi dari browser Anda."
+      return redirect_to search_path(search_filters), alert: t("alerts.search.invalid_location")
     end
 
     session[:nearby_search_origin] = {

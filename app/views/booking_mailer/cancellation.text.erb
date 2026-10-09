@@ -1,6 +1,7 @@
-Booking dibatalkan
+<%= t("booking_email.cancellation_title") %>
 
-Booking <%= @booking.reference %> telah dibatalkan.
-Bisnis: <%= @booking.business.name %>
-Tanggal: <%= I18n.l(@booking.start_time, format: "%A, %d %B %Y") %>
-Waktu: <%= @booking.start_time.strftime("%H:%M") %>–<%= @booking.end_time.strftime("%H:%M") %> WIB
+<%= t("booking_email.reference") %>: <%= @booking.reference %> <%= t("booking_email.cancellation_body") %>
+<%= t("booking_email.business") %>: <%= @booking.business.name %>
+<%= t("booking_email.date") %>: <%= I18n.l(@booking.start_time, format: "%A, %d %B %Y") %>
+<%= t("booking_email.time") %>: <%= I18n.l(@booking.start_time, format: "%H:%M") %>–<%= I18n.l(@booking.end_time, format: "%H:%M") %> WIB
+<%= t("booking_email.contact_business", business: @booking.business.name) %>

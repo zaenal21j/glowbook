@@ -2,7 +2,7 @@ class Service < ApplicationRecord
   belongs_to :business
   belongs_to :category
 
-  has_many :booking_items, dependent: :destroy
+  has_many :booking_items, dependent: :restrict_with_error
   has_many :staff_services, dependent: :destroy
   has_many :staff, through: :staff_services
 

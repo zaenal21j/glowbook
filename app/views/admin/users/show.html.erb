@@ -6,23 +6,23 @@
     <%= avatar_placeholder(@user.full_name, size: 14) %>
     <div>
       <h2 class="text-xl font-extrabold"><%= @user.full_name %></h2>
-      <p class="text-sm text-ink-500"><%= @user.email %> · <%= @user.role.humanize %></p>
+      <p class="text-sm text-ink-500"><%= @user.email %> · <%= t("admin.users.roles.#{@user.role}", default: @user.role.humanize) %></p>
       <% if @user.phone.present? %><p class="text-sm text-ink-500">📞 <%= @user.phone %></p><% end %>
     </div>
   </div>
 </div>
 
-<h2 class="mt-6 text-lg font-extrabold">Riwayat Booking</h2>
+<h2 class="mt-6 text-lg font-extrabold"><%= t("admin.users.booking_history") %></h2>
 <div class="card mt-4 overflow-x-auto">
   <table class="w-full text-sm">
     <thead>
       <tr class="border-b border-gray-100 text-left text-xs uppercase tracking-wide text-ink-500">
-        <th class="px-4 py-3">Kode</th>
-        <th class="px-4 py-3">Bisnis</th>
-        <th class="px-4 py-3">Layanan</th>
-        <th class="px-4 py-3">Waktu</th>
-        <th class="px-4 py-3">Total</th>
-        <th class="px-4 py-3">Status</th>
+        <th class="px-4 py-3"><%= t("admin.users.code") %></th>
+        <th class="px-4 py-3"><%= t("admin.users.business") %></th>
+        <th class="px-4 py-3"><%= t("admin.users.service") %></th>
+        <th class="px-4 py-3"><%= t("admin.users.time") %></th>
+        <th class="px-4 py-3"><%= t("admin.users.total") %></th>
+        <th class="px-4 py-3"><%= t("admin.users.status") %></th>
       </tr>
     </thead>
     <tbody class="divide-y divide-gray-50">
@@ -31,13 +31,13 @@
           <td class="px-4 py-3 font-mono text-xs"><%= b.reference %></td>
           <td class="px-4 py-3"><%= b.business.name %></td>
           <td class="px-4 py-3"><%= b.booking_items.map(&:label).join(", ") %></td>
-          <td class="px-4 py-3 whitespace-nowrap"><%= b.start_time.strftime("%d %b %Y, %H:%M") %></td>
+          <td class="px-4 py-3 whitespace-nowrap"><%= l(b.start_time, format: "%d %b %Y, %H:%M") %></td>
           <td class="px-4 py-3 font-semibold"><%= format_idr(b.total_amount) %></td>
-          <td class="px-4 py-3"><span class="badge <%= b.status_badge_class %>"><%= b.status.humanize %></span></td>
+          <td class="px-4 py-3"><span class="badge <%= b.status_badge_class %>"><%= t("booking.status.#{b.status}", default: b.status.humanize) %></span></td>
         </tr>
       <% end %>
       <% if @bookings.empty? %>
-        <tr><td colspan="6" class="px-4 py-10 text-center text-ink-500">Belum ada booking.</td></tr>
+        <tr><td colspan="6" class="px-4 py-10 text-center text-ink-500"><%= t("admin.users.no_bookings") %></td></tr>
       <% end %>
     </tbody>
   </table>

@@ -1,20 +1,20 @@
-<% content_for :title, "Kata Sandi Baru — GlowBook" %>
+<% content_for :title, t("auth.new_password_title") %>
 
 <div class="mx-auto flex max-w-md flex-col px-4 py-12">
   <div class="card p-6 sm:p-8">
-    <h1 class="text-xl font-extrabold">Buat kata sandi baru</h1>
+    <h1 class="text-xl font-extrabold"><%= t("auth.create_new_password") %></h1>
     <%= form_with model: resource, as: resource_name, url: password_path(resource_name), method: :patch, class: "mt-6 space-y-4" do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
       <%= f.hidden_field :reset_password_token %>
       <div>
-        <%= f.label :password, "Kata Sandi Baru", class: "label" %>
+        <%= f.label :password, t("auth.new_password"), class: "label" %>
         <%= f.password_field :password, autofocus: true, class: "input" %>
       </div>
       <div>
-        <%= f.label :password_confirmation, "Konfirmasi Kata Sandi", class: "label" %>
+        <%= f.label :password_confirmation, t("auth.confirm_password"), class: "label" %>
         <%= f.password_field :password_confirmation, class: "input" %>
       </div>
-      <%= f.submit "Simpan Kata Sandi", class: "btn-primary btn-lg w-full" %>
+      <%= f.submit t("auth.save_password"), class: "btn-primary btn-lg w-full" %>
     <% end %>
   </div>
 </div>

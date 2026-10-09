@@ -12,7 +12,7 @@ class Dashboard::ServicesController < Dashboard::BaseController
     @service = @business.services.build(service_params)
 
     if @service.save
-      redirect_to dashboard_services_path, notice: "Layanan \"#{@service.name}\" dibuat."
+      redirect_to dashboard_services_path, notice: t("business_management.services.flash.created", name: @service.name)
     else
       render :new, status: :unprocessable_entity
     end
@@ -26,7 +26,7 @@ class Dashboard::ServicesController < Dashboard::BaseController
     @service = @business.services.find(params[:id])
 
     if @service.update(service_params)
-      redirect_to dashboard_services_path, notice: "Layanan diperbarui."
+      redirect_to dashboard_services_path, notice: t("business_management.services.flash.updated")
     else
       render :edit, status: :unprocessable_entity
     end
@@ -34,8 +34,11 @@ class Dashboard::ServicesController < Dashboard::BaseController
 
   def destroy
     @service = @business.services.find(params[:id])
-    @service.destroy
-    redirect_to dashboard_services_path, notice: "Layanan dihapus."
+    if @service.destroy
+      redirect_to dashboard_services_path, notice: t("business_management.services.flash.deleted")
+    else
+      redirect_to dashboard_services_path, alert: t("scheduling.errors.service_in_use")
+    end
   end
 
   private

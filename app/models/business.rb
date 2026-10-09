@@ -19,8 +19,7 @@ class Business < ApplicationRecord
   has_many :conversations, dependent: :destroy
   has_many :customers, -> { distinct }, through: :bookings, source: :user
 
-  accepts_nested_attributes_for :business_hours, allow_destroy: true,
-                                                 reject_if: ->(attrs) { attrs["open_minute"].blank? }
+  accepts_nested_attributes_for :business_hours
 
   validates :name, presence: true, length: { maximum: 150 }
   validates :slug, presence: true, uniqueness: true
@@ -36,6 +35,7 @@ class Business < ApplicationRecord
 
   scope :active, -> { where(status: :active) }
   scope :in_city, ->(slug) { joins(:city).where(cities: { slug: slug }) }
+  scope :open_today, -> { joins(:business_hours).where(business_hours: { weekday: Date.current.wday, closed: false }) }
   scope :with_category, ->(slug) { joins(:categories).where(categories: { slug: slug }) }
   scope :min_rating, ->(r) { where("avg_rating >= ?", r.to_f) if r.present? }
   scope :has_promo, -> { joins(:promotions).merge(Promotion.active_now).distinct }
@@ -43,7 +43,7 @@ class Business < ApplicationRecord
   scope :search, ->(q) { where("businesses.name ILIKE :q OR businesses.address ILIKE :q", q: "%#{q}%") if q.present? }
   scope :with_any_category, ->(slugs) { joins(:categories).where(categories: { slug: slugs }).distinct }
   scope :price_between, ->(min, max) {
-    sub = Service.select("business_id, MIN(price) AS min_price").group(:business_id).to_sql
+    sub = Service.active.select("business_id, MIN(price) AS min_price").group(:business_id).to_sql
     scope = joins("JOIN (#{sub}) svc ON svc.business_id = businesses.id")
     scope = scope.where("svc.min_price >= ?", min.to_i) if min.present?
     scope = scope.where("svc.min_price <= ?", max.to_i) if max.present?
@@ -51,7 +51,7 @@ class Business < ApplicationRecord
   }
   scope :by_rating, -> { order(avg_rating: :desc).order(:name) }
   scope :by_min_price, -> {
-    service_prices = Service.select("business_id, MIN(price) AS lowest_service_price").group(:business_id).to_sql
+    service_prices = Service.active.select("business_id, MIN(price) AS lowest_service_price").group(:business_id).to_sql
     joins("LEFT JOIN (#{service_prices}) service_prices ON service_prices.business_id = businesses.id")
       .select("businesses.*, service_prices.lowest_service_price")
       .order(Arel.sql("lowest_service_price ASC NULLS LAST"))
@@ -96,11 +96,11 @@ class Business < ApplicationRecord
   end
 
   def price_from
-    services.minimum(:price) || 0
+    services.active.minimum(:price) || 0
   end
 
   def rating_label
-    avg_rating ? format("%.1f", avg_rating) : "Baru"
+    avg_rating ? format("%.1f", avg_rating) : I18n.t("display.new_business")
   end
 
   def categories_list

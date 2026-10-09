@@ -1,5 +1,5 @@
 const CACHE_PREFIX = "glowbook-static-"
-const CACHE_NAME = `${CACHE_PREFIX}v1`
+const CACHE_NAME = `${CACHE_PREFIX}v2`
 const FALLBACK_PAGE = "/offline.html"
 const PRECACHE_URLS = [FALLBACK_PAGE, "/icon.png", "/icon.svg"]
 

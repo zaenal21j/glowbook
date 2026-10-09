@@ -1,7 +1,7 @@
 <%= render "admin/shared/sidebar" %>
-<% content_for :page_title, "Edit Kategori" %>
+<% content_for :page_title, t("admin.categories.edit_title") %>
 
 <div class="max-w-xl card p-6">
-  <h3 class="font-semibold mb-4">Edit Kategori: <%= @category.name %></h3>
+  <h3 class="font-semibold mb-4"><%= t("admin.categories.edit_title") %>: <%= @category.name %></h3>
   <%= render "form", category: @category, url: admin_category_path(@category) %>
 </div>

@@ -1,8 +1,8 @@
-Jadwal booking berubah
+<%= t("booking_email.reschedule_title") %>
 
-Jadwal booking <%= @booking.reference %> telah diperbarui.
-Bisnis: <%= @booking.business.name %>
-Tanggal: <%= I18n.l(@booking.start_time, format: "%A, %d %B %Y") %>
-Waktu: <%= @booking.start_time.strftime("%H:%M") %>–<%= @booking.end_time.strftime("%H:%M") %> WIB
+<%= t("booking_email.reference") %>: <%= @booking.reference %> <%= t("booking_email.reschedule_body") %>
+<%= t("booking_email.business") %>: <%= @booking.business.name %>
+<%= t("booking_email.date") %>: <%= I18n.l(@booking.start_time, format: "%A, %d %B %Y") %>
+<%= t("booking_email.time") %>: <%= I18n.l(@booking.start_time, format: "%H:%M") %>–<%= I18n.l(@booking.end_time, format: "%H:%M") %> WIB
 
-Detail booking: <%= booking_url(@booking.reference) %>
+<%= t("booking_email.see_booking") %>: <%= booking_url(@booking.reference) %>

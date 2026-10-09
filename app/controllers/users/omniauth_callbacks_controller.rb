@@ -1,7 +1,7 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def facebook
     auth = request.env["omniauth.auth"]
-    return redirect_to login_path, alert: "Login Facebook dibatalkan atau gagal." unless auth
+    return redirect_to login_path, alert: t("alerts.oauth.facebook_cancelled_or_failed") unless auth
 
     @user = User.from_facebook(auth)
 
@@ -9,11 +9,13 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       sign_in_and_redirect @user, event: :authentication
       set_flash_message(:notice, :success, kind: "Facebook") if is_navigational_format?
     else
-      redirect_to new_user_registration_url, alert: "Gagal masuk dengan Facebook. Coba lagi."
+      redirect_to new_user_registration_url, alert: t("alerts.oauth.facebook_signin_failed")
     end
+  rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotUnique
+    redirect_to login_path, alert: t("alerts.oauth.facebook_account_conflict")
   end
 
   def failure
-    redirect_to login_path, alert: "Login Facebook dibatalkan atau gagal."
+    redirect_to login_path, alert: t("alerts.oauth.facebook_cancelled_or_failed")
   end
 end

@@ -1,30 +1,30 @@
-<% content_for :page_title, "Daftarkan Bisnis Anda" %>
+<% content_for :page_title, t("business_signup.title") %>
 
 <div class="mx-auto max-w-2xl px-4 py-12">
   <div class="card p-6 sm:p-8">
-    <h1 class="text-2xl font-extrabold">Daftarkan Bisnis Anda</h1>
-    <p class="mt-2 text-sm text-ink-500">Buat profil awal, lalu lengkapi layanan dan staff dari dashboard. Bisnis akan ditinjau admin sebelum tampil di marketplace.</p>
+    <h1 class="text-2xl font-extrabold"><%= t("business_signup.title") %></h1>
+    <p class="mt-2 text-sm text-ink-500"><%= t("business_signup.description") %></p>
 
     <% if !@business_registrations_open %>
       <div class="mt-6 rounded-xl bg-amber-50 p-4 text-sm text-amber-800">
-        Pendaftaran bisnis sedang ditutup sementara. Silakan coba kembali nanti.
+        <%= t("business_signup.closed") %>
       </div>
     <% elsif !user_signed_in? %>
       <div class="mt-6 rounded-xl bg-primary-50 p-4 text-sm text-primary-800">
-        Anda perlu masuk atau membuat akun pelanggan sebelum mendaftarkan bisnis.
+        <%= t("business_signup.sign_in_required") %>
       </div>
       <div class="mt-5 flex flex-wrap gap-3">
-        <%= link_to "Masuk", login_path, class: "btn-primary btn-md" %>
-        <%= link_to "Buat Akun", signup_path, class: "btn-secondary btn-md" %>
+        <%= link_to t("business_signup.sign_in"), login_path, class: "btn-primary btn-md" %>
+        <%= link_to t("business_signup.create_account"), signup_path, class: "btn-secondary btn-md" %>
       </div>
     <% elsif current_user.businesses.exists? %>
       <div class="mt-6 rounded-xl bg-primary-50 p-4 text-sm text-primary-800">
-        Akun ini sudah memiliki bisnis. Kelola data bisnis dari dashboard.
+        <%= t("business_signup.already_has_business") %>
       </div>
-      <%= link_to "Buka Dashboard Bisnis", dashboard_root_path, class: "btn-primary btn-md mt-5" %>
+      <%= link_to t("business_signup.open_dashboard"), dashboard_root_path, class: "btn-primary btn-md mt-5" %>
     <% elsif !current_user.customer? && !current_user.business_owner? %>
       <div class="mt-6 rounded-xl bg-amber-50 p-4 text-sm text-amber-800">
-        Peran akun ini tidak dapat mendaftarkan bisnis. Gunakan akun pelanggan atau pemilik bisnis.
+        <%= t("business_signup.role_not_allowed") %>
       </div>
     <% else %>
       <% if @business.errors.any? %>
@@ -39,35 +39,35 @@
 
       <%= form_with model: @business, url: buat_registrasi_bisnis_path, class: "mt-6 space-y-4" do |f| %>
         <div>
-          <%= f.label :name, "Nama bisnis", class: "label" %>
-          <%= f.text_field :name, required: true, maxlength: 150, class: "input", placeholder: "Contoh: Bellezza Hair Studio" %>
+          <%= f.label :name, t("business_signup.business_name"), class: "label" %>
+          <%= f.text_field :name, required: true, maxlength: 150, class: "input", placeholder: t("business_signup.business_name_example") %>
         </div>
         <div>
-          <%= f.label :phone, "Nomor telepon / WhatsApp", class: "label" %>
+          <%= f.label :phone, t("business_signup.phone"), class: "label" %>
           <%= f.telephone_field :phone, required: true, maxlength: 16, class: "input", placeholder: "+62812xxxxxxx" %>
-          <p class="mt-1 text-xs text-ink-400">Gunakan kode negara, misalnya +6281234567890.</p>
+          <p class="mt-1 text-xs text-ink-400"><%= t("business_signup.country_code_help") %></p>
         </div>
         <div>
-          <%= f.label :city_id, "Kota", class: "label" %>
-          <%= f.collection_select :city_id, @cities, :id, :name, { include_blank: "Pilih kota" }, { required: true, class: "input" } %>
+          <%= f.label :city_id, t("business_signup.city"), class: "label" %>
+          <%= f.collection_select :city_id, @cities, :id, :name, { include_blank: t("business_signup.choose_city") }, { required: true, class: "input" } %>
         </div>
         <div>
-          <%= f.label :address, "Alamat lengkap", class: "label" %>
-          <%= f.text_field :address, required: true, maxlength: 255, class: "input", placeholder: "Nama jalan, nomor, dan area" %>
+          <%= f.label :address, t("business_signup.address"), class: "label" %>
+          <%= f.text_field :address, required: true, maxlength: 255, class: "input", placeholder: t("business_signup.address_example") %>
         </div>
         <div class="grid gap-4 sm:grid-cols-2">
           <div>
-            <%= f.label :latitude, "Latitude (opsional)", class: "label" %>
+            <%= f.label :latitude, t("business_signup.latitude"), class: "label" %>
             <%= f.number_field :latitude, min: -90, max: 90, step: "0.000001", class: "input" %>
           </div>
           <div>
-            <%= f.label :longitude, "Longitude (opsional)", class: "label" %>
+            <%= f.label :longitude, t("business_signup.longitude"), class: "label" %>
             <%= f.number_field :longitude, min: -180, max: 180, step: "0.000001", class: "input" %>
           </div>
         </div>
-        <p class="-mt-2 text-xs text-ink-500">Koordinat membantu pelanggan menemukan lokasi di peta dan mengurutkan bisnis terdekat.</p>
+        <p class="-mt-2 text-xs text-ink-500"><%= t("business_signup.coordinates_help") %></p>
         <fieldset>
-          <legend class="label">Kategori bisnis</legend>
+          <legend class="label"><%= t("business_signup.categories") %></legend>
           <div class="mt-2 grid gap-2 sm:grid-cols-2">
             <% @categories.each do |category| %>
               <label class="flex items-center gap-2 rounded-lg border border-line p-3 text-sm">
@@ -77,8 +77,8 @@
             <% end %>
           </div>
         </fieldset>
-        <p class="text-xs text-ink-500">Jam awal diatur Senin–Sabtu 09.00–17.00 dan Minggu tutup. Setelah mendaftar, hubungi dukungan untuk perubahan jam operasional.</p>
-        <%= f.submit "Daftarkan Bisnis", class: "btn-primary btn-md w-full" %>
+        <p class="text-xs text-ink-500"><%= t("business_signup.hours_help") %></p>
+        <%= f.submit t("business_signup.submit"), class: "btn-primary btn-md w-full" %>
       <% end %>
     <% end %>
   </div>

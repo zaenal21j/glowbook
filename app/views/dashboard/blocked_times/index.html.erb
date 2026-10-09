@@ -1,0 +1,60 @@
+<%= render "dashboard/shared/sidebar" %>
+<% content_for :page_title, t("scheduling.blocks.title") %>
+
+<div class="max-w-4xl space-y-5">
+  <div>
+    <h1 class="text-xl font-extrabold"><%= t("scheduling.blocks.title") %></h1>
+    <p class="mt-1 text-sm text-ink-500"><%= t("scheduling.blocks.description") %></p>
+  </div>
+
+  <%= form_with model: @blocked_time, url: @blocked_time.persisted? ? dashboard_blocked_time_path(@blocked_time) : dashboard_blocked_times_path, class: "card space-y-4 p-5" do |f| %>
+    <h2 class="font-bold"><%= t(@blocked_time.persisted? ? "scheduling.blocks.edit_title" : "scheduling.blocks.add_title") %></h2>
+    <%= render "shared/form_errors", record: @blocked_time %>
+    <div class="grid gap-4 sm:grid-cols-2">
+      <div>
+        <%= f.label :staff_id, t("scheduling.blocks.staff"), class: "label" %>
+        <%= f.collection_select :staff_id, @staff_members, :id, :name, { include_blank: t("scheduling.blocks.all_staff") }, class: "input" %>
+      </div>
+      <div>
+        <%= f.label :reason, t("scheduling.blocks.reason"), class: "label" %>
+        <%= f.text_field :reason, maxlength: 255, required: true, class: "input", placeholder: t("scheduling.blocks.reason_example") %>
+      </div>
+      <div>
+        <%= f.label :start_time, t("scheduling.blocks.starts_at"), class: "label" %>
+        <%= f.datetime_local_field :start_time, step: 60, required: true, class: "input" %>
+      </div>
+      <div>
+        <%= f.label :end_time, t("scheduling.blocks.ends_at"), class: "label" %>
+        <%= f.datetime_local_field :end_time, step: 60, required: true, class: "input" %>
+      </div>
+    </div>
+    <p class="text-xs text-ink-500"><%= t("scheduling.blocks.help") %></p>
+    <div class="flex gap-2">
+      <%= f.submit t("scheduling.save"), class: "btn-primary btn-sm" %>
+      <% if @blocked_time.persisted? %><%= link_to t("scheduling.cancel"), dashboard_blocked_times_path, class: "btn-ghost btn-sm" %><% end %>
+    </div>
+  <% end %>
+
+  <nav class="flex flex-wrap gap-2" aria-label="<%= t('scheduling.blocks.filter_label') %>">
+    <% %w[upcoming past all].each do |filter| %>
+      <%= link_to t("scheduling.blocks.filters.#{filter}"), dashboard_blocked_times_path(filter: filter), class: "chip #{'chip-active' if @filter == filter}" %>
+    <% end %>
+  </nav>
+  <div class="space-y-3">
+    <% @blocked_times.each do |block| %>
+      <article class="card flex flex-wrap items-center justify-between gap-3 p-4">
+        <div>
+          <h2 class="font-semibold"><%= block.reason %></h2>
+          <p class="mt-1 text-sm text-ink-500"><%= block.staff&.name || t("scheduling.blocks.all_staff") %></p>
+          <p class="mt-1 text-sm"><%= l(block.start_time, format: "%d %b %Y %H:%M") %> – <%= l(block.end_time, format: "%d %b %Y %H:%M") %> WIB</p>
+        </div>
+        <div class="flex gap-3 text-sm">
+          <%= link_to t("scheduling.edit"), edit_dashboard_blocked_time_path(block), class: "font-semibold text-primary-600" %>
+          <%= button_to t("scheduling.delete"), dashboard_blocked_time_path(block), method: :delete, form: { data: { turbo_confirm: t("scheduling.delete_confirm") } }, class: "text-red-600" %>
+        </div>
+      </article>
+    <% end %>
+    <% if @blocked_times.empty? %><p class="card p-8 text-center text-ink-500"><%= t("scheduling.blocks.empty") %></p><% end %>
+  </div>
+  <%= render "shared/pagination" %>
+</div>

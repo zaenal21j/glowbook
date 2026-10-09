@@ -15,6 +15,7 @@ development:
 test:
   <<: *default
   database: glowbook_test
+  seeds: false
 
 production:
   primary: &primary_production

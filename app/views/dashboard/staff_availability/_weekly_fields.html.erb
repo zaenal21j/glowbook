@@ -1,0 +1,14 @@
+<div class="grid gap-3 sm:grid-cols-3">
+  <div>
+    <%= f.label :weekday, t("scheduling.day"), class: "label" %>
+    <%= f.select :weekday, weekday_options, {}, class: "input", required: true %>
+  </div>
+  <div>
+    <%= f.label :start_minute, t("scheduling.starts"), class: "label" %>
+    <%= f.select :start_minute, minute_of_day_options(f.object.start_minute), {}, class: "input", required: true %>
+  </div>
+  <div>
+    <%= f.label :end_minute, t("scheduling.ends"), class: "label" %>
+    <%= f.select :end_minute, minute_of_day_options(f.object.end_minute), {}, class: "input", required: true %>
+  </div>
+</div>

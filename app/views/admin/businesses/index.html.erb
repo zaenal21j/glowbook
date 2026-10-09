@@ -1,55 +1,55 @@
 <%= render "admin/shared/sidebar" %>
-<% content_for :page_title, "Bisnis" %>
+<% content_for :page_title, t("admin.businesses.title") %>
 
 <div class="flex flex-wrap items-center justify-between gap-3">
   <div class="flex gap-2 overflow-x-auto">
-    <%= link_to "Semua (#{@counts[:all]})", admin_businesses_path, class: "chip #{'chip-active' if params[:status].blank?}" %>
-    <%= link_to "Aktif (#{@counts[:active]})", admin_businesses_path(status: "active"), class: "chip #{'chip-active' if params[:status] == 'active'}" %>
-    <%= link_to "Menunggu (#{@counts[:pending]})", admin_businesses_path(status: "pending"), class: "chip #{'chip-active' if params[:status] == 'pending'}" %>
-    <%= link_to "Ditangguhkan (#{@counts[:suspended]})", admin_businesses_path(status: "suspended"), class: "chip #{'chip-active' if params[:status] == 'suspended'}" %>
+    <%= link_to "#{t('admin.businesses.all')} (#{@counts[:all]})", admin_businesses_path, class: "chip #{'chip-active' if params[:status].blank?}" %>
+    <%= link_to "#{t('admin.businesses.active')} (#{@counts[:active]})", admin_businesses_path(status: "active"), class: "chip #{'chip-active' if params[:status] == 'active'}" %>
+    <%= link_to "#{t('admin.businesses.pending')} (#{@counts[:pending]})", admin_businesses_path(status: "pending"), class: "chip #{'chip-active' if params[:status] == 'pending'}" %>
+    <%= link_to "#{t('admin.businesses.suspended')} (#{@counts[:suspended]})", admin_businesses_path(status: "suspended"), class: "chip #{'chip-active' if params[:status] == 'suspended'}" %>
   </div>
   <%= form_with url: admin_businesses_path, method: :get, class: "flex gap-2" do %>
-    <%= text_field_tag :q, params[:q], placeholder: "Cari bisnis…", class: "input w-56" %>
+    <%= text_field_tag :q, params[:q], placeholder: t("admin.businesses.search_placeholder"), class: "input w-56" %>
     <%= hidden_field_tag :status, params[:status] %>
-    <button class="btn-secondary btn-md">Cari</button>
+    <button class="btn-secondary btn-md"><%= t("admin.businesses.search") %></button>
   <% end %>
 </div>
 <div class="card mt-5 overflow-x-auto">
   <table class="w-full text-sm">
     <thead>
       <tr class="border-b border-gray-100 text-left text-xs uppercase tracking-wide text-ink-500">
-        <th class="px-4 py-3">Bisnis</th>
-        <th class="px-4 py-3">Kota</th>
-        <th class="px-4 py-3">Pemilik</th>
-        <th class="px-4 py-3">Rating</th>
-        <th class="px-4 py-3">Layanan</th>
-        <th class="px-4 py-3">Status</th>
+        <th class="px-4 py-3"><%= t("admin.businesses.business") %></th>
+        <th class="px-4 py-3"><%= t("admin.businesses.city") %></th>
+        <th class="px-4 py-3"><%= t("admin.businesses.owner") %></th>
+        <th class="px-4 py-3"><%= t("admin.businesses.rating") %></th>
+        <th class="px-4 py-3"><%= t("admin.businesses.services") %></th>
+        <th class="px-4 py-3"><%= t("admin.businesses.status") %></th>
         <th class="px-4 py-3"></th>
       </tr>
     </thead>
     <tbody class="divide-y divide-gray-50">
       <% @businesses.each do |b| %>
         <tr class="hover:bg-gray-50/60">
-          <td class="px-4 py-3 font-medium"><%= link_to b.name, admin_business_path(b), class: "hover:text-primary-600" %></td>
+          <td class="px-4 py-3 font-medium"><%= link_to b.name, admin_business_path(b.id), class: "hover:text-primary-600" %></td>
           <td class="px-4 py-3"><%= b.city.name %></td>
           <td class="px-4 py-3"><%= b.owner.full_name %></td>
           <td class="px-4 py-3"><%= b.rating_label %></td>
           <td class="px-4 py-3"><%= b.services.count %></td>
-          <td class="px-4 py-3"><span class="badge <%= b.active? ? 'badge-green' : (b.pending? ? 'badge-amber' : 'badge-red') %>"><%= b.status.humanize %></span></td>
+          <td class="px-4 py-3"><span class="badge <%= b.active? ? 'badge-green' : (b.pending? ? 'badge-amber' : 'badge-red') %>"><%= t("admin.businesses.#{b.status}", default: b.status.humanize) %></span></td>
           <td class="px-4 py-3 text-right">
             <% if b.pending? %>
-              <%= button_to "Setujui & Aktifkan", activate_admin_business_path(b), method: :patch, form: { data: { turbo_confirm: "Publikasikan #{b.name} di marketplace?" } }, class: "text-xs font-semibold text-emerald-600 hover:underline" %>
+              <%= button_to t("admin.businesses.approve"), activate_admin_business_path(b.id), method: :patch, form: { data: { turbo_confirm: t("admin.businesses.approve_confirm", name: b.name) } }, class: "text-xs font-semibold text-emerald-600 hover:underline" %>
             <% elsif b.suspended? %>
-              <%= button_to "Aktifkan Kembali", reactivate_admin_business_path(b), method: :patch, form: { data: { turbo_confirm: "Aktifkan kembali #{b.name} di marketplace?" } }, class: "text-xs font-semibold text-emerald-600 hover:underline" %>
+              <%= button_to t("admin.businesses.reactivate"), reactivate_admin_business_path(b.id), method: :patch, form: { data: { turbo_confirm: t("admin.businesses.reactivate_confirm", name: b.name) } }, class: "text-xs font-semibold text-emerald-600 hover:underline" %>
             <% end %>
             <% unless b.suspended? %>
-              <%= button_to "Tangguhkan", admin_business_path(b), method: :delete, form: { data: { turbo_confirm: "Tangguhkan #{b.name}?" } }, class: "text-xs font-semibold text-red-500 hover:underline" %>
+              <%= button_to t("admin.businesses.suspend"), admin_business_path(b.id), method: :delete, form: { data: { turbo_confirm: t("admin.businesses.suspend_confirm", name: b.name) } }, class: "text-xs font-semibold text-red-500 hover:underline" %>
             <% end %>
           </td>
         </tr>
       <% end %>
       <% if @businesses.empty? %>
-        <tr><td colspan="7" class="px-4 py-10 text-center text-ink-500">Tidak ada bisnis.</td></tr>
+        <tr><td colspan="7" class="px-4 py-10 text-center text-ink-500"><%= t("admin.businesses.no_businesses") %></td></tr>
       <% end %>
     </tbody>
   </table>

@@ -3,9 +3,9 @@ class BookingPaymentsController < ApplicationController
 
   def create
     booking = current_user.bookings.includes(:payment_attempts).find_by!(reference: params[:reference])
-    return redirect_to booking_path(booking.reference), alert: "Pembayaran online tidak diaktifkan." unless Rails.configuration.x.midtrans_enabled
-    return redirect_to booking_path(booking.reference), alert: "Booking ini tidak menggunakan pembayaran online." unless booking.payment_method == "online_transfer"
-    return redirect_to booking_path(booking.reference), alert: "Booking ini tidak lagi dapat dibayar." unless booking.confirmed?
+    return redirect_to booking_path(booking.reference), alert: t("alerts.payment.online_disabled") unless Rails.configuration.x.midtrans_enabled
+    return redirect_to booking_path(booking.reference), alert: t("alerts.payment.wrong_method") unless booking.payment_method == "online_transfer"
+    return redirect_to booking_path(booking.reference), alert: t("alerts.payment.not_payable") unless booking.confirmed?
 
     result = CreateBookingPayment.new(booking: booking).call
     if result.ok?
