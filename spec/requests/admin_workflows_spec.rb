@@ -24,6 +24,9 @@ RSpec.describe "Admin workflows", type: :request do
         get path
         expect(response).to have_http_status(:ok), "#{locale}: #{path}"
         expect(response.body).not_to match(/translation missing|Translation missing/), "#{locale}: #{path}"
+        menu = Nokogiri::HTML(response.body).at_css("header details")
+        expect(menu.at_css("summary")["aria-label"]).to eq(I18n.t("glowbook.nav.menu", locale: locale))
+        expect(menu.css("a").map { |link| link["href"] }).to include(admin_users_path, admin_businesses_path, admin_reports_path)
       end
     end
   end

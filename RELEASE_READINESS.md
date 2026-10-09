@@ -13,9 +13,9 @@ Audit lokal: 10 Oktober 2026 (Asia/Bangkok). Status ini mencatat bukti yang suda
 | Onboarding | Customer membuat bisnis pending dan mengelolanya; publikasi memerlukan persetujuan admin | `customer_business_workflows_spec.rb` |
 | Galeri | Upload, tampil publik, validasi gambar, hapus dan pembatasan antar bisnis diperiksa | Request specs galeri; halaman galeri lokal memberi 200 |
 | Chat dan notifikasi | Pertukaran pesan, status dibaca, pembatasan peserta, notifikasi dan tiga jenis email booking diperiksa | Request specs; enam email terkirim melalui test adapter. Pengiriman SMTP nyata belum dibuktikan |
-| Admin | Seluruh bagian utama merender dalam dua bahasa; persetujuan, suspend/reactivate, kategori, pengaturan dan proteksi akun diperiksa | `admin_workflows_spec.rb`; sepuluh halaman admin lokal memberi 200; tampilan dashboard diperiksa di browser |
+| Admin | Seluruh bagian utama merender dalam dua bahasa; persetujuan, suspend/reactivate, kategori, pengaturan dan proteksi akun diperiksa | `admin_workflows_spec.rb`; sepuluh halaman admin lokal memberi 200; menu admin dan bisnis dibuka pada viewport ponsel 390 × 844 |
 | Bahasa | Indonesia dan Inggris untuk UI utama dan pesan booking | 883 key literal tersedia pada kedua locale; key dinamis juga dicakup sebagian request specs |
-| PWA | Manifest, worker, cache aset statis dan fallback offline tersedia | Tujuh pengujian service worker lulus; endpoint nyata memberi 200. Instalasi/offline pada perangkat pengguna belum diperiksa |
+| PWA | Manifest, worker, cache aset statis dan fallback offline tersedia | Tujuh pengujian service worker lulus; endpoint nyata memberi 200; browser menampilkan fallback setelah instance sementara port 3002 dihentikan. Instalasi pada perangkat pengguna belum diperiksa |
 | Instalasi baru | Task `glowbook:bootstrap` membuat kota/kategori/admin tanpa akun demo; aman diulang | Empat service specs; seed demo ditolak di production |
 
 ## Verifikasi lokal yang selesai
@@ -28,6 +28,8 @@ Audit lokal: 10 Oktober 2026 (Asia/Bangkok). Status ini mencatat bukti yang suda
 - Dependency pengujian dapat dipasang dengan lockfile frozen melalui `bundle install --local`.
 - Image production web dan worker berhasil dibangun dan dijalankan pada `http://localhost:3000`; kolom staff bio tersedia dan tidak ada migrasi tertunda.
 - Cadangan database lokal dibuat sebelum penerapan pada `tmp/local_backups/`; folder tersebut tidak termasuk GitHub.
+- CI GitHub commit `779cb8c` lulus seluruh tahap, termasuk build image verifikasi dari database kosong dan build production: [hasil run](https://github.com/zaenal21j/glowbook/actions/runs/37964594297). Perubahan sesudah commit tersebut tetap harus melewati CI.
+- Pemeriksaan tambahan menu ponsel: 32 request examples admin/jadwal bisnis lulus; navigasi menu juga diperiksa di browser.
 
 Pengujian Rails menggunakan PostgreSQL terpisah dari database aplikasi lokal. Hasil ini tidak membuktikan kapasitas beban production atau pengiriman email ke penyedia SMTP.
 

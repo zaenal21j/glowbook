@@ -29,6 +29,8 @@ RSpec.describe "Business scheduling", type: :request do
   it "renders the staff form with its persisted bio field" do
     get new_dashboard_manage_staff_path
     expect(response).to have_http_status(:ok)
+    mobile_menu = Nokogiri::HTML(response.body).at_css("header details")
+    expect(mobile_menu.css("a").map { |link| link["href"] }).to include(dashboard_staffs_path, dashboard_blocked_times_path, dashboard_profile_path)
     post dashboard_manage_staffs_path, params: { staff: { name: "Ayu", bio: "Senior stylist", active: true, service_ids: [service.id] } }
     created = business.staff.find_by!(name: "Ayu")
     expect(created.bio).to eq("Senior stylist")
