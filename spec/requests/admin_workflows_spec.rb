@@ -132,6 +132,29 @@ RSpec.describe "Admin workflows", type: :request do
     expect(response.body.lines.first).to include('"Booking date"', '"Amount IDR"')
   end
 
+  it "ranks same-named businesses separately using only completed bookings in the selected month" do
+    first = create(:business, name: "Glow Studio", city: create(:city, name: "Jakarta"))
+    second = create(:business, name: "Glow Studio", city: create(:city, name: "Bandung"))
+    create(:booking, :past, business: first, total_amount: 200_000)
+    create(:booking, :past, business: first, total_amount: 50_000)
+    create(:booking, :past, business: second, total_amount: 500_000)
+    create(:booking, :past, business: first, total_amount: 10_000_000, status: :cancelled)
+    create(:booking, :past, business: first, total_amount: 9_000_000,
+      start_time: Time.zone.local(2026, 9, 20, 10), end_time: Time.zone.local(2026, 9, 20, 11))
+
+    %i[id en].each do |locale|
+      post locale_path(locale)
+      get admin_reports_path(month: "2026-10")
+      expect(response).to have_http_status(:ok)
+      rows = Nokogiri::HTML(response.body).css("ol > li")
+      expect(rows.map { |row| row.at_css("a")["href"] }).to eq([admin_business_path(second.id), admin_business_path(first.id)])
+      expect(rows.map { |row| row.at_css("a").text }).to eq(["Glow Studio", "Glow Studio"])
+      expect(rows.map { |row| row.at_css("strong").text }).to eq(["Rp 500.000", "Rp 250.000"])
+      expect(rows.first.text).to include("Bandung")
+      expect(rows.last.text).to include("Jakarta")
+    end
+  end
+
   it "rejects a customer from every admin mutation" do
     sign_in create(:user)
     patch activate_admin_business_path(business.id)

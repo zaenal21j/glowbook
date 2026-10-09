@@ -70,10 +70,14 @@
   <div class="card p-5">
     <h3 class="font-semibold"><%= t("admin.reports.top_businesses") %></h3>
     <ol class="mt-3 space-y-2 text-sm">
-      <% @top_businesses.each_with_index do |(name, amount), i| %>
+      <% @top_businesses.each_with_index do |business, i| %>
         <li class="flex justify-between border-b border-line pb-2 last:border-0">
-          <span><span class="mr-2 font-bold text-primary-500"><%= i + 1 %>.</span><%= name %></span>
-          <strong><%= number_to_currency(amount, unit: "Rp ", delimiter: ".", precision: 0) %></strong>
+          <span>
+            <span class="mr-2 font-bold text-primary-500"><%= i + 1 %>.</span>
+            <%= link_to business[:name], admin_business_path(business[:id]), class: "hover:text-primary-600" %>
+            <span class="block text-xs text-ink-500"><%= business[:city] %></span>
+          </span>
+          <strong><%= number_to_currency(business[:amount], unit: "Rp ", delimiter: ".", precision: 0) %></strong>
         </li>
       <% end %>
       <% if @top_businesses.empty? %><p class="text-sm text-ink-400"><%= t("admin.reports.no_completed_bookings") %></p><% end %>

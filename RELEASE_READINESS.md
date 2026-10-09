@@ -14,7 +14,7 @@ Audit lokal: 10 Oktober 2026 (Asia/Bangkok). Status ini mencatat bukti yang suda
 | Onboarding | Customer membuat bisnis pending dan mengelolanya; publikasi memerlukan persetujuan admin | `customer_business_workflows_spec.rb` |
 | Galeri | Upload, tampil publik, validasi gambar, hapus dan pembatasan antar bisnis diperiksa | Request specs galeri; halaman galeri lokal memberi 200 |
 | Chat dan notifikasi | Pertukaran pesan, status dibaca, pembatasan peserta, notifikasi dan tiga jenis email booking diperiksa | Request specs; enam email terkirim melalui test adapter. Pengiriman SMTP nyata belum dibuktikan |
-| Admin | Seluruh bagian utama merender dalam dua bahasa; persetujuan, suspend/reactivate, kategori, pengaturan dan proteksi akun diperiksa | `admin_workflows_spec.rb`; sepuluh halaman admin lokal memberi 200; menu admin dan bisnis dibuka pada viewport ponsel 390 × 844 |
+| Admin | Seluruh bagian utama merender dalam dua bahasa; persetujuan, suspend/reactivate, kategori, pengaturan, proteksi akun dan laporan diperiksa | `admin_workflows_spec.rb`; bisnis bernama sama tetap menjadi dua entri peringkat dengan total terpisah, lokasi dan tautan detail; booking batal/di luar bulan laporan tidak ikut dihitung. Sepuluh halaman admin lokal memberi 200; menu admin dan bisnis dibuka pada viewport ponsel 390 × 844 |
 | Bahasa | Indonesia dan Inggris untuk UI utama, pesan booking, email keamanan akun dan judul kolom CSV | 898 key literal tersedia pada kedua locale; request specs mencakup header CSV dan bahasa manifest |
 | PWA | Manifest sesuai bahasa, ikon GlowBook 192/512 piksel, worker, cache aset statis dan fallback offline tersedia pada ketiga layout | Tujuh pengujian service worker serta request specs manifest/ikon lulus; browser menampilkan fallback setelah instance sementara port 3002 dihentikan. Instalasi pada perangkat pengguna belum diperiksa |
 | Instalasi baru | Task `glowbook:bootstrap` membuat kota/kategori/admin tanpa akun demo; aman diulang | Empat service specs; seed demo ditolak di production |
@@ -23,7 +23,7 @@ Audit lokal: 10 Oktober 2026 (Asia/Bangkok). Status ini mencatat bukti yang suda
 
 ## Verifikasi lokal yang selesai
 
-- RSpec: **151 examples, 0 failures**, seed `33478`.
+- RSpec: **152 examples, 0 failures**, seed `59486`.
 - Node navigasi dan service worker: **13 passed, 0 failed**.
 - `script/check_release.rb`: 94 file Ruby, 100 template ERB, 898 key terjemahan, 157 pasangan controller/action serta lima registrasi controller Stimulus lolos.
 - `rails zeitwerk:check`: eager loading berhasil.
@@ -31,7 +31,9 @@ Audit lokal: 10 Oktober 2026 (Asia/Bangkok). Status ini mencatat bukti yang suda
 - Dependency pengujian dapat dipasang dengan lockfile frozen melalui `bundle install --local`.
 - Image production web dan worker berhasil dibangun dan dijalankan pada `http://localhost:3000`; kolom staff bio tersedia dan tidak ada migrasi tertunda.
 - Cadangan database lokal dibuat sebelum penerapan pada `tmp/local_backups/`; folder tersebut tidak termasuk GitHub.
-- CI GitHub commit `0d88ac1` lulus seluruh tahap, termasuk 147 request/model/service examples, build production, validasi konfigurasi HTTPS serta verifikasi backup/restore: [hasil run](https://github.com/zaenal21j/glowbook/actions/runs/37973006203). Perubahan navigasi/PWA/CSV sesudah commit tersebut masih harus melewati CI; hasil lokal terbaru di atas sudah mencakup perubahan itu.
+- CI GitHub commit `308265e` lulus seluruh tahap, termasuk 151 request/model/service examples, 13 pengujian JavaScript, build production, validasi konfigurasi HTTPS serta verifikasi backup/restore: [hasil run](https://github.com/zaenal21j/glowbook/actions/runs/37974942617). Perubahan laporan sesudah commit tersebut tetap harus melewati CI.
+- Pemeriksaan laporan terbaru: 15 request examples admin lulus, termasuk pemisahan bisnis bernama sama dalam kedua bahasa.
+- Laporan September lokal diperiksa di browser: dua bisnis menampilkan nilai masing-masing Rp 350.000 dan Rp 250.000; tautan peringkat membuka detail bisnis yang sesuai. Data aplikasi tidak diubah untuk pemeriksaan ini.
 - Pemeriksaan tambahan menu ponsel: 32 request examples admin/jadwal bisnis lulus; navigasi menu juga diperiksa di browser.
 
 Pengujian Rails menggunakan PostgreSQL terpisah dari database aplikasi lokal. Hasil ini tidak membuktikan kapasitas beban production atau pengiriman email ke penyedia SMTP.

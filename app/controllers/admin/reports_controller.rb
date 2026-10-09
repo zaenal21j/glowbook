@@ -25,11 +25,12 @@ class Admin::ReportsController < Admin::BaseController
                               .sum("booking_items.price")
                               .sort_by { |_, v| -v }
 
-    @top_businesses = month_scope.joins(:business)
-                                 .group("businesses.name")
+    @top_businesses = month_scope.joins(business: :city)
+                                 .group("businesses.id", "businesses.name", "cities.name")
                                  .sum("bookings.total_amount")
-                                 .sort_by { |_, v| -v }
+                                 .sort_by { |(id, name, _city), amount| [-amount, name, id] }
                                  .first(10)
+                                 .map { |(id, name, city), amount| { id: id, name: name, city: city, amount: amount } }
 
     respond_to do |format|
       format.html
