@@ -1,0 +1,14 @@
+<% metadata = @table_controls&.fetch(key, nil) %>
+<% if metadata && metadata[:pages] > 1 %>
+  <nav class="mt-5 flex flex-wrap items-center justify-between gap-3" aria-label="<%= t('pagination.aria_label') %>">
+    <p class="text-sm text-ink-500"><%= t("pagination.page_info", page: metadata[:page], pages: metadata[:pages], count: metadata[:count]) %></p>
+    <div class="flex gap-2">
+      <% { previous: metadata[:page] - 1, next: metadata[:page] + 1 }.each do |label, target| %>
+        <% if target.between?(1, metadata[:pages]) %>
+          <% tables = request.query_parameters["tables"].is_a?(Hash) ? request.query_parameters["tables"].deep_dup : {}; selected = tables[key].is_a?(Hash) ? tables[key] : {}; tables[key] = selected.merge("page" => target) %>
+          <%= link_to t("pagination.#{label}"), url_for(request.query_parameters.except("page").merge("tables" => tables)), class: "btn-secondary btn-sm" %>
+        <% end %>
+      <% end %>
+    </div>
+  </nav>
+<% end %>

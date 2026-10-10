@@ -9,7 +9,7 @@ class Dashboard::BookingsController < Dashboard::BaseController
     when "cancelled" then scope = @business.bookings.where(status: :cancelled)
     when "no_show" then scope = @business.bookings.where(status: :no_show)
     else
-      scope = @business.bookings.where(status: %w[pending confirmed]).upcoming_order
+      scope = table_requested_controls("bookings").present? ? @business.bookings : @business.bookings.where(status: %w[pending confirmed]).upcoming_order
       order = :asc
     end
 

@@ -9,7 +9,7 @@ class Admin::DashboardController < Admin::BaseController
     @total_revenue = Booking.completed.sum(:total_amount)
     @pending_businesses = Business.pending.count
 
-    @recent_bookings = Booking.includes(:user, :business, booking_items: [:service]).order(created_at: :desc).limit(8)
+    @recent_bookings = paginate(Booking.includes(:user, :business, booking_items: [:service]).order(created_at: :desc))
     @top_businesses = Business.active.where.not(avg_rating: nil).by_rating.limit(5)
     @popular_categories = Category.popular.limit(6)
 

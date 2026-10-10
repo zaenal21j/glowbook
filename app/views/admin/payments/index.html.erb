@@ -11,20 +11,13 @@
       <%= label_tag :month, t("admin.payments.period"), class: "label" %>
       <%= month_field_tag :month, @month.strftime("%Y-%m"), class: "input" %>
     </div>
-    <div>
-      <%= label_tag :status, t("admin.payments.status"), class: "label" %>
-      <%= select_tag :status, options_for_select([[t("admin.payments.all_statuses"), ""]] + PaymentAttempt::STATUSES.map { |status| [t("booking.payment_statuses.#{status}", default: status.humanize), status] }, @status), class: "input" %>
-    </div>
-    <div>
-      <%= label_tag :q, t("admin.payments.search"), class: "label" %>
-      <%= text_field_tag :q, params[:q], placeholder: t("admin.payments.search_placeholder"), class: "input w-64" %>
-    </div>
     <%= submit_tag t("admin.payments.apply"), class: "btn-secondary btn-md" %>
-    <%= link_to t("admin.payments.download_csv"), admin_payments_path(month: @month.strftime("%Y-%m"), status: @status, q: params[:q], format: :csv), class: "btn-primary btn-md" %>
+    <%= link_to t("admin.payments.download_csv"), url_for(request.query_parameters.merge(format: :csv, month: @month.strftime("%Y-%m"))), class: "btn-primary btn-md" %>
   <% end %>
 </div>
 
 <div class="card mt-5 overflow-x-auto">
+  <%= render "shared/table_controls", key: "payment_attempts" %>
   <table class="w-full text-sm">
     <thead>
       <tr class="border-b border-gray-100 text-left text-xs uppercase tracking-wide text-ink-500">
@@ -56,4 +49,4 @@
     </tbody>
   </table>
 </div>
-<%= render "shared/pagination" %>
+<%= render "shared/table_pagination", key: "payment_attempts" %>

@@ -1,4 +1,5 @@
 <% content_for :page_title, t("account.reviews") %>
+<%= render "shared/table_controls", key: "reviews" %>
 
 <div class="space-y-4">
   <% if @reviews.any? %>
@@ -25,4 +26,4 @@
   <% end %>
 </div>
 
-<%= render "shared/pagination" %>
+<%= render "shared/table_pagination", key: "reviews" %>

@@ -9,13 +9,9 @@
     <%= link_to "#{t('admin.businesses.pending')} (#{@counts[:pending]})", admin_businesses_path(status: "pending"), class: "chip #{'chip-active' if params[:status] == 'pending'}" %>
     <%= link_to "#{t('admin.businesses.suspended')} (#{@counts[:suspended]})", admin_businesses_path(status: "suspended"), class: "chip #{'chip-active' if params[:status] == 'suspended'}" %>
   </div>
-  <%= form_with url: admin_businesses_path, method: :get, class: "flex gap-2" do %>
-    <%= text_field_tag :q, params[:q], placeholder: t("admin.businesses.search_placeholder"), class: "input w-56" %>
-    <%= hidden_field_tag :status, params[:status] %>
-    <button class="btn-secondary btn-md"><%= t("admin.businesses.search") %></button>
-  <% end %>
 </div>
 <div class="card mt-5 overflow-x-auto">
+  <%= render "shared/table_controls", key: "businesses" %>
   <table class="w-full text-sm">
     <thead>
       <tr class="border-b border-gray-100 text-left text-xs uppercase tracking-wide text-ink-500">
@@ -56,4 +52,4 @@
     </tbody>
   </table>
 </div>
-<%= render "shared/pagination" %>
+<%= render "shared/table_pagination", key: "businesses" %>

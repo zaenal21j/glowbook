@@ -12,6 +12,7 @@
 </div>
 
 <div class="card mt-5 overflow-x-auto p-0">
+  <%= render "shared/table_controls", key: "services" %>
   <table class="w-full text-sm">
     <thead class="border-b border-line bg-surface-50 text-left text-xs uppercase tracking-wide text-ink-400">
       <tr><th class="p-3"><%= t("business_management.services.title") %></th><th class="p-3"><%= t("business_management.services.category") %></th><th class="p-3"><%= t("business_management.services.duration") %></th><th class="p-3"><%= t("business_management.services.price") %></th><th class="p-3"><%= t("business_management.staff.title") %></th><th class="p-3"><%= t("business_management.services.status") %></th><th class="p-3"></th></tr>
@@ -36,4 +37,4 @@
   </table>
 </div>
 
-<%= render "shared/pagination" %>
+<%= render "shared/table_pagination", key: "services" %>

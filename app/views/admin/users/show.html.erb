@@ -18,6 +18,7 @@
 
 <h2 class="mt-6 text-lg font-extrabold"><%= t("admin.users.booking_history") %></h2>
 <div class="card mt-4 overflow-x-auto">
+  <%= render "shared/table_controls", key: "bookings" %>
   <table class="w-full text-sm">
     <thead>
       <tr class="border-b border-gray-100 text-left text-xs uppercase tracking-wide text-ink-500">
@@ -46,3 +47,5 @@
     </tbody>
   </table>
 </div>
+
+<%= render "shared/table_pagination", key: "bookings" %>

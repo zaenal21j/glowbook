@@ -57,7 +57,7 @@ class Admin::UsersController < Admin::BaseController
   end
 
   def show
-    @bookings = @user.bookings.order(start_time: :desc).limit(20).includes(:business, booking_items: [ :service ])
+    @bookings = paginate(@user.bookings.order(start_time: :desc).includes(:business, booking_items: [ :service ]))
   end
 
   def destroy

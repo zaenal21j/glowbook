@@ -1,0 +1,33 @@
+<% metadata = @table_controls&.fetch(key, nil) %>
+<% if metadata %>
+  <% table_queries = request.query_parameters["tables"].is_a?(Hash) ? request.query_parameters["tables"] : {} %>
+  <% selected = table_queries[key].is_a?(Hash) ? table_queries[key] : {} %>
+  <% legacy_fields = metadata[:filters].map { |filter| filter[:field] } %>
+  <% legacy_fields += ["state"] if legacy_fields.include?("active") %>
+  <%= form_with url: request.path, method: :get, class: "my-4 flex flex-wrap items-end gap-3", data: { turbo: false } do %>
+    <% request.query_parameters.except("tables", "page", "per_page", "q", *legacy_fields).each do |name, value| %>
+      <% if value.is_a?(String) %><%= hidden_field_tag name, value %><% end %>
+    <% end %>
+    <% table_queries.except(key).each do |other_key, values| %>
+      <% if values.is_a?(Hash) %><% values.each do |name, value| %><%= hidden_field_tag "tables[#{other_key}][#{name}]", value if value.is_a?(String) %><% end %><% end %>
+    <% end %>
+    <div class="min-w-48 flex-1">
+      <%= label_tag "table_#{key}_q", t("table_controls.search"), class: "label" %>
+      <%= search_field_tag "tables[#{key}][q]", selected["q"] || params[:q], id: "table_#{key}_q", placeholder: t("table_controls.search_placeholder"), class: "input" %>
+    </div>
+    <div><%= label_tag "table_#{key}_per_page", t("table_controls.show"), class: "label" %><%= select_tag "tables[#{key}][per_page]", options_for_select([[10, 10], [25, 25], [50, 50], [100, 100], [t("table_controls.all"), "all"]], metadata[:per_page]), id: "table_#{key}_per_page", class: "input" %></div>
+    <% metadata[:filters].each do |filter| %>
+      <% field = filter[:field] %>
+      <% value = selected[field] || params[field]; value = "business_owner" if field == "role" && value == "owner" %>
+      <% value = params[:state] == "active" ? "true" : "false" if field == "active" && value.blank? && params[:state].in?(%w[active inactive]) %>
+      <div><%= label_tag "table_#{key}_#{field}", t("table_controls.fields.#{field}"), class: "label" %><%= select_tag "tables[#{key}][#{field}]", options_for_select([[t("table_controls.all"), ""]] + filter[:options], value), id: "table_#{key}_#{field}", class: "input" %></div>
+    <% end %>
+    <% if metadata[:date_column] %>
+      <% %w[from to].each do |boundary| %><div><%= label_tag "table_#{key}_#{boundary}", t("table_controls.#{boundary}"), class: "label" %><%= date_field_tag "tables[#{key}][#{boundary}]", selected[boundary], id: "table_#{key}_#{boundary}", class: "input" %></div><% end %>
+    <% end %>
+    <%= submit_tag t("table_controls.apply"), class: "btn-primary btn-md" %>
+    <%= link_to t("table_controls.reset"), url_for(request.query_parameters.except("page", "per_page", "q", *legacy_fields).merge("tables" => table_queries.except(key))), class: "btn-secondary btn-md" %>
+    <p class="w-full text-sm text-ink-500"><%= t("table_controls.total", count: metadata[:count]) %></p>
+    <% if metadata[:date_column] %><p class="w-full text-xs text-ink-500"><%= t("table_controls.date_basis", field: t("table_controls.fields.#{metadata[:date_column]}")) %></p><% end %>
+  <% end %>
+<% end %>

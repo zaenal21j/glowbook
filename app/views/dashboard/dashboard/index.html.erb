@@ -27,6 +27,7 @@
     <%= link_to t("dashboard.home.calendar"), dashboard_calendar_path, class: "text-sm font-semibold text-primary-600" %>
   </div>
   <div class="card mt-4 overflow-x-auto">
+    <%= render "shared/table_controls", key: "bookings" %>
     <table class="w-full text-sm">
       <thead>
         <tr class="border-b border-gray-100 text-left text-xs uppercase tracking-wide text-ink-500">
@@ -54,3 +55,5 @@
     </table>
   </div>
 </section>
+
+<%= render "shared/table_pagination", key: "bookings" %>

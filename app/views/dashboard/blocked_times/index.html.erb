@@ -1,5 +1,6 @@
 <%= render "dashboard/shared/sidebar" %>
 <% content_for :page_title, t("scheduling.blocks.title") %>
+<%= render "shared/table_controls", key: "blocked_times" %>
 
 <div class="max-w-4xl space-y-5">
   <div>
@@ -56,5 +57,5 @@
     <% end %>
     <% if @blocked_times.empty? %><p class="card p-8 text-center text-ink-500"><%= t("scheduling.blocks.empty") %></p><% end %>
   </div>
-  <%= render "shared/pagination" %>
+  <%= render "shared/table_pagination", key: "blocked_times" %>
 </div>

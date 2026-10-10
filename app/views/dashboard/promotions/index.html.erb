@@ -2,6 +2,7 @@
   <%= render "dashboard/shared/sidebar" %>
 <% end %>
 <% content_for :page_title, "#{t('business_management.promotions.title')} — GlowBook" %>
+<%= render "shared/table_controls", key: "promotions" %>
 
 <div class="flex flex-wrap items-center justify-between gap-3">
   <div>
@@ -37,4 +38,4 @@
   <% end %>
 </div>
 
-<%= render "shared/pagination" %>
+<%= render "shared/table_pagination", key: "promotions" %>

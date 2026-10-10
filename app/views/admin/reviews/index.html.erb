@@ -1,5 +1,6 @@
 <%= render "admin/shared/sidebar" %>
 <% content_for :page_title, t("admin.reviews.title") %>
+<%= render "shared/table_controls", key: "reviews" %>
 
 <div class="flex flex-wrap items-center justify-between gap-3">
   <div class="flex gap-2 overflow-x-auto">
@@ -25,4 +26,4 @@
     <div class="card p-10 text-center text-ink-500"><%= t("admin.reviews.empty") %></div>
   <% end %>
 </div>
-<%= render "shared/pagination" %>
+<%= render "shared/table_pagination", key: "reviews" %>

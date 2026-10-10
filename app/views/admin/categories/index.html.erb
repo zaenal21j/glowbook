@@ -4,6 +4,7 @@
 <div class="grid gap-6 lg:grid-cols-[1fr_340px]">
   <div>
     <div class="card overflow-x-auto p-0">
+      <%= render "shared/table_controls", key: "categories" %>
       <table class="w-full text-sm">
         <thead class="border-b border-line bg-surface-50 text-left text-xs uppercase tracking-wide text-ink-400">
           <tr><th class="p-3"><%= t("admin.categories.category") %></th><th class="p-3"><%= t("admin.categories.slug") %></th><th class="p-3"><%= t("admin.categories.services") %></th><th class="p-3"><%= t("admin.categories.businesses") %></th><th class="p-3"></th></tr>
@@ -25,7 +26,7 @@
         </tbody>
       </table>
     </div>
-    <%= render "shared/pagination" %>
+    <%= render "shared/table_pagination", key: "categories" %>
   </div>
 
   <div class="card h-fit p-5">

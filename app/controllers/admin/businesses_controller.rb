@@ -62,7 +62,7 @@ class Admin::BusinessesController < Admin::BaseController
     @business = Business.find(params[:id])
     @services = @business.services.ordered
     @staff = @business.staff.ordered
-    @bookings = @business.bookings.order(start_time: :desc).limit(15).includes(:user, booking_items: [ :service ])
+    @bookings = paginate(@business.bookings.order(start_time: :desc).includes(:user, booking_items: [ :service ]))
     @reviews = @business.reviews.recent.limit(10).includes(:user)
   end
 

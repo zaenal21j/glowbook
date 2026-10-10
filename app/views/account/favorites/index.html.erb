@@ -1,4 +1,5 @@
 <% content_for :page_title, t("account.favorites") %>
+<%= render "shared/table_controls", key: "favorites" %>
 
 <% if @businesses.any? %>
   <div class="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
@@ -15,4 +16,4 @@
   </div>
 <% end %>
 
-<%= render "shared/pagination" %>
+<%= render "shared/table_pagination", key: "favorites" %>

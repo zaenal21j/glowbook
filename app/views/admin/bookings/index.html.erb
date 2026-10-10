@@ -10,13 +10,9 @@
     <%= link_to "#{t('admin.bookings.cancelled')} (#{@counts[:cancelled]})", admin_bookings_path(status: "cancelled", q: params[:q]), class: "chip #{'chip-active' if params[:status] == 'cancelled'}" %>
     <%= link_to "#{t('admin.bookings.no_show')} (#{@counts[:no_show]})", admin_bookings_path(status: "no_show", q: params[:q]), class: "chip #{'chip-active' if params[:status] == 'no_show'}" %>
   </div>
-  <%= form_with url: admin_bookings_path, method: :get, class: "flex gap-2" do %>
-    <%= text_field_tag :q, params[:q], placeholder: t("admin.bookings.search_placeholder"), class: "input w-60" %>
-    <%= hidden_field_tag :status, params[:status] %>
-    <button class="btn-secondary btn-md"><%= t("admin.bookings.search") %></button>
-  <% end %>
 </div>
 <div class="card mt-5 overflow-x-auto">
+  <%= render "shared/table_controls", key: "bookings" %>
   <table class="w-full text-sm">
     <thead>
       <tr class="border-b border-gray-100 text-left text-xs uppercase tracking-wide text-ink-500">
@@ -47,4 +43,4 @@
     </tbody>
   </table>
 </div>
-<%= render "shared/pagination" %>
+<%= render "shared/table_pagination", key: "bookings" %>

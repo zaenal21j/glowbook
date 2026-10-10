@@ -29,7 +29,8 @@ class Dashboard::PaymentsController < Dashboard::BaseController
     respond_to do |format|
       format.html { @payments = paginate(@payment_scope) }
       format.csv do
-        send_data PaymentAttemptCsv.new(@payment_scope).render,
+        export_scope, = table_filter_scope(@payment_scope, table_requested_controls("payment_attempts"))
+        send_data PaymentAttemptCsv.new(export_scope).render,
                   filename: "#{@business.slug}-payments-#{@month.strftime('%Y-%m')}.csv",
                   type: "text/csv; charset=utf-8"
       end

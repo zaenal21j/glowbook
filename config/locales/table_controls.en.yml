@@ -1,0 +1,40 @@
+en:
+  table_controls:
+    search: Search records
+    search_placeholder: Name, email, phone or code…
+    show: Show records
+    all: All
+    "yes": "Yes"
+    "no": "No"
+    from: From date
+    to: To date
+    apply: Apply
+    reset: Reset
+    total: "%{count} records matching search and filters"
+    date_basis: "Date filter: %{field}"
+    fields:
+      status: Status
+      role: Role
+      active: Active
+      is_popular: Popular
+      rating: Rating
+      payment_method: Payment method
+      provider: Provider
+      gateway_environment: Gateway mode
+      category_id: Category
+      city_id: City
+      business_id: Business
+      service_id: Service
+      staff_id: Staff
+      start_time: Booking schedule
+      starts_at: Valid from
+      created_at: Created date
+    values:
+      sandbox: Sandbox
+      production: Production
+      duitku: Duitku
+      midtrans: Midtrans
+      pay_at_venue: Pay at venue
+      online_transfer: Pay online
+      google_oauth2: Google
+      facebook: Facebook

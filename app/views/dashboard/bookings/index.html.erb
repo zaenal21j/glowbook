@@ -11,6 +11,7 @@
 </div>
 
 <div class="card mt-5 overflow-x-auto">
+  <%= render "shared/table_controls", key: "bookings" %>
   <table class="w-full text-sm">
     <thead>
       <tr class="border-b border-gray-100 text-left text-xs uppercase tracking-wide text-ink-500">
@@ -62,4 +63,4 @@
   </table>
 </div>
 
-<%= render "shared/pagination" %>
+<%= render "shared/table_pagination", key: "bookings" %>

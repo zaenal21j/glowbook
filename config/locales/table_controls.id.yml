@@ -1,0 +1,40 @@
+id:
+  table_controls:
+    search: Cari data
+    search_placeholder: Nama, email, telepon atau kode…
+    show: Tampilkan data
+    all: Semua
+    "yes": Ya
+    "no": Tidak
+    from: Dari tanggal
+    to: Sampai tanggal
+    apply: Terapkan
+    reset: Reset
+    total: "%{count} data sesuai pencarian dan filter"
+    date_basis: "Filter tanggal: %{field}"
+    fields:
+      status: Status
+      role: Peran
+      active: Aktif
+      is_popular: Populer
+      rating: Rating
+      payment_method: Metode pembayaran
+      provider: Penyedia
+      gateway_environment: Mode gateway
+      category_id: Kategori
+      city_id: Kota
+      business_id: Bisnis
+      service_id: Layanan
+      staff_id: Staff
+      start_time: Jadwal booking
+      starts_at: Mulai berlaku
+      created_at: Tanggal dibuat
+    values:
+      sandbox: Sandbox
+      production: Production
+      duitku: Duitku
+      midtrans: Midtrans
+      pay_at_venue: Bayar di tempat
+      online_transfer: Bayar online
+      google_oauth2: Google
+      facebook: Facebook

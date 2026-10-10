@@ -9,13 +9,9 @@
     <%= link_to "#{t('admin.users.business_owners')} (#{@counts[:owner]})", admin_users_path(role: "owner"), class: "chip #{'chip-active' if params[:role] == 'owner'}" %>
     <%= link_to "#{t('admin.users.admins')} (#{@counts[:admin]})", admin_users_path(role: "admin"), class: "chip #{'chip-active' if params[:role] == 'admin'}" %>
   </div>
-  <%= form_with url: admin_users_path, method: :get, class: "flex gap-2" do %>
-    <%= text_field_tag :q, params[:q], placeholder: t("admin.users.search_placeholder"), class: "input w-56" %>
-    <%= hidden_field_tag :role, params[:role] %>
-    <button class="btn-secondary btn-md"><%= t("admin.users.search") %></button>
-  <% end %>
 </div>
 <div class="card mt-5 overflow-x-auto">
+  <%= render "shared/table_controls", key: "users" %>
   <table class="w-full text-sm">
     <thead>
       <tr class="border-b border-gray-100 text-left text-xs uppercase tracking-wide text-ink-500">
@@ -52,4 +48,4 @@
     </tbody>
   </table>
 </div>
-<%= render "shared/pagination" %>
+<%= render "shared/table_pagination", key: "users" %>
