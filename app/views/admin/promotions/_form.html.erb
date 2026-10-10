@@ -1,0 +1,37 @@
+<% promotion = @promotion %>
+<%= form_with model: promotion, url: promotion.persisted? ? admin_promotion_path(promotion) : admin_promotions_path, class: "space-y-4" do |f| %>
+  <%= render "shared/form_errors", record: promotion %>
+<% if promotion.new_record? %><div><%= f.label :business_id, t("admin.promotions.business"), class: "label" %><%= f.collection_select :business_id, Business.order(:name), :id, :name, {include_blank: true}, required: true, class: "input" %></div><% else %><p class="text-sm"><%= promotion.business.name %></p><% end %>
+  <div>
+    <%= f.label :title, t("business_management.promotions.title_label"), class: "label" %>
+    <%= f.text_field :title, class: "input", required: true, placeholder: t("business_management.promotions.example_title") %>
+  </div>
+  <div class="grid gap-4 sm:grid-cols-2">
+    <div>
+      <%= f.label :code, t("business_management.promotions.code"), class: "label" %>
+      <%= f.text_field :code, class: "input font-mono uppercase", placeholder: "GLOW20" %>
+    </div>
+    <div>
+      <%= f.label :discount_percent, t("business_management.promotions.discount"), class: "label" %>
+      <%= f.number_field :discount_percent, class: "input", min: 1, max: 90, required: true %>
+    </div>
+  </div>
+  <div class="grid gap-4 sm:grid-cols-2">
+    <div>
+      <%= f.label :starts_at, t("business_management.promotions.starts_at"), class: "label" %>
+      <%= f.datetime_local_field :starts_at, class: "input" %>
+    </div>
+    <div>
+      <%= f.label :ends_at, t("business_management.promotions.ends_at"), class: "label" %>
+      <%= f.datetime_local_field :ends_at, class: "input" %>
+    </div>
+  </div>
+  <label class="flex items-center gap-2 text-sm">
+    <%= f.check_box :active, class: "h-4 w-4 rounded accent-primary-600" %>
+    <%= t("business_management.promotions.active_help") %>
+  </label>
+  <div class="flex gap-2 pt-2">
+    <button class="btn-primary btn-md flex-1"><%= t("business_management.promotions.save") %></button>
+    <%= link_to t("business_management.promotions.cancel"), admin_promotions_path, class: "btn-ghost btn-md" %>
+  </div>
+<% end %>

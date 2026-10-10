@@ -1,0 +1,22 @@
+<div class="card p-6 max-w-3xl">
+  <% if @user.errors.any? %>
+    <div role="alert" class="mb-5 rounded-xl bg-red-50 p-4 text-red-700">
+      <ul class="list-disc pl-5"><% @user.errors.full_messages.each do |message| %><li><%= message %></li><% end %></ul>
+    </div>
+  <% end %>
+  <%= form_with model: [:admin, @user], class: "space-y-5" do |form| %>
+    <div><%= form.label :name, t("admin.users.name"), class: "block text-sm font-semibold mb-2" %><%= form.text_field :name, required: true, maxlength: 120, class: "input w-full", autocomplete: "name" %></div>
+    <div><%= form.label :email, t("admin.users.email"), class: "block text-sm font-semibold mb-2" %><%= form.email_field :email, required: true, readonly: @user.persisted? && @user.provider.present?, class: "input w-full", autocomplete: "email" %></div>
+    <div><%= form.label :phone, t("admin.user_management.phone"), class: "block text-sm font-semibold mb-2" %><%= form.telephone_field :phone, class: "input w-full", autocomplete: "tel" %></div>
+    <% role_locked = @user.persisted? && (@user.admin? || @user == current_user || @user.businesses.exists? || @user.staff_member.present?) %>
+    <div>
+      <%= form.label :role, t("admin.users.role"), class: "block text-sm font-semibold mb-2" %>
+      <%= form.select :role, User.roles.keys.map { |role| [t("admin.users.roles.#{role}"), role] }, {}, disabled: role_locked, class: "input w-full" %>
+      <p class="text-xs text-ink-500 mt-2"><%= t(role_locked ? "admin.user_management.role_locked" : "admin.user_management.role_help") %></p>
+    </div>
+    <div><%= form.label :password, t("admin.user_management.password"), class: "block text-sm font-semibold mb-2" %><%= form.password_field :password, required: @user.new_record?, minlength: Devise.password_length.min, autocomplete: "new-password", class: "input w-full" %></div>
+    <div><%= form.label :password_confirmation, t("admin.user_management.password_confirmation"), class: "block text-sm font-semibold mb-2" %><%= form.password_field :password_confirmation, required: @user.new_record?, autocomplete: "new-password", class: "input w-full" %></div>
+    <p class="text-sm text-ink-500"><%= t("admin.user_management.password_help", minimum: Devise.password_length.min) %></p>
+    <div class="flex gap-3"><%= form.submit t("admin.user_management.save"), class: "btn-primary btn-md" %><%= link_to t("admin.user_management.back"), admin_users_path, class: "btn-secondary btn-md" %></div>
+  <% end %>
+</div>

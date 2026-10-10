@@ -1,0 +1,32 @@
+en:
+  admin:
+    management:
+      add_business: Add business
+      add_promotion: Add promotion
+      edit: Edit
+      save: Save
+      back: Back to list
+      created: Record created successfully.
+      updated: Record updated successfully.
+      address: Address
+      description: Description
+      latitude: Latitude
+      longitude: Longitude
+      business_help: New businesses await approval and start with closed opening hours. Owners configure services, staff, opening hours and galleries before administrators approve publication.
+      owner_required: Choose a customer or owner who does not already own a business.
+    user_management:
+      add: Add user
+      edit: Edit user
+      back: Back to users
+      save: Save user
+      phone: Phone number
+      password: Password
+      password_confirmation: Confirm password
+      password_help: "At least %{minimum} characters. When editing, leave both fields blank to keep the password."
+      created: User created successfully.
+      updated: User updated successfully.
+      protected: Protected
+      retained_help: Your own account, administrators and accounts with businesses, history or messages cannot be deleted.
+      role_locked: The role of your own account, administrators, linked owners or linked staff cannot be changed.
+      role_help: Administrators have full access. Owner and staff roles do not automatically create a business or link a staff schedule.
+      oauth_email_locked: Social login account emails cannot be changed from this panel.

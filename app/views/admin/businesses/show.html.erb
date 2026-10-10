@@ -9,6 +9,7 @@
       <p class="text-sm text-ink-500"><%= t("admin.businesses.owner_label") %> <%= @business.owner.full_name %> · 📞 <%= @business.phone %></p>
     </div>
     <div class="flex items-center gap-3">
+      <%= link_to t("admin.management.edit"), edit_admin_business_path(@business.id), class: "btn-secondary btn-sm" %>
       <span class="badge <%= @business.active? ? 'badge-green' : (@business.pending? ? 'badge-amber' : 'badge-red') %>"><%= t("admin.businesses.#{@business.status}", default: @business.status.humanize) %></span>
       <% if @business.pending? %>
         <%= button_to t("admin.businesses.approve"), activate_admin_business_path(@business.id), method: :patch,

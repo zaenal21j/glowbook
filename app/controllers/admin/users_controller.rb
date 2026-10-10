@@ -1,4 +1,46 @@
 class Admin::UsersController < Admin::BaseController
+  before_action :set_user, only: %i[show edit update]
+
+  def new
+    @user = User.new
+  end
+
+  def create
+    @user = User.new(user_params)
+    if @user.save
+      redirect_to admin_user_path(@user), notice: I18n.t("admin.user_management.created")
+    else
+      render :new, status: :unprocessable_content
+    end
+  end
+
+  def edit
+  end
+
+  def update
+    attributes = user_params
+    if attributes[:password].blank? && attributes[:password_confirmation].blank?
+      attributes = attributes.except(:password, :password_confirmation)
+    end
+    @user.with_lock do
+      @user.assign_attributes(attributes)
+      if @user.role_changed? && (@user.role_was == "admin" || @user == current_user || @user.businesses.exists? || @user.staff_member.present?)
+        @user.errors.add(:role, I18n.t("admin.user_management.role_locked"))
+        return render :edit, status: :unprocessable_content
+      end
+      if @user.provider.present? && @user.email_changed?
+        @user.errors.add(:email, I18n.t("admin.user_management.oauth_email_locked"))
+        return render :edit, status: :unprocessable_content
+      end
+      if @user.save
+        bypass_sign_in(@user) if @user == current_user
+        redirect_to admin_user_path(@user), notice: I18n.t("admin.user_management.updated")
+      else
+        render :edit, status: :unprocessable_content
+      end
+    end
+  end
+
   def index
     scope = case params[:role]
     when "customer" then User.customers
@@ -13,7 +55,6 @@ class Admin::UsersController < Admin::BaseController
   end
 
   def show
-    @user = User.find(params[:id])
     @bookings = @user.bookings.order(start_time: :desc).limit(20).includes(:business, booking_items: [ :service ])
   end
 
@@ -31,5 +72,20 @@ class Admin::UsersController < Admin::BaseController
     end
   rescue ActiveRecord::DeleteRestrictionError, ActiveRecord::RecordNotDestroyed
     redirect_to admin_users_path, alert: I18n.t("admin.users.errors.restricted")
+  end
+
+  private
+
+  def set_user
+    @user = User.find(params[:id])
+  end
+
+  def user_params
+    attributes = params.require(:user).permit(:name, :email, :phone, :role, :password, :password_confirmation)
+    # Invalid enum values should render validation errors instead of raising ArgumentError.
+    if attributes.key?(:role) && !User.roles.key?(attributes[:role])
+      attributes[:role] = nil
+    end
+    attributes
   end
 end

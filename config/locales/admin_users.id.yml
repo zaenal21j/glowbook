@@ -1,0 +1,32 @@
+id:
+  admin:
+    management:
+      add_business: Tambah bisnis
+      add_promotion: Tambah promosi
+      edit: Edit
+      save: Simpan
+      back: Kembali ke daftar
+      created: Data berhasil ditambahkan.
+      updated: Data berhasil diperbarui.
+      address: Alamat
+      description: Deskripsi
+      latitude: Lintang
+      longitude: Bujur
+      business_help: Bisnis baru berstatus menunggu persetujuan dan jam buka ditutup. Owner mengatur layanan, staff, jam buka dan galeri dari dashboard bisnis sebelum admin menyetujui publikasi.
+      owner_required: Pilih customer atau owner yang belum memiliki bisnis.
+    user_management:
+      add: Tambah pengguna
+      edit: Edit pengguna
+      back: Kembali ke daftar pengguna
+      save: Simpan pengguna
+      phone: Nomor telepon
+      password: Kata sandi
+      password_confirmation: Konfirmasi kata sandi
+      password_help: "Minimal %{minimum} karakter. Saat mengedit, kosongkan kedua kolom untuk mempertahankan kata sandi."
+      created: Pengguna berhasil ditambahkan.
+      updated: Pengguna berhasil diperbarui.
+      protected: Dilindungi
+      retained_help: Akun sendiri, admin, serta akun yang memiliki bisnis, riwayat atau pesan tidak dapat dihapus.
+      role_locked: Peran akun sendiri, admin, pemilik bisnis atau staff yang sudah terhubung tidak dapat diubah.
+      role_help: Peran admin memberikan akses penuh. Peran owner dan staff tidak otomatis membuat bisnis atau menghubungkan jadwal staff.
+      oauth_email_locked: Email akun login sosial tidak dapat diubah melalui panel ini.

@@ -2,6 +2,10 @@
 <% content_for :page_title, @user.full_name %>
 
 <div class="card p-6">
+  <div class="flex gap-3 mb-4">
+    <%= link_to t("admin.user_management.back"), admin_users_path, class: "btn-secondary btn-sm" %>
+    <%= link_to t("admin.user_management.edit"), edit_admin_user_path(@user), class: "btn-primary btn-sm" %>
+  </div>
   <div class="flex items-center gap-4">
     <%= avatar_placeholder(@user.full_name, size: 14) %>
     <div>

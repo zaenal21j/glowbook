@@ -2,6 +2,7 @@
 <% content_for :page_title, t("admin.users.title") %>
 
 <div class="flex flex-wrap items-center justify-between gap-3">
+  <%= link_to t("admin.user_management.add"), new_admin_user_path, class: "btn-primary btn-md" %>
   <div class="flex gap-2 overflow-x-auto">
     <%= link_to "#{t('admin.users.all')} (#{@counts[:all]})", admin_users_path, class: "chip #{'chip-active' if params[:role].blank?}" %>
     <%= link_to "#{t('admin.users.customers')} (#{@counts[:customer]})", admin_users_path(role: "customer"), class: "chip #{'chip-active' if params[:role] == 'customer'}" %>
@@ -35,8 +36,12 @@
           <td class="px-4 py-3"><%= u.bookings.count %></td>
           <td class="px-4 py-3 whitespace-nowrap"><%= l(u.created_at, format: "%d %b %Y") %></td>
           <td class="px-4 py-3 text-right">
-            <% unless u == current_user %>
+            <%= link_to t("admin.user_management.edit"), edit_admin_user_path(u), class: "text-xs font-semibold text-primary-600 hover:underline mr-3" %>
+            <% unless u == current_user || u.admin? || u.has_retained_records? %>
               <%= button_to t("admin.users.delete"), admin_user_path(u), method: :delete, form: { data: { turbo_confirm: t("admin.users.delete_confirm", name: u.full_name) } }, class: "text-xs font-semibold text-red-500 hover:underline" %>
+            <% end %>
+            <% if u == current_user || u.admin? || u.has_retained_records? %>
+              <span class="text-xs text-ink-500" title="<%= t('admin.user_management.retained_help') %>"><%= t("admin.user_management.protected") %></span>
             <% end %>
           </td>
         </tr>

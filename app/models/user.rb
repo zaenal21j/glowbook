@@ -16,6 +16,7 @@ class User < ApplicationRecord
   has_one :staff_member, class_name: "Staff", dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 120 }
+  validates :role, presence: true
   validates :phone, allow_blank: true, format: { with: /\A\+?[0-9]{8,15}\z/ }
   validates :uid, uniqueness: { scope: :provider }, allow_nil: true
 
