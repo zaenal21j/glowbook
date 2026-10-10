@@ -4,14 +4,14 @@
   <% selected = table_queries[key].is_a?(Hash) ? table_queries[key] : {} %>
   <% legacy_fields = metadata[:filters].map { |filter| filter[:field] } %>
   <% legacy_fields += ["state"] if legacy_fields.include?("active") %>
-  <%= form_with url: request.path, method: :get, class: "my-4 flex flex-wrap items-end gap-3", data: { turbo: false } do %>
+  <%= form_with url: request.path, method: :get, class: "table-controls", data: { turbo: false } do %>
     <% request.query_parameters.except("tables", "page", "per_page", "q", *legacy_fields).each do |name, value| %>
       <% if value.is_a?(String) %><%= hidden_field_tag name, value %><% end %>
     <% end %>
     <% table_queries.except(key).each do |other_key, values| %>
       <% if values.is_a?(Hash) %><% values.each do |name, value| %><%= hidden_field_tag "tables[#{other_key}][#{name}]", value if value.is_a?(String) %><% end %><% end %>
     <% end %>
-    <div class="min-w-48 flex-1">
+    <div class="table-controls-search">
       <%= label_tag "table_#{key}_q", t("table_controls.search"), class: "label" %>
       <%= search_field_tag "tables[#{key}][q]", selected["q"] || params[:q], id: "table_#{key}_q", placeholder: t("table_controls.search_placeholder"), class: "input" %>
     </div>
@@ -25,9 +25,13 @@
     <% if metadata[:date_column] %>
       <% %w[from to].each do |boundary| %><div><%= label_tag "table_#{key}_#{boundary}", t("table_controls.#{boundary}"), class: "label" %><%= date_field_tag "tables[#{key}][#{boundary}]", selected[boundary], id: "table_#{key}_#{boundary}", class: "input" %></div><% end %>
     <% end %>
+    <div class="table-controls-actions">
     <%= submit_tag t("table_controls.apply"), class: "btn-primary btn-md" %>
     <%= link_to t("table_controls.reset"), url_for(request.query_parameters.except("page", "per_page", "q", *legacy_fields).merge("tables" => table_queries.except(key))), class: "btn-secondary btn-md" %>
-    <p class="w-full text-sm text-ink-500"><%= t("table_controls.total", count: metadata[:count]) %></p>
-    <% if metadata[:date_column] %><p class="w-full text-xs text-ink-500"><%= t("table_controls.date_basis", field: t("table_controls.fields.#{metadata[:date_column]}")) %></p><% end %>
+    </div>
+    <div class="table-controls-summary">
+      <p class="text-sm text-ink-500"><%= t("table_controls.total", count: metadata[:count]) %></p>
+      <% if metadata[:date_column] %><p class="mt-1 text-xs text-ink-500"><%= t("table_controls.date_basis", field: t("table_controls.fields.#{metadata[:date_column]}")) %></p><% end %>
+    </div>
   <% end %>
 <% end %>
