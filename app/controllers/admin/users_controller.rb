@@ -7,6 +7,7 @@ class Admin::UsersController < Admin::BaseController
 
   def create
     @user = User.new(user_params)
+    assign_requested_role
     if @user.save
       redirect_to admin_user_path(@user), notice: I18n.t("admin.user_management.created")
     else
@@ -24,6 +25,7 @@ class Admin::UsersController < Admin::BaseController
     end
     @user.with_lock do
       @user.assign_attributes(attributes)
+      assign_requested_role
       if @user.role_changed? && (@user.role_was == "admin" || @user == current_user || @user.businesses.exists? || @user.staff_member.present?)
         @user.errors.add(:role, I18n.t("admin.user_management.role_locked"))
         return render :edit, status: :unprocessable_content
@@ -81,11 +83,13 @@ class Admin::UsersController < Admin::BaseController
   end
 
   def user_params
-    attributes = params.require(:user).permit(:name, :email, :phone, :role, :password, :password_confirmation)
-    # Invalid enum values should render validation errors instead of raising ArgumentError.
-    if attributes.key?(:role) && !User.roles.key?(attributes[:role])
-      attributes[:role] = nil
-    end
-    attributes
+    params.require(:user).permit(:name, :email, :phone, :password, :password_confirmation)
+  end
+
+  def assign_requested_role
+    return unless params[:user].key?(:role)
+
+    requested_role = params[:user][:role]
+    @user.role = User.roles.key?(requested_role) ? requested_role : nil
   end
 end
