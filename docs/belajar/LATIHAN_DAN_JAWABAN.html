@@ -1,0 +1,132 @@
+<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Latihan dan Pembahasan</title><style>
+:root{--ink:#17232c;--muted:#5f717b;--accent:#c32153;--line:#dde5e8;--paper:#fff;--wash:#f3f6f7}
+*{box-sizing:border-box}body{margin:0;background:var(--wash);color:var(--ink);font-family:'Segoe UI',Arial,sans-serif;line-height:1.75}
+a{color:var(--accent);text-underline-offset:3px}header{background:#172d38;color:white;padding:48px max(24px,calc((100vw - 1150px)/2));border-bottom:7px solid #df3668}
+header p{max-width:720px;color:#d2e0e6}header .eyebrow{color:#ffabc4;letter-spacing:.15em;text-transform:uppercase;font-size:12px;font-weight:700}
+.layout{max-width:1220px;margin:auto;display:grid;grid-template-columns:260px minmax(0,1fr);gap:28px;padding:28px}
+aside{position:sticky;top:20px;align-self:start;max-height:calc(100vh - 40px);overflow:auto;padding:20px;background:white;border:1px solid var(--line);border-radius:14px;font-size:13px}
+aside a{display:block;padding:6px 0;color:var(--ink);text-decoration:none}aside a:hover{color:var(--accent)}
+main{min-width:0;background:white;border:1px solid var(--line);border-radius:16px;padding:34px 42px}
+h1,h2,h3{line-height:1.3}h1{font-size:36px;letter-spacing:-.025em}h2{font-size:26px;margin:55px 0 22px;padding-top:22px;border-top:2px solid var(--line);scroll-margin-top:20px}h3{font-size:19px;margin-top:30px}
+p{margin:16px 0}li{padding:4px 0}pre{background:#132b37;color:#ecf4f7;padding:20px;border-radius:10px;overflow:auto;line-height:1.6;font-size:12px;tab-size:2}
+code{font-family:Consolas,'Courier New',monospace;font-size:.92em}p code,td code,li code{background:#f0f3f5;padding:2px 5px;border-radius:4px;color:#a11b44;overflow-wrap:anywhere}
+.table-wrap{overflow:auto;margin:22px 0}table{width:100%;border-collapse:collapse;font-size:14px}th{background:#edf3f5;text-align:left;color:#173a4a}td,th{padding:12px 14px;border:1px solid var(--line);vertical-align:top}tr:nth-child(even) td{background:#fafcfc}
+.tools{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}.tools a,.tools button{padding:9px 15px;background:white;color:#173a4a;border:1px solid #d2e0e6;border-radius:8px;text-decoration:none;font:600 13px 'Segoe UI',sans-serif;cursor:pointer}
+.note{padding:18px 22px;border-left:4px solid var(--accent);background:#fff2f6;border-radius:4px;margin-bottom:28px}
+.source-card{padding:20px 0;border-bottom:1px solid var(--line)}.source-card h2{margin:0 0 12px;border:0;padding:0;font-size:19px;overflow-wrap:anywhere}.source-card p{margin:8px 0;font-size:14px}.source-card summary{cursor:pointer;color:var(--accent);font-weight:600;padding:12px 0}.source-card pre{max-height:650px}
+.source-line{display:flex;line-height:1.7}.source-line .n{color:#85a6b6;width:44px;flex:none;text-align:right;padding-right:12px;user-select:none}.source-line .src{white-space:pre;flex:1}
+.search{width:100%;padding:12px;border:1px solid var(--line);border-radius:8px;font:14px 'Segoe UI',sans-serif;margin-bottom:10px}.small{font-size:13px;color:var(--muted)}[hidden]{display:none!important}footer{text-align:center;padding:30px;color:var(--muted);font-size:12px}
+@media(max-width:850px){.layout{display:block;padding:16px}aside{position:static;max-height:260px;margin-bottom:20px}main{padding:22px}h1{font-size:29px}h2{font-size:23px}header{padding:30px 22px}td,th{padding:10px}pre{padding:14px}}
+@media print{body{background:white;font-size:10pt}.layout{display:block;padding:0}aside,.tools{display:none}header{padding:18px;color:#17232c;background:white}header p,header .eyebrow{color:#17232c}main{border:0;padding:0}h2{break-before:page}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#eef2f4;color:#17232c}tr{break-inside:avoid}.source-card pre{max-height:none}a{color:inherit}footer{display:none}}
+</style></head><body>
+    <header><div class="eyebrow">GlowBook / Learning Library / 14 Oktober 2026</div><h1>Latihan dan Pembahasan</h1><p>18 latihan untuk melatih pemahaman. Kerjakan pada project/database latihan, lalu jelaskan input, proses, output dan batasnya.</p><div class="tools"><a href="PANDUAN_GLOWBOOK.html">Panduan utama</a><a href="ATLAS_KODE.html">Atlas kode</a><a href="LATIHAN_DAN_JAWABAN.html">Latihan & pembahasan</a><a href="../../output/pdf/Belajar_GlowBook.pdf">Unduh PDF</a><button onclick="window.print()">Cetak</button></div></header>
+    <div class="layout"><aside><strong>Daftar isi</strong><p class="small">Ctrl+F untuk mencari istilah. Pilih satu bab setiap sesi.</p><a href="#section-1">Cara mengerjakan</a>
+<a href="#section-2">Latihan 1 — Menjelaskan satu request</a>
+<a href="#section-3">Latihan 2 — Ruby sederhana</a>
+<a href="#section-4">Latihan 3 — Katalog mini</a>
+<a href="#section-5">Latihan 4 — Tambah deskripsi</a>
+<a href="#section-6">Latihan 5 — Relasi bisnis dan layanan</a>
+<a href="#section-7">Latihan 6 — Periksa akses owner</a>
+<a href="#section-8">Latihan 7 — Memahami interval</a>
+<a href="#section-9">Latihan 8 — Rangkaian layanan</a>
+<a href="#section-10">Latihan 9 — Transaction dan lock</a>
+<a href="#section-11">Latihan 10 — Pagination</a>
+<a href="#section-12">Latihan 11 — Filter tanggal</a>
+<a href="#section-13">Latihan 12 — Spacing CSS</a>
+<a href="#section-14">Latihan 13 — Email dan chat</a>
+<a href="#section-15">Latihan 14 — Pembayaran palsu dari browser</a>
+<a href="#section-16">Latihan 15 — Bahasa</a>
+<a href="#section-17">Latihan 16 — Uji dan debugging</a>
+<a href="#section-18">Latihan 17 — Deployment dan backup</a>
+<a href="#section-19">Latihan 18 — Komunikasi klien</a>
+<a href="#section-20">Penilaian diri</a></aside><main><p>Gunakan bersama PANDUAN_GLOWBOOK.html. Semua perubahan eksperimen dilakukan pada <code>glowbook_latihan</code> atau salinan project dengan database latihan. Jangan gunakan data klien sebagai data belajar. Urutan ini tidak menetapkan jam kerja Upwork.</p>
+<h2 id="section-1">Cara mengerjakan</h2>
+<ol><li>Baca tugas dan tulis rencana tiga kalimat.</li><li>Kerjakan dahulu sebelum membaca pembahasan.</li><li>Jelaskan input, proses, output dan kemungkinan kegagalan.</li><li>Simpan satu commit setelah tugas selesai dan diperiksa.</li></ol>
+<h2 id="section-2">Latihan 1 — Menjelaskan satu request</h2>
+<p><strong>Tugas:</strong> tulis urutan saat browser membuka <code>/admin/pengguna</code>.</p>
+<p><strong>Selesai jika:</strong> Anda menyebut routes, access guard, controller, model, filter dan view.</p>
+<p><strong>Pembahasan:</strong> GET dipetakan routes ke Admin::UsersController#index. Admin::BaseController menjalankan require_admin!. Scope User dipilih, Paginatable membaca kontrol tabel, PostgreSQL menyediakan data, lalu view index menghasilkan HTML. Pengguna yang tidak berhak tidak boleh mencapai data admin.</p>
+<h2 id="section-3">Latihan 2 — Ruby sederhana</h2>
+<p><strong>Tugas:</strong> hitung harga tiga layanan <code>[100_000, 150_000, 75_000]</code>, lalu tampilkan totalnya.</p>
+<p><strong>Selesai jika:</strong> hasil 325000 dan Anda memahami Array/Integer.</p>
+<pre aria-label="Contoh kode ruby"><code>harga = [100_000, 150_000, 75_000]
+total = harga.sum
+puts total</code></pre>
+<p><strong>Pembahasan:</strong> underscore hanya membantu membaca angka. <code>sum</code> menjumlahkan elemen. <code>puts</code> menampilkan hasil; belum menyimpan apa pun ke database.</p>
+<h2 id="section-4">Latihan 3 — Katalog mini</h2>
+<p><strong>Tugas:</strong> selesaikan CRUD mini bab 09: list, new dan create.</p>
+<p><strong>Selesai jika:</strong> layanan baru tampil setelah submit; nama kosong dan harga negatif ditolak; pesan error ditampilkan.</p>
+<p><strong>Pembahasan:</strong> route menentukan action, controller membuat Service dari strong parameters, model memvalidasi, view menampilkan hasil. Validasi form browser tidak menggantikan validasi server. Bila gagal, render new dengan status 422; bila berhasil, redirect ke daftar.</p>
+<h2 id="section-5">Latihan 4 — Tambah deskripsi</h2>
+<p><strong>Tugas:</strong> tambahkan <code>description:text</code> pada katalog mini, tampilkan textarea dan deskripsinya di daftar.</p>
+<p><strong>Selesai jika:</strong> deskripsi tetap ada setelah halaman dimuat ulang.</p>
+<p><strong>Pembahasan:</strong> buat migration, migrate, permit <code>:description</code>, tambahkan <code>f.text_area</code>, lalu tampilkan <code>service.description</code>. Jangan hanya menambah field HTML: tanpa permit data tidak masuk ke model. Jangan mengedit schema.rb secara langsung.</p>
+<h2 id="section-6">Latihan 5 — Relasi bisnis dan layanan</h2>
+<p><strong>Tugas:</strong> rancang relasi Business–Service; jelaskan di tabel mana foreign key berada. Belum perlu menyalin seluruh schema GlowBook.</p>
+<p><strong>Selesai jika:</strong> Anda menjelaskan satu bisnis memiliki banyak layanan, service belongs_to business, dan services menyimpan business_id.</p>
+<p><strong>Pembahasan:</strong> <code>has_many :services</code> pada Business dan <code>belongs_to :business</code> pada Service. Migration membutuhkan reference business. Ketika menambah relasi pada data yang sudah ada, rencanakan pengisian foreign key lama sebelum memberi null:false; generator saja tidak menyelesaikan migrasi data.</p>
+<h2 id="section-7">Latihan 6 — Periksa akses owner</h2>
+<p><strong>Tugas:</strong> jelaskan mengapa <code>@business.services.find(id)</code> lebih tepat daripada <code>Service.find(id)</code> untuk edit layanan owner.</p>
+<p><strong>Selesai jika:</strong> Anda menyebut scope, ownership dan kemungkinan mengganti ID pada URL.</p>
+<p><strong>Pembahasan:</strong> scope pertama membatasi record ke bisnis yang boleh diakses. Login owner tidak membuat semua layanan menjadi miliknya. Tombol edit disembunyikan bukan perlindungan server; endpoint juga perlu memeriksa akses.</p>
+<h2 id="section-8">Latihan 7 — Memahami interval</h2>
+<p><strong>Tugas:</strong> staff punya booking 09.00–10.00. Apakah 09.30–10.30 bentrok? Apakah 10.00–10.30 bentrok jika range <code>[)</code>?</p>
+<p><strong>Jawaban:</strong> yang pertama bentrok; yang kedua tidak.</p>
+<p><strong>Pembahasan:</strong> <code>[)</code> memasukkan awal, mengecualikan akhir. Tugas lanjutan: tambahkan break 10.15–10.45. Walau tidak bentrok booking, layanan 10.00–10.30 tetap tidak tersedia karena break.</p>
+<h2 id="section-9">Latihan 8 — Rangkaian layanan</h2>
+<p><strong>Tugas:</strong> layanan A 45 menit, B 30 menit, awal 09.00. Staff punya break 10.00–10.30. Tentukan waktu selesai dan apakah rangkaian tersedia.</p>
+<p><strong>Jawaban:</strong> akhir 10.15; tidak tersedia.</p>
+<p><strong>Pembahasan:</strong> A berakhir 09.45, B berakhir 10.15. Jangan hanya memeriksa apakah waktu awal 09.00 tersedia. Seluruh interval harus valid.</p>
+<h2 id="section-10">Latihan 9 — Transaction dan lock</h2>
+<p><strong>Tugas:</strong> booking berhasil dibuat tetapi BookingItem kedua gagal. Jelaskan hasil bila keduanya berada dalam transaksi dan penyimpanan memakai bang method.</p>
+<p><strong>Jawaban:</strong> exception menyebabkan rollback perubahan dalam transaksi; jangan meninggalkan booking setengah lengkap.</p>
+<p><strong>Pembahasan:</strong> transaksi menjaga kesatuan perubahan. Lock mengatur perubahan bersamaan. Constraint overlap tetap diperlukan karena dua transaksi dapat semula sama-sama melihat slot kosong. Ketiganya mempunyai tugas berbeda.</p>
+<h2 id="section-11">Latihan 10 — Pagination</h2>
+<p><strong>Tugas:</strong> 63 hasil, 25 per halaman. Berapa halaman? Berapa offset halaman ketiga? Apa hasil bila filter hanya menyisakan 6 record?</p>
+<p><strong>Jawaban:</strong> tiga halaman; offset 50; satu halaman untuk enam hasil.</p>
+<p><strong>Pembahasan:</strong> total halaman ceil(63/25). Halaman terakhir bukan selalu penuh. Page dari URL harus divalidasi/dibatasi. Filter harus diterapkan sebelum count, limit dan offset.</p>
+<h2 id="section-12">Latihan 11 — Filter tanggal</h2>
+<p><strong>Tugas:</strong> jelaskan perbedaan filter created_at User dan start_time Booking.</p>
+<p><strong>Jawaban:</strong> yang pertama memilih tanggal akun dibuat; yang kedua tanggal janji layanan.</p>
+<p><strong>Pembahasan:</strong> jangan menyebut kedua filter sebagai “tanggal transaksi” tanpa konteks. GlowBook memberi label basis tanggal. Waktu harus sesuai timezone aplikasi.</p>
+<h2 id="section-13">Latihan 12 — Spacing CSS</h2>
+<p><strong>Tugas:</strong> buat card filter dengan label tidak menempel tepi, pencarian selebar baris, dan dua field sejajar di layar kecil.</p>
+<p><strong>Selesai jika:</strong> padding sisi 16 px terlihat, label punya margin bawah, dan field tidak melebar keluar wadah.</p>
+<p><strong>Pembahasan:</strong> padding untuk sisi card, gap untuk jarak kolom, min-width:0 untuk grid item. Periksa view lebar kecil dan besar. Tidak perlu menambah JavaScript hanya untuk spacing.</p>
+<h2 id="section-14">Latihan 13 — Email dan chat</h2>
+<p><strong>Tugas:</strong> booking berhasil tetapi email belum sampai. Buat daftar pemeriksaan. Jelaskan juga mengapa pesan chat memakai textContent.</p>
+<p><strong>Pembahasan:</strong> periksa konfigurasi SMTP aktif, antrean, worker, job gagal, penerima dan inbox/spam. <code>deliver_later</code> hanya mengantrekan. <code>textContent</code> menghindari menafsirkan isi pesan sebagai HTML yang dapat berbahaya.</p>
+<h2 id="section-15">Latihan 14 — Pembayaran palsu dari browser</h2>
+<p><strong>Tugas:</strong> seseorang membuka return URL dengan <code>resultCode=00</code>. Bolehkah aplikasi langsung memberi status lunas?</p>
+<p><strong>Jawaban:</strong> tidak.</p>
+<p><strong>Pembahasan:</strong> browser dapat mengubah parameter. Pembayaran ditentukan oleh callback terverifikasi dan pemeriksaan API status. Cocokkan merchant, mode, order, reference dan nominal. Callback dua kali tidak boleh membuat efek pembayaran dua kali.</p>
+<h2 id="section-16">Latihan 15 — Bahasa</h2>
+<p><strong>Tugas:</strong> tambahkan label fitur latihan dalam locale id dan en, lalu panggil t(...) pada view.</p>
+<pre aria-label="Contoh kode yaml"><code>id:
+  latihan:
+    deskripsi: Deskripsi layanan</code></pre>
+<pre aria-label="Contoh kode yaml"><code>en:
+  latihan:
+    deskripsi: Service description</code></pre>
+<pre aria-label="Contoh kode erb"><code>&lt;%= t(&quot;latihan.deskripsi&quot;) %&gt;</code></pre>
+<p><strong>Pembahasan:</strong> key sama pada kedua file; value berbeda bahasa. Indentasi YAML menentukan hirarki. Tidak perlu mengganti nama key menjadi bahasa Inggris pada file en.</p>
+<h2 id="section-17">Latihan 16 — Uji dan debugging</h2>
+<p><strong>Tugas:</strong> tambahkan model spec harga negatif pada katalog mini dan buat ia lulus karena model benar, bukan karena expectation dilemahkan.</p>
+<p><strong>Selesai jika:</strong> spec gagal ketika validasi sengaja dilepas dan berhasil ketika validasi dikembalikan.</p>
+<p><strong>Pembahasan:</strong> ini bukti spec menguji perilaku yang dimaksud. Skenario valid dan invalid sama-sama diperlukan; validasi yang menolak semua data juga dapat meluluskan satu spec invalid.</p>
+<h2 id="section-18">Latihan 17 — Deployment dan backup</h2>
+<p><strong>Tugas:</strong> sebutkan tiga kelompok data yang perlu dipulihkan pada GlowBook production dan satu secret yang harus dipertahankan.</p>
+<p><strong>Jawaban:</strong> database aplikasi, database queue, file upload; key utama SECRET_KEY_BASE untuk membaca konfigurasi terenkripsi.</p>
+<p><strong>Pembahasan:</strong> metadata Active Storage di database tidak menggantikan byte file. Backup key perlu disimpan aman terpisah. Restore ke lingkungan terpisah untuk menghindari menimpa data aktif.</p>
+<h2 id="section-19">Latihan 18 — Komunikasi klien</h2>
+<p><strong>Tugas:</strong> tulis update singkat untuk fitur filter pengguna. Sertakan hasil, bukti, keterbatasan dan actual time bila kontrak hourly.</p>
+<p><strong>Contoh:</strong></p>
+<pre aria-label="Contoh kode text"><code>Implemented admin user search, role filter and page-size controls.
+Verified 10-row paging and combined role/email search.
+Commit: [your actual commit]
+Known limit: All records can be expensive on large datasets.
+Time: actual work recorded under the agreed contract scope.</code></pre>
+<p><strong>Pembahasan:</strong> jangan menulis jumlah jam yang tidak dikerjakan. Jangan menyebut “all tests pass” bila hanya membuka satu halaman. Dokumentasi, review dan pengujian nyata merupakan hasil kerja yang bisa dijelaskan dengan konkret.</p>
+<h2 id="section-20">Penilaian diri</h2>
+<div class="table-wrap"><table><thead><tr><th>Pertanyaan</th><th>Jawab Ya/Belum</th></tr></thead><tbody><tr><td>Saya dapat menelusuri satu URL sampai view.</td><td></td></tr><tr><td>Saya memahami perbedaan model validation dan DB constraint.</td><td></td></tr><tr><td>Saya dapat membuat CRUD kecil tanpa generator penuh.</td><td></td></tr><tr><td>Saya dapat menjelaskan scope owner dan strong parameters.</td><td></td></tr><tr><td>Saya tahu mengapa booking memakai range dan transaksi.</td><td></td></tr><tr><td>Saya tidak memakai return URL untuk memutuskan pembayaran.</td><td></td></tr><tr><td>Saya tahu kapan perlu worker dan permanent storage.</td><td></td></tr><tr><td>Saya dapat membaca diff dan membuat commit yang jelas.</td><td></td></tr><tr><td>Saya dapat melaporkan hasil tanpa melebih-lebihkan bukti.</td><td></td></tr></tbody></table></div>
+<p>Jika banyak jawaban Belum, pilih satu latihan dan ulangi. Jangan menambah semua teknologi sekaligus. Pada sesi belajar berikutnya, mulai dari bab 09 dan satu error yang dapat direproduksi.</p></main></div><footer>Snapshot cb1cc60 · Dokumen belajar offline · Tidak menyertakan kredensial pribadi</footer></body></html>

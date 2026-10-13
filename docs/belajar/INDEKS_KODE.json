@@ -1,0 +1,2830 @@
+{
+  "snapshot": "cb1cc60",
+  "date": "2026-10-14",
+  "files": [
+    {
+      "file": ".github/workflows/ci.yml",
+      "lines": 46,
+      "methods": [],
+      "description": "Tahap CI: specs, JavaScript, Brakeman, release checks, image, HTTPS dan backup/restore.",
+      "anchor": "f1"
+    },
+    {
+      "file": "Dockerfile",
+      "lines": 62,
+      "methods": [],
+      "description": "Tahap image base/dependencies/build/verification/runtime, library OS, aset dan proses non-root.",
+      "anchor": "f2"
+    },
+    {
+      "file": "Gemfile",
+      "lines": 77,
+      "methods": [],
+      "description": "Library langsung dan grouping environment. Gemfile.lock mengunci dependency aktual termasuk dependency turunan.",
+      "anchor": "f3"
+    },
+    {
+      "file": "app/assets/stylesheets/application.css",
+      "lines": 10,
+      "methods": [],
+      "description": "Sumber pendukung pada jalur ini. Gunakan nama file, deklarasi dan pemanggil untuk memahami perannya bersama bab panduan terkait.",
+      "anchor": "f4"
+    },
+    {
+      "file": "app/assets/tailwind/application.css",
+      "lines": 159,
+      "methods": [],
+      "description": "Sumber style Tailwind, komponen bersama dan CSS responsive filter; edit sumber ini, bukan CSS build.",
+      "anchor": "f5"
+    },
+    {
+      "file": "app/controllers/account/base_controller.rb",
+      "lines": 12,
+      "methods": [
+        "current_business_for_owner"
+      ],
+      "description": "Landasan dashboard akun pelanggan dan akses login; controller turunannya bekerja pada data pengguna.",
+      "anchor": "f6"
+    },
+    {
+      "file": "app/controllers/account/bookings_controller.rb",
+      "lines": 16,
+      "methods": [
+        "index"
+      ],
+      "description": "Controller area akun untuk bookings. Lihat action dan before_action di bawah untuk scope, parameter dan respons aktual.",
+      "anchor": "f7"
+    },
+    {
+      "file": "app/controllers/account/dashboard_controller.rb",
+      "lines": 9,
+      "methods": [
+        "show"
+      ],
+      "description": "Controller area akun untuk dashboard. Lihat action dan before_action di bawah untuk scope, parameter dan respons aktual.",
+      "anchor": "f8"
+    },
+    {
+      "file": "app/controllers/account/favorites_controller.rb",
+      "lines": 8,
+      "methods": [
+        "index"
+      ],
+      "description": "Controller area akun untuk favorites. Lihat action dan before_action di bawah untuk scope, parameter dan respons aktual.",
+      "anchor": "f9"
+    },
+    {
+      "file": "app/controllers/account/passwords_controller.rb",
+      "lines": 19,
+      "methods": [
+        "show",
+        "update"
+      ],
+      "description": "Controller area akun untuk passwords. Lihat action dan before_action di bawah untuk scope, parameter dan respons aktual.",
+      "anchor": "f10"
+    },
+    {
+      "file": "app/controllers/account/profiles_controller.rb",
+      "lines": 28,
+      "methods": [
+        "show",
+        "update",
+        "profile_params"
+      ],
+      "description": "Controller area akun untuk profiles. Lihat action dan before_action di bawah untuk scope, parameter dan respons aktual.",
+      "anchor": "f11"
+    },
+    {
+      "file": "app/controllers/account/reviews_controller.rb",
+      "lines": 5,
+      "methods": [
+        "index"
+      ],
+      "description": "Controller area akun untuk reviews. Lihat action dan before_action di bawah untuk scope, parameter dan respons aktual.",
+      "anchor": "f12"
+    },
+    {
+      "file": "app/controllers/account/settings_controller.rb",
+      "lines": 5,
+      "methods": [
+        "show"
+      ],
+      "description": "Controller area akun untuk settings. Lihat action dan before_action di bawah untuk scope, parameter dan respons aktual.",
+      "anchor": "f13"
+    },
+    {
+      "file": "app/controllers/admin/base_controller.rb",
+      "lines": 15,
+      "methods": [
+        "admin_section?"
+      ],
+      "description": "Landasan panel admin: layout dashboard, Paginatable dan guard require_admin!.",
+      "anchor": "f14"
+    },
+    {
+      "file": "app/controllers/admin/bookings_controller.rb",
+      "lines": 58,
+      "methods": [
+        "index",
+        "show",
+        "update_status"
+      ],
+      "description": "Controller area admin untuk bookings. Lihat action dan before_action di bawah untuk scope, parameter dan respons aktual.",
+      "anchor": "f15"
+    },
+    {
+      "file": "app/controllers/admin/businesses_controller.rb",
+      "lines": 109,
+      "methods": [
+        "new",
+        "create",
+        "edit",
+        "update",
+        "index",
+        "show",
+        "destroy",
+        "activate",
+        "reactivate",
+        "business_params",
+        "assign_categories"
+      ],
+      "description": "Tambah/edit profil bisnis, pending, persetujuan, suspend/reaktivasi; ownership lama tidak dipindahkan melalui edit biasa.",
+      "anchor": "f16"
+    },
+    {
+      "file": "app/controllers/admin/categories_controller.rb",
+      "lines": 64,
+      "methods": [
+        "index",
+        "create",
+        "edit",
+        "update",
+        "destroy",
+        "toggle_popular",
+        "set_category",
+        "load_categories",
+        "category_params"
+      ],
+      "description": "Controller area admin untuk categories. Lihat action dan before_action di bawah untuk scope, parameter dan respons aktual.",
+      "anchor": "f17"
+    },
+    {
+      "file": "app/controllers/admin/dashboard_controller.rb",
+      "lines": 20,
+      "methods": [
+        "index"
+      ],
+      "description": "Controller area admin untuk dashboard. Lihat action dan before_action di bawah untuk scope, parameter dan respons aktual.",
+      "anchor": "f18"
+    },
+    {
+      "file": "app/controllers/admin/integrations_controller.rb",
+      "lines": 28,
+      "methods": [
+        "index",
+        "update",
+        "load_integrations"
+      ],
+      "description": "Form integrasi admin dan update konfigurasi provider; field secret dipertahankan atau dihapus dengan pilihan eksplisit.",
+      "anchor": "f19"
+    },
+    {
+      "file": "app/controllers/admin/payments_controller.rb",
+      "lines": 46,
+      "methods": [
+        "index",
+        "selected_month"
+      ],
+      "description": "Controller area admin untuk payments. Lihat action dan before_action di bawah untuk scope, parameter dan respons aktual.",
+      "anchor": "f20"
+    },
+    {
+      "file": "app/controllers/admin/promotions_controller.rb",
+      "lines": 48,
+      "methods": [
+        "new",
+        "create",
+        "edit",
+        "update",
+        "index",
+        "destroy",
+        "promotion_params"
+      ],
+      "description": "Tambah/edit/hapus promosi dan aktif/nonaktif; bisnis promosi lama dipertahankan saat edit.",
+      "anchor": "f21"
+    },
+    {
+      "file": "app/controllers/admin/reports_controller.rb",
+      "lines": 85,
+      "methods": [
+        "index",
+        "selected_month",
+        "completed_bookings",
+        "bookings_csv",
+        "csv_cell"
+      ],
+      "description": "Laporan bulanan dan ekspor; baca definisi status/periode sebelum menyamakan nilai booking dengan uang diterima.",
+      "anchor": "f22"
+    },
+    {
+      "file": "app/controllers/admin/reviews_controller.rb",
+      "lines": 17,
+      "methods": [
+        "index",
+        "destroy"
+      ],
+      "description": "Controller area admin untuk reviews. Lihat action dan before_action di bawah untuk scope, parameter dan respons aktual.",
+      "anchor": "f23"
+    },
+    {
+      "file": "app/controllers/admin/settings_controller.rb",
+      "lines": 23,
+      "methods": [
+        "show",
+        "update",
+        "settings_params"
+      ],
+      "description": "Controller area admin untuk settings. Lihat action dan before_action di bawah untuk scope, parameter dan respons aktual.",
+      "anchor": "f24"
+    },
+    {
+      "file": "app/controllers/admin/users_controller.rb",
+      "lines": 95,
+      "methods": [
+        "new",
+        "create",
+        "edit",
+        "update",
+        "index",
+        "show",
+        "destroy",
+        "set_user",
+        "user_params",
+        "assign_requested_role"
+      ],
+      "description": "CRUD pengguna admin; role diatur secara eksplisit, password kosong dipertahankan dan akun bersejarah dilindungi.",
+      "anchor": "f25"
+    },
+    {
+      "file": "app/controllers/application_controller.rb",
+      "lines": 79,
+      "methods": [
+        "after_sign_in_path_for",
+        "configure_permitted_parameters",
+        "switch_locale",
+        "require_customer!",
+        "require_business_owner!",
+        "require_admin!",
+        "owned_business",
+        "current_business",
+        "staff_for_business!"
+      ],
+      "description": "Landasan controller: locale, parameter Devise, tujuan login, serta pembatasan akses pelanggan/bisnis/admin.",
+      "anchor": "f26"
+    },
+    {
+      "file": "app/controllers/booking_payments_controller.rb",
+      "lines": 26,
+      "methods": [
+        "create",
+        "refresh"
+      ],
+      "description": "Endpoint pelanggan untuk membuat checkout dan memeriksa ulang status attempt milik booking yang boleh diakses.",
+      "anchor": "f27"
+    },
+    {
+      "file": "app/controllers/bookings_controller.rb",
+      "lines": 62,
+      "methods": [
+        "show",
+        "cancel",
+        "reschedule",
+        "update_schedule",
+        "set_booking",
+        "authorize_owner!",
+        "schedule_selection"
+      ],
+      "description": "Detail booking pelanggan, pembatalan dan ubah jadwal, dengan aturan akses dan perubahan booking.",
+      "anchor": "f28"
+    },
+    {
+      "file": "app/controllers/bookings_flow_controller.rb",
+      "lines": 239,
+      "methods": [
+        "new",
+        "show",
+        "update",
+        "confirmation",
+        "complete",
+        "set_business",
+        "flow",
+        "init_flow",
+        "load_step_data",
+        "flow_staff",
+        "flow_date",
+        "flow_time",
+        "flow_start_time",
+        "parse_month",
+        "selected_services",
+        "sequence_availability",
+        "flow_ready?",
+        "parse_date",
+        "parse_time",
+        "build_calendar"
+      ],
+      "description": "State lima langkah booking di session; memvalidasi pilihan dan memanggil BookingBuilder. Harga tetap berasal dari database.",
+      "anchor": "f29"
+    },
+    {
+      "file": "app/controllers/business_registrations_controller.rb",
+      "lines": 79,
+      "methods": [
+        "create",
+        "ensure_business_registration_open",
+        "business_params",
+        "unique_slug",
+        "create_default_business_hours"
+      ],
+      "description": "Onboarding mandiri: kategori valid, bisnis pending, jam default, dan kenaikan peran owner dalam transaksi.",
+      "anchor": "f30"
+    },
+    {
+      "file": "app/controllers/businesses_controller.rb",
+      "lines": 31,
+      "methods": [
+        "show",
+        "tab",
+        "set_business"
+      ],
+      "description": "Controller area publik/aplikasi untuk businesses. Lihat action dan before_action di bawah untuk scope, parameter dan respons aktual.",
+      "anchor": "f31"
+    },
+    {
+      "file": "app/controllers/categories_controller.rb",
+      "lines": 6,
+      "methods": [
+        "show"
+      ],
+      "description": "Controller area publik/aplikasi untuk categories. Lihat action dan before_action di bawah untuk scope, parameter dan respons aktual.",
+      "anchor": "f32"
+    },
+    {
+      "file": "app/controllers/chats_controller.rb",
+      "lines": 96,
+      "methods": [
+        "index",
+        "start",
+        "show",
+        "create",
+        "poll",
+        "set_conversation",
+        "require_participant!",
+        "business_for_current_user",
+        "message_params",
+        "mark_unread_messages_as_read"
+      ],
+      "description": "Daftar percakapan, peserta, pengiriman dan polling pesan. Pesan hanya dapat dibaca pihak yang berhak.",
+      "anchor": "f33"
+    },
+    {
+      "file": "app/controllers/cities_controller.rb",
+      "lines": 7,
+      "methods": [
+        "show"
+      ],
+      "description": "Controller area publik/aplikasi untuk cities. Lihat action dan before_action di bawah untuk scope, parameter dan respons aktual.",
+      "anchor": "f34"
+    },
+    {
+      "file": "app/controllers/concerns/paginatable.rb",
+      "lines": 124,
+      "methods": [
+        "paginate",
+        "table_requested_controls",
+        "table_filter_scope",
+        "table_search_predicate",
+        "table_date_column",
+        "table_filter_options",
+        "table_option_label"
+      ],
+      "description": "Mesin tabel bersama: pencarian terikat scope, pilihan ukuran, filter field/relasi/tanggal dan metadata pagination.",
+      "anchor": "f35"
+    },
+    {
+      "file": "app/controllers/dashboard/analytics_controller.rb",
+      "lines": 39,
+      "methods": [
+        "show"
+      ],
+      "description": "Analitik bisnis menggunakan bulan jadwal, timezone Jakarta dan scope bisnis; sandbox dipisahkan dari uang production.",
+      "anchor": "f36"
+    },
+    {
+      "file": "app/controllers/dashboard/base_controller.rb",
+      "lines": 20,
+      "methods": [
+        "set_current_business",
+        "current_business"
+      ],
+      "description": "Landasan dashboard bisnis: akses owner/staff dan pemilihan bisnis yang terkait dengan pengguna.",
+      "anchor": "f37"
+    },
+    {
+      "file": "app/controllers/dashboard/blocked_times_controller.rb",
+      "lines": 53,
+      "methods": [
+        "index",
+        "edit",
+        "create",
+        "update",
+        "destroy",
+        "load_view_data",
+        "save_block",
+        "blocked_time_params"
+      ],
+      "description": "Membuat/edit/hapus interval larangan booking untuk bisnis atau staff; periksa overlap dan scope bisnis.",
+      "anchor": "f38"
+    },
+    {
+      "file": "app/controllers/dashboard/bookings_controller.rb",
+      "lines": 40,
+      "methods": [
+        "index",
+        "update_status"
+      ],
+      "description": "Controller area bisnis untuk bookings. Lihat action dan before_action di bawah untuk scope, parameter dan respons aktual.",
+      "anchor": "f39"
+    },
+    {
+      "file": "app/controllers/dashboard/calendars_controller.rb",
+      "lines": 28,
+      "methods": [
+        "show"
+      ],
+      "description": "Controller area bisnis untuk calendars. Lihat action dan before_action di bawah untuk scope, parameter dan respons aktual.",
+      "anchor": "f40"
+    },
+    {
+      "file": "app/controllers/dashboard/customers_controller.rb",
+      "lines": 11,
+      "methods": [
+        "index"
+      ],
+      "description": "Aggregate pelanggan bisnis: jumlah booking, nilai booking dan kunjungan terakhir; pagination grouped query.",
+      "anchor": "f41"
+    },
+    {
+      "file": "app/controllers/dashboard/dashboard_controller.rb",
+      "lines": 10,
+      "methods": [
+        "index"
+      ],
+      "description": "Controller area bisnis untuk dashboard. Lihat action dan before_action di bawah untuk scope, parameter dan respons aktual.",
+      "anchor": "f42"
+    },
+    {
+      "file": "app/controllers/dashboard/galleries_controller.rb",
+      "lines": 39,
+      "methods": [
+        "index",
+        "create",
+        "destroy",
+        "gallery_params",
+        "load_galleries"
+      ],
+      "description": "Upload galeri hingga enam file, urutan, validasi dan penghapusan melalui scope bisnis.",
+      "anchor": "f43"
+    },
+    {
+      "file": "app/controllers/dashboard/payments_controller.rb",
+      "lines": 49,
+      "methods": [
+        "index",
+        "selected_month"
+      ],
+      "description": "Controller area bisnis untuk payments. Lihat action dan before_action di bawah untuk scope, parameter dan respons aktual.",
+      "anchor": "f44"
+    },
+    {
+      "file": "app/controllers/dashboard/profiles_controller.rb",
+      "lines": 31,
+      "methods": [
+        "show",
+        "update",
+        "prepare_hours",
+        "profile_params"
+      ],
+      "description": "Controller area bisnis untuk profiles. Lihat action dan before_action di bawah untuk scope, parameter dan respons aktual.",
+      "anchor": "f45"
+    },
+    {
+      "file": "app/controllers/dashboard/promotions_controller.rb",
+      "lines": 51,
+      "methods": [
+        "index",
+        "new",
+        "create",
+        "edit",
+        "update",
+        "destroy",
+        "toggle",
+        "promotion_params"
+      ],
+      "description": "Controller area bisnis untuk promotions. Lihat action dan before_action di bawah untuk scope, parameter dan respons aktual.",
+      "anchor": "f46"
+    },
+    {
+      "file": "app/controllers/dashboard/services_controller.rb",
+      "lines": 49,
+      "methods": [
+        "index",
+        "new",
+        "create",
+        "edit",
+        "update",
+        "destroy",
+        "service_params"
+      ],
+      "description": "Controller area bisnis untuk services. Lihat action dan before_action di bawah untuk scope, parameter dan respons aktual.",
+      "anchor": "f47"
+    },
+    {
+      "file": "app/controllers/dashboard/settings_controller.rb",
+      "lines": 5,
+      "methods": [
+        "show"
+      ],
+      "description": "Controller area bisnis untuk settings. Lihat action dan before_action di bawah untuk scope, parameter dan respons aktual.",
+      "anchor": "f48"
+    },
+    {
+      "file": "app/controllers/dashboard/staff_availability_controller.rb",
+      "lines": 102,
+      "methods": [
+        "show",
+        "create_shift",
+        "update_shift",
+        "destroy_shift",
+        "create_break",
+        "update_break",
+        "destroy_break",
+        "copy_hours",
+        "set_staff_member",
+        "load_view_data",
+        "save_shift",
+        "save_break",
+        "shift_params",
+        "break_params"
+      ],
+      "description": "Mengelola shift, break dan menyalin jam untuk staff dalam bisnis yang boleh diakses.",
+      "anchor": "f49"
+    },
+    {
+      "file": "app/controllers/dashboard/staffs_controller.rb",
+      "lines": 54,
+      "methods": [
+        "index",
+        "new",
+        "create",
+        "edit",
+        "update",
+        "destroy",
+        "staff_params"
+      ],
+      "description": "Controller area bisnis untuk staffs. Lihat action dan before_action di bawah untuk scope, parameter dan respons aktual.",
+      "anchor": "f50"
+    },
+    {
+      "file": "app/controllers/duitku_notifications_controller.rb",
+      "lines": 13,
+      "methods": [
+        "create"
+      ],
+      "description": "Endpoint callback server Duitku. Ekstrak field body, jalankan verifikasi service, balas 200/422/503.",
+      "anchor": "f51"
+    },
+    {
+      "file": "app/controllers/favorites_controller.rb",
+      "lines": 23,
+      "methods": [
+        "create",
+        "destroy",
+        "index"
+      ],
+      "description": "Controller area publik/aplikasi untuk favorites. Lihat action dan before_action di bawah untuk scope, parameter dan respons aktual.",
+      "anchor": "f52"
+    },
+    {
+      "file": "app/controllers/home_controller.rb",
+      "lines": 16,
+      "methods": [
+        "index"
+      ],
+      "description": "Controller area publik/aplikasi untuk home. Lihat action dan before_action di bawah untuk scope, parameter dan respons aktual.",
+      "anchor": "f53"
+    },
+    {
+      "file": "app/controllers/locales_controller.rb",
+      "lines": 14,
+      "methods": [
+        "update"
+      ],
+      "description": "Controller area publik/aplikasi untuk locales. Lihat action dan before_action di bawah untuk scope, parameter dan respons aktual.",
+      "anchor": "f54"
+    },
+    {
+      "file": "app/controllers/notifications_controller.rb",
+      "lines": 26,
+      "methods": [
+        "index",
+        "mark_read",
+        "mark_all_read"
+      ],
+      "description": "Controller area publik/aplikasi untuk notifications. Lihat action dan before_action di bawah untuk scope, parameter dan respons aktual.",
+      "anchor": "f55"
+    },
+    {
+      "file": "app/controllers/pages_controller.rb",
+      "lines": 12,
+      "methods": [
+        "business",
+        "business_signup"
+      ],
+      "description": "Controller area publik/aplikasi untuk pages. Lihat action dan before_action di bawah untuk scope, parameter dan respons aktual.",
+      "anchor": "f56"
+    },
+    {
+      "file": "app/controllers/pwa_controller.rb",
+      "lines": 6,
+      "methods": [
+        "manifest"
+      ],
+      "description": "Controller area publik/aplikasi untuk pwa. Lihat action dan before_action di bawah untuk scope, parameter dan respons aktual.",
+      "anchor": "f57"
+    },
+    {
+      "file": "app/controllers/reviews_controller.rb",
+      "lines": 36,
+      "methods": [
+        "new",
+        "create",
+        "set_business",
+        "review_params",
+        "require_completed_visit!"
+      ],
+      "description": "Controller area publik/aplikasi untuk reviews. Lihat action dan before_action di bawah untuk scope, parameter dan respons aktual.",
+      "anchor": "f58"
+    },
+    {
+      "file": "app/controllers/searches_controller.rb",
+      "lines": 80,
+      "methods": [
+        "index",
+        "nearby",
+        "search_filters",
+        "valid_nearby_origin"
+      ],
+      "description": "Filter marketplace, pengurutan rating/harga/jarak, validasi lokasi dan pagination publik 12 hasil.",
+      "anchor": "f59"
+    },
+    {
+      "file": "app/controllers/users/omniauth_callbacks_controller.rb",
+      "lines": 34,
+      "methods": [
+        "facebook",
+        "google_oauth2",
+        "failure"
+      ],
+      "description": "Menerima identitas OAuth dan menangani sukses/gagal login; bukan tempat menaruh client secret.",
+      "anchor": "f60"
+    },
+    {
+      "file": "app/controllers/users/registrations_controller.rb",
+      "lines": 9,
+      "methods": [
+        "destroy"
+      ],
+      "description": "Penyesuaian pendaftaran/akun Devise dan perlindungan penghapusan akun dengan data yang perlu dipertahankan.",
+      "anchor": "f61"
+    },
+    {
+      "file": "app/helpers/application_helper.rb",
+      "lines": 68,
+      "methods": [
+        "weekday_options",
+        "minute_of_day_options",
+        "format_minute_of_day",
+        "format_idr",
+        "format_duration",
+        "format_time_short",
+        "format_date_id",
+        "format_datetime_id",
+        "rating_stars",
+        "avatar_placeholder",
+        "active_nav_link_class",
+        "breadcrumb"
+      ],
+      "description": "Sumber pendukung pada jalur ini. Gunakan nama file, deklarasi dan pemanggil untuk memahami perannya bersama bab panduan terkait.",
+      "anchor": "f62"
+    },
+    {
+      "file": "app/javascript/application.js",
+      "lines": 17,
+      "methods": [],
+      "description": "Entry point frontend: import Turbo dan controller yang diperlukan.",
+      "anchor": "f63"
+    },
+    {
+      "file": "app/javascript/controllers/application.js",
+      "lines": 7,
+      "methods": [],
+      "description": "Menjalankan aplikasi Stimulus dan konfigurasi awalnya.",
+      "anchor": "f64"
+    },
+    {
+      "file": "app/javascript/controllers/chat_controller.js",
+      "lines": 67,
+      "methods": [],
+      "description": "Polling empat detik, pesan setelah ID terakhir, render textContent dan pembersihan timer.",
+      "anchor": "f65"
+    },
+    {
+      "file": "app/javascript/controllers/dismissable_controller.js",
+      "lines": 7,
+      "methods": [],
+      "description": "Menutup pesan pada elemen yang dikendalikan tanpa memengaruhi pesan lain.",
+      "anchor": "f66"
+    },
+    {
+      "file": "app/javascript/controllers/dropdown_controller.js",
+      "lines": 30,
+      "methods": [],
+      "description": "Buka/tutup menu, click-outside, Escape/fokus dan reset saat navigasi/cache Turbo.",
+      "anchor": "f67"
+    },
+    {
+      "file": "app/javascript/controllers/index.js",
+      "lines": 16,
+      "methods": [],
+      "description": "Mendaftarkan nama controller Stimulus yang dipakai data-controller pada view.",
+      "anchor": "f68"
+    },
+    {
+      "file": "app/javascript/controllers/nearby_search_controller.js",
+      "lines": 33,
+      "methods": [],
+      "description": "Meminta lokasi browser untuk pencarian terdekat dan menyiapkan request setelah izin pengguna.",
+      "anchor": "f69"
+    },
+    {
+      "file": "app/jobs/application_job.rb",
+      "lines": 7,
+      "methods": [],
+      "description": "Superclass Active Job untuk pekerjaan latar aplikasi.",
+      "anchor": "f70"
+    },
+    {
+      "file": "app/jobs/booking_mailer_delivery_job.rb",
+      "lines": 11,
+      "methods": [],
+      "description": "Job pengiriman mailer booking dengan kebijakan eksekusi/retry yang tertulis di file.",
+      "anchor": "f71"
+    },
+    {
+      "file": "app/mailers/application_mailer.rb",
+      "lines": 21,
+      "methods": [
+        "apply_integration_smtp"
+      ],
+      "description": "Pengirim/layout dasar email dan konfigurasi SMTP efektif saat delivery.",
+      "anchor": "f72"
+    },
+    {
+      "file": "app/mailers/booking_mailer.rb",
+      "lines": 25,
+      "methods": [
+        "confirmation",
+        "cancellation",
+        "reschedule",
+        "deliver_booking_message"
+      ],
+      "description": "Isi email confirmation/cancellation/reschedule beserta konteks booking, penerima dan locale.",
+      "anchor": "f73"
+    },
+    {
+      "file": "app/models/application_record.rb",
+      "lines": 3,
+      "methods": [],
+      "description": "Superclass abstrak Active Record yang diwarisi model project.",
+      "anchor": "f74"
+    },
+    {
+      "file": "app/models/blocked_time.rb",
+      "lines": 27,
+      "methods": [
+        "end_after_start",
+        "staff_belongs_to_business"
+      ],
+      "description": "Interval blocked time bisnis/staff dengan scope overlap dan validasi rentang.",
+      "anchor": "f75"
+    },
+    {
+      "file": "app/models/booking.rb",
+      "lines": 130,
+      "methods": [
+        "duration_minutes",
+        "status_badge_class",
+        "cancellable?",
+        "reschedulable?",
+        "completable?",
+        "no_showable?",
+        "complete!",
+        "mark_no_show!",
+        "cancel!",
+        "self.next_reference_for",
+        "generate_reference",
+        "end_after_start",
+        "not_in_past",
+        "items_belong_to_business"
+      ],
+      "description": "Induk janji: status/reference/waktu/total, relasi item/payment, aturan cancel/reschedule/complete/no-show dan lock.",
+      "anchor": "f76"
+    },
+    {
+      "file": "app/models/booking_item.rb",
+      "lines": 28,
+      "methods": [
+        "label",
+        "staff_must_serve_service"
+      ],
+      "description": "Snapshot layanan/harga/durasi/staff dan tstzrange yang dilindungi exclusion constraint DB.",
+      "anchor": "f77"
+    },
+    {
+      "file": "app/models/business.rb",
+      "lines": 125,
+      "methods": [
+        "self.ransackable_attributes",
+        "opening_hour",
+        "open_today?",
+        "open_now?",
+        "price_from",
+        "rating_label",
+        "categories_list",
+        "service_categories_list",
+        "active_promotions",
+        "reviews_count",
+        "to_param"
+      ],
+      "description": "Profil bisnis, owner, kota, kategori, layanan/jadwal/galeri, status dan scope pencarian publik.",
+      "anchor": "f78"
+    },
+    {
+      "file": "app/models/business_category.rb",
+      "lines": 8,
+      "methods": [],
+      "description": "Tabel penghubung bisnis dengan beberapa kategori.",
+      "anchor": "f79"
+    },
+    {
+      "file": "app/models/business_gallery.rb",
+      "lines": 23,
+      "methods": [
+        "image_must_be_supported"
+      ],
+      "description": "Satu foto terlampir, caption dan posisi; JPEG/PNG/WebP maksimal 10 MB.",
+      "anchor": "f80"
+    },
+    {
+      "file": "app/models/business_hour.rb",
+      "lines": 37,
+      "methods": [
+        "self.days",
+        "day_name",
+        "open_time_string",
+        "close_time_string",
+        "open_today_label",
+        "close_after_open"
+      ],
+      "description": "Jam operasional per hari berupa menit dari tengah malam; closed menonaktifkan hari.",
+      "anchor": "f81"
+    },
+    {
+      "file": "app/models/category.rb",
+      "lines": 29,
+      "methods": [
+        "icon_path"
+      ],
+      "description": "Data kategori, slug, urutan dan pilihan populer serta relasi bisnis/layanan.",
+      "anchor": "f82"
+    },
+    {
+      "file": "app/models/chat_message.rb",
+      "lines": 26,
+      "methods": [
+        "trim_body",
+        "sender_must_be_a_participant",
+        "touch_conversation"
+      ],
+      "description": "Isi pesan, pengirim, percakapan dan waktu dibaca; server mengontrol identitas pengirim.",
+      "anchor": "f83"
+    },
+    {
+      "file": "app/models/city.rb",
+      "lines": 8,
+      "methods": [],
+      "description": "Data referensi kota untuk profil bisnis dan filter marketplace.",
+      "anchor": "f84"
+    },
+    {
+      "file": "app/models/conversation.rb",
+      "lines": 22,
+      "methods": [
+        "participant?",
+        "unread_count_for"
+      ],
+      "description": "Percakapan bisnis-pelanggan dan predicate participant? untuk melindungi akses pesan.",
+      "anchor": "f85"
+    },
+    {
+      "file": "app/models/favorite.rb",
+      "lines": 10,
+      "methods": [],
+      "description": "Relasi pengguna-bisnis favorit, dengan keunikan pasangan pada database.",
+      "anchor": "f86"
+    },
+    {
+      "file": "app/models/integration_setting.rb",
+      "lines": 127,
+      "methods": [
+        "self.effective",
+        "settings",
+        "settings=",
+        "update_configuration",
+        "self.with_duitku_lock",
+        "assign_configuration",
+        "ready?",
+        "smtp_options",
+        "encryptor",
+        "validate_configuration"
+      ],
+      "description": "Konfigurasi provider terenkripsi, fallback ENV, validasi, SMTP dan lock perubahan Duitku saat pending.",
+      "anchor": "f87"
+    },
+    {
+      "file": "app/models/payment_attempt.rb",
+      "lines": 35,
+      "methods": [
+        "paid?",
+        "gateway_label",
+        "status_badge_class"
+      ],
+      "description": "Attempt pembayaran terpisah dari status booking; provider/mode/merchant, scope paid dan production_payments.",
+      "anchor": "f88"
+    },
+    {
+      "file": "app/models/platform_setting.rb",
+      "lines": 11,
+      "methods": [
+        "self.current"
+      ],
+      "description": "Pengaturan platform tersimpan seperti komisi dan pendaftaran bisnis; bukan mesin penagihan komisi.",
+      "anchor": "f89"
+    },
+    {
+      "file": "app/models/promotion.rb",
+      "lines": 20,
+      "methods": [
+        "ends_after_starts"
+      ],
+      "description": "Judul, kode, persen diskon, periode dan keaktifan promosi; scope active_now memeriksa waktu berlaku.",
+      "anchor": "f90"
+    },
+    {
+      "file": "app/models/review.rb",
+      "lines": 25,
+      "methods": [
+        "stars",
+        "recalculate_business_rating"
+      ],
+      "description": "Rating/komentar pengguna untuk bisnis serta pembaruan aggregate rating; baca kelayakan review pada controller juga.",
+      "anchor": "f91"
+    },
+    {
+      "file": "app/models/service.rb",
+      "lines": 22,
+      "methods": [
+        "price_idr"
+      ],
+      "description": "Layanan milik bisnis/kategori dengan harga rupiah integer, durasi, keaktifan dan kualifikasi staff.",
+      "anchor": "f92"
+    },
+    {
+      "file": "app/models/staff.rb",
+      "lines": 29,
+      "methods": [
+        "display_title",
+        "works_on?"
+      ],
+      "description": "Anggota staff dan relasi ke bisnis/user/layanan/jadwal; kelayakan staff memengaruhi availability.",
+      "anchor": "f93"
+    },
+    {
+      "file": "app/models/staff_break.rb",
+      "lines": 16,
+      "methods": [
+        "end_after_start"
+      ],
+      "description": "Interval istirahat mingguan staff yang mengurangi waktu tersedia.",
+      "anchor": "f94"
+    },
+    {
+      "file": "app/models/staff_schedule.rb",
+      "lines": 27,
+      "methods": [
+        "end_after_start",
+        "no_overlapping_shifts"
+      ],
+      "description": "Interval shift mingguan staff, validasi menit dan aturan jadwal.",
+      "anchor": "f95"
+    },
+    {
+      "file": "app/models/staff_service.rb",
+      "lines": 8,
+      "methods": [],
+      "description": "Tabel penghubung kualifikasi staff-layanan; jangan menyamakan semua staff dengan semua layanan.",
+      "anchor": "f96"
+    },
+    {
+      "file": "app/models/user.rb",
+      "lines": 71,
+      "methods": [
+        "self.from_facebook",
+        "self.from_google",
+        "business_owner?",
+        "has_retained_records?",
+        "send_devise_notification",
+        "full_name",
+        "initial"
+      ],
+      "description": "Identitas, Devise, empat role, relasi data, validasi nama/telepon dan lookup OAuth provider+UID.",
+      "anchor": "f97"
+    },
+    {
+      "file": "app/models/user_notification.rb",
+      "lines": 15,
+      "methods": [
+        "unread?"
+      ],
+      "description": "Notifikasi pengguna, event booking, judul/body dan read/unread.",
+      "anchor": "f98"
+    },
+    {
+      "file": "app/services/admin_charts.rb",
+      "lines": 49,
+      "methods": [
+        "initialize",
+        "daily_counts",
+        "daily_revenue",
+        "max_count",
+        "max_revenue",
+        "range_start",
+        "range_end",
+        "fill"
+      ],
+      "description": "Aggregate grafik admin, memakai periode dan tanggal lokal Jakarta.",
+      "anchor": "f99"
+    },
+    {
+      "file": "app/services/availability.rb",
+      "lines": 140,
+      "methods": [
+        "initialize",
+        "slots",
+        "available_at?",
+        "has_availability?",
+        "staff_available_at?",
+        "staff_available_during",
+        "compute_slots",
+        "business_window",
+        "day_base",
+        "business_hours",
+        "eligible_staff_ids",
+        "staff_free?",
+        "working_hours?",
+        "on_break?",
+        "blocked?",
+        "booked?",
+        "minute_of_day"
+      ],
+      "description": "Slot layanan: jam bisnis, staff berkualifikasi, shift, break, blocked time dan booking yang overlap.",
+      "anchor": "f100"
+    },
+    {
+      "file": "app/services/booking_builder.rb",
+      "lines": 101,
+      "methods": [
+        "initialize",
+        "call",
+        "resolve_staff",
+        "sequence_available?",
+        "sequence_free?"
+      ],
+      "description": "Mengecek layanan/staff/interval lalu membuat booking dan item dalam transaksi; menangani konflik database.",
+      "anchor": "f101"
+    },
+    {
+      "file": "app/services/booking_notification_delivery.rb",
+      "lines": 71,
+      "methods": [
+        "initialize",
+        "call",
+        "notification_recipients",
+        "create_in_app_notification",
+        "notification_content",
+        "owner_notification_body",
+        "customer_notification_body"
+      ],
+      "description": "Membuat notifikasi in-app dan mengantrekan email untuk event yang dibatasi allowlist.",
+      "anchor": "f102"
+    },
+    {
+      "file": "app/services/booking_rescheduler.rb",
+      "lines": 35,
+      "methods": [
+        "initialize",
+        "call"
+      ],
+      "description": "Ubah jadwal atomik: lock booking, cek availability, lepas range lama, isi range baru dan rollback jika gagal.",
+      "anchor": "f103"
+    },
+    {
+      "file": "app/services/booking_result.rb",
+      "lines": 16,
+      "methods": [
+        "initialize",
+        "ok?"
+      ],
+      "description": "Objek hasil proses booking: membawa booking atau error dan predicate ok?.",
+      "anchor": "f104"
+    },
+    {
+      "file": "app/services/booking_sequence_availability.rb",
+      "lines": 59,
+      "methods": [
+        "initialize",
+        "slots",
+        "available_at?",
+        "staff_available_at?",
+        "sequence_staff_ids"
+      ],
+      "description": "Menghitung ketersediaan rangkaian layanan berurutan pada staff; juga dapat menggunakan snapshot booking saat reschedule.",
+      "anchor": "f105"
+    },
+    {
+      "file": "app/services/create_booking_payment.rb",
+      "lines": 68,
+      "methods": [
+        "ok?",
+        "initialize",
+        "call",
+        "prepare_attempt"
+      ],
+      "description": "Membuat/memakai attempt yang sesuai merchant/mode; menjaga order saat timeout dan menolak booking yang tak layak.",
+      "anchor": "f106"
+    },
+    {
+      "file": "app/services/duitku_client.rb",
+      "lines": 116,
+      "methods": [
+        "self.enabled?",
+        "self.checkout_label",
+        "initialize",
+        "current_configuration?",
+        "create_invoice",
+        "valid_checkout_url?",
+        "transaction_status",
+        "valid_signature?",
+        "signature",
+        "invoice_payload",
+        "request"
+      ],
+      "description": "Klien HTTP Duitku: signature HMAC, invoice/status, timeout, validasi host checkout dan hasil ambigu.",
+      "anchor": "f107"
+    },
+    {
+      "file": "app/services/oauth_provider_setup.rb",
+      "lines": 12,
+      "methods": [
+        "self.call"
+      ],
+      "description": "Mengisi konfigurasi strategi OAuth per request dari pengaturan efektif dan callback kanonis.",
+      "anchor": "f108"
+    },
+    {
+      "file": "app/services/payment_attempt_csv.rb",
+      "lines": 42,
+      "methods": [
+        "initialize",
+        "render",
+        "spreadsheet_safe",
+        "csv_cell"
+      ],
+      "description": "Menyusun CSV pembayaran dengan provider/mode dan pengamanan nilai yang dapat dianggap formula spreadsheet.",
+      "anchor": "f109"
+    },
+    {
+      "file": "app/services/platform_bootstrap.rb",
+      "lines": 38,
+      "methods": [
+        "self.call"
+      ],
+      "description": "Inisialisasi production tanpa demo: admin dan data referensi, mempertahankan data/password lama.",
+      "anchor": "f110"
+    },
+    {
+      "file": "app/services/process_duitku_notification.rb",
+      "lines": 32,
+      "methods": [
+        "initialize",
+        "call",
+        "verify_amount!"
+      ],
+      "description": "Verifikasi callback signature/merchant/amount/reference lalu delegasi rekonsiliasi status server.",
+      "anchor": "f111"
+    },
+    {
+      "file": "app/services/reconcile_duitku_payment.rb",
+      "lines": 46,
+      "methods": [
+        "initialize",
+        "call"
+      ],
+      "description": "Cek API transactionStatus, cocokkan identitas/nominal, lock update dan lindungi paid dari callback terlambat.",
+      "anchor": "f112"
+    },
+    {
+      "file": "app/views/account/bookings/_booking_row.html.erb",
+      "lines": 19,
+      "methods": [],
+      "description": "Partial tampilan yang dipakai melalui render. Data berasal dari locals atau instance variable; jalur folder menunjukkan fitur pemakainya.",
+      "anchor": "f113"
+    },
+    {
+      "file": "app/views/account/bookings/index.html.erb",
+      "lines": 24,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f114"
+    },
+    {
+      "file": "app/views/account/dashboard/show.html.erb",
+      "lines": 37,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f115"
+    },
+    {
+      "file": "app/views/account/favorites/index.html.erb",
+      "lines": 19,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f116"
+    },
+    {
+      "file": "app/views/account/passwords/show.html.erb",
+      "lines": 23,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f117"
+    },
+    {
+      "file": "app/views/account/profiles/show.html.erb",
+      "lines": 25,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f118"
+    },
+    {
+      "file": "app/views/account/reviews/index.html.erb",
+      "lines": 29,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f119"
+    },
+    {
+      "file": "app/views/account/settings/show.html.erb",
+      "lines": 30,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f120"
+    },
+    {
+      "file": "app/views/admin/bookings/index.html.erb",
+      "lines": 46,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f121"
+    },
+    {
+      "file": "app/views/admin/bookings/show.html.erb",
+      "lines": 67,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f122"
+    },
+    {
+      "file": "app/views/admin/businesses/_form.html.erb",
+      "lines": 22,
+      "methods": [],
+      "description": "Partial tampilan yang dipakai melalui render. Data berasal dari locals atau instance variable; jalur folder menunjukkan fitur pemakainya.",
+      "anchor": "f123"
+    },
+    {
+      "file": "app/views/admin/businesses/edit.html.erb",
+      "lines": 4,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f124"
+    },
+    {
+      "file": "app/views/admin/businesses/index.html.erb",
+      "lines": 55,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f125"
+    },
+    {
+      "file": "app/views/admin/businesses/new.html.erb",
+      "lines": 4,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f126"
+    },
+    {
+      "file": "app/views/admin/businesses/show.html.erb",
+      "lines": 88,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f127"
+    },
+    {
+      "file": "app/views/admin/categories/_form.html.erb",
+      "lines": 23,
+      "methods": [],
+      "description": "Partial tampilan yang dipakai melalui render. Data berasal dari locals atau instance variable; jalur folder menunjukkan fitur pemakainya.",
+      "anchor": "f128"
+    },
+    {
+      "file": "app/views/admin/categories/edit.html.erb",
+      "lines": 7,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f129"
+    },
+    {
+      "file": "app/views/admin/categories/index.html.erb",
+      "lines": 36,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f130"
+    },
+    {
+      "file": "app/views/admin/dashboard/index.html.erb",
+      "lines": 127,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f131"
+    },
+    {
+      "file": "app/views/admin/integrations/index.html.erb",
+      "lines": 77,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f132"
+    },
+    {
+      "file": "app/views/admin/payments/index.html.erb",
+      "lines": 52,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f133"
+    },
+    {
+      "file": "app/views/admin/promotions/_form.html.erb",
+      "lines": 37,
+      "methods": [],
+      "description": "Partial tampilan yang dipakai melalui render. Data berasal dari locals atau instance variable; jalur folder menunjukkan fitur pemakainya.",
+      "anchor": "f134"
+    },
+    {
+      "file": "app/views/admin/promotions/edit.html.erb",
+      "lines": 4,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f135"
+    },
+    {
+      "file": "app/views/admin/promotions/index.html.erb",
+      "lines": 35,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f136"
+    },
+    {
+      "file": "app/views/admin/promotions/new.html.erb",
+      "lines": 4,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f137"
+    },
+    {
+      "file": "app/views/admin/reports/index.html.erb",
+      "lines": 86,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f138"
+    },
+    {
+      "file": "app/views/admin/reviews/index.html.erb",
+      "lines": 29,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f139"
+    },
+    {
+      "file": "app/views/admin/settings/show.html.erb",
+      "lines": 61,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f140"
+    },
+    {
+      "file": "app/views/admin/shared/_sidebar.html.erb",
+      "lines": 46,
+      "methods": [],
+      "description": "Partial tampilan yang dipakai melalui render. Data berasal dari locals atau instance variable; jalur folder menunjukkan fitur pemakainya.",
+      "anchor": "f141"
+    },
+    {
+      "file": "app/views/admin/users/_form.html.erb",
+      "lines": 22,
+      "methods": [],
+      "description": "Partial tampilan yang dipakai melalui render. Data berasal dari locals atau instance variable; jalur folder menunjukkan fitur pemakainya.",
+      "anchor": "f142"
+    },
+    {
+      "file": "app/views/admin/users/edit.html.erb",
+      "lines": 4,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f143"
+    },
+    {
+      "file": "app/views/admin/users/index.html.erb",
+      "lines": 51,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f144"
+    },
+    {
+      "file": "app/views/admin/users/new.html.erb",
+      "lines": 4,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f145"
+    },
+    {
+      "file": "app/views/admin/users/show.html.erb",
+      "lines": 51,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f146"
+    },
+    {
+      "file": "app/views/booking_mailer/_booking_details.html.erb",
+      "lines": 7,
+      "methods": [],
+      "description": "Partial tampilan yang dipakai melalui render. Data berasal dari locals atau instance variable; jalur folder menunjukkan fitur pemakainya.",
+      "anchor": "f147"
+    },
+    {
+      "file": "app/views/booking_mailer/cancellation.html.erb",
+      "lines": 4,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f148"
+    },
+    {
+      "file": "app/views/booking_mailer/cancellation.text.erb",
+      "lines": 7,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f149"
+    },
+    {
+      "file": "app/views/booking_mailer/confirmation.html.erb",
+      "lines": 4,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f150"
+    },
+    {
+      "file": "app/views/booking_mailer/confirmation.text.erb",
+      "lines": 11,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f151"
+    },
+    {
+      "file": "app/views/booking_mailer/reschedule.html.erb",
+      "lines": 4,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f152"
+    },
+    {
+      "file": "app/views/booking_mailer/reschedule.text.erb",
+      "lines": 8,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f153"
+    },
+    {
+      "file": "app/views/bookings/reschedule.html.erb",
+      "lines": 46,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f154"
+    },
+    {
+      "file": "app/views/bookings/show.html.erb",
+      "lines": 84,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f155"
+    },
+    {
+      "file": "app/views/bookings_flow/_step_konfirmasi.html.erb",
+      "lines": 61,
+      "methods": [],
+      "description": "Partial tampilan yang dipakai melalui render. Data berasal dari locals atau instance variable; jalur folder menunjukkan fitur pemakainya.",
+      "anchor": "f156"
+    },
+    {
+      "file": "app/views/bookings_flow/_step_layanan.html.erb",
+      "lines": 23,
+      "methods": [],
+      "description": "Partial tampilan yang dipakai melalui render. Data berasal dari locals atau instance variable; jalur folder menunjukkan fitur pemakainya.",
+      "anchor": "f157"
+    },
+    {
+      "file": "app/views/bookings_flow/_step_staff.html.erb",
+      "lines": 32,
+      "methods": [],
+      "description": "Partial tampilan yang dipakai melalui render. Data berasal dari locals atau instance variable; jalur folder menunjukkan fitur pemakainya.",
+      "anchor": "f158"
+    },
+    {
+      "file": "app/views/bookings_flow/_step_tanggal.html.erb",
+      "lines": 43,
+      "methods": [],
+      "description": "Partial tampilan yang dipakai melalui render. Data berasal dari locals atau instance variable; jalur folder menunjukkan fitur pemakainya.",
+      "anchor": "f159"
+    },
+    {
+      "file": "app/views/bookings_flow/_step_waktu.html.erb",
+      "lines": 34,
+      "methods": [],
+      "description": "Partial tampilan yang dipakai melalui render. Data berasal dari locals atau instance variable; jalur folder menunjukkan fitur pemakainya.",
+      "anchor": "f160"
+    },
+    {
+      "file": "app/views/bookings_flow/new.html.erb",
+      "lines": 38,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f161"
+    },
+    {
+      "file": "app/views/businesses/_tab_content.html.erb",
+      "lines": 103,
+      "methods": [],
+      "description": "Partial tampilan yang dipakai melalui render. Data berasal dari locals atau instance variable; jalur folder menunjukkan fitur pemakainya.",
+      "anchor": "f162"
+    },
+    {
+      "file": "app/views/businesses/show.html.erb",
+      "lines": 129,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f163"
+    },
+    {
+      "file": "app/views/chats/index.html.erb",
+      "lines": 35,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f164"
+    },
+    {
+      "file": "app/views/chats/show.html.erb",
+      "lines": 47,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f165"
+    },
+    {
+      "file": "app/views/dashboard/analytics/show.html.erb",
+      "lines": 65,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f166"
+    },
+    {
+      "file": "app/views/dashboard/blocked_times/index.html.erb",
+      "lines": 61,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f167"
+    },
+    {
+      "file": "app/views/dashboard/bookings/index.html.erb",
+      "lines": 66,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f168"
+    },
+    {
+      "file": "app/views/dashboard/calendars/show.html.erb",
+      "lines": 97,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f169"
+    },
+    {
+      "file": "app/views/dashboard/customers/index.html.erb",
+      "lines": 39,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f170"
+    },
+    {
+      "file": "app/views/dashboard/dashboard/index.html.erb",
+      "lines": 59,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f171"
+    },
+    {
+      "file": "app/views/dashboard/galleries/index.html.erb",
+      "lines": 55,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f172"
+    },
+    {
+      "file": "app/views/dashboard/payments/index.html.erb",
+      "lines": 57,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f173"
+    },
+    {
+      "file": "app/views/dashboard/profiles/show.html.erb",
+      "lines": 78,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f174"
+    },
+    {
+      "file": "app/views/dashboard/promotions/_form.html.erb",
+      "lines": 35,
+      "methods": [],
+      "description": "Partial tampilan yang dipakai melalui render. Data berasal dari locals atau instance variable; jalur folder menunjukkan fitur pemakainya.",
+      "anchor": "f175"
+    },
+    {
+      "file": "app/views/dashboard/promotions/edit.html.erb",
+      "lines": 9,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f176"
+    },
+    {
+      "file": "app/views/dashboard/promotions/index.html.erb",
+      "lines": 41,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f177"
+    },
+    {
+      "file": "app/views/dashboard/promotions/new.html.erb",
+      "lines": 9,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f178"
+    },
+    {
+      "file": "app/views/dashboard/services/_form.html.erb",
+      "lines": 39,
+      "methods": [],
+      "description": "Partial tampilan yang dipakai melalui render. Data berasal dari locals atau instance variable; jalur folder menunjukkan fitur pemakainya.",
+      "anchor": "f179"
+    },
+    {
+      "file": "app/views/dashboard/services/edit.html.erb",
+      "lines": 9,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f180"
+    },
+    {
+      "file": "app/views/dashboard/services/index.html.erb",
+      "lines": 40,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f181"
+    },
+    {
+      "file": "app/views/dashboard/services/new.html.erb",
+      "lines": 9,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f182"
+    },
+    {
+      "file": "app/views/dashboard/settings/show.html.erb",
+      "lines": 41,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f183"
+    },
+    {
+      "file": "app/views/dashboard/shared/_sidebar.html.erb",
+      "lines": 58,
+      "methods": [],
+      "description": "Partial tampilan yang dipakai melalui render. Data berasal dari locals atau instance variable; jalur folder menunjukkan fitur pemakainya.",
+      "anchor": "f184"
+    },
+    {
+      "file": "app/views/dashboard/staff_availability/_weekly_fields.html.erb",
+      "lines": 14,
+      "methods": [],
+      "description": "Partial tampilan yang dipakai melalui render. Data berasal dari locals atau instance variable; jalur folder menunjukkan fitur pemakainya.",
+      "anchor": "f185"
+    },
+    {
+      "file": "app/views/dashboard/staff_availability/show.html.erb",
+      "lines": 70,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f186"
+    },
+    {
+      "file": "app/views/dashboard/staffs/_form.html.erb",
+      "lines": 35,
+      "methods": [],
+      "description": "Partial tampilan yang dipakai melalui render. Data berasal dari locals atau instance variable; jalur folder menunjukkan fitur pemakainya.",
+      "anchor": "f187"
+    },
+    {
+      "file": "app/views/dashboard/staffs/edit.html.erb",
+      "lines": 10,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f188"
+    },
+    {
+      "file": "app/views/dashboard/staffs/index.html.erb",
+      "lines": 51,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f189"
+    },
+    {
+      "file": "app/views/dashboard/staffs/new.html.erb",
+      "lines": 9,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f190"
+    },
+    {
+      "file": "app/views/devise/mailer/email_changed.html.erb",
+      "lines": 3,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f191"
+    },
+    {
+      "file": "app/views/devise/mailer/email_changed.text.erb",
+      "lines": 5,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f192"
+    },
+    {
+      "file": "app/views/devise/mailer/password_change.html.erb",
+      "lines": 3,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f193"
+    },
+    {
+      "file": "app/views/devise/mailer/password_change.text.erb",
+      "lines": 5,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f194"
+    },
+    {
+      "file": "app/views/devise/mailer/reset_password_instructions.html.erb",
+      "lines": 4,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f195"
+    },
+    {
+      "file": "app/views/devise/mailer/reset_password_instructions.text.erb",
+      "lines": 7,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f196"
+    },
+    {
+      "file": "app/views/devise/passwords/edit.html.erb",
+      "lines": 20,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f197"
+    },
+    {
+      "file": "app/views/devise/passwords/new.html.erb",
+      "lines": 19,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f198"
+    },
+    {
+      "file": "app/views/devise/registrations/new.html.erb",
+      "lines": 38,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f199"
+    },
+    {
+      "file": "app/views/devise/sessions/new.html.erb",
+      "lines": 36,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f200"
+    },
+    {
+      "file": "app/views/devise/shared/_error_messages.html.erb",
+      "lines": 10,
+      "methods": [],
+      "description": "Partial tampilan yang dipakai melalui render. Data berasal dari locals atau instance variable; jalur folder menunjukkan fitur pemakainya.",
+      "anchor": "f201"
+    },
+    {
+      "file": "app/views/devise/shared/_oauth_buttons.html.erb",
+      "lines": 21,
+      "methods": [],
+      "description": "Partial tampilan yang dipakai melalui render. Data berasal dari locals atau instance variable; jalur folder menunjukkan fitur pemakainya.",
+      "anchor": "f202"
+    },
+    {
+      "file": "app/views/home/index.html.erb",
+      "lines": 109,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f203"
+    },
+    {
+      "file": "app/views/layouts/account.html.erb",
+      "lines": 65,
+      "methods": [],
+      "description": "Layout pembungkus halaman: head/aset, navigasi, pesan dan yield konten. Periksa content_for pada view pemanggil.",
+      "anchor": "f204"
+    },
+    {
+      "file": "app/views/layouts/application.html.erb",
+      "lines": 41,
+      "methods": [],
+      "description": "Layout pembungkus halaman: head/aset, navigasi, pesan dan yield konten. Periksa content_for pada view pemanggil.",
+      "anchor": "f205"
+    },
+    {
+      "file": "app/views/layouts/dashboard.html.erb",
+      "lines": 63,
+      "methods": [],
+      "description": "Layout pembungkus halaman: head/aset, navigasi, pesan dan yield konten. Periksa content_for pada view pemanggil.",
+      "anchor": "f206"
+    },
+    {
+      "file": "app/views/layouts/mailer.html.erb",
+      "lines": 13,
+      "methods": [],
+      "description": "Layout pembungkus halaman: head/aset, navigasi, pesan dan yield konten. Periksa content_for pada view pemanggil.",
+      "anchor": "f207"
+    },
+    {
+      "file": "app/views/layouts/mailer.text.erb",
+      "lines": 1,
+      "methods": [],
+      "description": "Layout pembungkus halaman: head/aset, navigasi, pesan dan yield konten. Periksa content_for pada view pemanggil.",
+      "anchor": "f208"
+    },
+    {
+      "file": "app/views/notifications/index.html.erb",
+      "lines": 44,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f209"
+    },
+    {
+      "file": "app/views/pages/business.html.erb",
+      "lines": 45,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f210"
+    },
+    {
+      "file": "app/views/pages/business_signup.html.erb",
+      "lines": 85,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f211"
+    },
+    {
+      "file": "app/views/pwa/manifest.json.erb",
+      "lines": 16,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f212"
+    },
+    {
+      "file": "app/views/pwa/service-worker.js",
+      "lines": 53,
+      "methods": [],
+      "description": "Cache aset statis dan fallback offline; tidak menyimpan HTML akun/admin atau mengambil alih request mutasi.",
+      "anchor": "f213"
+    },
+    {
+      "file": "app/views/reviews/new.html.erb",
+      "lines": 28,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f214"
+    },
+    {
+      "file": "app/views/searches/_filters.html.erb",
+      "lines": 62,
+      "methods": [],
+      "description": "Partial tampilan yang dipakai melalui render. Data berasal dari locals atau instance variable; jalur folder menunjukkan fitur pemakainya.",
+      "anchor": "f215"
+    },
+    {
+      "file": "app/views/searches/index.html.erb",
+      "lines": 128,
+      "methods": [],
+      "description": "Template respons fitur pada jalur ini. Controller menentukan data, ERB menyusun HTML/JSON/email, helper dan locale memberi format/teks.",
+      "anchor": "f216"
+    },
+    {
+      "file": "app/views/shared/_business_card.html.erb",
+      "lines": 38,
+      "methods": [],
+      "description": "Partial tampilan yang dipakai melalui render. Data berasal dari locals atau instance variable; jalur folder menunjukkan fitur pemakainya.",
+      "anchor": "f217"
+    },
+    {
+      "file": "app/views/shared/_footer.html.erb",
+      "lines": 42,
+      "methods": [],
+      "description": "Partial tampilan yang dipakai melalui render. Data berasal dari locals atau instance variable; jalur folder menunjukkan fitur pemakainya.",
+      "anchor": "f218"
+    },
+    {
+      "file": "app/views/shared/_form_errors.html.erb",
+      "lines": 10,
+      "methods": [],
+      "description": "Partial tampilan yang dipakai melalui render. Data berasal dari locals atau instance variable; jalur folder menunjukkan fitur pemakainya.",
+      "anchor": "f219"
+    },
+    {
+      "file": "app/views/shared/_locale_switcher.html.erb",
+      "lines": 5,
+      "methods": [],
+      "description": "Partial tampilan yang dipakai melalui render. Data berasal dari locals atau instance variable; jalur folder menunjukkan fitur pemakainya.",
+      "anchor": "f220"
+    },
+    {
+      "file": "app/views/shared/_mobile_nav.html.erb",
+      "lines": 20,
+      "methods": [],
+      "description": "Partial tampilan yang dipakai melalui render. Data berasal dari locals atau instance variable; jalur folder menunjukkan fitur pemakainya.",
+      "anchor": "f221"
+    },
+    {
+      "file": "app/views/shared/_navbar.html.erb",
+      "lines": 90,
+      "methods": [],
+      "description": "Partial tampilan yang dipakai melalui render. Data berasal dari locals atau instance variable; jalur folder menunjukkan fitur pemakainya.",
+      "anchor": "f222"
+    },
+    {
+      "file": "app/views/shared/_pagination.html.erb",
+      "lines": 15,
+      "methods": [],
+      "description": "Pagination umum/legacy yang masih dipakai bagian tertentu; berbeda dari kontrol tabel bernamespace.",
+      "anchor": "f223"
+    },
+    {
+      "file": "app/views/shared/_pwa_head.html.erb",
+      "lines": 7,
+      "methods": [],
+      "description": "Partial tampilan yang dipakai melalui render. Data berasal dari locals atau instance variable; jalur folder menunjukkan fitur pemakainya.",
+      "anchor": "f224"
+    },
+    {
+      "file": "app/views/shared/_table_controls.html.erb",
+      "lines": 37,
+      "methods": [],
+      "description": "Form GET bersama: pencarian, ukuran, filter, tanggal, Apply/Reset dan ringkasan; query lain dipertahankan sesuai aturan.",
+      "anchor": "f225"
+    },
+    {
+      "file": "app/views/shared/_table_pagination.html.erb",
+      "lines": 14,
+      "methods": [],
+      "description": "Link previous/next berbasis metadata tabel, mempertahankan filter dan mengubah page.",
+      "anchor": "f226"
+    },
+    {
+      "file": "bin/dev",
+      "lines": 2,
+      "methods": [],
+      "description": "Entry point perintah project. Periksa environment, working directory dan layanan yang dijalankan sebelum mengeksekusi.",
+      "anchor": "f227"
+    },
+    {
+      "file": "bin/docker-entrypoint",
+      "lines": 8,
+      "methods": [],
+      "description": "Menjalankan db:prepare sebelum server, lalu exec proses utama; tidak menyiapkan admin demo production.",
+      "anchor": "f228"
+    },
+    {
+      "file": "bin/jobs",
+      "lines": 6,
+      "methods": [],
+      "description": "Entry point perintah project. Periksa environment, working directory dan layanan yang dijalankan sebelum mengeksekusi.",
+      "anchor": "f229"
+    },
+    {
+      "file": "bin/rails",
+      "lines": 4,
+      "methods": [],
+      "description": "Entry point perintah project. Periksa environment, working directory dan layanan yang dijalankan sebelum mengeksekusi.",
+      "anchor": "f230"
+    },
+    {
+      "file": "bin/rake",
+      "lines": 4,
+      "methods": [],
+      "description": "Entry point perintah project. Periksa environment, working directory dan layanan yang dijalankan sebelum mengeksekusi.",
+      "anchor": "f231"
+    },
+    {
+      "file": "compose.production.yaml",
+      "lines": 22,
+      "methods": [],
+      "description": "Overlay deployment HTTPS, proxy dan volume terkait. Domain nyata masih memerlukan konfigurasi lingkungan.",
+      "anchor": "f232"
+    },
+    {
+      "file": "compose.test.yaml",
+      "lines": 31,
+      "methods": [],
+      "description": "Stack test terpisah, PostgreSQL sementara dan perintah RSpec. Jangan gunakan untuk menyimpan data penting.",
+      "anchor": "f233"
+    },
+    {
+      "file": "compose.yaml",
+      "lines": 88,
+      "methods": [],
+      "description": "PostgreSQL + web + worker, environment, healthcheck dan volume data permanen satu host.",
+      "anchor": "f234"
+    },
+    {
+      "file": "config/application.rb",
+      "lines": 29,
+      "methods": [],
+      "description": "Konfigurasi Rails bersama: locale id/en, zona Jakarta, UTC database dan APP_HOST.",
+      "anchor": "f235"
+    },
+    {
+      "file": "config/boot.rb",
+      "lines": 4,
+      "methods": [],
+      "description": "Konfigurasi Rails/library pada tahap boot atau environment. Nilai ENV dapat mengubah perilaku; jangan memasukkan secret nyata ke sumber.",
+      "anchor": "f236"
+    },
+    {
+      "file": "config/bundler-audit.yml",
+      "lines": 5,
+      "methods": [],
+      "description": "Konfigurasi Rails/library pada tahap boot atau environment. Nilai ENV dapat mengubah perilaku; jangan memasukkan secret nyata ke sumber.",
+      "anchor": "f237"
+    },
+    {
+      "file": "config/ci.rb",
+      "lines": 20,
+      "methods": [],
+      "description": "Konfigurasi Rails/library pada tahap boot atau environment. Nilai ENV dapat mengubah perilaku; jangan memasukkan secret nyata ke sumber.",
+      "anchor": "f238"
+    },
+    {
+      "file": "config/database.yml",
+      "lines": 30,
+      "methods": [],
+      "description": "Koneksi DB per environment, primary/queue production; password dibaca ENV, bukan kredensial nyata dalam file.",
+      "anchor": "f239"
+    },
+    {
+      "file": "config/environment.rb",
+      "lines": 5,
+      "methods": [],
+      "description": "Konfigurasi Rails/library pada tahap boot atau environment. Nilai ENV dapat mengubah perilaku; jangan memasukkan secret nyata ke sumber.",
+      "anchor": "f240"
+    },
+    {
+      "file": "config/environments/development.rb",
+      "lines": 74,
+      "methods": [],
+      "description": "Konfigurasi Rails/library pada tahap boot atau environment. Nilai ENV dapat mengubah perilaku; jangan memasukkan secret nyata ke sumber.",
+      "anchor": "f241"
+    },
+    {
+      "file": "config/environments/production.rb",
+      "lines": 110,
+      "methods": [],
+      "description": "Reload/cache, SSL, host, SMTP, storage lokal dan Solid Queue production.",
+      "anchor": "f242"
+    },
+    {
+      "file": "config/environments/test.rb",
+      "lines": 53,
+      "methods": [],
+      "description": "Konfigurasi Rails/library pada tahap boot atau environment. Nilai ENV dapat mengubah perilaku; jangan memasukkan secret nyata ke sumber.",
+      "anchor": "f243"
+    },
+    {
+      "file": "config/importmap.rb",
+      "lines": 11,
+      "methods": [],
+      "description": "Memetakan dependency JavaScript dan controller tanpa bundler npm untuk aplikasi ini.",
+      "anchor": "f244"
+    },
+    {
+      "file": "config/initializers/assets.rb",
+      "lines": 1,
+      "methods": [],
+      "description": "Konfigurasi Rails/library pada tahap boot atau environment. Nilai ENV dapat mengubah perilaku; jangan memasukkan secret nyata ke sumber.",
+      "anchor": "f245"
+    },
+    {
+      "file": "config/initializers/content_security_policy.rb",
+      "lines": 29,
+      "methods": [],
+      "description": "Konfigurasi Rails/library pada tahap boot atau environment. Nilai ENV dapat mengubah perilaku; jangan memasukkan secret nyata ke sumber.",
+      "anchor": "f246"
+    },
+    {
+      "file": "config/initializers/devise.rb",
+      "lines": 39,
+      "methods": [],
+      "description": "Konfigurasi Rails/library pada tahap boot atau environment. Nilai ENV dapat mengubah perilaku; jangan memasukkan secret nyata ke sumber.",
+      "anchor": "f247"
+    },
+    {
+      "file": "config/initializers/filter_parameter_logging.rb",
+      "lines": 9,
+      "methods": [],
+      "description": "Menentukan parameter rahasia yang disaring dari log; ini bukan izin menyimpan log privat di GitHub.",
+      "anchor": "f248"
+    },
+    {
+      "file": "config/initializers/inflections.rb",
+      "lines": 16,
+      "methods": [],
+      "description": "Konfigurasi Rails/library pada tahap boot atau environment. Nilai ENV dapat mengubah perilaku; jangan memasukkan secret nyata ke sumber.",
+      "anchor": "f249"
+    },
+    {
+      "file": "config/locales/account_security.en.yml",
+      "lines": 16,
+      "methods": [],
+      "description": "Kamus locale. Key dipanggil t/I18n.t dan l/I18n.l; pasangan id/en harus menyediakan key yang sesuai.",
+      "anchor": "f250"
+    },
+    {
+      "file": "config/locales/account_security.id.yml",
+      "lines": 21,
+      "methods": [],
+      "description": "Kamus locale. Key dipanggil t/I18n.t dan l/I18n.l; pasangan id/en harus menyediakan key yang sesuai.",
+      "anchor": "f251"
+    },
+    {
+      "file": "config/locales/admin_users.en.yml",
+      "lines": 32,
+      "methods": [],
+      "description": "Kamus locale. Key dipanggil t/I18n.t dan l/I18n.l; pasangan id/en harus menyediakan key yang sesuai.",
+      "anchor": "f252"
+    },
+    {
+      "file": "config/locales/admin_users.id.yml",
+      "lines": 32,
+      "methods": [],
+      "description": "Kamus locale. Key dipanggil t/I18n.t dan l/I18n.l; pasangan id/en harus menyediakan key yang sesuai.",
+      "anchor": "f253"
+    },
+    {
+      "file": "config/locales/booking_support.en.yml",
+      "lines": 32,
+      "methods": [],
+      "description": "Kamus locale. Key dipanggil t/I18n.t dan l/I18n.l; pasangan id/en harus menyediakan key yang sesuai.",
+      "anchor": "f254"
+    },
+    {
+      "file": "config/locales/booking_support.id.yml",
+      "lines": 28,
+      "methods": [],
+      "description": "Kamus locale. Key dipanggil t/I18n.t dan l/I18n.l; pasangan id/en harus menyediakan key yang sesuai.",
+      "anchor": "f255"
+    },
+    {
+      "file": "config/locales/duitku.en.yml",
+      "lines": 30,
+      "methods": [],
+      "description": "Kamus locale. Key dipanggil t/I18n.t dan l/I18n.l; pasangan id/en harus menyediakan key yang sesuai.",
+      "anchor": "f256"
+    },
+    {
+      "file": "config/locales/duitku.id.yml",
+      "lines": 30,
+      "methods": [],
+      "description": "Kamus locale. Key dipanggil t/I18n.t dan l/I18n.l; pasangan id/en harus menyediakan key yang sesuai.",
+      "anchor": "f257"
+    },
+    {
+      "file": "config/locales/en.yml",
+      "lines": 989,
+      "methods": [],
+      "description": "Kamus locale. Key dipanggil t/I18n.t dan l/I18n.l; pasangan id/en harus menyediakan key yang sesuai.",
+      "anchor": "f258"
+    },
+    {
+      "file": "config/locales/id.devise.yml",
+      "lines": 65,
+      "methods": [],
+      "description": "Kamus locale. Key dipanggil t/I18n.t dan l/I18n.l; pasangan id/en harus menyediakan key yang sesuai.",
+      "anchor": "f259"
+    },
+    {
+      "file": "config/locales/id.yml",
+      "lines": 1179,
+      "methods": [],
+      "description": "Kamus locale. Key dipanggil t/I18n.t dan l/I18n.l; pasangan id/en harus menyediakan key yang sesuai.",
+      "anchor": "f260"
+    },
+    {
+      "file": "config/locales/integrations.en.yml",
+      "lines": 40,
+      "methods": [],
+      "description": "Kamus locale. Key dipanggil t/I18n.t dan l/I18n.l; pasangan id/en harus menyediakan key yang sesuai.",
+      "anchor": "f261"
+    },
+    {
+      "file": "config/locales/integrations.id.yml",
+      "lines": 40,
+      "methods": [],
+      "description": "Kamus locale. Key dipanggil t/I18n.t dan l/I18n.l; pasangan id/en harus menyediakan key yang sesuai.",
+      "anchor": "f262"
+    },
+    {
+      "file": "config/locales/release_ui.en.yml",
+      "lines": 8,
+      "methods": [],
+      "description": "Kamus locale. Key dipanggil t/I18n.t dan l/I18n.l; pasangan id/en harus menyediakan key yang sesuai.",
+      "anchor": "f263"
+    },
+    {
+      "file": "config/locales/release_ui.id.yml",
+      "lines": 8,
+      "methods": [],
+      "description": "Kamus locale. Key dipanggil t/I18n.t dan l/I18n.l; pasangan id/en harus menyediakan key yang sesuai.",
+      "anchor": "f264"
+    },
+    {
+      "file": "config/locales/scheduling.en.yml",
+      "lines": 79,
+      "methods": [],
+      "description": "Kamus locale. Key dipanggil t/I18n.t dan l/I18n.l; pasangan id/en harus menyediakan key yang sesuai.",
+      "anchor": "f265"
+    },
+    {
+      "file": "config/locales/scheduling.id.yml",
+      "lines": 79,
+      "methods": [],
+      "description": "Kamus locale. Key dipanggil t/I18n.t dan l/I18n.l; pasangan id/en harus menyediakan key yang sesuai.",
+      "anchor": "f266"
+    },
+    {
+      "file": "config/locales/table_controls.en.yml",
+      "lines": 40,
+      "methods": [],
+      "description": "Kamus locale. Key dipanggil t/I18n.t dan l/I18n.l; pasangan id/en harus menyediakan key yang sesuai.",
+      "anchor": "f267"
+    },
+    {
+      "file": "config/locales/table_controls.id.yml",
+      "lines": 40,
+      "methods": [],
+      "description": "Kamus locale. Key dipanggil t/I18n.t dan l/I18n.l; pasangan id/en harus menyediakan key yang sesuai.",
+      "anchor": "f268"
+    },
+    {
+      "file": "config/puma.rb",
+      "lines": 39,
+      "methods": [],
+      "description": "Thread/port server Puma dan plugin restart; PORT/RAILS_MAX_THREADS datang dari environment.",
+      "anchor": "f269"
+    },
+    {
+      "file": "config/queue.yml",
+      "lines": 18,
+      "methods": [],
+      "description": "Pengaturan dispatcher/worker Solid Queue; baca concurrency bersama environment dan Compose.",
+      "anchor": "f270"
+    },
+    {
+      "file": "config/recurring.yml",
+      "lines": 15,
+      "methods": [],
+      "description": "Konfigurasi Rails/library pada tahap boot atau environment. Nilai ENV dapat mengubah perilaku; jangan memasukkan secret nyata ke sumber.",
+      "anchor": "f271"
+    },
+    {
+      "file": "config/routes.rb",
+      "lines": 143,
+      "methods": [],
+      "description": "Peta URL dan metode HTTP ke action; namespace Ruby dipisah dari path Indonesia.",
+      "anchor": "f272"
+    },
+    {
+      "file": "config/storage.yml",
+      "lines": 27,
+      "methods": [],
+      "description": "Adapter Active Storage test/local; contoh S3/GCS masih komentar dan bukan konfigurasi aktif.",
+      "anchor": "f273"
+    },
+    {
+      "file": "db/migrate/20260920000000_create_glowbook_schema.rb",
+      "lines": 211,
+      "methods": [
+        "change"
+      ],
+      "description": "Migration perubahan skema sesuai nama/tanggal file. up/change menerapkan perubahan; down/reversal perlu diperiksa sebelum rollback.",
+      "anchor": "f274"
+    },
+    {
+      "file": "db/migrate/20260921000000_create_staff_services.rb",
+      "lines": 11,
+      "methods": [
+        "change"
+      ],
+      "description": "Migration perubahan skema sesuai nama/tanggal file. up/change menerapkan perubahan; down/reversal perlu diperiksa sebelum rollback.",
+      "anchor": "f275"
+    },
+    {
+      "file": "db/migrate/20260921000001_create_active_storage_tables.active_storage.rb",
+      "lines": 57,
+      "methods": [
+        "change",
+        "primary_and_foreign_key_types"
+      ],
+      "description": "Migration perubahan skema sesuai nama/tanggal file. up/change menerapkan perubahan; down/reversal perlu diperiksa sebelum rollback.",
+      "anchor": "f276"
+    },
+    {
+      "file": "db/migrate/20261006000000_create_payment_attempts.rb",
+      "lines": 25,
+      "methods": [
+        "change"
+      ],
+      "description": "Migration perubahan skema sesuai nama/tanggal file. up/change menerapkan perubahan; down/reversal perlu diperiksa sebelum rollback.",
+      "anchor": "f277"
+    },
+    {
+      "file": "db/migrate/20261006130000_create_conversations_and_chat_messages.rb",
+      "lines": 22,
+      "methods": [
+        "change"
+      ],
+      "description": "Migration perubahan skema sesuai nama/tanggal file. up/change menerapkan perubahan; down/reversal perlu diperiksa sebelum rollback.",
+      "anchor": "f278"
+    },
+    {
+      "file": "db/migrate/20261007000000_create_user_notifications.rb",
+      "lines": 19,
+      "methods": [
+        "change"
+      ],
+      "description": "Migration perubahan skema sesuai nama/tanggal file. up/change menerapkan perubahan; down/reversal perlu diperiksa sebelum rollback.",
+      "anchor": "f279"
+    },
+    {
+      "file": "db/migrate/20261007000001_allow_repeated_booking_notifications.rb",
+      "lines": 5,
+      "methods": [
+        "change"
+      ],
+      "description": "Migration perubahan skema sesuai nama/tanggal file. up/change menerapkan perubahan; down/reversal perlu diperiksa sebelum rollback.",
+      "anchor": "f280"
+    },
+    {
+      "file": "db/migrate/20261009120000_create_platform_settings.rb",
+      "lines": 10,
+      "methods": [
+        "change"
+      ],
+      "description": "Migration perubahan skema sesuai nama/tanggal file. up/change menerapkan perubahan; down/reversal perlu diperiksa sebelum rollback.",
+      "anchor": "f281"
+    },
+    {
+      "file": "db/migrate/20261009130000_add_bio_to_staffs.rb",
+      "lines": 5,
+      "methods": [
+        "change"
+      ],
+      "description": "Migration perubahan skema sesuai nama/tanggal file. up/change menerapkan perubahan; down/reversal perlu diperiksa sebelum rollback.",
+      "anchor": "f282"
+    },
+    {
+      "file": "db/migrate/20261010100000_create_integration_settings.rb",
+      "lines": 11,
+      "methods": [
+        "change"
+      ],
+      "description": "Migration perubahan skema sesuai nama/tanggal file. up/change menerapkan perubahan; down/reversal perlu diperiksa sebelum rollback.",
+      "anchor": "f283"
+    },
+    {
+      "file": "db/migrate/20261010110000_identify_payment_gateways.rb",
+      "lines": 10,
+      "methods": [
+        "change"
+      ],
+      "description": "Migration perubahan skema sesuai nama/tanggal file. up/change menerapkan perubahan; down/reversal perlu diperiksa sebelum rollback.",
+      "anchor": "f284"
+    },
+    {
+      "file": "db/queue_schema.rb",
+      "lines": 160,
+      "methods": [],
+      "description": "Sumber pendukung pada jalur ini. Gunakan nama file, deklarasi dan pemanggil untuk memahami perannya bersama bab panduan terkait.",
+      "anchor": "f285"
+    },
+    {
+      "file": "db/schema.rb",
+      "lines": 412,
+      "methods": [],
+      "description": "Snapshot skema hasil migration, termasuk range dan constraint. Bukan tempat mengedit struktur secara manual.",
+      "anchor": "f286"
+    },
+    {
+      "file": "db/seeds.rb",
+      "lines": 321,
+      "methods": [
+        "fetch_image",
+        "attach",
+        "seed_user"
+      ],
+      "description": "Data demo development yang menghapus/mengisi ulang data; ditolak di production. Bukan bootstrap production.",
+      "anchor": "f287"
+    },
+    {
+      "file": "deploy/caddy/Caddyfile",
+      "lines": 4,
+      "methods": [],
+      "description": "Konfigurasi deployment/backup host. Template perlu diterapkan dan diperiksa pada host nyata; keberadaan file bukan bukti layanan aktif.",
+      "anchor": "f288"
+    },
+    {
+      "file": "deploy/systemd/glowbook-backup.service",
+      "lines": 13,
+      "methods": [],
+      "description": "Konfigurasi deployment/backup host. Template perlu diterapkan dan diperiksa pada host nyata; keberadaan file bukan bukti layanan aktif.",
+      "anchor": "f289"
+    },
+    {
+      "file": "deploy/systemd/glowbook-backup.timer",
+      "lines": 10,
+      "methods": [],
+      "description": "Konfigurasi deployment/backup host. Template perlu diterapkan dan diperiksa pada host nyata; keberadaan file bukan bukti layanan aktif.",
+      "anchor": "f290"
+    },
+    {
+      "file": "lib/tasks/glowbook.rake",
+      "lines": 8,
+      "methods": [],
+      "description": "Task glowbook:bootstrap membaca input admin dari environment dan memanggil PlatformBootstrap.",
+      "anchor": "f291"
+    },
+    {
+      "file": "script/backup.sh",
+      "lines": 111,
+      "methods": [],
+      "description": "Backup data database/storage dengan pengendalian keadaan worker dan checksum; baca BACKUP_RESTORE.md sebelum menjalankan.",
+      "anchor": "f292"
+    },
+    {
+      "file": "script/check_release.rb",
+      "lines": 43,
+      "methods": [],
+      "description": "Memeriksa syntax Ruby/ERB, literal key id/en, action routes dan registrasi Stimulus.",
+      "anchor": "f293"
+    },
+    {
+      "file": "script/render_pwa_icons.rb",
+      "lines": 9,
+      "methods": [],
+      "description": "Sumber pendukung pada jalur ini. Gunakan nama file, deklarasi dan pemanggil untuk memahami perannya bersama bab panduan terkait.",
+      "anchor": "f294"
+    },
+    {
+      "file": "script/verify_backup.sh",
+      "lines": 89,
+      "methods": [],
+      "description": "Pembuktian workflow backup/restore pada lingkungan terpisah termasuk skenario kegagalan.",
+      "anchor": "f295"
+    },
+    {
+      "file": "spec/factories.rb",
+      "lines": 175,
+      "methods": [],
+      "description": "Sumber pengujian/data uji, bukan alur production. Baca describe/it/expect untuk skenario dan bukti yang benar-benar dicakup; stub bukan panggilan penyedia nyata.",
+      "anchor": "f296"
+    },
+    {
+      "file": "spec/javascript/navigation_test.cjs",
+      "lines": 82,
+      "methods": [],
+      "description": "Sumber pengujian/data uji, bukan alur production. Baca describe/it/expect untuk skenario dan bukti yang benar-benar dicakup; stub bukan panggilan penyedia nyata.",
+      "anchor": "f297"
+    },
+    {
+      "file": "spec/javascript/service_worker_test.cjs",
+      "lines": 130,
+      "methods": [],
+      "description": "Sumber pengujian/data uji, bukan alur production. Baca describe/it/expect untuk skenario dan bukti yang benar-benar dicakup; stub bukan panggilan penyedia nyata.",
+      "anchor": "f298"
+    },
+    {
+      "file": "spec/mailers/integration_smtp_spec.rb",
+      "lines": 33,
+      "methods": [],
+      "description": "Sumber pengujian/data uji, bukan alur production. Baca describe/it/expect untuk skenario dan bukti yang benar-benar dicakup; stub bukan panggilan penyedia nyata.",
+      "anchor": "f299"
+    },
+    {
+      "file": "spec/models/booking_spec.rb",
+      "lines": 64,
+      "methods": [],
+      "description": "Sumber pengujian/data uji, bukan alur production. Baca describe/it/expect untuk skenario dan bukti yang benar-benar dicakup; stub bukan panggilan penyedia nyata.",
+      "anchor": "f300"
+    },
+    {
+      "file": "spec/models/business_spec.rb",
+      "lines": 35,
+      "methods": [],
+      "description": "Sumber pengujian/data uji, bukan alur production. Baca describe/it/expect untuk skenario dan bukti yang benar-benar dicakup; stub bukan panggilan penyedia nyata.",
+      "anchor": "f301"
+    },
+    {
+      "file": "spec/models/integration_setting_spec.rb",
+      "lines": 63,
+      "methods": [],
+      "description": "Sumber pengujian/data uji, bukan alur production. Baca describe/it/expect untuk skenario dan bukti yang benar-benar dicakup; stub bukan panggilan penyedia nyata.",
+      "anchor": "f302"
+    },
+    {
+      "file": "spec/models/promotion_spec.rb",
+      "lines": 20,
+      "methods": [],
+      "description": "Sumber pengujian/data uji, bukan alur production. Baca describe/it/expect untuk skenario dan bukti yang benar-benar dicakup; stub bukan panggilan penyedia nyata.",
+      "anchor": "f303"
+    },
+    {
+      "file": "spec/models/review_spec.rb",
+      "lines": 18,
+      "methods": [],
+      "description": "Sumber pengujian/data uji, bukan alur production. Baca describe/it/expect untuk skenario dan bukti yang benar-benar dicakup; stub bukan panggilan penyedia nyata.",
+      "anchor": "f304"
+    },
+    {
+      "file": "spec/models/staff_schedule_spec.rb",
+      "lines": 16,
+      "methods": [],
+      "description": "Sumber pengujian/data uji, bukan alur production. Baca describe/it/expect untuk skenario dan bukti yang benar-benar dicakup; stub bukan panggilan penyedia nyata.",
+      "anchor": "f305"
+    },
+    {
+      "file": "spec/rails_helper.rb",
+      "lines": 21,
+      "methods": [],
+      "description": "Sumber pengujian/data uji, bukan alur production. Baca describe/it/expect untuk skenario dan bukti yang benar-benar dicakup; stub bukan panggilan penyedia nyata.",
+      "anchor": "f306"
+    },
+    {
+      "file": "spec/requests/account_security_spec.rb",
+      "lines": 169,
+      "methods": [
+        "reset_mail",
+        "reset_token"
+      ],
+      "description": "Sumber pengujian/data uji, bukan alur production. Baca describe/it/expect untuk skenario dan bukti yang benar-benar dicakup; stub bukan panggilan penyedia nyata.",
+      "anchor": "f307"
+    },
+    {
+      "file": "spec/requests/admin_integrations_spec.rb",
+      "lines": 56,
+      "methods": [],
+      "description": "Sumber pengujian/data uji, bukan alur production. Baca describe/it/expect untuk skenario dan bukti yang benar-benar dicakup; stub bukan panggilan penyedia nyata.",
+      "anchor": "f308"
+    },
+    {
+      "file": "spec/requests/admin_workflows_spec.rb",
+      "lines": 196,
+      "methods": [],
+      "description": "Sumber pengujian/data uji, bukan alur production. Baca describe/it/expect untuk skenario dan bukti yang benar-benar dicakup; stub bukan panggilan penyedia nyata.",
+      "anchor": "f309"
+    },
+    {
+      "file": "spec/requests/authorization_spec.rb",
+      "lines": 76,
+      "methods": [
+        "assert_redirected_to_login"
+      ],
+      "description": "Sumber pengujian/data uji, bukan alur production. Baca describe/it/expect untuk skenario dan bukti yang benar-benar dicakup; stub bukan panggilan penyedia nyata.",
+      "anchor": "f310"
+    },
+    {
+      "file": "spec/requests/booking_flow_spec.rb",
+      "lines": 49,
+      "methods": [
+        "sign_in"
+      ],
+      "description": "Sumber pengujian/data uji, bukan alur production. Baca describe/it/expect untuk skenario dan bukti yang benar-benar dicakup; stub bukan panggilan penyedia nyata.",
+      "anchor": "f311"
+    },
+    {
+      "file": "spec/requests/booking_schedule_spec.rb",
+      "lines": 198,
+      "methods": [
+        "appointment",
+        "choose_services",
+        "shown_times"
+      ],
+      "description": "Sumber pengujian/data uji, bukan alur production. Baca describe/it/expect untuk skenario dan bukti yang benar-benar dicakup; stub bukan panggilan penyedia nyata.",
+      "anchor": "f312"
+    },
+    {
+      "file": "spec/requests/business_analytics_spec.rb",
+      "lines": 79,
+      "methods": [
+        "metric"
+      ],
+      "description": "Sumber pengujian/data uji, bukan alur production. Baca describe/it/expect untuk skenario dan bukti yang benar-benar dicakup; stub bukan panggilan penyedia nyata.",
+      "anchor": "f313"
+    },
+    {
+      "file": "spec/requests/business_scheduling_spec.rb",
+      "lines": 222,
+      "methods": [
+        "slots",
+        "shift_attributes",
+        "associate_service"
+      ],
+      "description": "Sumber pengujian/data uji, bukan alur production. Baca describe/it/expect untuk skenario dan bukti yang benar-benar dicakup; stub bukan panggilan penyedia nyata.",
+      "anchor": "f314"
+    },
+    {
+      "file": "spec/requests/customer_business_workflows_spec.rb",
+      "lines": 227,
+      "methods": [],
+      "description": "Sumber pengujian/data uji, bukan alur production. Baca describe/it/expect untuk skenario dan bukti yang benar-benar dicakup; stub bukan panggilan penyedia nyata.",
+      "anchor": "f315"
+    },
+    {
+      "file": "spec/requests/duitku_payments_spec.rb",
+      "lines": 95,
+      "methods": [],
+      "description": "Sumber pengujian/data uji, bukan alur production. Baca describe/it/expect untuk skenario dan bukti yang benar-benar dicakup; stub bukan panggilan penyedia nyata.",
+      "anchor": "f316"
+    },
+    {
+      "file": "spec/requests/facebook_oauth_spec.rb",
+      "lines": 69,
+      "methods": [
+        "facebook_sign_in"
+      ],
+      "description": "Sumber pengujian/data uji, bukan alur production. Baca describe/it/expect untuk skenario dan bukti yang benar-benar dicakup; stub bukan panggilan penyedia nyata.",
+      "anchor": "f317"
+    },
+    {
+      "file": "spec/requests/google_oauth_spec.rb",
+      "lines": 131,
+      "methods": [
+        "google_sign_in"
+      ],
+      "description": "Sumber pengujian/data uji, bukan alur production. Baca describe/it/expect untuk skenario dan bukti yang benar-benar dicakup; stub bukan panggilan penyedia nyata.",
+      "anchor": "f318"
+    },
+    {
+      "file": "spec/requests/marketplace_spec.rb",
+      "lines": 96,
+      "methods": [
+        "result_links"
+      ],
+      "description": "Sumber pengujian/data uji, bukan alur production. Baca describe/it/expect untuk skenario dan bukti yang benar-benar dicakup; stub bukan panggilan penyedia nyata.",
+      "anchor": "f319"
+    },
+    {
+      "file": "spec/requests/pwa_navigation_spec.rb",
+      "lines": 58,
+      "methods": [],
+      "description": "Sumber pengujian/data uji, bukan alur production. Baca describe/it/expect untuk skenario dan bukti yang benar-benar dicakup; stub bukan panggilan penyedia nyata.",
+      "anchor": "f320"
+    },
+    {
+      "file": "spec/services/admin_charts_spec.rb",
+      "lines": 32,
+      "methods": [],
+      "description": "Sumber pengujian/data uji, bukan alur production. Baca describe/it/expect untuk skenario dan bukti yang benar-benar dicakup; stub bukan panggilan penyedia nyata.",
+      "anchor": "f321"
+    },
+    {
+      "file": "spec/services/availability_spec.rb",
+      "lines": 81,
+      "methods": [
+        "at",
+        "slot_times"
+      ],
+      "description": "Sumber pengujian/data uji, bukan alur production. Baca describe/it/expect untuk skenario dan bukti yang benar-benar dicakup; stub bukan panggilan penyedia nyata.",
+      "anchor": "f322"
+    },
+    {
+      "file": "spec/services/booking_builder_spec.rb",
+      "lines": 115,
+      "methods": [
+        "tomorrow_at",
+        "build_booking"
+      ],
+      "description": "Sumber pengujian/data uji, bukan alur production. Baca describe/it/expect untuk skenario dan bukti yang benar-benar dicakup; stub bukan panggilan penyedia nyata.",
+      "anchor": "f323"
+    },
+    {
+      "file": "spec/services/duitku_payment_spec.rb",
+      "lines": 245,
+      "methods": [
+        "respond_with"
+      ],
+      "description": "Sumber pengujian/data uji, bukan alur production. Baca describe/it/expect untuk skenario dan bukti yang benar-benar dicakup; stub bukan panggilan penyedia nyata.",
+      "anchor": "f324"
+    },
+    {
+      "file": "spec/services/oauth_provider_setup_spec.rb",
+      "lines": 24,
+      "methods": [],
+      "description": "Sumber pengujian/data uji, bukan alur production. Baca describe/it/expect untuk skenario dan bukti yang benar-benar dicakup; stub bukan panggilan penyedia nyata.",
+      "anchor": "f325"
+    },
+    {
+      "file": "spec/services/platform_bootstrap_spec.rb",
+      "lines": 42,
+      "methods": [],
+      "description": "Sumber pengujian/data uji, bukan alur production. Baca describe/it/expect untuk skenario dan bukti yang benar-benar dicakup; stub bukan panggilan penyedia nyata.",
+      "anchor": "f326"
+    },
+    {
+      "file": "spec/spec_helper.rb",
+      "lines": 13,
+      "methods": [],
+      "description": "Sumber pengujian/data uji, bukan alur production. Baca describe/it/expect untuk skenario dan bukti yang benar-benar dicakup; stub bukan panggilan penyedia nyata.",
+      "anchor": "f327"
+    }
+  ]
+}

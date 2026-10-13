@@ -1,0 +1,551 @@
+<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Belajar Membuat GlowBook</title><style>
+:root{--ink:#17232c;--muted:#5f717b;--accent:#c32153;--line:#dde5e8;--paper:#fff;--wash:#f3f6f7}
+*{box-sizing:border-box}body{margin:0;background:var(--wash);color:var(--ink);font-family:'Segoe UI',Arial,sans-serif;line-height:1.75}
+a{color:var(--accent);text-underline-offset:3px}header{background:#172d38;color:white;padding:48px max(24px,calc((100vw - 1150px)/2));border-bottom:7px solid #df3668}
+header p{max-width:720px;color:#d2e0e6}header .eyebrow{color:#ffabc4;letter-spacing:.15em;text-transform:uppercase;font-size:12px;font-weight:700}
+.layout{max-width:1220px;margin:auto;display:grid;grid-template-columns:260px minmax(0,1fr);gap:28px;padding:28px}
+aside{position:sticky;top:20px;align-self:start;max-height:calc(100vh - 40px);overflow:auto;padding:20px;background:white;border:1px solid var(--line);border-radius:14px;font-size:13px}
+aside a{display:block;padding:6px 0;color:var(--ink);text-decoration:none}aside a:hover{color:var(--accent)}
+main{min-width:0;background:white;border:1px solid var(--line);border-radius:16px;padding:34px 42px}
+h1,h2,h3{line-height:1.3}h1{font-size:36px;letter-spacing:-.025em}h2{font-size:26px;margin:55px 0 22px;padding-top:22px;border-top:2px solid var(--line);scroll-margin-top:20px}h3{font-size:19px;margin-top:30px}
+p{margin:16px 0}li{padding:4px 0}pre{background:#132b37;color:#ecf4f7;padding:20px;border-radius:10px;overflow:auto;line-height:1.6;font-size:12px;tab-size:2}
+code{font-family:Consolas,'Courier New',monospace;font-size:.92em}p code,td code,li code{background:#f0f3f5;padding:2px 5px;border-radius:4px;color:#a11b44;overflow-wrap:anywhere}
+.table-wrap{overflow:auto;margin:22px 0}table{width:100%;border-collapse:collapse;font-size:14px}th{background:#edf3f5;text-align:left;color:#173a4a}td,th{padding:12px 14px;border:1px solid var(--line);vertical-align:top}tr:nth-child(even) td{background:#fafcfc}
+.tools{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}.tools a,.tools button{padding:9px 15px;background:white;color:#173a4a;border:1px solid #d2e0e6;border-radius:8px;text-decoration:none;font:600 13px 'Segoe UI',sans-serif;cursor:pointer}
+.note{padding:18px 22px;border-left:4px solid var(--accent);background:#fff2f6;border-radius:4px;margin-bottom:28px}
+.source-card{padding:20px 0;border-bottom:1px solid var(--line)}.source-card h2{margin:0 0 12px;border:0;padding:0;font-size:19px;overflow-wrap:anywhere}.source-card p{margin:8px 0;font-size:14px}.source-card summary{cursor:pointer;color:var(--accent);font-weight:600;padding:12px 0}.source-card pre{max-height:650px}
+.source-line{display:flex;line-height:1.7}.source-line .n{color:#85a6b6;width:44px;flex:none;text-align:right;padding-right:12px;user-select:none}.source-line .src{white-space:pre;flex:1}
+.search{width:100%;padding:12px;border:1px solid var(--line);border-radius:8px;font:14px 'Segoe UI',sans-serif;margin-bottom:10px}.small{font-size:13px;color:var(--muted)}[hidden]{display:none!important}footer{text-align:center;padding:30px;color:var(--muted);font-size:12px}
+@media(max-width:850px){.layout{display:block;padding:16px}aside{position:static;max-height:260px;margin-bottom:20px}main{padding:22px}h1{font-size:29px}h2{font-size:23px}header{padding:30px 22px}td,th{padding:10px}pre{padding:14px}}
+@media print{body{background:white;font-size:10pt}.layout{display:block;padding:0}aside,.tools{display:none}header{padding:18px;color:#17232c;background:white}header p,header .eyebrow{color:#17232c}main{border:0;padding:0}h2{break-before:page}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#eef2f4;color:#17232c}tr{break-inside:avoid}.source-card pre{max-height:none}a{color:inherit}footer{display:none}}
+</style></head><body>
+    <header><div class="eyebrow">GlowBook / Learning Library / 14 Oktober 2026</div><h1>Belajar Membuat GlowBook</h1><p>Dari dasar Ruby dan MVC menuju marketplace, booking, integrasi dan delivery remote. Contoh kecil dahulu; kode project dibaca lewat atlas.</p><div class="tools"><a href="PANDUAN_GLOWBOOK.html">Panduan utama</a><a href="ATLAS_KODE.html">Atlas kode</a><a href="LATIHAN_DAN_JAWABAN.html">Latihan & pembahasan</a><a href="../../output/pdf/Belajar_GlowBook.pdf">Unduh PDF</a><button onclick="window.print()">Cetak</button></div></header>
+    <div class="layout"><aside><strong>Daftar isi</strong><p class="small">Ctrl+F untuk mencari istilah. Pilih satu bab setiap sesi.</p><a href="#section-1">01 — Mulai dari sini</a>
+<a href="#section-3">02 — Apa yang dibangun?</a>
+<a href="#section-4">03 — Teknologi yang digunakan</a>
+<a href="#section-5">04 — Cara browser berbicara dengan server</a>
+<a href="#section-6">05 — Mengenal folder project</a>
+<a href="#section-7">06 — Dasar Ruby dalam 15 menit</a>
+<a href="#section-8">07 — Menyiapkan lingkungan belajar</a>
+<a href="#section-11">08 — Urutan membangun dari nol</a>
+<a href="#section-12">09 — MVC: model, view dan controller</a>
+<a href="#section-13">10 — Database dan hubungan data</a>
+<a href="#section-14">11 — Login dan pembatasan akses</a>
+<a href="#section-15">12 — Marketplace dan pencarian</a>
+<a href="#section-16">13 — Jadwal dan ketersediaan staff</a>
+<a href="#section-17">14 — Alur booking lima langkah</a>
+<a href="#section-19">15 — Pembatalan dan ubah jadwal</a>
+<a href="#section-20">16 — Onboarding bisnis dan galeri</a>
+<a href="#section-21">17 — Email, worker dan notifikasi</a>
+<a href="#section-22">18 — Chat tanpa WebSocket</a>
+<a href="#section-23">19 — Tabel, pencarian, filter dan jumlah data</a>
+<a href="#section-24">20 — Tampilan rapi dengan Tailwind dan CSS</a>
+<a href="#section-25">21 — Terjemahan dan PWA</a>
+<a href="#section-26">22 — Integrasi Google, Facebook dan konfigurasi terenkripsi</a>
+<a href="#section-27">23 — Duitku: invoice, callback dan status</a>
+<a href="#section-28">24 — Laporan, analitik dan CSV</a>
+<a href="#section-29">25 — Pengujian: bukti, bukan dugaan</a>
+<a href="#section-30">26 — Docker, deployment dan backup</a>
+<a href="#section-31">27 — Git dan pekerjaan sehari-hari</a>
+<a href="#section-32">28 — Debugging tanpa panik</a>
+<a href="#section-33">29 — Menjadi siap bekerja remote di Upwork</a>
+<a href="#section-37">30 — Rencana belajar delapan tahap</a>
+<a href="#section-38">31 — Cara membaca atlas kode</a>
+<a href="#section-39">32 — Kamus istilah singkat</a>
+<a href="#section-40">33 — Referensi dan dokumen lanjutan</a></aside><main><h2 id="section-1">01 — Mulai dari sini</h2>
+<p><strong>Untuk:</strong> pemula yang ingin memahami dan membangun aplikasi booking, lalu mampu menjelaskan pekerjaannya kepada klien remote.</p>
+<p><strong>Tanggal penulisan:</strong> 14 Oktober 2026. <strong>Kode acuan:</strong> commit <code>cb1cc60</code>. Dokumentasi ini menjelaskan implementasi project pada snapshot tersebut. Versi paket mengikuti <code>Gemfile.lock</code>, bukan versi terbaru di internet.</p>
+<p>Tujuan Anda bukan menghafal semua baris. Tujuannya: mengetahui file mana yang perlu diubah, mengapa perubahan diperlukan, dan bagaimana membuktikan hasilnya.</p>
+<p>Paket belajar ini berisi:</p>
+<ol><li><strong>PANDUAN_GLOWBOOK.html</strong> — buku utama, nyaman dibaca offline, dengan daftar isi dan pencarian browser.</li><li><strong>PANDUAN_GLOWBOOK.md</strong> — sumber buku yang dapat diedit.</li><li><strong>ATLAS_KODE.html</strong> — kode project per file, nomor baris, fungsi file dan petunjuk membaca. Gunakan pencarian file untuk mencari <code>booking_builder</code> atau <code>users_controller</code>.</li><li><strong>LATIHAN_DAN_JAWABAN.md</strong> — latihan, kriteria selesai, dan pembahasan.</li></ol>
+<p>Cara memakai: baca satu bab, ketik ulang contoh pada project latihan, jelaskan dengan kata sendiri, lalu lihat implementasi GlowBook di atlas. Jangan menyalin semua kode sekaligus.</p>
+<h3 id="section-2">Dua jalur yang berbeda</h3>
+<div class="table-wrap"><table><thead><tr><th>Jalur</th><th>Tujuan</th><th>Tempat mengerjakan</th></tr></thead><tbody><tr><td>Menjalankan GlowBook yang sudah ada</td><td>Mengenali aplikasi dan struktur kode</td><td>Salinan repository dengan database latihan</td></tr><tr><td>Membangun ulang dari nol</td><td>Memahami setiap lapisan secara bertahap</td><td>Folder baru <code>glowbook_latihan</code></td></tr></tbody></table></div>
+<p>Contoh yang berlabel <strong>LATIHAN</strong> adalah kode kecil untuk memahami konsep. Contoh yang berlabel <strong>KODE PROJECT</strong> berasal dari project ini. Contoh latihan bukan pengganti seluruh fitur keamanan GlowBook.</p>
+<p>Jangan menjalankan reset/seed latihan pada database project yang berisi data penting. <code>db/seeds.rb</code> project menghapus data demo development sebelum mengisi ulang dan menolak berjalan di production.</p>
+<h2 id="section-3">02 — Apa yang dibangun?</h2>
+<p>GlowBook adalah marketplace layanan kecantikan dan wellness. Pelanggan mencari bisnis, memilih layanan dan staff, lalu memesan waktu. Owner mengatur bisnis. Admin mengelola platform.</p>
+<div class="table-wrap"><table><thead><tr><th>Bagian</th><th>Contoh tugas pengguna</th><th>Lokasi utama</th></tr></thead><tbody><tr><td>Publik</td><td>Cari salon, lihat layanan, jam buka dan ulasan</td><td><code>/</code>, <code>/cari</code>, <code>/b/:slug</code></td></tr><tr><td>Pelanggan</td><td>Booking, favorit, ulasan, profil, pesan</td><td><code>/akun</code></td></tr><tr><td>Owner/staff</td><td>Layanan, jadwal, booking, galeri, pelanggan</td><td><code>/bisnis</code></td></tr><tr><td>Admin</td><td>Pengguna, bisnis, kategori, promosi, laporan, integrasi</td><td><code>/admin</code></td></tr><tr><td>Integrasi</td><td>Google, Facebook, SMTP, Duitku</td><td><code>/admin/integrasi</code></td></tr></tbody></table></div>
+<p>Empat nilai peran di kode: <code>customer</code>, <code>business_owner</code>, <code>staff</code>, dan <code>admin</code>. Tampilan sehari-hari sering dikelompokkan menjadi tiga area: pelanggan, bisnis dan admin.</p>
+<p>Yang sudah diimplementasikan tidak otomatis sudah aktif pada layanan nyata. Login Google memerlukan kredensial Google; email memerlukan SMTP; pembayaran memerlukan merchant Duitku dan callback publik.</p>
+<p>Refund otomatis, payout owner, komisi otomatis dan WhatsApp belum tersedia. Angka pendapatan booking dan status pembayaran bukan bukti saldo bank. Ini penting saat menjelaskan cakupan kepada klien.</p>
+<h2 id="section-4">03 — Teknologi yang digunakan</h2>
+<div class="table-wrap"><table><thead><tr><th>Teknologi</th><th>Versi acuan / konfigurasi</th><th>Fungsi sederhana</th></tr></thead><tbody><tr><td>Ruby</td><td>3.4.7</td><td>Bahasa backend: menghitung, memvalidasi dan mengolah data</td></tr><tr><td>Rails</td><td>8.1.3.1</td><td>Kerangka aplikasi: routes, controller, model, view, email, upload</td></tr><tr><td>PostgreSQL</td><td>Image Docker 16</td><td>Database relasional dan pencegahan bentrok booking</td></tr><tr><td>Active Record</td><td>Bagian Rails</td><td>Mengakses database memakai objek Ruby</td></tr><tr><td>HTML + ERB</td><td>Template Rails</td><td>Membentuk halaman HTML dengan data dari Ruby</td></tr><tr><td>Tailwind CSS</td><td>Gem 4.6.0; compiler sesuai lockfile</td><td>Mengatur warna, jarak, ukuran dan layout</td></tr><tr><td>Turbo</td><td>turbo-rails 2.0.23</td><td>Navigasi dan pembaruan HTML tanpa membuat SPA penuh</td></tr><tr><td>Stimulus</td><td>stimulus-rails 1.3.4</td><td>Perilaku kecil: menu, tutup pesan, geolokasi, chat</td></tr><tr><td>Importmap</td><td>2.2.3</td><td>Memetakan import JavaScript; tidak wajib memakai npm untuk runtime frontend ini</td></tr><tr><td>Propshaft</td><td>1.3.2</td><td>Menyajikan aset dengan fingerprint untuk cache</td></tr><tr><td>Devise</td><td>5.0.4</td><td>Login email/password, session dan reset password</td></tr><tr><td>OmniAuth</td><td>Facebook + Google OAuth2</td><td>Login memakai identitas penyedia eksternal</td></tr><tr><td>Active Storage</td><td>Bagian Rails</td><td>Relasi database dan penyimpanan file upload</td></tr><tr><td>libvips + image_processing</td><td>Library OS + gem</td><td>Memproses gambar dan variant</td></tr><tr><td>Action Mailer + Active Job</td><td>Bagian Rails</td><td>Menyusun email dan mengantrekan pengiriman</td></tr><tr><td>Solid Queue</td><td>1.7.0</td><td>Antrean pekerjaan menggunakan database; tidak memakai Redis pada konfigurasi ini</td></tr><tr><td>Puma</td><td>8.0.2</td><td>Server HTTP yang menjalankan Rails</td></tr><tr><td>Duitku POP</td><td>API eksternal</td><td>Hosted checkout dan status pembayaran</td></tr><tr><td>I18n + rails-i18n</td><td>Konfigurasi <code>id</code> dan <code>en</code></td><td>Terjemahan dan format tanggal</td></tr><tr><td>RSpec + FactoryBot</td><td>rspec-rails 8.0.4</td><td>Pengujian otomatis Ruby dengan data contoh</td></tr><tr><td>Node test runner</td><td><code>spec/javascript/*_test.cjs</code></td><td>Menguji perilaku JavaScript; Node bukan server backend GlowBook</td></tr><tr><td>Brakeman</td><td>Gem development/test</td><td>Pemeriksaan potensi masalah keamanan secara statis</td></tr><tr><td>Docker + Compose</td><td>Dockerfile dan YAML</td><td>Menjalankan web, worker dan PostgreSQL secara konsisten</td></tr><tr><td>Git + GitHub Actions</td><td>Workflow repository</td><td>Riwayat perubahan dan pemeriksaan CI</td></tr><tr><td>Caddy</td><td>Overlay production</td><td>Reverse proxy dan HTTPS untuk deployment satu host</td></tr></tbody></table></div>
+<p>Gem yang terpasang tidak selalu berarti fitur aktif. Misalnya Jbuilder tersedia, tetapi respons chat saat ini dibuat dengan <code>render json:</code>. Capybara/Selenium tersedia sebagai alat uji; jangan menyebut semua alur otomatis memakai browser tanpa membaca spec.</p>
+<p>Project ini tidak memakai React, Next.js, Laravel atau Node sebagai backend. Anda cukup belajar stack yang benar-benar dipakai dulu.</p>
+<h2 id="section-5">04 — Cara browser berbicara dengan server</h2>
+<p>Bayangkan satu tindakan: membuka daftar pengguna admin.</p>
+<pre aria-label="Contoh kode text"><code>Browser: GET /admin/pengguna
+  -&gt; config/routes.rb memilih Admin::UsersController#index
+  -&gt; require_admin! memeriksa akses
+  -&gt; controller mengambil User dari PostgreSQL
+  -&gt; Paginatable menambahkan pencarian/filter/batas baris
+  -&gt; app/views/admin/users/index.html.erb membentuk HTML
+  -&gt; browser menampilkan tabel</code></pre>
+<p><strong>Request</strong> adalah permintaan browser. <strong>Response</strong> adalah jawaban server. HTML dibentuk di server, kemudian JavaScript membantu interaksi tertentu.</p>
+<div class="table-wrap"><table><thead><tr><th>Metode HTTP</th><th>Maksud</th><th>Contoh</th></tr></thead><tbody><tr><td>GET</td><td>Membaca</td><td>Buka daftar atau form</td></tr><tr><td>POST</td><td>Membuat / tindakan server tertentu</td><td>Simpan pengguna baru, buat invoice</td></tr><tr><td>PATCH</td><td>Mengubah sebagian data</td><td>Edit pengguna, ubah status booking</td></tr><tr><td>DELETE</td><td>Menghapus</td><td>Hapus pengguna yang boleh dihapus</td></tr></tbody></table></div>
+<p>Status umum: <code>200</code> berhasil, <code>302/303</code> berpindah halaman, <code>404</code> tidak ditemukan, <code>422</code> input tidak valid, <code>503</code> layanan sementara tidak tersedia. Status HTTP berbeda dari status booking dan status Duitku.</p>
+<h2 id="section-6">05 — Mengenal folder project</h2>
+<div class="table-wrap"><table><thead><tr><th>Folder/file</th><th>Pertanyaan yang dijawab</th></tr></thead><tbody><tr><td><code>Gemfile</code> / <code>Gemfile.lock</code></td><td>Library apa dan versi tepat apa yang digunakan?</td></tr><tr><td><code>config/routes.rb</code></td><td>URL ini masuk ke controller mana?</td></tr><tr><td><code>app/controllers</code></td><td>Bagaimana request dibaca dan respons dipilih?</td></tr><tr><td><code>app/models</code></td><td>Apa struktur relasi dan aturan validasi data?</td></tr><tr><td><code>app/services</code></td><td>Di mana proses bisnis yang panjang dilakukan?</td></tr><tr><td><code>app/views</code></td><td>Bagaimana halaman dan email disusun?</td></tr><tr><td><code>app/helpers</code></td><td>Bagaimana format rupiah, avatar, ikon dan teks dibantu?</td></tr><tr><td><code>app/javascript/controllers</code></td><td>Apa perilaku interaktif di browser?</td></tr><tr><td><code>app/assets/tailwind/application.css</code></td><td>Bagaimana komponen visual diatur?</td></tr><tr><td><code>config/locales</code></td><td>Dari mana teks Indonesia/Inggris berasal?</td></tr><tr><td><code>db/migrate</code></td><td>Bagaimana struktur database berubah secara bertahap?</td></tr><tr><td><code>db/schema.rb</code></td><td>Seperti apa hasil struktur database sekarang?</td></tr><tr><td><code>app/mailers</code> / <code>app/jobs</code></td><td>Bagaimana email disusun dan dijalankan di belakang?</td></tr><tr><td><code>spec</code></td><td>Bagaimana perilaku kode dibuktikan?</td></tr><tr><td><code>public</code></td><td>Ikon dan fallback offline yang dapat disajikan langsung</td></tr><tr><td><code>compose.yaml</code> / <code>Dockerfile</code></td><td>Bagaimana layanan dijalankan dalam container?</td></tr><tr><td><code>script</code> / <code>deploy</code></td><td>Pemeriksaan rilis, backup, restore dan HTTPS</td></tr></tbody></table></div>
+<p>Jangan mengedit <code>db/schema.rb</code> untuk menambahkan kolom; buat migration. Jangan mengedit CSS hasil build; edit sumber Tailwind. Jangan membuka <code>.env.local</code> di screenshot, menyalin secret ke tutorial, atau memasukkannya ke Git.</p>
+<h2 id="section-7">06 — Dasar Ruby dalam 15 menit</h2>
+<p><strong>LATIHAN — kode ini dapat diketik pada <code>irb</code> di lingkungan Ruby latihan.</strong></p>
+<pre aria-label="Contoh kode ruby"><code>nama = &quot;Facial&quot;                 # String: teks
+harga = 150_000                  # Integer: bilangan bulat
+aktif = true                     # Boolean: benar/salah
+layanan = [&quot;Facial&quot;, &quot;Massage&quot;]  # Array: daftar
+booking = { nama: nama, harga: harga } # Hash: pasangan kunci/nilai
+
+if aktif
+  puts &quot;#{nama}: Rp #{harga}&quot;    # Interpolasi memasukkan nilai ke teks
+end</code></pre>
+<p><code>nama:</code> adalah key berupa Symbol. <code>booking[:harga]</code> membaca nilainya. Hash dengan key String menggunakan <code>booking[&quot;harga&quot;]</code>; String dan Symbol bukan key yang sama.</p>
+<pre aria-label="Contoh kode ruby"><code>def total_harga(harga, jumlah: 1)
+  harga * jumlah
+end
+
+total_harga(150_000, jumlah: 2) # menghasilkan 300000</code></pre>
+<p><code>def</code> membuat method. Nilai ekspresi terakhir menjadi hasil method. <code>jumlah:</code> adalah keyword argument. Pada service GlowBook, keyword seperti <code>business:</code> membuat pemanggilan mudah dibaca.</p>
+<pre aria-label="Contoh kode ruby"><code>class KalkulatorBooking
+  def initialize(harga:)
+    @harga = harga
+  end
+
+  def total
+    @harga
+  end
+end
+
+KalkulatorBooking.new(harga: 150_000).total</code></pre>
+<p><code>class</code> adalah rancangan objek. <code>.new</code> membuat objek. <code>initialize</code> menerima data awal. <code>@harga</code> adalah instance variable yang dapat dipakai method lain dalam objek yang sama.</p>
+<div class="table-wrap"><table><thead><tr><th>Sintaks</th><th>Arti saat membaca GlowBook</th></tr></thead><tbody><tr><td><code>nil</code></td><td>Tidak ada nilai</td></tr><tr><td><code>present?</code> / <code>blank?</code></td><td>Pemeriksaan nilai tersedia/kosong dari Active Support</td></tr><tr><td><code>&amp;.</code></td><td>Panggil method hanya jika objek bukan nil</td></tr><tr><td><code>||</code> / <code>&amp;&amp;</code></td><td>Atau / dan</td></tr><tr><td><code>return</code></td><td>Keluar dari method dengan hasil tertentu</td></tr><tr><td><code>.map</code> / <code>.select</code></td><td>Ubah setiap elemen / pilih elemen yang sesuai</td></tr><tr><td><code>.any?</code> / <code>.all?</code></td><td>Apakah ada / apakah semuanya memenuhi kondisi?</td></tr><tr><td><code>do ... end</code> / <code>{ ... }</code></td><td>Block yang dijalankan suatu method</td></tr><tr><td><code>private</code></td><td>Method internal, bukan untuk dipanggil bebas dari luar</td></tr><tr><td><code>rescue</code></td><td>Tangani exception tertentu</td></tr><tr><td><code>.freeze</code></td><td>Cegah objek diubah setelah dibuat</td></tr><tr><td><code>15.minutes</code></td><td>Durasi dari Active Support, bukan Ruby dasar</td></tr></tbody></table></div>
+<p>Tanda <code>?</code> dan <code>!</code> di nama method adalah konvensi, bukan perintah khusus bahasa. Pada Active Record, <code>save!</code> menaikkan exception jika gagal, sedangkan <code>save</code> mengembalikan false. Method custom tetap perlu dibaca untuk mengetahui perilakunya.</p>
+<h2 id="section-8">07 — Menyiapkan lingkungan belajar</h2>
+<p>Untuk Windows, gunakan WSL2 Ubuntu untuk menulis Rails secara langsung, atau Docker Desktop untuk menjalankan project yang sudah ada. Jangan mencampur perintah Bash dengan PowerShell tanpa memperhatikan terminalnya.</p>
+<h3 id="section-9">Jalur A: project latihan baru dengan WSL/Ubuntu</h3>
+<p>Gunakan Ruby <strong>3.4.7</strong>, Rails <strong>8.1.3.1</strong>, PostgreSQL dan library OS. Detail pemasangan Ruby melalui rbenv ada di <code>SETUP.md</code>. Jalankan berikut hanya pada lingkungan latihan baru:</p>
+<pre aria-label="Contoh kode bash"><code># Terminal WSL/Ubuntu, bukan PowerShell
+sudo apt update
+sudo apt install -y postgresql libpq-dev libvips build-essential libyaml-dev
+ruby -v
+gem install rails -v 8.1.3.1
+rails new glowbook_latihan --database=postgresql --css=tailwind
+cd glowbook_latihan
+bundle install</code></pre>
+<p>Arti: <code>rails new</code> membuat skeleton, <code>--database</code> memilih PostgreSQL, <code>--css</code> memasang Tailwind, <code>bundle install</code> memasang gem. Ini belum menghasilkan seluruh GlowBook.</p>
+<p>Buat role PostgreSQL latihan secara interaktif, agar password tidak ditulis di history shell:</p>
+<pre aria-label="Contoh kode bash"><code>sudo service postgresql start
+sudo -u postgres createuser --login --createdb --pwprompt glowbook_latihan
+read -s -p &quot;Password database latihan: &quot; PGPASSWORD
+echo
+export PGPASSWORD
+export PGUSER=glowbook_latihan
+export PGHOST=localhost</code></pre>
+<p><code>read -s</code> menyembunyikan input. Role dan database latihan harus terpisah dari GlowBook utama. Sesuaikan bagian development/test <code>config/database.yml</code> project latihan:</p>
+<pre aria-label="Contoh kode yaml"><code>default: &amp;default
+  adapter: postgresql
+  encoding: unicode
+  host: &lt;%= ENV.fetch(&quot;PGHOST&quot;, &quot;localhost&quot;) %&gt;
+  username: &lt;%= ENV.fetch(&quot;PGUSER&quot;, &quot;glowbook_latihan&quot;) %&gt;
+  password: &lt;%= ENV[&quot;PGPASSWORD&quot;] %&gt;
+  pool: 5
+
+development:
+  &lt;&lt;: *default
+  database: glowbook_latihan_development
+
+test:
+  &lt;&lt;: *default
+  database: glowbook_latihan_test</code></pre>
+<p><code>&amp;default</code> membuat anchor YAML, <code>&lt;&lt;: *default</code> menggunakan kembali konfigurasi. <code>&lt;%= ... %&gt;</code> menghitung nilai Ruby sebelum YAML dibaca. Simpan password di environment, bukan pada file tersebut.</p>
+<pre aria-label="Contoh kode bash"><code>bin/rails db:create
+bin/rails db:migrate
+bin/dev</code></pre>
+<p><code>db:create</code> membuat database; <code>db:migrate</code> menjalankan migration; <code>bin/dev</code> menjalankan proses development sesuai <code>Procfile.dev</code>, termasuk watcher CSS. Buka <code>http://localhost:3000</code>. Jika GlowBook utama memakai port 3000, hentikan server latihan dan atur port latihan tersendiri, misalnya server Rails port 3002 dengan watcher Tailwind di terminal kedua.</p>
+<h3 id="section-10">Jalur B: menjalankan repository GlowBook</h3>
+<p><code>SETUP.md</code> adalah petunjuk operasional project. Clone ke folder baru jika ingin bereksperimen. <code>bundle install</code>, <code>bin/rails db:prepare</code>, lalu <code>bin/dev</code> menjalankan mode development. Perhatikan bahwa prepare dapat memuat seed pada database development baru.</p>
+<p>Stack Docker lokal yang sudah ada memakai konfigurasi production dengan HTTP lokal yang diizinkan khusus di <code>.env.local</code>. Untuk menyalakan ulang stack tersebut, dari PowerShell di folder GlowBook:</p>
+<pre aria-label="Contoh kode powershell"><code>docker compose --env-file .env.local up -d --wait web worker
+docker compose --env-file .env.local ps
+docker compose --env-file .env.local logs --tail 50 web</code></pre>
+<p><code>up</code> menjalankan layanan, <code>-d</code> di belakang, <code>--wait</code> menunggu healthcheck, <code>ps</code> menunjukkan status, <code>logs</code> membaca keluaran. Perintah ini memakai container yang sudah ada; bukan langkah membuat project baru. Port default Compose adalah <strong>3001</strong>, sedangkan konfigurasi <code>.env.local</code> project memakai <strong>3000</strong>.</p>
+<p>Setelah mengubah kode, image production harus dibangun ulang agar perubahan masuk. Development biasanya melakukan reload; container production tidak otomatis membaca file kerja host.</p>
+<h2 id="section-11">08 — Urutan membangun dari nol</h2>
+<p>Jangan langsung mulai dari payment gateway. Bangun satu alur yang dapat dipakai, kemudian tambah lapisan.</p>
+<div class="table-wrap"><table><thead><tr><th>Tahap</th><th>Yang dibuat</th><th>Bukti selesai</th></tr></thead><tbody><tr><td>1</td><td>Homepage statis, layout dan navbar</td><td>Dapat dibuka dengan tampilan rapi</td></tr><tr><td>2</td><td>Model kota, kategori, bisnis, layanan</td><td>Data dapat dibuat dan ditampilkan</td></tr><tr><td>3</td><td>Devise dan pembatasan peran</td><td>Customer tidak dapat membuka admin</td></tr><tr><td>4</td><td>CRUD layanan owner</td><td>Owner hanya mengubah layanannya sendiri</td></tr><tr><td>5</td><td>Staff, kualifikasi dan jadwal</td><td>Slot mempertimbangkan jam kerja dan istirahat</td></tr><tr><td>6</td><td>Booking bertahap dan constraint DB</td><td>Dua request tidak memesan interval staff yang sama</td></tr><tr><td>7</td><td>Akun pelanggan, favorit dan ulasan</td><td>Riwayat dan akses milik pengguna benar</td></tr><tr><td>8</td><td>Onboarding, galeri dan admin</td><td>Bisnis pending, upload tersimpan, moderasi tersedia</td></tr><tr><td>9</td><td>Notifikasi, email dan chat</td><td>Pesan/email mencapai peserta yang benar</td></tr><tr><td>10</td><td>Filter, pagination, analitik dan CSV</td><td>Hasil sesuai filter dan tidak bocor antar owner</td></tr><tr><td>11</td><td>I18n, PWA dan keamanan</td><td>Bahasa bekerja dan halaman privat tidak disimpan offline</td></tr><tr><td>12</td><td>Integrasi, deployment dan backup</td><td>Kredensial nyata diverifikasi; restore dibuktikan</td></tr></tbody></table></div>
+<p>Pada tahap awal, gunakan satu kota, satu bisnis, dua layanan dan satu staff. Kompleksitas baru ditambah setelah contoh kecil dipahami.</p>
+<h2 id="section-12">09 — MVC: model, view dan controller</h2>
+<p><strong>Model</strong> adalah data dan aturannya. <strong>View</strong> adalah tampilan. <strong>Controller</strong> menghubungkan request dengan model dan view. Service menampung proses yang terlalu panjang untuk controller.</p>
+<p><strong>LATIHAN — buat katalog layanan mini pada project latihan.</strong></p>
+<pre aria-label="Contoh kode bash"><code>bin/rails generate model Service name:string price:integer duration_minutes:integer active:boolean
+bin/rails db:migrate
+bin/rails generate controller Services index new</code></pre>
+<p>Model generator menghasilkan model dan migration, bukan fitur booking. Ini memakai model <code>Service</code> mini tanpa bisnis dan kategori; GlowBook asli memiliki relasi tambahan.</p>
+<p>Ganti routes hasil generator untuk controller latihan menjadi:</p>
+<pre aria-label="Contoh kode ruby"><code>Rails.application.routes.draw do
+  root &quot;services#index&quot;
+  resources :services, only: [:index, :new, :create]
+end</code></pre>
+<p>Ganti file model latihan <code>app/models/service.rb</code>:</p>
+<pre aria-label="Contoh kode ruby"><code>class Service &lt; ApplicationRecord
+  validates :name, presence: true
+  validates :price, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :duration_minutes, numericality: { only_integer: true, greater_than: 0 }
+end</code></pre>
+<p><code>&lt; ApplicationRecord</code> mewarisi Active Record. <code>validates</code> memeriksa data sebelum penyimpanan. Harga integer menyimpan rupiah tanpa persoalan pecahan float.</p>
+<p>Ganti <code>app/controllers/services_controller.rb</code> pada latihan:</p>
+<pre aria-label="Contoh kode ruby"><code>class ServicesController &lt; ApplicationController
+  def index
+    @services = Service.order(:name)
+  end
+
+  def new
+    @service = Service.new
+  end
+
+  def create
+    @service = Service.new(service_params)
+    if @service.save
+      redirect_to services_path, notice: &quot;Layanan berhasil dibuat.&quot;
+    else
+      render :new, status: :unprocessable_content
+    end
+  end
+
+  private
+
+  def service_params
+    params.require(:service).permit(:name, :price, :duration_minutes)
+  end
+end</code></pre>
+<div class="table-wrap"><table><thead><tr><th>Baris/bagian</th><th>Penjelasan</th></tr></thead><tbody><tr><td><code>index</code></td><td>Mengambil daftar; Rails mencari view <code>services/index</code></td></tr><tr><td><code>@services</code></td><td>Data dapat dibaca view karena instance variable</td></tr><tr><td><code>Service.order(:name)</code></td><td>Membentuk query urut nama</td></tr><tr><td><code>new</code></td><td>Menyiapkan objek kosong untuk form</td></tr><tr><td><code>create</code></td><td>Membaca input, membuat objek dan mencoba menyimpan</td></tr><tr><td><code>redirect_to</code></td><td>Membuat request baru menuju daftar setelah berhasil</td></tr><tr><td><code>render :new</code></td><td>Menampilkan form kembali tanpa request baru</td></tr><tr><td><code>422</code></td><td>Memberi tahu bahwa input belum valid</td></tr><tr><td><code>require(:service)</code></td><td>Memerlukan kelompok parameter service</td></tr><tr><td><code>permit(...)</code></td><td>Hanya menerima field yang diizinkan</td></tr></tbody></table></div>
+<p>Latihan ini belum dilindungi login. Setelah CRUD dipahami, tambahkan autentikasi dan ownership sebelum memakai pola ini untuk data klien.</p>
+<p><code>app/views/services/new.html.erb</code> latihan:</p>
+<pre aria-label="Contoh kode erb"><code>&lt;h1&gt;Tambah layanan&lt;/h1&gt;
+&lt;% @service.errors.full_messages.each do |message| %&gt;
+  &lt;p&gt;&lt;%= message %&gt;&lt;/p&gt;
+&lt;% end %&gt;
+
+&lt;%= form_with model: @service do |f| %&gt;
+  &lt;%= f.label :name, &quot;Nama&quot; %&gt;
+  &lt;%= f.text_field :name, required: true %&gt;
+  &lt;%= f.label :price, &quot;Harga rupiah&quot; %&gt;
+  &lt;%= f.number_field :price, min: 0, required: true %&gt;
+  &lt;%= f.label :duration_minutes, &quot;Durasi menit&quot; %&gt;
+  &lt;%= f.number_field :duration_minutes, min: 1, required: true %&gt;
+  &lt;%= f.submit &quot;Simpan&quot; %&gt;
+&lt;% end %&gt;</code></pre>
+<p><code>&lt;% ... %&gt;</code> menjalankan Ruby; <code>&lt;%= ... %&gt;</code> menampilkan hasilnya. <code>f</code> adalah pembuat field form. <code>required</code>/<code>min</code> membantu browser, tetapi validasi server tetap wajib. <code>form_with</code> ikut menyiapkan token CSRF.</p>
+<p><code>app/views/services/index.html.erb</code> latihan:</p>
+<pre aria-label="Contoh kode erb"><code>&lt;h1&gt;Layanan&lt;/h1&gt;
+&lt;%= link_to &quot;Tambah layanan&quot;, new_service_path %&gt;
+&lt;% @services.each do |service| %&gt;
+  &lt;article&gt;
+    &lt;h2&gt;&lt;%= service.name %&gt;&lt;/h2&gt;
+    &lt;p&gt;Rp &lt;%= service.price %&gt; · &lt;%= service.duration_minutes %&gt; menit&lt;/p&gt;
+  &lt;/article&gt;
+&lt;% end %&gt;</code></pre>
+<p>Nama helper seperti <code>new_service_path</code> dibuat Rails dari routes. Setelah latihan berhasil, bandingkan dengan <code>Dashboard::ServicesController</code> dan form layanan GlowBook di atlas. Perbedaan penting: scope <code>@business.services</code>, kategori, terjemahan, staff, dan perlindungan layanan yang telah dipakai booking.</p>
+<h2 id="section-13">10 — Database dan hubungan data</h2>
+<pre aria-label="Contoh kode text"><code>User (owner) -&gt; Business -&gt; Service -&gt; BookingItem &lt;- Booking &lt;- User (customer)
+                    |         |            |
+                    |         +-- StaffService -- Staff
+                    +-- BusinessHour              |-- StaffSchedule
+                    +-- Promotion                 |-- StaffBreak
+                    +-- BusinessGallery           +-- BlockedTime
+Booking -&gt; PaymentAttempt
+User + Business -&gt; Favorite / Review / Conversation
+Conversation -&gt; ChatMessage
+User -&gt; UserNotification</code></pre>
+<p>Panah berarti hubungan; jumlah record tergantung relasinya. <code>BookingItem</code> adalah detail layanan dalam satu booking. Satu booking dapat berisi beberapa layanan berurutan dengan snapshot harga dan durasi.</p>
+<p><strong>KODE PROJECT — bagian model Service:</strong></p>
+<pre aria-label="Contoh kode ruby"><code>belongs_to :business
+belongs_to :category
+has_many :booking_items, dependent: :restrict_with_error
+has_many :staff_services, dependent: :destroy
+has_many :staff, through: :staff_services</code></pre>
+<p><code>belongs_to</code> berarti record memiliki foreign key. <code>has_many ... through</code> membaca relasi melalui tabel penghubung. Staff dan layanan banyak-ke-banyak: satu staff dapat melayani banyak layanan dan satu layanan dapat dikerjakan banyak staff.</p>
+<p><code>restrict_with_error</code> menolak penghapusan layanan yang sudah memiliki booking item. <code>dependent: :destroy</code> menghapus record terkait ketika induk dihapus; karena itu tidak aman menghapus data bisnis bersejarah sembarangan.</p>
+<p>Migration adalah riwayat perubahan skema. <strong>LATIHAN</strong> menambah kolom deskripsi:</p>
+<pre aria-label="Contoh kode bash"><code>bin/rails generate migration AddDescriptionToServices description:text
+bin/rails db:migrate</code></pre>
+<p>Migration menambah struktur, sedangkan model mengatur perilaku. <code>db:migrate</code> tidak otomatis membuat form deskripsi. Anda masih perlu menambah permit controller dan field view.</p>
+<p><code>foreign_key: true</code> membantu DB memastikan induk tersedia. <code>unique: true</code> pada index melindungi keunikan ketika request bersamaan. Validasi Ruby saja tidak menggantikan constraint database.</p>
+<h2 id="section-14">11 — Login dan pembatasan akses</h2>
+<p><strong>KODE PROJECT — User:</strong></p>
+<pre aria-label="Contoh kode ruby"><code>devise :database_authenticatable, :registerable, :recoverable, :rememberable,
+       :validatable, :omniauthable, omniauth_providers: [ :facebook, :google_oauth2 ]
+enum :role, { customer: 0, business_owner: 1, staff: 2, admin: 9 }, default: :customer</code></pre>
+<p>Devise mengelola autentikasi password, pendaftaran, reset, remember-me, validasi dan kaitan OAuth. Password disimpan sebagai hash melalui Devise, bukan sebagai teks biasa. Enum menyimpan angka di database dan memberi nama serta predicate seperti <code>admin?</code>.</p>
+<p><strong>Authentication</strong> bertanya “siapa Anda?”. <strong>Authorization</strong> bertanya “apa yang boleh Anda lakukan?”. Login saja belum menjamin boleh mengedit bisnis lain.</p>
+<p><strong>KODE PROJECT — pola akses:</strong></p>
+<pre aria-label="Contoh kode ruby"><code>before_action :require_admin!
+# Di dashboard owner, pilih record melalui bisnis yang dapat diakses:
+@service = @business.services.find(params[:id])</code></pre>
+<p><code>before_action</code> berjalan sebelum action. Scope <code>@business.services</code> mencegah owner memilih layanan bisnis lain melalui ID. Jangan menggantinya dengan <code>Service.find(params[:id])</code> tanpa pemeriksaan ownership.</p>
+<p><code>ApplicationController#after_sign_in_path_for</code> memilih tujuan setelah login: admin, dashboard bisnis, atau akun pelanggan. <code>require_customer!</code> project saat ini hanya memastikan login; namanya tidak berarti ia menolak semua peran non-customer. Baca kondisi aktual, jangan menebak dari nama method.</p>
+<p>Admin tambah/edit pengguna mempunyai strong parameters untuk profil/password dan menetapkan role secara eksplisit dari <code>User.roles</code>. Perubahan role akun admin, akun sendiri, owner dengan bisnis, atau staff terhubung ditolak. Email akun OAuth tidak dapat diganti dari panel tersebut.</p>
+<p>Kolom password kosong saat edit dipisahkan dari atribut yang disimpan. Jika tidak, password kosong dapat merusak alur validasi atau membingungkan pengguna.</p>
+<h2 id="section-15">12 — Marketplace dan pencarian</h2>
+<p><code>SearchesController#index</code> menyusun query dari bisnis aktif, lalu menambahkan kota, kata pencarian, rating, promo, jam buka, kategori dan harga. Query dibatasi 12 bisnis per halaman.</p>
+<p><strong>KODE PROJECT — contoh scope:</strong></p>
+<pre aria-label="Contoh kode ruby"><code>scope = Business.active.includes(:city, :categories, :services, :promotions)
+scope = scope.in_city(params[:city]) if params[:city].present?
+scope = scope.search(params[:q]) if params[:q].present?</code></pre>
+<p><code>scope</code> adalah kumpulan record yang masih berupa relation. <code>where</code>/scope menyusun SQL; query biasanya dieksekusi ketika data dibaca. <code>includes</code> mengurangi query berulang untuk relasi yang akan ditampilkan.</p>
+<p><code>ILIKE</code> adalah pencarian PostgreSQL tanpa membedakan kapital. Binding seperti <code>where(&quot;name ILIKE ?&quot;, nilai)</code> memisahkan nilai dari SQL. Hindari menyisipkan input mentah langsung ke string SQL.</p>
+<p>Geolokasi diproses <code>nearby_search_controller.js</code> dan endpoint POST <code>/cari/terdekat</code>. Koordinat diperiksa rentangnya, disimpan di session dengan masa berlaku 30 menit, dan digunakan untuk urutan jarak. Browser dapat menolak izin lokasi; aplikasi perlu tetap menyediakan pencarian biasa.</p>
+<p>Homepage/detail bisnis menggunakan partial untuk kartu, galeri, jam dan ulasan. Partial berawalan <code>_</code> membantu memakai tampilan yang sama di beberapa halaman.</p>
+<h2 id="section-16">13 — Jadwal dan ketersediaan staff</h2>
+<p>Slot tidak dibuat dengan menampilkan jam 09.00–17.00 saja. Slot harus sesuai jam bisnis, durasi layanan, staff aktif yang memenuhi kualifikasi, shift, break, blocked time dan booking sebelumnya.</p>
+<p><strong>KODE PROJECT — Availability:</strong></p>
+<pre aria-label="Contoh kode ruby"><code>SLOT_GRANULARITY = 30.minutes
+
+def staff_free?(staff_id, start, finish)
+  working_hours?(staff_id, start, finish) &amp;&amp;
+    !on_break?(staff_id, start, finish) &amp;&amp;
+    !blocked?(staff_id, start, finish) &amp;&amp;
+    !booked?(staff_id, start, finish)
+end</code></pre>
+<p><code>30.minutes</code> adalah langkah pilihan waktu awal yang ditampilkan, bukan durasi wajib semua layanan. Layanan kedua dapat mulai pada menit di antara pilihan awal selama seluruh intervalnya valid.</p>
+<p>Contoh: layanan A 45 menit dan B 30 menit mulai pukul 09.00. A menempati 09.00–09.45, B 09.45–10.15. Bila staff istirahat 10.00–10.30, rangkaian itu tidak tersedia.</p>
+<p><code>working_hours?</code> memeriksa apakah shift menutup seluruh interval. Shift berurutan dapat menutupi satu layanan; celah antarsift tidak boleh dilewati. Waktu di database menggunakan UTC, sementara perhitungan antarmuka memakai zona Jakarta. Zona komputer Anda bukan dasar perhitungan booking.</p>
+<p><strong>KODE PROJECT — overlap SQL:</strong></p>
+<pre aria-label="Contoh kode ruby"><code>.where(&quot;booking_items.during &amp;&amp; tstzrange(?, ?, &#x27;[)&#x27;)&quot;, start, finish)</code></pre>
+<p><code>tstzrange</code> adalah rentang timestamp PostgreSQL. <code>&amp;&amp;</code> memeriksa tumpang tindih. <code>[)</code> memasukkan batas awal dan mengecualikan batas akhir: layanan selesai 10.00 boleh diikuti layanan mulai 10.00.</p>
+<p><code>BookingSequenceAvailability</code> menguji seluruh rangkaian layanan. <code>Availability</code> menguji kebutuhan interval layanan/staff. Keduanya perlu dibaca bersama untuk memahami booking beberapa layanan.</p>
+<h2 id="section-17">14 — Alur booking lima langkah</h2>
+<pre aria-label="Contoh kode text"><code>Layanan -&gt; Staff -&gt; Tanggal -&gt; Waktu -&gt; Konfirmasi -&gt; Simpan</code></pre>
+<p><code>BookingsFlowController</code> menyimpan pilihan sementara di <code>session[:booking_flow]</code>. Mengubah layanan menghapus pilihan staff/tanggal/waktu yang tidak lagi relevan. Business ID diperiksa agar session dari satu bisnis tidak digunakan pada bisnis lain.</p>
+<p>State dari browser tetap diperiksa ulang di server. Harga berasal dari database, bukan hidden input pelanggan. Staff harus aktif, milik bisnis, dan dapat mengerjakan semua layanan yang dipilih.</p>
+<p><strong>KODE PROJECT — controller memanggil service:</strong></p>
+<pre aria-label="Contoh kode ruby"><code>result = BookingBuilder.new(
+  user: current_user,
+  business: @business,
+  service_ids: flow[&quot;service_ids&quot;],
+  staff_id: flow[&quot;staff_id&quot;],
+  start_time: flow_start_time,
+  payment_method: payment_method
+).call</code></pre>
+<p><code>.new</code> memasukkan kebutuhan proses; <code>.call</code> menjalankannya. <code>result.ok?</code> menunjukkan keberhasilan. Jika gagal, <code>result.error</code> menjadi pesan. Controller memilih respons; service menjalankan proses bisnis.</p>
+<p><strong>KODE PROJECT — transaksi di BookingBuilder:</strong></p>
+<pre aria-label="Contoh kode ruby"><code>Booking.transaction(requires_new: true) do
+  booking = Booking.create!(...)
+  services.each do |service|
+    BookingItem.create!(...)
+  end
+  BookingResult.new(booking: booking.reload)
+end</code></pre>
+<p>Tanda <code>...</code> pada potongan ini adalah penyingkat penjelasan, bukan kode runnable. Kode lengkap ada di atlas. Transaksi berarti booking dan item harus tersimpan sebagai satu kesatuan; exception membuat rollback. <code>reload</code> membaca ulang asosiasi setelah item dibuat.</p>
+<p>Harga dan durasi disalin ke BookingItem. Bila harga layanan diubah besok, booking bersejarah tetap menyimpan harga yang dipakai saat dipesan.</p>
+<h3 id="section-18">Mengapa perlu perlindungan database?</h3>
+<p>Dua pelanggan dapat membaca slot kosong pada saat yang hampir sama. Pemeriksaan aplikasi saja tidak menutup perlombaan tersebut.</p>
+<p><strong>KODE PROJECT — migration:</strong></p>
+<pre aria-label="Contoh kode sql"><code>EXCLUDE USING gist (
+  staff_id WITH =,
+  during WITH &amp;&amp;
+) WHERE (during IS NOT NULL AND staff_id IS NOT NULL)</code></pre>
+<p>Constraint menolak interval yang bertabrakan pada staff yang sama. <code>btree_gist</code> digunakan untuk menggabungkan pembandingan staff dan range. BookingBuilder menangani exception dengan pesan slot sudah diambil.</p>
+<p>Reference booking dibuat model dalam pola <code>GB-YYYYMMDD-000001</code>. Pembentukan urutan dengan membaca maksimum masih dapat bertabrakan saat request serentak; unique index melindungi database, tetapi tidak berarti semua request akan berhasil. Jangan mengklaim generator reference itu sequence database atomik.</p>
+<h2 id="section-19">15 — Pembatalan dan ubah jadwal</h2>
+<p><code>Booking#cancel!</code> memakai <code>with_lock</code>, melepaskan interval item dengan <code>during: nil</code>, lalu mengubah status. <code>with_lock</code> mengunci record dalam transaksi agar dua perubahan pada booking yang sama tidak saling menimpa.</p>
+<p>Aturan aktual project:</p>
+<ul><li>Pembatalan hanya untuk pending/confirmed dan ditolak jika ada payment attempt pending/settlement/capture.</li><li>Ubah jadwal memakai aturan pembatalan tersebut dan waktu awal booking harus lebih dari dua jam ke depan.</li><li>Selesai hanya untuk confirmed setelah waktu berakhir.</li><li>No-show hanya untuk confirmed setelah waktu mulai.</li></ul>
+<p><code>BookingRescheduler</code> mengecek rangkaian layanan menggunakan harga/durasi booking yang tersimpan. Interval lama dilepas di dalam transaksi, interval baru ditulis, lalu waktu booking diperbarui. Jika bentrok, rollback mengembalikan data lama.</p>
+<p>Setelah perubahan berhasil, <code>BookingNotificationDelivery</code> dipanggil untuk mengabari pelanggan dan owner. Pembayaran yang sudah diterima membutuhkan kebijakan refund tersendiri; project belum melakukan refund otomatis.</p>
+<h2 id="section-20">16 — Onboarding bisnis dan galeri</h2>
+<p><code>BusinessRegistrationsController#create</code> membuat bisnis pending, memilih kategori yang valid, membuat jam buka awal dan menaikkan customer menjadi owner dalam transaksi. Pada onboarding pelanggan, jam default 09.00–17.00 selain Minggu; bisnis masih pending. Pada penambahan bisnis oleh admin, tujuh hari dimulai tertutup. Kedua alur berbeda, jadi periksa file masing-masing.</p>
+<p>Owner melengkapi layanan, staff, jadwal dan profil. Admin menyetujui, menangguhkan atau mengaktifkan kembali. Menangguhkan bisnis mempertahankan booking dan riwayat.</p>
+<p><strong>KODE PROJECT — BusinessGallery:</strong></p>
+<pre aria-label="Contoh kode ruby"><code>belongs_to :business
+has_one_attached :image</code></pre>
+<p><code>has_one_attached</code> menghubungkan record dengan metadata dan blob Active Storage. File bukan disimpan sebagai string foto di tabel galeri.</p>
+<p>Validasi galeri project menerima JPEG, PNG atau WebP, maksimum 10 MB per file; controller membatasi jumlah galeri enam. File owner diakses melalui <code>@business.business_galleries</code>, sehingga owner tidak dapat menghapus gambar bisnis lain lewat ID.</p>
+<p>Production saat ini memakai disk lokal <code>/rails/storage</code> dengan volume Docker. Database menyimpan metadata, volume menyimpan byte gambar. Backup database saja tidak cukup. Bila pindah ke hosting dengan disk sementara, siapkan object storage atau disk permanen dan sesuaikan konfigurasi.</p>
+<h2 id="section-21">17 — Email, worker dan notifikasi</h2>
+<pre aria-label="Contoh kode text"><code>Booking berhasil
+  -&gt; BookingNotificationDelivery
+  -&gt; UserNotification dibuat untuk pelanggan dan owner
+  -&gt; BookingMailer menyiapkan email
+  -&gt; deliver_later memasukkan pekerjaan ke antrean
+  -&gt; worker Solid Queue menjalankan pengiriman SMTP</code></pre>
+<p><code>deliver_later</code> tidak membuktikan email sudah sampai ke inbox. Ia mengantrekan pekerjaan. Worker harus berjalan, SMTP harus valid, dan penyedia email dapat menolak pesan.</p>
+<p><strong>KODE PROJECT — pemanggilan mailer:</strong></p>
+<pre aria-label="Contoh kode ruby"><code>BookingMailer.with(booking: @booking, recipient: recipient, locale: I18n.locale)
+            .public_send(@event).deliver_later</code></pre>
+<p><code>.with</code> memasukkan parameter. <code>@event</code> dibatasi ke confirmation/cancellation/reschedule sebelum <code>public_send</code> dipanggil. Jangan mengganti allowlist itu dengan nama method bebas dari input pengguna.</p>
+<p><code>ApplicationMailer</code> membaca konfigurasi SMTP tersimpan saat pengiriman. Google/Facebook/SMTP/Duitku di Admin disimpan terenkripsi melalui IntegrationSetting. SMTP dapat memakai STARTTLS atau TLS sesuai penyedia.</p>
+<p>Production menggunakan dua database bernama <code>glowbook_production</code> dan <code>glowbook_production_queue</code> pada server PostgreSQL yang sama. Yang kedua menyimpan antrean. Backup perlu mencakup keduanya.</p>
+<p>UserNotification memiliki read/unread; controller memilih record dari pengguna yang login. Menandai semua terbaca bukan menghapus notifikasi.</p>
+<h2 id="section-22">18 — Chat tanpa WebSocket</h2>
+<p>Chat GlowBook saat ini memakai polling HTTP tiap empat detik. Ia tidak memakai Action Cable atau Redis untuk pengiriman pesan real-time.</p>
+<p><strong>KODE PROJECT — Stimulus:</strong></p>
+<pre aria-label="Contoh kode javascript"><code>connect() {
+  this.scrollToLatest()
+  this.timer = window.setInterval(() =&gt; this.refresh(), 4000)
+}
+
+disconnect() {
+  window.clearInterval(this.timer)
+}</code></pre>
+<p><code>connect</code> berjalan ketika controller dipasang pada elemen. Interval memanggil refresh. <code>disconnect</code> membersihkan timer saat elemen dilepas agar tidak menumpuk setelah navigasi Turbo.</p>
+<p>Server menerima <code>after_id</code> dan mengirim pesan yang lebih baru. Pesan hanya boleh dibaca peserta percakapan. Owner, pelanggan dan staff aktif diperiksa model Conversation.</p>
+<p><strong>KODE PROJECT — render pesan aman:</strong></p>
+<pre aria-label="Contoh kode javascript"><code>body.textContent = message.body</code></pre>
+<p><code>textContent</code> menampilkan pesan sebagai teks, bukan mengeksekusinya sebagai HTML. Jangan mengganti ini dengan <code>innerHTML</code> untuk pesan pengguna.</p>
+<p>Chat menampilkan 100 pesan terakhir dan polling dibatasi 100 record per respons. Ini bukan fitur riwayat chat tanpa batas. Teks <code>Anda</code> di controller JavaScript masih hardcode; jangan menyebut seluruh kode sudah 100% terjemahan.</p>
+<h2 id="section-23">19 — Tabel, pencarian, filter dan jumlah data</h2>
+<p><code>Paginatable</code> dipakai banyak controller. Ia mempertahankan scope milik pengguna/bisnis, menambahkan pencarian dan filter, menghitung hasil, lalu memberi limit/offset.</p>
+<p><strong>KODE PROJECT — batas baris:</strong></p>
+<pre aria-label="Contoh kode ruby"><code>scope.limit(@per_page).offset((@page - 1) * @per_page)</code></pre>
+<p>Jika 25 data per halaman: halaman 1 offset 0, halaman 2 offset 25, halaman 3 offset 50. Pilihan ukuran dibatasi 10/25/50/100. <code>all</code> menggunakan jumlah hasil, dengan minimum 1 untuk perhitungan halaman agar tidak membagi nol.</p>
+<p>Permintaan filter disusun seperti:</p>
+<pre aria-label="Contoh kode text"><code>tables[users][q]=sari
+tables[users][per_page]=10
+tables[users][role]=customer</code></pre>
+<p>Namespacing per tabel membuat filter memiliki identitas jelas. GET dipakai sehingga URL dapat disalin. Tombol Terapkan memulai halaman baru tanpa mempertahankan page lama; link pagination mempertahankan filter.</p>
+<p><code>table_search_predicate</code> memakai Arel untuk kondisi SQL. Ia mencari field teks yang dikenali dan dapat menjangkau relasi belongs_to sampai dua tingkat. Ini bukan mesin pencarian semua kolom; lihat daftar field aktual di concern.</p>
+<p><code>sanitize_sql_like</code> meloloskan <code>%</code>/<code>_</code> dari kata pencarian agar dibaca sebagai karakter biasa. Filter role/status memakai enum; filter relasi memakai pilihan ID yang tersedia pada scope.</p>
+<p><code>table_date_column</code> memilih <code>start_time</code>, lalu <code>starts_at</code>, lalu <code>created_at</code>. Karena itu tanggal booking berarti jadwal, tanggal pengguna berarti dibuat, tanggal promosi berarti mulai berlaku. Penjelasan basis tanggal ditampilkan pada form.</p>
+<p>Pencarian/CSV pembayaran mengikuti scope yang sama. Mode sandbox tidak ditambahkan ke total uang production. Pilihan Semua dapat berat pada data besar; tidak ada jaminan kapasitas ribuan record sebelum pengukuran.</p>
+<h2 id="section-24">20 — Tampilan rapi dengan Tailwind dan CSS</h2>
+<p><strong>LATIHAN:</strong></p>
+<pre aria-label="Contoh kode html"><code>&lt;section class=&quot;rounded-2xl bg-white p-6 shadow-sm&quot;&gt;
+  &lt;h2 class=&quot;mb-4 text-xl font-bold&quot;&gt;Filter pengguna&lt;/h2&gt;
+&lt;/section&gt;</code></pre>
+<p><code>rounded-2xl</code> membulatkan sudut; <code>bg-white</code> memberi latar; <code>p-6</code> padding; <code>shadow-sm</code> bayangan; <code>mb-4</code> jarak bawah; <code>text-xl</code> ukuran; <code>font-bold</code> ketebalan.</p>
+<p>Jarak penting: <strong>padding</strong> adalah jarak isi dari tepi kotak; <strong>margin</strong> jarak antar kotak; <strong>gap</strong> jarak antar item grid/flex.</p>
+<p><strong>KODE PROJECT — perapian filter:</strong></p>
+<pre aria-label="Contoh kode css"><code>.table-controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr));
+  align-items: end;
+  gap: 18px 16px;
+  padding: 24px;
+}</code></pre>
+<p>Grid membuat kolom menyesuaikan ruang. Minimum 170 px mencegah field terlalu sempit pada layar besar. <code>min(100%, ...)</code> membantu saat wadah lebih kecil. <code>align-items: end</code> menyelaraskan dasar field. Padding mengatasi teks yang sebelumnya menempel pada card.</p>
+<p>Pada layar di bawah 640 px, project memakai dua kolom, padding 20 px vertikal dan 16 px horizontal. Pencarian, tombol, dan ringkasan memakai satu baris penuh. <code>min-width: 0</code> membantu item tidak memaksa grid melebar.</p>
+<p>Untuk menambah komponen visual: lihat style yang sudah ada terlebih dahulu, gunakan class bersama, periksa label/keyboard/kontras dan layar kecil. Jangan langsung menambah JavaScript untuk persoalan yang cukup diselesaikan dengan CSS.</p>
+<h2 id="section-25">21 — Terjemahan dan PWA</h2>
+<p><strong>KODE PROJECT — terjemahan:</strong></p>
+<pre aria-label="Contoh kode erb"><code>&lt;%= t(&quot;table_controls.search&quot;) %&gt;</code></pre>
+<p>Key tersebut dibaca dari YAML locale. Tambahkan key pada <code>id</code> dan <code>en</code>, bukan mengetik label dua kali di view. <code>l(...)</code> memformat tanggal/waktu sesuai locale. Locale dipilih melalui session dan <code>I18n.with_locale</code>.</p>
+<p>PWA terdiri dari manifest, ikon, service worker dan halaman offline. Worker menyimpan aset statis; halaman akun/admin tetap menggunakan jaringan dan tidak dicache sebagai halaman privat. Jika navigasi gagal, fallback offline ditampilkan.</p>
+<p><strong>KODE PROJECT — pembatasan interception:</strong></p>
+<pre aria-label="Contoh kode javascript"><code>if (request.method !== &quot;GET&quot; || url.origin !== self.location.origin) return</code></pre>
+<p>Worker tidak mengambil alih mutasi POST/PATCH/DELETE atau request domain lain. Booking dan pembayaran tetap membutuhkan server; PWA ini tidak memberi kemampuan booking offline.</p>
+<p>Versi cache dinaikkan jika strategi atau aset berubah. Aktivasi membersihkan cache milik prefix GlowBook, bukan semua cache origin sembarangan.</p>
+<h2 id="section-26">22 — Integrasi Google, Facebook dan konfigurasi terenkripsi</h2>
+<p>OAuth mengalihkan pengguna ke penyedia, penyedia mengembalikan callback, lalu aplikasi membuat/mencari identitas yang cocok. <code>state</code>/CSRF melindungi proses. Callback URI harus sama persis dengan yang didaftarkan, termasuk port lokal.</p>
+<p>Google mengharuskan email terverifikasi. Identitas dicari berdasarkan provider dan UID, bukan hanya email. Akun dengan email sama tidak otomatis digabung; ini mengurangi risiko pengambilalihan akun. Penautan beberapa identitas belum tersedia.</p>
+<p><strong>KODE PROJECT — penyimpanan integrasi:</strong></p>
+<pre aria-label="Contoh kode ruby"><code>key = Rails.application.key_generator.generate_key(&quot;glowbook-integration-settings-v1&quot;, 32)
+ActiveSupport::MessageEncryptor.new(key, cipher: &quot;aes-256-gcm&quot;, serializer: JSON)</code></pre>
+<p>Key diturunkan melalui key generator Rails. AES-256-GCM menyimpan isi terenkripsi dengan verifikasi. Purpose memisahkan konteks tiap provider. Jangan menciptakan algoritma enkripsi sendiri.</p>
+<p>Konfigurasi tersimpan mengesampingkan fallback environment, termasuk nilai disabled. Kolom secret selalu kosong di form; kosong saat edit berarti mempertahankan secret lama, bukan menghapus. Penghapusan memerlukan pilihan khusus.</p>
+<p><code>SECRET_KEY_BASE</code> yang sama diperlukan agar secret dapat dibaca setelah restore. Database backup tanpa key tidak cukup; key perlu disimpan terpisah secara aman. Jangan mengunggah key ke GitHub atau atlas kode.</p>
+<h2 id="section-27">23 — Duitku: invoice, callback dan status</h2>
+<pre aria-label="Contoh kode text"><code>Customer menekan bayar
+  -&gt; CreateBookingPayment membuat/memakai attempt
+  -&gt; DuitkuClient meminta invoice
+  -&gt; Browser ke hosted checkout Duitku
+  -&gt; Duitku POST callback ke aplikasi
+  -&gt; Signature dan identitas diperiksa
+  -&gt; Server meminta transactionStatus Duitku
+  -&gt; PaymentAttempt diperbarui berdasarkan status API</code></pre>
+<p>Browser return URL bukan bukti pembayaran. Pengguna dapat mengubah query URL. Status lunas diputuskan setelah verifikasi server.</p>
+<p><strong>KODE PROJECT — signature:</strong></p>
+<pre aria-label="Contoh kode ruby"><code>OpenSSL::HMAC.hexdigest(&quot;SHA256&quot;, @api_key, value)</code></pre>
+<p>HMAC memakai secret bersama. String yang ditandatangani berbeda untuk create invoice, callback dan cek status. Lihat <code>DuitkuClient</code> serta <code>DUITKU_SETUP.md</code> untuk urutan field dan endpoint acuan. Jangan memakai contoh MD5 lama jika dokumentasi merchant Anda mengharuskan HMAC.</p>
+<p>API key tidak dikirim sebagai parameter browser. Checkout URL harus HTTPS dan host Duitku yang diizinkan. Callback memeriksa merchant, mode, order, reference, jumlah dan signature. API status harus cocok dengan attempt tersimpan.</p>
+<p><code>CreateBookingPayment</code> menggunakan lock konfigurasi dan lock booking. Jika hasil invoice ambigu setelah timeout, order ID dipertahankan; membuat ID baru langsung dapat memicu pembayaran ganda.</p>
+<p><code>ReconcileDuitkuPayment</code> menangani status server, callback berulang dan refresh manual. Paid tidak boleh berubah kembali menjadi pending akibat callback terlambat. Ini disebut <strong>idempotensi</strong>: pengulangan tindakan tidak menggandakan efek yang sudah berhasil.</p>
+<p>Sandbox ditandai pada riwayat dan tidak masuk total uang production. Record Midtrans lama dipertahankan, tetapi integrasi aktif checkout baru memakai Duitku.</p>
+<p>Tes HTTP stub membuktikan aturan kode, bukan persetujuan merchant atau dana sampai bank. Uji nyata memerlukan kredensial sandbox, host callback publik dan simulator penyedia. Jangan menyalakan production sebelum verifikasi itu selesai.</p>
+<h2 id="section-28">24 — Laporan, analitik dan CSV</h2>
+<p>Controller laporan memakai periode bulan; grafik memakai layanan <code>AdminCharts</code>. Dashboard bisnis menghitung metrik pada business yang sedang diakses. <code>Dashboard::CustomersController</code> menggunakan aggregate COUNT/SUM/MAX per user.</p>
+<p>Istilah perlu dijelaskan kepada klien:</p>
+<ul><li>Nilai booking selesai adalah nilai layanan yang status booking-nya completed.</li><li>Pembayaran online terkonfirmasi adalah PaymentAttempt yang memenuhi scope paid.</li><li>Uang production mengecualikan sandbox dan riwayat Midtrans sandbox.</li><li>Saldo owner/payout ke bank belum dihitung otomatis.</li></ul>
+<p>Grouping tanggal memakai waktu Jakarta agar booking dekat tengah malam masuk tanggal/bulan yang benar. Grouping bisnis menggunakan identitas ID; dua bisnis bernama sama tidak boleh dianggap satu.</p>
+<p>CSV dibuat service <code>PaymentAttemptCsv</code>, termasuk perlindungan nilai yang dapat menjadi formula spreadsheet. Input pengguna yang diawali <code>=</code>, <code>+</code>, <code>-</code> atau <code>@</code> perlu diperlakukan sebagai data, bukan rumus. CSV berbeda dari file XLSX.</p>
+<p>Saat menambah laporan: tulis arti metrik dahulu, tentukan timezone/status/periode, susun query, baru buat grafik. Grafik yang bagus dengan definisi salah tetap memberi informasi salah.</p>
+<h2 id="section-29">25 — Pengujian: bukti, bukan dugaan</h2>
+<p>Bab ini berisi perintah untuk Anda pelajari dan jalankan pada lingkungan test; penulisan dokumentasi ini tidak menjalankan suite aplikasi baru.</p>
+<p><strong>LATIHAN — contoh model spec pada katalog mini:</strong></p>
+<pre aria-label="Contoh kode ruby"><code>RSpec.describe Service, type: :model do
+  it &quot;menolak harga negatif&quot; do
+    service = Service.new(name: &quot;Facial&quot;, price: -1, duration_minutes: 30)
+    expect(service).not_to be_valid
+  end
+end</code></pre>
+<p><code>describe</code> menyatakan objek yang diuji; <code>it</code> satu skenario; <code>expect</code> harapan. Untuk memakai contoh, tambahkan <code>rspec-rails</code> pada group development/test di Gemfile latihan, jalankan <code>bundle install</code>, lalu <code>bin/rails generate rspec:install</code>. Simpan contoh pada <code>spec/models/service_spec.rb</code>.</p>
+<pre aria-label="Contoh kode bash"><code># Di project latihan atau database test terpisah
+bundle exec rspec spec/models/service_spec.rb</code></pre>
+<p>Pada GlowBook, FactoryBot membuat user/bisnis/layanan yang memenuhi relasi. Request spec mengecek akses, respons dan perubahan data. Service spec mengecek logika booking/payment. Node tests mengecek JavaScript. Brakeman mencari pola keamanan; hasil nol peringatan bukan jaminan tidak ada bug.</p>
+<p>Untuk GlowBook gunakan stack uji terpisah:</p>
+<pre aria-label="Contoh kode powershell"><code>docker compose -f compose.test.yaml up --build --abort-on-container-exit --exit-code-from tests
+docker compose -f compose.test.yaml down --remove-orphans --volumes
+node --test spec/javascript/*_test.cjs</code></pre>
+<p>Pembersihan di sini hanya untuk project Compose verification yang bersifat sementara. Jangan menambahkan <code>--volumes</code> pada stack utama karena dapat menghapus volume database/upload utama.</p>
+<p>Workflow CI juga memeriksa syntax/routes/templates/terjemahan, build production, konfigurasi HTTPS dan backup/restore. Baca <code>.github/workflows/ci.yml</code> untuk tahap aktual. Pengujian baru harus ditambahkan ketika perilaku baru dibuat; pengujian lama hijau tidak otomatis membuktikan semua fitur baru.</p>
+<h2 id="section-30">26 — Docker, deployment dan backup</h2>
+<p>Dockerfile memakai beberapa tahap: base, dependencies, build, verification dan image runtime. Runtime memakai user non-root. Build memasang library dan menghasilkan aset; runtime menjalankan aplikasi.</p>
+<p>Compose utama menjalankan PostgreSQL, web dan worker. Web melakukan <code>db:prepare</code> pada entrypoint sebelum server mulai. Worker menunggu web sehat kemudian menjalankan <code>bin/jobs</code>.</p>
+<p><code>/up</code> adalah healthcheck, bukan uji seluruh fitur. Database healthy berarti dapat menerima koneksi, bukan berarti laporan atau pembayaran pasti benar.</p>
+<p><strong>KODE PROJECT — volume:</strong></p>
+<pre aria-label="Contoh kode yaml"><code>volumes:
+  postgres_data:
+  storage_data:</code></pre>
+<p>Volume mempertahankan data saat container dibuat ulang. Volume tetap dapat hilang karena penghapusan, kerusakan disk atau salah perintah. Karena itu backup tetap diperlukan.</p>
+<p>Production membutuhkan APP_HOST HTTPS, secret baru, database, antrean, storage dan SMTP. Admin mengatur kredensial integrasi aplikasi, tetapi domain, DNS, HTTPS dan key utama tetap di server.</p>
+<p>Tidak harus mengelola VPS sendiri: penyedia hosting aplikasi dapat menjalankan Rails. Konfigurasi Render/Railway belum disiapkan sebagai deployment terbukti pada snapshot ini. Jangan menganggap menghubungkan GitHub saja cukup: database queue, extension PostgreSQL <code>btree_gist</code>, port, worker, secret dan storage perlu diperiksa.</p>
+<p>Gunakan <code>BACKUP_RESTORE.md</code>: backup primary DB, queue DB dan upload; simpan salinan di luar host; periksa checksum; lakukan restore pada lingkungan terpisah. Simpan key enkripsi terpisah dari backup. Sukses membuat dump belum membuktikan dump dapat dipulihkan.</p>
+<p>Untuk admin production, gunakan task <code>glowbook:bootstrap</code> sesuai <code>SETUP.md</code>, bukan seed demo. Task mempertahankan akun/data yang sudah ada dan menolak menaikkan akun customer lama menjadi admin hanya karena email sama.</p>
+<h2 id="section-31">27 — Git dan pekerjaan sehari-hari</h2>
+<p>Git menyimpan perubahan; GitHub menyimpan remote repository. <strong>Commit</strong> adalah catatan lokal; <strong>push</strong> mengirim commit ke remote.</p>
+<pre aria-label="Contoh kode bash"><code>git status
+git switch -c codex/latihan-deskripsi-layanan
+git diff
+git add app/models/service.rb app/views/dashboard/services/_form.html.erb
+git commit -m &quot;Add service description field&quot;
+git push -u origin codex/latihan-deskripsi-layanan</code></pre>
+<p>Contoh ini mengandaikan file sudah diubah dan branch latihan belum ada. Jangan menyalin contoh add jika perubahan Anda berada pada file berbeda. Gunakan <code>git diff</code> untuk membaca apa yang akan disimpan.</p>
+<p>Untuk klien, satu perubahan yang jelas lebih mudah ditinjau daripada banyak fitur tak terkait pada satu commit. Jangan memasukkan <code>.env</code>, master key, dump, upload pelanggan atau data pribadi. Dua gambar lokal yang tidak terkait pembaruan GlowBook juga tidak otomatis dimasukkan ke commit.</p>
+<p>Urutan kerja: pahami permintaan → pilih file → ubah secukupnya → periksa diff → verifikasi sesuai cakupan → commit → push → pantau CI → jelaskan hasil dan batasnya.</p>
+<h2 id="section-32">28 — Debugging tanpa panik</h2>
+<div class="table-wrap"><table><thead><tr><th>Gejala</th><th>Mulai periksa</th><th>Alasan</th></tr></thead><tbody><tr><td>Halaman 404</td><td>Routes, parameter ID/slug/reference</td><td>URL mungkin menuju resource yang berbeda</td></tr><tr><td>Admin ditolak</td><td>Login/session dan role</td><td>Authentication dan authorization berbeda</td></tr><tr><td>Data tidak tersimpan</td><td>errors model, permit controller, constraint DB</td><td>Field form belum tentu diizinkan server</td></tr><tr><td>CSS tidak berubah</td><td>Source Tailwind, proses build, image yang berjalan</td><td>File source host tidak otomatis masuk image</td></tr><tr><td>Email belum datang</td><td>Worker, job gagal, SMTP, inbox/spam</td><td>Antrean bukan konfirmasi terkirim</td></tr><tr><td>Slot kosong</td><td>Jam buka, shift, break, block, kualifikasi, timezone</td><td>Availability menyaring banyak kondisi</td></tr><tr><td>Callback gagal</td><td>Mode/merchant/signature/amount/reference/status API</td><td>Redirect browser tidak dipercaya</td></tr><tr><td>Upload hilang</td><td>Storage service, volume/object storage</td><td>Filesystem container dapat sementara</td></tr><tr><td>Filter tidak cocok</td><td>Scope awal, query URL, basis tanggal</td><td>Tab/periode awal juga membatasi hasil</td></tr><tr><td>CI gagal</td><td>Tahap pertama yang gagal dan log terkait</td><td>Tahap berikutnya bisa hanya skipped</td></tr></tbody></table></div>
+<p>Prosedur sederhana: reproduksi, tulis hasil harapan vs aktual, baca log bagian error, cari file terkait dengan <code>rg</code>, ubah satu penyebab, lalu ulangi skenario. Jangan sekaligus mengganti dependency, database dan UI ketika penyebab belum jelas.</p>
+<h2 id="section-33">29 — Menjadi siap bekerja remote di Upwork</h2>
+<p>Kecepatan dengan AI dapat membantu, tetapi Anda tetap bertanggung jawab memahami perubahan, menjaga data klien dan menyerahkan hasil yang sesuai. Menghafal atau mengetik lebih lama bukan tujuan profesional.</p>
+<p>Pada kontrak hourly, catat <strong>waktu kerja yang benar-benar dilakukan</strong>. Jangan menagih delapan jam bila kerja terkait kontrak hanya dua jam. Waktu analisis, implementasi, review, pengujian, debugging dan dokumentasi yang benar-benar dikerjakan dapat dijelaskan sebagai tugas; pastikan cakupannya disepakati klien. Belajar umum untuk meningkatkan kemampuan sendiri tidak otomatis menjadi jam tagihan klien.</p>
+<p>Upwork menyediakan tracked time melalui Desktop App dan manual time bila diizinkan. Manual time tidak memperoleh Hourly Payment Protection yang sama seperti tracked time; periksa ketentuan resmi sebelum menggunakan. <a href="https://support.upwork.com/hc/en-us/articles/211062308-How-to-allow-manual-vs-tracked-time-on-hourly-contracts">Penjelasan tracked/manual time</a>.</p>
+<p>Jika pekerjaan cepat dan scope jelas, kontrak fixed-price dengan milestone bisa dibicarakan sehingga nilai hasil disepakati di awal. Jangan mengubah model tagihan tanpa persetujuan klien. Ini saran cara menyusun pekerjaan, bukan janji pendapatan atau aturan universal semua klien.</p>
+<h3 id="section-34">Contoh catatan kerja yang jelas</h3>
+<pre aria-label="Contoh kode text"><code>Task: Add role filter to admin users table
+Work: Reviewed existing access scope; implemented role options;
+      checked owner/customer results; documented behavior.
+Deliverable: commit + screenshots + validation results
+Time: actual start/end recorded for this contract</code></pre>
+<p>Hindari memo “coding website” tanpa konteks. Jelaskan apa yang diselesaikan, file utama, hasil verifikasi, risiko dan pekerjaan tersisa.</p>
+<h3 id="section-35">AI sebagai tutor, bukan pengganti pemahaman</h3>
+<p>Minta AI: “jelaskan method ini”, “beri satu latihan”, “tunjukkan kemungkinan gagal”, “review perubahan kecil ini”. Sebelum menerima kode, jelaskan input, output, akses pengguna dan kegagalan yang mungkin terjadi. Ikuti kebijakan klien tentang penggunaan AI dan izin membagikan kode/data kepada layanan luar.</p>
+<h3 id="section-36">Milestone portofolio yang realistis</h3>
+<div class="table-wrap"><table><thead><tr><th>Milestone</th><th>Hasil yang dapat diperlihatkan</th></tr></thead><tbody><tr><td>Katalog</td><td>CRUD layanan, validasi, tampilan responsive</td></tr><tr><td>Akses</td><td>Login dan pemisahan customer/owner/admin</td></tr><tr><td>Booking</td><td>Availability, transaksi, constraint dan skenario bentrok</td></tr><tr><td>Admin</td><td>Filter, pagination, pengelolaan dan laporan</td></tr><tr><td>Integrasi</td><td>Sandbox, email, callback dan dokumentasi setup</td></tr><tr><td>Rilis</td><td>CI, deployment, backup dan handover</td></tr></tbody></table></div>
+<p>Jangan menyatakan Anda menulis semuanya sendiri bila memakai bantuan. Anda dapat menjelaskan kontribusi dan kemampuan memelihara kode secara jujur.</p>
+<h2 id="section-37">30 — Rencana belajar delapan tahap</h2>
+<p>Ini urutan belajar yang disarankan, bukan target jam yang harus ditagihkan. Lama tiap tahap mengikuti kemampuan dan waktu Anda.</p>
+<div class="table-wrap"><table><thead><tr><th>Tahap</th><th>Fokus</th><th>Tugas kecil</th></tr></thead><tbody><tr><td>1</td><td>HTML, CSS, Ruby dasar</td><td>Buat kartu layanan dan kalkulator harga</td></tr><tr><td>2</td><td>MVC dan Active Record</td><td>Katalog layanan mini bab 09</td></tr><tr><td>3</td><td>Relasi dan Devise</td><td>Hubungkan bisnis-layanan dan batasi owner</td></tr><tr><td>4</td><td>Jadwal dan transaksi</td><td>Hitung slot satu staff, pelajari range</td></tr><tr><td>5</td><td>Booking dan akun</td><td>Simpan dua layanan; pelajari cancel/reschedule</td></tr><tr><td>6</td><td>Admin dan UX</td><td>Tambahkan satu filter dan perapian responsive</td></tr><tr><td>7</td><td>Integrasi dan pekerjaan belakang</td><td>Email test, chat, OAuth dan Duitku stub</td></tr><tr><td>8</td><td>Delivery remote</td><td>Git, CI, dokumentasi, demo dan handover</td></tr></tbody></table></div>
+<p>Selesai satu tahap ketika Anda bisa menjelaskan “request masuk ke mana, data diambil dari mana, siapa yang boleh mengubah, dan apa yang terjadi jika gagal”.</p>
+<h2 id="section-38">31 — Cara membaca atlas kode</h2>
+<p>Atlas adalah pendamping, bukan bacaan dari halaman pertama sampai terakhir. Semua file sumber yang dimasukkan memiliki lokasi, isi bernomor baris, ringkasan tanggung jawab, serta catatan pola kode yang memang terdeteksi. Ringkasan pola tidak menggantikan review keamanan atau pembuktian perilaku.</p>
+<p>Mulai dari satu jejak:</p>
+<div class="table-wrap"><table><thead><tr><th>Pertanyaan</th><th>Jejak file</th></tr></thead><tbody><tr><td>Bagaimana layanan dibuat?</td><td>routes → dashboard/services controller → Service → form/view</td></tr><tr><td>Mengapa slot tidak tersedia?</td><td>bookings_flow → BookingSequenceAvailability → Availability → BookingItem/constraint</td></tr><tr><td>Bagaimana admin mengedit user?</td><td>admin/users controller → User → admin/users/_form</td></tr><tr><td>Dari mana tabel mendapat filter?</td><td>Paginatable → shared/_table_controls → _table_pagination → CSS</td></tr><tr><td>Bagaimana email terkirim?</td><td>BookingNotificationDelivery → BookingMailer → job → ApplicationMailer → worker config</td></tr><tr><td>Siapa boleh membaca chat?</td><td>ChatsController → Conversation → ChatMessage → chat_controller.js</td></tr><tr><td>Kapan pembayaran lunas?</td><td>ProcessDuitkuNotification → ReconcileDuitkuPayment → DuitkuClient → PaymentAttempt</td></tr></tbody></table></div>
+<p>Atlas mencakup sumber Ruby/ERB/JS/CSS, migration, konfigurasi terpilih, task, script deployment dan spec. Tidak menyertakan <code>.env.local</code>, master key, database dump, file upload, library pihak ketiga atau aset hasil build. File locale yang besar dijelaskan sebagai kelompok konfigurasi; versi mentahnya tetap tersedia dalam repository.</p>
+<p>Untuk penjelasan satu baris yang belum Anda pahami, sebutkan nama file dan nomor baris atlas. Belajar lewat pertanyaan konkret jauh lebih mudah daripada meminta penjelasan seluruh aplikasi dalam satu sesi.</p>
+<h2 id="section-39">32 — Kamus istilah singkat</h2>
+<div class="table-wrap"><table><thead><tr><th>Istilah</th><th>Arti</th></tr></thead><tbody><tr><td>CRUD</td><td>Create, Read, Update, Delete</td></tr><tr><td>ORM</td><td>Penghubung objek program dengan tabel database</td></tr><tr><td>Relation/scope</td><td>Query data yang dapat ditambah kondisi</td></tr><tr><td>Migration</td><td>Perubahan struktur database yang berurutan</td></tr><tr><td>Foreign key</td><td>Hubungan ID ke tabel induk</td></tr><tr><td>Validation</td><td>Pemeriksaan input sebelum disimpan</td></tr><tr><td>Constraint</td><td>Aturan yang ditegakkan database</td></tr><tr><td>Transaction</td><td>Beberapa perubahan menjadi satu kesatuan</td></tr><tr><td>Lock</td><td>Membatasi perubahan bersamaan pada data tertentu</td></tr><tr><td>Race condition</td><td>Hasil bergantung urutan request yang bersamaan</td></tr><tr><td>CSRF</td><td>Request tak diinginkan yang menyalahgunakan session pengguna</td></tr><tr><td>XSS</td><td>Konten berbahaya dieksekusi browser sebagai script</td></tr><tr><td>OAuth</td><td>Login/otorisasi melalui penyedia eksternal</td></tr><tr><td>Secret</td><td>Password/key yang harus dirahasiakan</td></tr><tr><td>Callback/webhook</td><td>Penyedia mengirim pemberitahuan ke endpoint aplikasi</td></tr><tr><td>Idempotent</td><td>Pengulangan tidak menggandakan efek yang sudah berhasil</td></tr><tr><td>Job/worker</td><td>Pekerjaan antrean/proses yang mengerjakannya</td></tr><tr><td>CI</td><td>Pemeriksaan otomatis atas commit</td></tr><tr><td>Deployment</td><td>Menjalankan versi aplikasi pada lingkungan tujuan</td></tr><tr><td>Backup/restore</td><td>Menyalin data/memulihkan data dari salinan</td></tr></tbody></table></div>
+<h2 id="section-40">33 — Referensi dan dokumen lanjutan</h2>
+<p>Sumber utama panduan ini adalah kode lokal snapshot <code>cb1cc60</code>. Snippet project berasal dari file yang disebutkan; snippet latihan dibuat khusus untuk pembelajaran. Referensi resmi dibaca untuk membantu istilah dan ketentuan eksternal, bukan menyalin tutorial pihak lain.</p>
+<ul><li><a href="https://www.ruby-lang.org/en/documentation/">Ruby documentation</a> — bahasa Ruby.</li><li><a href="https://guides.rubyonrails.org/">Rails Guides</a> — pilih versi yang sesuai ketika memeriksa API.</li><li><a href="https://api.rubyonrails.org/v8.1/classes/ActiveRecord.html">Active Record API Rails 8.1</a> — query, model dan relasi.</li><li><a href="https://turbo.hotwired.dev/handbook/introduction">Turbo Handbook</a> — konsep navigasi HTML.</li><li><a href="https://stimulus.hotwired.dev/handbook/introduction">Stimulus Handbook</a> — controller JavaScript.</li><li><a href="https://github.com/heartcombo/devise">Devise repository</a> — autentikasi.</li><li><a href="https://www.postgresql.org/docs/16/rangetypes.html">PostgreSQL range types</a> — rentang dan overlap.</li><li><a href="https://docs.duitku.com/pop/id/">Duitku POP</a> dan <a href="https://docs.duitku.com/api/id/#cek-transaksi">status transaksi</a> — API merchant.</li><li><a href="https://support.upwork.com/hc/en-us/articles/211064098-How-to-log-time-with-the-time-tracker">Upwork Time Tracker</a> — pencatatan waktu aktual.</li></ul>
+<p>Dokumen operasional project: <code>SETUP.md</code>, <code>DUITKU_SETUP.md</code>, <code>BACKUP_RESTORE.md</code>, <code>ADMIN_FEATURES.md</code>, <code>RELEASE_READINESS.md</code>. Panduan belajar tidak menggantikan pemeriksaan production, dan klaim historis pengujian tidak berarti seluruh fitur sudah diuji lagi pada tanggal penulisan.</p>
+<p><strong>Langkah pertama setelah membaca:</strong> selesaikan katalog mini bab 09 tanpa meminta AI menulis seluruh fitur; gunakan AI untuk menjelaskan satu error atau satu method. Lalu kerjakan latihan 1–3 pada workbook.</p></main></div><footer>Snapshot cb1cc60 · Dokumen belajar offline · Tidak menyertakan kredensial pribadi</footer></body></html>

@@ -2,6 +2,10 @@
 
 GlowBook adalah marketplace kecantikan dan wellness untuk mencari bisnis, melihat layanan, lalu memesan jadwal secara online. Aplikasi menggunakan Rails 8.1, PostgreSQL, Hotwire, dan Tailwind CSS; antarmuka utamanya berbahasa Indonesia.
 
+## Belajar membangun GlowBook
+
+Tersedia [paket belajar berbahasa Indonesia](docs/belajar/README.md): panduan 33 bab, buku PDF, contoh kode, 18 latihan beserta pembahasan, dan atlas sumber per file. Mulai dari [panduan HTML](docs/belajar/PANDUAN_GLOWBOOK.html) atau [PDF](output/pdf/Belajar_GlowBook.pdf). HTML dapat dibuka offline pada browser setelah repository diunduh.
+
 ## Fitur utama
 
 - Pencarian bisnis berdasarkan kota, kategori, layanan, dan harga.
